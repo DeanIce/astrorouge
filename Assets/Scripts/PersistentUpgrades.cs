@@ -42,7 +42,8 @@ public class PersistentUpgrades : MonoBehaviour
 
         destination = Application.persistentDataPath + "/save.dat";
 
-        //output += <variable>.ToString() + "";
+        //output += <variable>.ToString() + " ";
+        output += num.ToString() + " ";
 
         using (var file = File.Open(destination, FileMode.Create))
         {
@@ -75,6 +76,10 @@ public class PersistentUpgrades : MonoBehaviour
         //count = GetNextData(start, inputChars);
         //<variablename> = input.Substring(start, count); convert type if needed via int.Parse, etc
         //start += count + 1;
+
+        count = GetNextData(start, inputChars);
+        num = int.Parse(input.Substring(start, count));
+        start += count + 1;
     }
 
     private int GetNextData(int start, char[] inputChars)

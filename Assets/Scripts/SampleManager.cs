@@ -12,6 +12,7 @@ public class SampleManager : MonoBehaviour
     void Start()
     {
         data = FindObjectOfType<PersistentUpgrades>();
+        data.Load();
         num = data.num;
     }
 
@@ -20,5 +21,6 @@ public class SampleManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (Input.GetKeyDown(KeyCode.E)) num++;
+        if (Input.GetKeyDown(KeyCode.Escape)) data.Save();
     }
 }
