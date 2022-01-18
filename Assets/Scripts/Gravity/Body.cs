@@ -8,21 +8,26 @@ namespace Gravity
 {
     public class Body : MonoBehaviour
     {
-        public GameObject attractorObject;
-        private Attractor attractor;
+        public List<GameObject> attractorObjects;
+        private readonly List<Attractor> attractors = new();
+        public float turningRate = 70f;
 
         private Rigidbody rb;
         public float maxSpeed = 10f;
         public float jumpForce = 3f;
-        
-        
+
+
         Vector3 velocity, desiredVelocity;
         bool desiredJump;
 
         // Start is called before the first frame update
         void Start()
         {
-            attractor = attractorObject.GetComponent<Attractor>();
+            foreach (var attractorObject in attractorObjects)
+            {
+                attractors.Add(attractorObject.GetComponent<Attractor>());
+            }
+
             rb = GetComponent<Rigidbody>();
         }
 
@@ -42,7 +47,24 @@ namespace Gravity
 
         void FixedUpdate()
         {
-            attractor.Attract(gameObject);
+            Quaternion sumQuat = Quaternion.identity;
+            Vector3 sumRot = Vector3.zero;
+            Vector3 sumForce = Vector3.zero;
+
+            foreach (var a in attractors)
+            {
+                var (quat, f) = a.Attract(gameObject);
+                sumRot += quat;
+                sumForce += f;
+            }
+
+            sumForce /= attractors.Count;
+
+            Debug.DrawLine(transform.position, sumForce, Color.blue);
+
+            // Apply the combined rotations
+            transform.localRotation = Quaternion.FromToRotation(transform.up, sumRot) * transform.rotation;
+            // oRb.AddForce(force * Time.deltaTime);
 
 
             float strafe = Input.GetAxis("Horizontal");
@@ -50,12 +72,15 @@ namespace Gravity
 
 
             var force = -transform.right * walk + transform.forward * strafe;
-            // if (desiredJump)
-            // {
-            //     force += Vector3.up * jumpForce;
-            // }
+            rb.AddForce(force * maxSpeed);
 
-            rb.AddForce(force*maxSpeed);
+            if (desiredJump)
+            {
+                print("jump");
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                // rb.velocity += transform.up * jumpForce;
+                desiredJump = false;
+            }
         }
     }
 }
