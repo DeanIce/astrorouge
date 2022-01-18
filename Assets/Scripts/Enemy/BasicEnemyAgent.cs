@@ -11,34 +11,52 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Public variables that the game manager or other objects may need
     public float health;
     public float movementSpeed;
+    public Collider playerCollider;
 
     // Private enemy specific variables
     Rigidbody rb;
     Quaternion deltaRotation;
     Vector3 eulerAngleVelocity;
     Bounds b;
+    Bounds playerBounds;
+    Vector3 newDirection;
     int randomRotation;
     int leftOrRight;
     private bool wandering = false;
     private bool hunting = false;
     private bool rotating = false;
 
-    // Temp for debugging and testing
-    Renderer rend;
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rend = GetComponent<Renderer>();
         b = new Bounds(rb.position, new Vector3(20, 2, 20));
+        playerBounds = playerCollider.bounds;
+    }
+
+    void Update()
+    {
+        b = new Bounds(rb.position, new Vector3(20, 2, 20));
+        playerBounds = playerCollider.bounds;
     }
 
     void FixedUpdate()
     {
         // Two states, either hunting or wandering
-        if (!hunting)
+        if (!hunting && wandering)
         {
             wander(transform.forward);
+        } 
+
+        if (b.Intersects(playerBounds))
+        {
+            wandering = false;
+            hunting = true;
+            hunt();
+        } 
+        else
+        {
+            wandering = true;
+            hunting = false;
         }
     }
 
@@ -59,7 +77,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public void hunt()
     {
-
+        // NOTE: May need to add offset to playerBounds center, potential bug here ***
+        // Rotation referenced from unity documentation
+        Debug.Log("Hunting towards " + playerBounds.center);
+        transform.position = Vector3.MoveTowards(transform.position, playerBounds.center, movementSpeed * Time.deltaTime);
+        newDirection = Vector3.RotateTowards(transform.forward, playerBounds.center - transform.position, movementSpeed * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
     }
 
     public void takeDmg(float dmg)
@@ -108,5 +131,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(rb.position, new Vector3(20, 2, 20));
+        Gizmos.DrawWireCube(playerBounds.center, new Vector3(1, 2, 1));
     }
 }
