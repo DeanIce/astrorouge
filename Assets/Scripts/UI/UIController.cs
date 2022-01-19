@@ -36,6 +36,7 @@ public class UIController : MonoBehaviour
         //About buttons
         aboutBackButton = aboutMenu.Q<Button>("back-button");
 
+        quitButton.clicked += QuitButtonPressed;
         newGameButton.clicked += NewGameButtonPressed;
         settingsButton.clicked += SettingsButtonPressed;
         aboutButton.clicked += AboutButtonPressed;
