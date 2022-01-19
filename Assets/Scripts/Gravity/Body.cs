@@ -45,26 +45,38 @@ namespace Gravity
             desiredJump |= Input.GetButtonDown("Jump");
         }
 
+        private Vector3 sumForce = Vector3.zero;
+
+        private Vector3 upAxis;
+        
         void FixedUpdate()
         {
             Quaternion sumQuat = Quaternion.identity;
             Vector3 sumRot = Vector3.zero;
-            Vector3 sumForce = Vector3.zero;
+            sumForce = Vector3.zero;
+            
+            // foreach (var a in attractors)
+            // {
+            //     var (quat, f, isWithinBounds) = a.Attract(gameObject);
+            //
+            //     if (isWithinBounds)
+            //     {
+            //         sumRot += quat;
+            //         sumForce += f;
+            //     }
+            // }
 
-            foreach (var a in attractors)
-            {
-                var (quat, f) = a.Attract(gameObject);
-                sumRot += quat;
-                sumForce += f;
-            }
+            // sumForce /= attractors.Count;
 
-            sumForce /= attractors.Count;
+            sumForce = Manager.GetGravity(transform.position, out upAxis);
 
             Debug.DrawLine(transform.position, sumForce, Color.blue);
 
             // Apply the combined rotations
-            transform.localRotation = Quaternion.FromToRotation(transform.up, sumRot) * transform.rotation;
-            // oRb.AddForce(force * Time.deltaTime);
+            transform.localRotation = Quaternion.FromToRotation(transform.up, -sumForce) * transform.rotation;
+            
+            
+            rb.AddForce(sumForce * Time.deltaTime);
 
 
             float strafe = Input.GetAxis("Horizontal");
