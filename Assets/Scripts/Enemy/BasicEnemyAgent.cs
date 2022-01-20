@@ -30,7 +30,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        b = new Bounds(rb.position, new Vector3(20, 2, 20));
+        b = new Bounds(rb.position, new Vector3(20, 5, 20));
         playerBounds = playerCollider.bounds;
     }
 
@@ -38,7 +38,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // Maybe just set b center pos instead
         // Potential Bug here **
-        b = new Bounds(rb.position, new Vector3(20, 2, 20));
+        b = new Bounds(rb.position, new Vector3(20, 5, 20));
         playerBounds = playerCollider.bounds;
     }
 
@@ -85,9 +85,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
         Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
 
+        // Actual movement and rotation
         transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
         newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+
+        // Detect if player is above enemy, if so, then we want to jump
+        if (playerBounds.center.y > transform.position.y)
+        {
+            Debug.Log("Jump!");
+        }
     }
 
     public void takeDmg(float dmg)
@@ -135,7 +142,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(rb.position, new Vector3(20, 2, 20));
+        Gizmos.DrawWireCube(rb.position, new Vector3(20, 5, 20));
         Gizmos.DrawWireCube(playerBounds.center, new Vector3(1, 2, 1));
     }
 }
