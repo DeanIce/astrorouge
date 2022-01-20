@@ -17,7 +17,9 @@ namespace Gravity
         public float jumpForce = 3f;
 
 
-        Vector3 velocity, desiredVelocity;
+        private Vector3 sumForce = Vector3.zero;
+        private Vector3 upAxis;
+        Vector3 velocity;
         bool desiredJump;
 
         // Start is called before the first frame update
@@ -34,63 +36,29 @@ namespace Gravity
 
         private void Update()
         {
-            Vector2 playerInput;
-            playerInput.x = Input.GetAxis("Horizontal");
-            playerInput.y = Input.GetAxis("Vertical");
-            playerInput = Vector2.ClampMagnitude(playerInput, 1f);
-
-            desiredVelocity =
-                new Vector3(playerInput.x, 0f, playerInput.y) * maxSpeed;
-
             desiredJump |= Input.GetButtonDown("Jump");
         }
 
-        private Vector3 sumForce = Vector3.zero;
 
-        private Vector3 upAxis;
         
         void FixedUpdate()
         {
-            Quaternion sumQuat = Quaternion.identity;
-            Vector3 sumRot = Vector3.zero;
-            sumForce = Vector3.zero;
-            
-            // foreach (var a in attractors)
-            // {
-            //     var (quat, f, isWithinBounds) = a.Attract(gameObject);
-            //
-            //     if (isWithinBounds)
-            //     {
-            //         sumRot += quat;
-            //         sumForce += f;
-            //     }
-            // }
-
-            // sumForce /= attractors.Count;
-
+            // Gravity
             sumForce = Manager.GetGravity(transform.position, out upAxis);
-
-            Debug.DrawLine(transform.position, sumForce, Color.blue);
-
-            // Apply the combined rotations
-            transform.localRotation = Quaternion.FromToRotation(transform.up, -sumForce) * transform.rotation;
-            
-            
             rb.AddForce(sumForce * Time.deltaTime);
+            Debug.DrawLine(transform.position, sumForce, Color.blue);
+            rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * transform.rotation);
 
-
+            // Naive movement code
             float strafe = Input.GetAxis("Horizontal");
             float walk = Input.GetAxis("Vertical");
-
-
             var force = -transform.right * walk + transform.forward * strafe;
             rb.AddForce(force * maxSpeed);
-
+            
+            // Bad jump code
             if (desiredJump)
             {
-                print("jump");
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-                // rb.velocity += transform.up * jumpForce;
                 desiredJump = false;
             }
         }
