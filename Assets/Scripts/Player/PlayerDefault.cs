@@ -73,15 +73,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void FixedUpdate()
     {
-        Vector3 upAxis;
         // Gravity
-        var sumForce = Manager.GetGravity(transform.position, out upAxis);
+        Vector3 sumForce = Manager.GetGravity(transform.position, out Vector3 upAxis);
         rb.AddForce(sumForce * Time.deltaTime);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
-        rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * transform.rotation);
 
-        
-        
+        /*
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Updates vertical velocity (up relative to player) to allow gravity and prevent phasing through objects
@@ -96,17 +93,20 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         // Calculate total displacement
         Vector3 displacement = Walk(movement.ReadValue<Vector2>());
-        displacement += Time.deltaTime * verticalVelocity * transform.up;
+
+        Debug.Log($"{sumForce} {displacement}");
+
+        displacement += Mathf.Pow(Time.deltaTime, 2) * verticalVelocity * sumForce.normalized;
 
         // Apply displacement
         rb.MovePosition(transform.position + displacement);
-
+        */
         // Calculate lookAt vector then increment quaternion
         Vector3 lookAt = Look(look.ReadValue<Vector2>());
-        Quaternion rotation = transform.rotation * Quaternion.FromToRotation(transform.forward, lookAt);
 
         // Apply rotation
-        rb.MoveRotation(rotation);
+        rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+        
     }
 
     // Translates 2D input into 3D looking direction
