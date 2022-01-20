@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Gravity
 {
-    public static class Manager {
+    public static class Manager
+    {
+        private static readonly List<Source> sources = new();
 
-        static List<Source> sources = new List<Source>();
-
-        public static void Register (Source source) {
+        public static void Register(Source source)
+        {
             Debug.AssertFormat(
                 !sources.Contains(source),
                 "Duplicate registration of gravity source!", source
@@ -16,36 +16,46 @@ namespace Gravity
             sources.Add(source);
         }
 
-        public static void Unregister (Source source) {
+        public static void Unregister(Source source)
+        {
             Debug.AssertFormat(
                 sources.Contains(source),
                 "Unregistration of unknown gravity source!", source
             );
             sources.Remove(source);
         }
-	
-        public static Vector3 GetGravity (Vector3 position) {
+
+        public static Vector3 GetGravity(Vector3 position)
+        {
             Vector3 g = Vector3.zero;
-            for (int i = 0; i < sources.Count; i++) {
-                g += sources[i].GetGravity(position);
+            foreach (var t in sources)
+            {
+                g += t.GetGravity(position);
             }
+
             return g;
         }
 
-        public static Vector3 GetGravity (Vector3 position, out Vector3 upAxis) {
+        public static Vector3 GetGravity(Vector3 position, out Vector3 upAxis)
+        {
             Vector3 g = Vector3.zero;
-            for (int i = 0; i < sources.Count; i++) {
-                g += sources[i].GetGravity(position);
+            foreach (var t in sources)
+            {
+                g += t.GetGravity(position);
             }
+
             upAxis = -g.normalized;
             return g;
         }
 
-        public static Vector3 GetUpAxis (Vector3 position) {
+        public static Vector3 GetUpAxis(Vector3 position)
+        {
             Vector3 g = Vector3.zero;
-            for (int i = 0; i < sources.Count; i++) {
-                g += sources[i].GetGravity(position);
+            foreach (var t in sources)
+            {
+                g += t.GetGravity(position);
             }
+
             return -g.normalized;
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gravity
 {
@@ -12,15 +11,18 @@ namespace Gravity
             rb = GetComponentInChildren<Rigidbody>();
         }
 
-        public virtual Vector3 GetGravity (Vector3 position) {
+        public virtual Vector3 GetGravity(Vector3 position)
+        {
             return Physics.gravity;
         }
 
-        void OnEnable () {
+        void OnEnable()
+        {
             Manager.Register(this);
         }
 
-        void OnDisable () {
+        void OnDisable()
+        {
             Manager.Unregister(this);
         }
     }
