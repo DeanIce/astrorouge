@@ -21,8 +21,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     Bounds playerBounds;
     Vector3 newDirection;
     Vector3 playerPosition;
+    Vector3 jumpForce = new Vector3(0f, 20f, 0f);
     int randomRotation;
     int leftOrRight;
+    float distanceToGround;
+    private bool isGroundedVar = true;
     private bool wandering = false;
     private bool hunting = false;
     private bool rotating = false;
@@ -31,6 +34,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         rb = GetComponent<Rigidbody>();
         b = new Bounds(rb.position, new Vector3(20, 5, 20));
+        distanceToGround = b.extents.y;
         playerBounds = playerCollider.bounds;
     }
 
@@ -91,10 +95,22 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
 
         // Detect if player is above enemy, if so, then we want to jump
-        if (playerBounds.center.y > transform.position.y)
+        if (playerBounds.center.y > transform.position.y && isGrounded())
         {
             Debug.Log("Jump!");
+            jump();
         }
+    }
+
+    // Raycast jumping and grounded idea comes from here: https://answers.unity.com/questions/196381/how-do-i-check-if-my-rigidbody-player-is-grounded.html
+    bool isGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distanceToGround + 0.1f);
+    }
+
+    void jump()
+    {
+        rb.AddForce(jumpForce);
     }
 
     public void takeDmg(float dmg)
