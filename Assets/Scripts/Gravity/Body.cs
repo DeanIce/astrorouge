@@ -21,6 +21,8 @@ namespace Gravity
         private Vector3 upAxis;
         Vector3 velocity;
         bool desiredJump;
+        
+        
 
         // Start is called before the first frame update
         void Start()

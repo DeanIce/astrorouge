@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Gravity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +26,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float groundDistance = 0.1f;
     private const float defaultVelocity = -1f;
     private const float terminalVelocity = -50f;
+    
+    
+    // Gravity stuff
+
 
     private void Start()
     {
@@ -57,6 +63,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void FixedUpdate()
     {
+        Vector3 upAxis;
+        // Gravity
+        var sumForce = Manager.GetGravity(transform.position, out upAxis);
+        rb.AddForce(sumForce * Time.deltaTime);
+        Debug.DrawLine(transform.position, sumForce, Color.blue);
+        rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * transform.rotation);
+
+        
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Updates vertical velocity (up relative to player) to allow gravity and prevent phasing through objects
