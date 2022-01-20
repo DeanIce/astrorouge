@@ -8,6 +8,7 @@ public class UpgradeItem : MonoBehaviour
     // game what stats are to be changed after pick up
 
     // Be sure to change layer of item to the item layer
+    // test
     
     // Start is called before the first frame update
     void Start()
