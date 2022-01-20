@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
     private PlayerInputActions playerInputActions;
-    private InputAction movement;
+    private InputAction movement, look;
     private Rigidbody rb;
 
     // Player stats
-    private float speed = 6f;
+    private float turnSpeed = 4f;
+    private float walkSpeed = 6f;
+    private float sprintSpeed = 10f;
     private float jumpSpeed = 15f;
     private float gravity = 45f;
     private int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
@@ -19,6 +21,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public float verticalVelocity;
     private bool isGrounded;
     private int extraJumpsLeft;
+    private bool isSprinting;
 
     // Constants
     private Transform groundCheck;
@@ -49,16 +52,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         movement = playerInputActions.Player.Movement;
         movement.Enable();
+        look = playerInputActions.Player.Look;
+        look.Enable();
 
         playerInputActions.Player.Jump.performed += Jump;
         playerInputActions.Player.Jump.Enable();
+        playerInputActions.Player.Sprint.started += SprintToggle;
+        playerInputActions.Player.Sprint.canceled += SprintToggle;
+        playerInputActions.Player.Sprint.Enable();
     }
 
 
     private void OnDisable()
     {
         movement.Disable();
+        look.Disable();
         playerInputActions.Player.Jump.Disable();
+        playerInputActions.Player.Sprint.Disable();
     }
 
     private void FixedUpdate()
@@ -90,13 +100,27 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         // Apply displacement
         rb.MovePosition(transform.position + displacement);
+
+        // Calculate lookAt vector then increment quaternion
+        Vector3 lookAt = Look(look.ReadValue<Vector2>());
+        Quaternion rotation = transform.rotation * Quaternion.FromToRotation(transform.forward, lookAt);
+
+        // Apply rotation
+        rb.MoveRotation(rotation);
+    }
+
+    // Translates 2D input into 3D looking direction
+    public Vector3 Look(Vector2 direction)
+    {
+        Vector3 change = direction.x * transform.right;
+        return turnSpeed * Time.deltaTime * change + transform.forward;
     }
 
     // Translates 2D input into 3D displacement
     public Vector3 Walk(Vector2 direction)
     {
         Vector3 movement = direction.x * transform.right + direction.y * transform.forward;
-        return movement.normalized * Time.deltaTime * speed;
+        return (isSprinting ? sprintSpeed : walkSpeed) * Time.deltaTime * movement.normalized;
     }
 
     public void Jump(InputAction.CallbackContext obj)
@@ -110,5 +134,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             extraJumpsLeft--;
             verticalVelocity = jumpSpeed * 0.75f;
         }
+    }
+
+    public void SprintToggle(InputAction.CallbackContext obj)
+    {
+        isSprinting = !isSprinting;
     }
 }
