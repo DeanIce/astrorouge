@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Gravity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,12 +12,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private float turnSpeed = 4f;
     private float walkSpeed = 6f;
     private float sprintSpeed = 10f;
-    private float jumpSpeed = 15f;
-    private float gravity = 45f;
+    [SerializeField] private float jumpForce = 30f;
     private int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
 
     // Dynamic player info
-    public float verticalVelocity;
+    private float impulseJumpForce;
     private bool isGrounded;
     private int extraJumpsLeft;
     private bool isSprinting;
@@ -27,19 +25,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Transform groundCheck;
     private LayerMask groundMask;
     private const float groundDistance = 0.1f;
-    private const float defaultVelocity = -1f;
-    private const float terminalVelocity = -50f;
     
-    
-    // Gravity stuff
-
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        verticalVelocity = defaultVelocity;
         extraJumpsLeft = maxExtraJumps;
     }
 
@@ -77,36 +68,27 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 sumForce = Manager.GetGravity(transform.position, out Vector3 upAxis);
         rb.AddForce(sumForce * Time.deltaTime);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
-
-        /*
+                
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded)
+            extraJumpsLeft = maxExtraJumps;
 
         // Updates vertical velocity (up relative to player) to allow gravity and prevent phasing through objects
-        if (verticalVelocity < 0 && isGrounded)
+        if (impulseJumpForce > 0.1f)
         {
-            verticalVelocity = defaultVelocity;
-            extraJumpsLeft = maxExtraJumps;
+            rb.AddForce(transform.up * impulseJumpForce, ForceMode.Impulse);
+            impulseJumpForce = 0;
         }
-        else if (verticalVelocity < terminalVelocity)
-            verticalVelocity = terminalVelocity;
-        verticalVelocity -= gravity * Time.deltaTime;
 
         // Calculate total displacement
         Vector3 displacement = Walk(movement.ReadValue<Vector2>());
-
-        Debug.Log($"{sumForce} {displacement}");
-
-        displacement += Mathf.Pow(Time.deltaTime, 2) * verticalVelocity * sumForce.normalized;
-
-        // Apply displacement
         rb.MovePosition(transform.position + displacement);
-        */
+
         // Calculate lookAt vector then increment quaternion
         Vector3 lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
-        
     }
 
     // Translates 2D input into 3D looking direction
@@ -127,12 +109,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         if (isGrounded)
         {
-            verticalVelocity = jumpSpeed;
+            impulseJumpForce = jumpForce;
         }
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            verticalVelocity = jumpSpeed * 0.75f;
+            impulseJumpForce = jumpForce * 0.75f;
         }
     }
 
