@@ -20,6 +20,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     Bounds b;
     Bounds playerBounds;
     Vector3 newDirection;
+    Vector3 playerPosition;
     int randomRotation;
     int leftOrRight;
     private bool wandering = false;
@@ -35,6 +36,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     void Update()
     {
+        // Maybe just set b center pos instead
+        // Potential Bug here **
         b = new Bounds(rb.position, new Vector3(20, 2, 20));
         playerBounds = playerCollider.bounds;
     }
@@ -79,9 +82,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // NOTE: May need to add offset to playerBounds center, potential bug here ***
         // Rotation referenced from unity documentation
-        Debug.Log("Hunting towards " + playerBounds.center);
-        transform.position = Vector3.MoveTowards(transform.position, playerBounds.center, movementSpeed * Time.deltaTime);
-        newDirection = Vector3.RotateTowards(transform.forward, playerBounds.center - transform.position, movementSpeed * Time.deltaTime, 0.0f);
+        playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
+        Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
+
+        transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
+        newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
     }
 
