@@ -5,21 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class SampleManager : MonoBehaviour
 {
-    private PersistentUpgrades data;
-    public int num;
+    private Data data;
 
     // Start is called before the first frame update
     void Start()
     {
-        data = FindObjectOfType<PersistentUpgrades>();
-        num = data.num;
+        data = PersistentUpgrades.Load();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        if (Input.GetKeyDown(KeyCode.E)) num++;
-        if (Input.GetKeyDown(KeyCode.Escape)) data.Save();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PersistentUpgrades.Save(data);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.E)) data.num++;
+        if (Input.GetKeyDown(KeyCode.Escape)) PersistentUpgrades.Save(data);
     }
 }
