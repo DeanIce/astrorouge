@@ -6,7 +6,13 @@ using System.Xml.Serialization;
 
 public class PersistentUpgrades : MonoBehaviour
 {
-    XmlSerializer serializer = new XmlSerializer(typeof(string));
+    public class Data
+    {
+        //needed variables here (public)
+        public int num;
+    }
+    
+    XmlSerializer serializer = new XmlSerializer(typeof(Data));
     private static PersistentUpgrades instance;
     //put any needed variables here (public)
     public int num;
@@ -19,6 +25,7 @@ public class PersistentUpgrades : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            instance.Load();
             DontDestroyOnLoad(this);
         }
         else
@@ -37,27 +44,22 @@ public class PersistentUpgrades : MonoBehaviour
 
     public void Save()
     {
-        string destination = "";
-        string output = "";
-
-        destination = Application.persistentDataPath + "/save.dat";
-
-        //output += <variable>.ToString() + " ";
-        output += num.ToString() + " ";
+        Data data = new Data();
+        //set variables here- set equal to the Persistent upgrades version
+        data.num = num;
+        
+        string destination = Application.persistentDataPath + "/save.dat";
 
         using (var file = File.Open(destination, FileMode.Create))
         {
-            serializer.Serialize(file, output);
+            serializer.Serialize(file, data);
         }
     }
 
     public void Load()
     {
-        string destination = "", input;
-        int count, start = 0;
-        char[] inputChars;
-
-        destination = Application.persistentDataPath + "/save.dat";
+        string destination = Application.persistentDataPath + "/save.dat";
+        Data data;
 
         if (!File.Exists(destination))
         {
@@ -67,30 +69,10 @@ public class PersistentUpgrades : MonoBehaviour
 
         using (var file = File.Open(destination, FileMode.Open))
         {
-            input = (string)serializer.Deserialize(file);
-        }
-        
-        inputChars = input.ToCharArray();
-
-        //3 lines needed to get a variable (note first and third lines will always be the same):
-        //count = GetNextData(start, inputChars);
-        //<variablename> = input.Substring(start, count); convert type if needed via int.Parse, etc
-        //start += count + 1;
-
-        count = GetNextData(start, inputChars);
-        num = int.Parse(input.Substring(start, count));
-        start += count + 1;
-    }
-
-    private int GetNextData(int start, char[] inputChars)
-    {
-        int count = 0;
-
-        while (inputChars[start + count] != ' ')
-        {
-            count++;
+            data = (Data)serializer.Deserialize(file);
         }
 
-        return count;
+        //synchronize with persistent upgrades version
+        num = data.num;
     }
 }

@@ -12,7 +12,6 @@ public class SampleManager : MonoBehaviour
     void Start()
     {
         data = FindObjectOfType<PersistentUpgrades>();
-        data.Load();
         num = data.num;
     }
 
