@@ -2,7 +2,7 @@
 
 namespace Gravity
 {
-    public class Sphere : Source
+    public class SphereSource : Source
     {
         public float gravity = 9.81f;
 
