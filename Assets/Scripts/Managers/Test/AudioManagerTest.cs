@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Managers.Test
+{
+    
 public class AudioManagerTest : MonoBehaviour
 {
     /*  ================================= AUDIO MANAGER TEST ======================================    
@@ -92,4 +95,6 @@ public class AudioManagerTest : MonoBehaviour
             AudioManager.Instance.ToggleMute();
         }
     }
+}
+
 }

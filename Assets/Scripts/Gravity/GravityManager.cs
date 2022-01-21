@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Gravity
 {
-    public static class Manager
+    public static class GravityManager
     {
         private static readonly List<Source> sources = new();
 
@@ -27,22 +27,16 @@ namespace Gravity
 
         public static Vector3 GetGravity(Vector3 position)
         {
-            Vector3 g = Vector3.zero;
-            foreach (var t in sources)
-            {
-                g += t.GetGravity(position);
-            }
+            var g = Vector3.zero;
+            foreach (var t in sources) g += t.GetGravity(position);
 
             return g;
         }
 
         public static Vector3 GetGravity(Vector3 position, out Vector3 upAxis)
         {
-            Vector3 g = Vector3.zero;
-            foreach (var t in sources)
-            {
-                g += t.GetGravity(position);
-            }
+            var g = Vector3.zero;
+            foreach (var t in sources) g += t.GetGravity(position);
 
             upAxis = -g.normalized;
             return g;
@@ -50,11 +44,8 @@ namespace Gravity
 
         public static Vector3 GetUpAxis(Vector3 position)
         {
-            Vector3 g = Vector3.zero;
-            foreach (var t in sources)
-            {
-                g += t.GetGravity(position);
-            }
+            var g = Vector3.zero;
+            foreach (var t in sources) g += t.GetGravity(position);
 
             return -g.normalized;
         }
