@@ -399,8 +399,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1871575528}
   - component: {fileID: 1871575527}
-  - component: {fileID: 1871575530}
   - component: {fileID: 1871575529}
+  - component: {fileID: 1871575530}
   m_Layer: 5
   m_Name: InventoryHUD
   m_TagString: Untagged
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1871575525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c94bd2eb7757c94eb1f0f3cfa6619d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d1b56bd1c7d344fac311070d4901df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryHUD: {fileID: 1871575527}
