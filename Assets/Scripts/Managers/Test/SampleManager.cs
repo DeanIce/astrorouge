@@ -35,7 +35,7 @@ namespace Managers.Test
                 PersistentUpgrades.Save(data);
             }
 
-            if (Input.GetKeyDown(KeyCode.O)) print($"Current: {PersistentUpgrades.Load().num}");
+            if (Input.GetKeyDown(KeyCode.O)) print($"Current: {PersistentUpgrades.Load()}");
         }
     }
 }
