@@ -18,7 +18,7 @@ public class HoldToPickUp : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI itemNameText;
 
-    private UpgradeItem itemBeingPickedUp;
+    private IPickup itemBeingPickedUp;
     private float currentPickupTimerElapsed;
 
     private void Update()
@@ -66,13 +66,13 @@ public class HoldToPickUp : MonoBehaviour
 
     private void SelectItemBeingPickedupFromRay() {
         Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
-        Debug.DrawRay(ray.origin, ray.direction * 2f, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red);
 
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, 2f, layerMask))
+        if (Physics.Raycast(ray, out hitInfo, 3f, layerMask))
         {
-            var hitItem = hitInfo.collider.GetComponent<UpgradeItem>();
+            var hitItem = hitInfo.collider.GetComponent<IPickup>();
 
             if (hitItem == null)
             {
