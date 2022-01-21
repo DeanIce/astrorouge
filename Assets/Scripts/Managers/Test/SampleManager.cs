@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-namespace Managers
+namespace Managers.Test
 {
     public class SampleManager : MonoBehaviour
     {
@@ -12,13 +9,13 @@ namespace Managers
         private Data data;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             data = PersistentUpgrades.Load();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -38,11 +35,7 @@ namespace Managers
                 PersistentUpgrades.Save(data);
             }
 
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                print($"Current: {PersistentUpgrades.Load().num}");
-            }
+            if (Input.GetKeyDown(KeyCode.O)) print($"Current: {PersistentUpgrades.Load().num}");
         }
     }
-
 }
