@@ -28,7 +28,7 @@ public class HoldToPickUp : MonoBehaviour
         if (HasItemTargetted()) {
             pickupImageRoot.gameObject.SetActive(true);
 
-            if (Input.GetKeyDown(KeyCode.F)) // change to work with new input system
+            if (Input.GetKey(KeyCode.E)) // change to work with new input system
             {
                 IncrementPickupProgressAndTryComplete();
             } 
