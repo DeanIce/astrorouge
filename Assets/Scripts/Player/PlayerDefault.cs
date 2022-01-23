@@ -4,27 +4,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
-    private const float groundDistance = 0.1f;
-    [SerializeField] private float jumpForce = 30f;
-    private int extraJumpsLeft;
 
     // Constants
+    private PlayerInputActions playerInputActions;
+    private InputAction movement, look;
+    private Rigidbody rb;
     private Transform groundCheck;
     private LayerMask groundMask;
+    private const float groundDistance = 0.1f;
 
     // Dynamic player info
-    private float impulseJumpForce;
+    [SerializeField] private int extraJumpsLeft;
     private bool isGrounded;
     private bool isSprinting;
-    private readonly int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
-    private InputAction movement, look;
-    private PlayerInputActions playerInputActions;
-    private Rigidbody rb;
     private readonly float sprintSpeed = 10f;
 
     // Player stats
-    private readonly float turnSpeed = 4f;
     private readonly float walkSpeed = 6f;
+    private readonly float turnSpeed = Mathf.PI / 3.0f;
+    [SerializeField] private float jumpForce = 32f;
+    private int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
+    [SerializeField][Range(0.5f, 1.0f)] private float extraJumpDampaner = 0.8f;
 
     private void Awake()
     {
@@ -49,13 +49,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded)
             extraJumpsLeft = maxExtraJumps;
-
-        // Updates vertical velocity (up relative to player) to allow gravity and prevent phasing through objects
-        if (impulseJumpForce > 0.1f)
-        {
-            rb.AddForce(transform.up * impulseJumpForce, ForceMode.Impulse);
-            impulseJumpForce = 0;
-        }
 
         // Calculate total displacement
         var displacement = Walk(movement.ReadValue<Vector2>());
@@ -95,8 +88,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Translates 2D input into 3D looking direction
     public Vector3 Look(Vector2 direction)
     {
-        var change = direction.x * transform.right;
-        return turnSpeed * Time.deltaTime * change + transform.forward;
+        return Vector3.RotateTowards(transform.forward, transform.right * Mathf.Sign(direction.x),
+            turnSpeed * Time.deltaTime * Mathf.Abs(direction.x), 0.0f);
     }
 
     // Translates 2D input into 3D displacement
@@ -110,12 +103,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         if (isGrounded)
         {
-            impulseJumpForce = jumpForce;
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            impulseJumpForce = jumpForce * 0.75f;
+            rb.AddForce(transform.up * jumpForce * extraJumpDampaner, ForceMode.Impulse);
         }
     }
 
