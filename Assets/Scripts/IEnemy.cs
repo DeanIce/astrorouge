@@ -4,8 +4,8 @@ using UnityEngine;
 
 interface IEnemy
 {
-    void wander(Vector3 direction);
-    void hunt();
-    void takeDmg(float dmg);
-    void die();
+    void Wander(Vector3 direction);
+    void Hunt();
+    void TakeDmg(float dmg);
+    void Die();
 }
