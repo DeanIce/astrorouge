@@ -9,6 +9,7 @@ namespace Gravity
         private void Start()
         {
             rb = GetComponentInChildren<Rigidbody>();
+            if (rb == null) rb = GetComponent<Rigidbody>();
         }
 
         private void OnEnable()
