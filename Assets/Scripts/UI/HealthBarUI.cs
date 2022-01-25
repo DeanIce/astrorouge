@@ -21,10 +21,12 @@ public class HealthBarUI : MonoBehaviour
         health = healthBar.Q<VisualElement>("Health");
         healthText = healthBar.Q<TextElement>("HealthText");
 
+        //set initial hp for testing
         SetHealth(70, 100);
         SetPosition();
     }
 
+    //sets the position of the health bar
     public void SetPosition()
     {
         Vector2 newPos = RuntimePanelUtils.CameraTransformWorldToPanel(healthBar.panel, TargetFollow.position, mainCamera);
@@ -33,6 +35,7 @@ public class HealthBarUI : MonoBehaviour
         healthBar.transform.position = adjustedPos;
     }
 
+    //call SetHealth whenever health needs adjusted
     public void SetHealth(float hp, float maxHp)
     {
         healthText.text = hp + "/" + maxHp;
