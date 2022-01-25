@@ -21,12 +21,16 @@ public class DropManager : MonoBehaviour
         GameObject.Instantiate(spawnItem, location, rotation);
     }
 
-    // Will need more logic to narrow down eligible itme nums
+    // Will need more logic to narrow down eligible item nums
     private static int GetItemNum()
     {
+        // Example loot table ideas
+        // If level one, limit range from 0 to X where X is the beginning of stronger level 2 items
+        // If enemy type is X, limit range from Y to Z 
         return Random.Range(0, staticDrops.Length);
     }
 
+    // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
     private static GameObject GetSpawnItem()
     {
         int lootNum = GetItemNum();
