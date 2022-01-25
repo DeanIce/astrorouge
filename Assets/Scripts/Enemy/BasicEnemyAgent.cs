@@ -50,6 +50,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // Potential Bug here **
         //b = new Bounds(rb.position, new Vector3(20, 5, 20));
         //playerBounds = playerCollider.bounds;
+
+        // Temp for testing item drops, kills enemy
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Die();
+        }
     }
 
     void FixedUpdate()
@@ -146,7 +152,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public void Die()
     {
         // Temp, add animation and call other methods here later.
-        GameObject.Destroy(this);
+        GameObject.Destroy(this.gameObject);
+        DropManager.SpawnItem(transform.position);
     }
 
     IEnumerator Rotate()
