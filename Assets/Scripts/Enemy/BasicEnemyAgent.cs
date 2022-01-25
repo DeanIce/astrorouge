@@ -18,8 +18,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     Rigidbody rb;
     Quaternion deltaRotation;
     Vector3 eulerAngleVelocity;
-    Bounds b;
-    Bounds playerBounds;
+    //Bounds b;
+    //Bounds playerBounds;
     Vector3 newDirection;
     Vector3 playerPosition;
     Vector3 jumpForce = new Vector3(0f, 20f, 0f);
@@ -31,40 +31,33 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool hunting = false;
     private bool rotating = false;
 
+    // Swapping to collider and layer based detection
+    int playerLayer = 9;
+    Rigidbody targetRb;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        b = new Bounds(rb.position, new Vector3(20, 5, 20));
-        distanceToGround = b.extents.y;
-        playerBounds = playerCollider.bounds;
+        // b = new Bounds(rb.position, new Vector3(20, 5, 20));
+        // distanceToGround = b.extents.y;
+        //playerBounds = playerCollider.bounds;
     }
 
     void Update()
     {
+        // OLD MOVEMENT HERE
         // Maybe just set b center pos instead
         // Potential Bug here **
-        b = new Bounds(rb.position, new Vector3(20, 5, 20));
-        playerBounds = playerCollider.bounds;
+        //b = new Bounds(rb.position, new Vector3(20, 5, 20));
+        //playerBounds = playerCollider.bounds;
     }
 
     void FixedUpdate()
     {
         // Two states, either hunting or wandering
-        if (!hunting && wandering)
+        if (!hunting)
         {
             Wander(transform.forward);
-        } 
-
-        if (b.Intersects(playerBounds))
-        {
-            wandering = false;
-            hunting = true;
-            Hunt();
-        } 
-        else
-        {
-            wandering = true;
-            hunting = false;
         }
     }
 
@@ -97,26 +90,31 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         }
     }
 
-    public void Hunt()
+    public void Hunt(Collider target)
     {
         DoGravity();
 
+        // NEW MOVEMENT HERE
+        targetRb = target.GetComponent<Rigidbody>();
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
+
+        // OLD MOVEMENT HERE
         // NOTE: May need to add offset to playerBounds center, potential bug here ***
         // Rotation referenced from unity documentation
-        playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
+        /*playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
         Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
-
+        */
         // Actual movement and rotation
-        transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
+        /* transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
         newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);*/
 
         // Detect if player is above enemy, if so, then we want to jump
-        if (playerBounds.center.y > transform.position.y && IsGrounded())
+        /* if (playerBounds.center.y > transform.position.y && IsGrounded())
         {
             Debug.Log("Jump!");
-            Jump();
-        }
+            // Jump();
+        }*/
     }
 
     // Raycast jumping and grounded idea comes from here: https://answers.unity.com/questions/196381/how-do-i-check-if-my-rigidbody-player-is-grounded.html
@@ -171,11 +169,50 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     }
 
+    // Swapping to collider based detection
+    // This is for attacking
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == playerLayer)
+        {
+            // Attack
+        }
+    }
+
+    // Detected
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == playerLayer)
+        {
+            wandering = false;
+            hunting = true;
+        }
+    }
+
+    // Lost Player
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == playerLayer)
+        {
+            wandering = true;
+            hunting = false;
+        }
+    }
+
+    // Hunting
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == playerLayer)
+        {
+            Hunt(other);
+        }
+    }
+
     // Temp, used for testing and debugging
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(rb.position, new Vector3(20, 5, 20));
         Gizmos.DrawWireCube(playerBounds.center, new Vector3(1, 2, 1));
-    }
+    }*/
 }
