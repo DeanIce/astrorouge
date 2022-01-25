@@ -153,7 +153,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // Temp, add animation and call other methods here later.
         GameObject.Destroy(this.gameObject);
-        DropManager.SpawnItem(transform.position);
+        DropManager.SpawnItem(transform.position, transform.rotation);
     }
 
     IEnumerator Rotate()

@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class DropManager : MonoBehaviour
 {
-    // Vars
-    GameObject itemToSpawn;
+    // Temporary workaround because I'm dumb
+    public GameObject[] drops;
+    private static GameObject[] staticDrops;
 
-    public static void SpawnItem(Vector3 location)
+    private void Awake()
     {
-        int lootNum = GetItemNum();
-        Debug.Log("Spawn Item " + lootNum + " at " + location);
+        staticDrops = drops;
     }
-    
+
+    // This is what enemies will call when they die, all logic done here
+    public static void SpawnItem(Vector3 location, Quaternion rotation)
+    {
+        GameObject spawnItem = GetSpawnItem();
+        Debug.Log("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
+        GameObject.Instantiate(spawnItem, location, rotation);
+    }
+
+    // Will need more logic to narrow down eligible itme nums
     private static int GetItemNum()
     {
-        return 1;
+        return Random.Range(0, staticDrops.Length);
+    }
+
+    private static GameObject GetSpawnItem()
+    {
+        int lootNum = GetItemNum();
+        return staticDrops[lootNum];
     }
 }
