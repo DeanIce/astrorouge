@@ -4,27 +4,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
-
-    // Constants
-    private PlayerInputActions playerInputActions;
-    private InputAction movement, look;
-    private Rigidbody rb;
-    private Transform groundCheck;
-    private LayerMask groundMask;
     private const float groundDistance = 0.1f;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
-    private bool isGrounded;
-    private bool isSprinting;
+    [SerializeField] private float jumpForce = 32f;
+    [SerializeField] [Range(0.5f, 1.0f)] private float extraJumpDampaner = 0.8f;
+    private readonly int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
     private readonly float sprintSpeed = 10f;
+    private readonly float turnSpeed = Mathf.PI / 3.0f;
 
     // Player stats
     private readonly float walkSpeed = 6f;
-    private readonly float turnSpeed = Mathf.PI / 3.0f;
-    [SerializeField] private float jumpForce = 32f;
-    private int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
-    [SerializeField][Range(0.5f, 1.0f)] private float extraJumpDampaner = 0.8f;
+    private Transform groundCheck;
+    private LayerMask groundMask;
+    private bool isGrounded;
+    private bool isSprinting;
+    private InputAction movement, look;
+
+    // Constants
+    private PlayerInputActions playerInputActions;
+    private Rigidbody rb;
 
     private void Awake()
     {
