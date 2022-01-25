@@ -98,6 +98,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         targetRb = target.GetComponent<Rigidbody>();
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
 
+        // Jumping
+        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) 
+        {
+            Jump();
+        }
+
         // OLD MOVEMENT HERE
         // NOTE: May need to add offset to playerBounds center, potential bug here ***
         // Rotation referenced from unity documentation
