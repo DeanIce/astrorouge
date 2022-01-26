@@ -12,7 +12,7 @@ public class IItem {
     }
 }
 
-public class IInventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
    Dictionary<IItem, int> inventory = new Dictionary<IItem, int>();
    private InventoryUIController uic;

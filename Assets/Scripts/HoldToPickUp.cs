@@ -21,10 +21,10 @@ public class HoldToPickUp : MonoBehaviour
     private IPickup itemBeingPickedUp;
     private float currentPickupTimerElapsed;
 
-    private IInventory inventory;
+    private Inventory inventory;
 
     private void Start() {
-        inventory = GetComponent<IInventory>();
+        inventory = GetComponent<Inventory>();
     }
 
     private void Update()

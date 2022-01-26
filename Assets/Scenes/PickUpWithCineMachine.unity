@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1841617056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8241fb247d59d44e99e18f0c0e9e535, type: 3}
+  m_Script: {fileID: 11500000, guid: 090e11909ca07124bb008caa16562126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryui: {fileID: 757935373}
