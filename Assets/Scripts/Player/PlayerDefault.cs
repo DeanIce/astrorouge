@@ -1,10 +1,18 @@
 using Gravity;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
     private const float groundDistance = 0.1f;
+
+    //for testing attack purposes
+    public MeshRenderer rend;
+    public MeshRenderer rend2;
+
+    //variables that may be needed by other things
+    public float range = 2;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
@@ -18,6 +26,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private readonly float walkSpeed = 6f;
     private Transform groundCheck;
     private LayerMask groundMask;
+    private LayerMask enemyMask;
     private bool isGrounded;
     private bool isSprinting;
     private InputAction movement, look;
@@ -36,6 +45,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         rb = GetComponent<Rigidbody>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
+        enemyMask = LayerMask.GetMask("Enemy");
         extraJumpsLeft = maxExtraJumps;
     }
 
@@ -123,11 +133,35 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
-
+        StartCoroutine(Attack());
     }
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, range, enemyMask))
+        {
+            var hitItem = hit.collider.GetComponent<IEnemy>();
 
+            if (hitItem != null)
+            {
+                hitItem.TakeDmg(5);
+            }
+        }
+        StartCoroutine(RangedAttack());
+    }
+
+    private IEnumerator Attack()
+    {
+        rend.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        rend.enabled = false;
+    }
+
+    private IEnumerator RangedAttack()
+    {
+        rend2.enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        rend2.enabled = false;
     }
 }
