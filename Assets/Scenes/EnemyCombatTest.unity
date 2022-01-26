@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 278348666}
   - component: {fileID: 278348665}
   - component: {fileID: 278348664}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 524310835}
   - component: {fileID: 524310834}
   - component: {fileID: 524310836}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TestEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -939,7 +939,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1067758008}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 1647993615}
   - component: {fileID: 1647993614}
   - component: {fileID: 1647993613}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 1871729049}
   - component: {fileID: 1871729048}
   - component: {fileID: 1871729047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1607,7 +1607,7 @@ GameObject:
   - component: {fileID: 2142125083}
   - component: {fileID: 2142125082}
   - component: {fileID: 2142125081}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
