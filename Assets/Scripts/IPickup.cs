@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class IPickup : MonoBehaviour
+public abstract class IItem : MonoBehaviour
 {
     public string itemName;
     public Texture2D itemIcon;

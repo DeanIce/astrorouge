@@ -20,7 +20,7 @@ public class HoldToPickUp : MonoBehaviour
 
     private Inventory inventory;
 
-    private IPickup itemBeingPickedUp;
+    private IItem itemBeingPickedUp;
 
     private void Start()
     {
@@ -76,7 +76,7 @@ public class HoldToPickUp : MonoBehaviour
         Debug.DrawLine(start, end, Color.red);
         if (Physics.Raycast(start, transform.forward, out hitInfo, 30f, layerMask))
         {
-            var hitItem = hitInfo.collider.GetComponent<IPickup>();
+            var hitItem = hitInfo.collider.GetComponent<IItem>();
 
             if (hitItem == null)
             {
@@ -86,7 +86,7 @@ public class HoldToPickUp : MonoBehaviour
             else if (hitItem != null && hitItem != itemBeingPickedUp)
             {
                 itemBeingPickedUp = hitItem;
-                itemNameText.text = "Pickup " + itemBeingPickedUp.gameObject.name;
+                itemNameText.text = "Pickup " + itemBeingPickedUp.itemName;
             }
         }
         else
@@ -99,7 +99,6 @@ public class HoldToPickUp : MonoBehaviour
     private void MoveItemToInventory()
     {
         Destroy(itemBeingPickedUp.gameObject);
-        // inventory.Add_Item(new IItem("dagger", inventory.item_two_background_texture));
         inventory.AddItem(itemBeingPickedUp);
         itemBeingPickedUp = null;
     }

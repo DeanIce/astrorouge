@@ -4,7 +4,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public GameObject inventoryUI;
-    private readonly Dictionary<string, (IPickup, int)> inventory = new();
+    private readonly Dictionary<string, (IItem, int)> inventory = new();
     private InventoryUIController uic;
 
 
@@ -14,16 +14,16 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public bool HasItem(IPickup item)
+    public bool HasItem(IItem item)
     {
         return inventory.ContainsKey(item.itemName);
     }
 
-    public void AddItem(IPickup item)
+    public void AddItem(IItem item)
     {
         if (HasItem(item))
         {
-            (IPickup p, int i) tup = inventory[item.itemName];
+            (IItem p, int i) tup = inventory[item.itemName];
             inventory[item.itemName] = (tup.p, tup.i + 1);
             uic.UpdateItem(item, inventory[item.itemName].Item2);
         }

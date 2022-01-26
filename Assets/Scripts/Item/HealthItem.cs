@@ -1,3 +1,3 @@
-public class HealthItem : IPickup
+public class HealthItem : IItem
 {
 }
