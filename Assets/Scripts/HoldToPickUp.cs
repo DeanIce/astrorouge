@@ -1,29 +1,29 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HoldToPickUp : MonoBehaviour
 {
-    [SerializeField]
-    private Camera camera;
-    [SerializeField]
-    private LayerMask layerMask;
-    [SerializeField]
-    private float pickupTime = 1f;
-    [SerializeField]
-    private RectTransform pickupImageRoot;
-    [SerializeField]
-    private Image pickupProgressImage;
-    [SerializeField]
-    private TextMeshProUGUI itemNameText;
+    [SerializeField] private Camera camera;
 
-    private IPickup itemBeingPickedUp;
+    [SerializeField] private LayerMask layerMask;
+
+    [SerializeField] private float pickupTime = 1f;
+
+    [SerializeField] private RectTransform pickupImageRoot;
+
+    [SerializeField] private Image pickupProgressImage;
+
+    [SerializeField] private TextMeshProUGUI itemNameText;
+
     private float currentPickupTimerElapsed;
 
     private Inventory inventory;
 
-    private void Start() {
+    private IPickup itemBeingPickedUp;
+
+    private void Start()
+    {
         inventory = GetComponent<Inventory>();
     }
 
@@ -31,17 +31,14 @@ public class HoldToPickUp : MonoBehaviour
     {
         SelectItemBeingPickedupFromRay();
 
-        if (HasItemTargetted()) {
+        if (HasItemTargetted())
+        {
             pickupImageRoot.gameObject.SetActive(true);
 
             if (Input.GetKey(KeyCode.E)) // change to work with new input system
-            {
                 IncrementPickupProgressAndTryComplete();
-            } 
             else
-            {
                 currentPickupTimerElapsed = 0f;
-            }
             UpdatePickupProgressImage();
         }
         else
@@ -59,20 +56,19 @@ public class HoldToPickUp : MonoBehaviour
     private void IncrementPickupProgressAndTryComplete()
     {
         currentPickupTimerElapsed += Time.deltaTime;
-        if (currentPickupTimerElapsed >= pickupTime)
-        {
-            MoveItemToInventory();
-        }
+        if (currentPickupTimerElapsed >= pickupTime) MoveItemToInventory();
     }
 
-    private void UpdatePickupProgressImage() {
-        float pct = currentPickupTimerElapsed / pickupTime;
+    private void UpdatePickupProgressImage()
+    {
+        var pct = currentPickupTimerElapsed / pickupTime;
         pickupProgressImage.fillAmount = pct;
     }
 
-    private void SelectItemBeingPickedupFromRay() {
-        Vector3 start = transform.position;
-        Vector3 end = transform.forward * 30f;
+    private void SelectItemBeingPickedupFromRay()
+    {
+        var start = transform.position;
+        var end = transform.forward * 30f;
         // Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
         // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
         RaycastHit hitInfo;
@@ -99,11 +95,12 @@ public class HoldToPickUp : MonoBehaviour
             itemNameText.text = null;
         }
     }
+
     private void MoveItemToInventory()
     {
         Destroy(itemBeingPickedUp.gameObject);
-        inventory.Add_Item(new IItem("dagger", inventory.item_two_background_texture));
+        // inventory.Add_Item(new IItem("dagger", inventory.item_two_background_texture));
+        inventory.AddItem(itemBeingPickedUp);
         itemBeingPickedUp = null;
     }
 }
-

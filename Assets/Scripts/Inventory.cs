@@ -1,58 +1,36 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-
-public class IItem {
-    public StyleBackground item_icon;
-    public string item_name;
-    public IItem(string given_item_name, StyleBackground icon_src) {
-        item_icon = icon_src;
-        item_name = given_item_name;
-    }
-}
 
 public class Inventory : MonoBehaviour
 {
-   Dictionary<IItem, int> inventory = new Dictionary<IItem, int>();
-   private InventoryUIController uic;
+    public GameObject inventoryUI;
+    private readonly Dictionary<string, (IPickup, int)> inventory = new();
+    private InventoryUIController uic;
 
-   public GameObject inventoryui;
 
-   // prototype items
-   IItem item_one;
-   IItem item_two;
-   // this needs something better
-   public Texture2D item_one_background_texture;
-   public Texture2D item_two_background_texture;
-
-   void Start() {
-       uic = inventoryui.GetComponent<InventoryUIController>();
-       item_one = new IItem("dagger", new StyleBackground(item_one_background_texture));
-       item_two = new IItem("coin_pouch", new StyleBackground(item_two_background_texture));
+    private void Start()
+    {
+        uic = inventoryUI.GetComponent<InventoryUIController>();
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.V)) {
-            Add_Item(item_one);
-        } 
-        if (Input.GetKeyDown(KeyCode.B)) {
-            Add_Item(item_two);
+
+    public bool HasItem(IPickup item)
+    {
+        return inventory.ContainsKey(item.itemName);
+    }
+
+    public void AddItem(IPickup item)
+    {
+        if (HasItem(item))
+        {
+            (IPickup p, int i) tup = inventory[item.itemName];
+            inventory[item.itemName] = (tup.p, tup.i + 1);
+            uic.UpdateItem(item, inventory[item.itemName].Item2);
+        }
+        else
+        {
+            inventory.Add(item.itemName, (item, 1));
+            uic.AddItem(item, 1);
         }
     }
-   
-   public bool Has_Item(IItem item) {
-       if (inventory.ContainsKey(item)) return true;
-       else return false;
-   }
-
-   public void Add_Item(IItem item) {
-       if (this.Has_Item(item)) {
-           inventory[item] = inventory[item] + 1;
-           uic.Update_Item(item, inventory[item]);
-       } else {
-           inventory.Add(item, 1);
-           uic.Add_Item(item, 1);
-       }
-   }
 }
