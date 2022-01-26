@@ -20,7 +20,7 @@ public class HoldToPickUp : MonoBehaviour
 
     private Inventory inventory;
 
-    private IItem itemBeingPickedUp;
+    private AbstractItem itemBeingPickedUp;
 
     private void Start()
     {
@@ -76,7 +76,7 @@ public class HoldToPickUp : MonoBehaviour
         Debug.DrawLine(start, end, Color.red);
         if (Physics.Raycast(start, transform.forward, out hitInfo, 30f, layerMask))
         {
-            var hitItem = hitInfo.collider.GetComponent<IItem>();
+            var hitItem = hitInfo.collider.GetComponent<AbstractItem>();
 
             if (hitItem == null)
             {

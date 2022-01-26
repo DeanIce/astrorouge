@@ -41,7 +41,7 @@ public class InventoryUIController : MonoBehaviour
         currentBox = box;
     }
 
-    private VisualElement MakeItemSlot(IItem item, int number)
+    private VisualElement MakeItemSlot(AbstractItem item, int number)
     {
         var temp = new VisualElement();
         temp.style.width = box_width;
@@ -62,7 +62,7 @@ public class InventoryUIController : MonoBehaviour
         return temp;
     }
 
-    public void AddItem(IItem item, int number)
+    public void AddItem(AbstractItem item, int number)
     {
         if (currentBox.childCount % 10 == 0 && currentBox.childCount != 0)
         {
@@ -75,7 +75,7 @@ public class InventoryUIController : MonoBehaviour
         currentBox.Add(temp);
     }
 
-    public void UpdateItem(IItem item, int number)
+    public void UpdateItem(AbstractItem item, int number)
     {
         var boxLabel = root.Query<Label>(item.itemName).First();
         boxLabel.text = number.ToString();
