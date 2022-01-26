@@ -43,13 +43,14 @@ public class InventoryUIController : MonoBehaviour
         currentBox = box;
     }
 
-    private VisualElement MakeItemSlot(string item_name, int number) {
+    private VisualElement MakeItemSlot(IItem item, int number) {
         var temp = new VisualElement();
         temp.style.width = box_width;
         temp.style.height = box_height;
         temp.style.marginRight = box_margin;
         temp.style.marginBottom = box_margin;
         temp.style.backgroundColor = Color.gray;
+        temp.style.backgroundImage = item.item_icon;
         temp.style.position = Position.Relative;
 
         var temp_label = new Label();
@@ -57,24 +58,24 @@ public class InventoryUIController : MonoBehaviour
         temp_label.style.right = 0;
         temp_label.style.bottom = 0;
         temp_label.text = number.ToString();
-        temp_label.name = item_name;
+        temp_label.name = item.item_name;
         temp.Add(temp_label);
         return temp;
     }
 
-    public void Add_Item(string item_name, int number)
+    public void Add_Item(IItem item, int number)
     {
         if (currentBox.childCount % 10 == 0 && currentBox.childCount != 0) {
             MakeNewBox();
             root.Add(currentBox);
             root.style.height = root_height * box_count;
         }
-        var temp = MakeItemSlot(item_name, number);
+        var temp = MakeItemSlot(item, number);
         currentBox.Add(temp);
     }
 
-    public void Update_Item(string item_name, int number) {
-        Label box_label = root.Query<Label>(item_name).First();
+    public void Update_Item(IItem item, int number) {
+        Label box_label = root.Query<Label>(item.item_name).First();
         box_label.text = number.ToString();
     }
 }

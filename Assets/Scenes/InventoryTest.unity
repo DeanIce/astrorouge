@@ -451,6 +451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8241fb247d59d44e99e18f0c0e9e535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item_one_background_texture: {fileID: 2800000, guid: ddee9c20ea4ee8646996f7640a1f4672, type: 3}
+  item_two_background_texture: {fileID: 2800000, guid: 2da51c1ff75522443b74fbb1c6fb001f, type: 3}
 --- !u!114 &1871575530
 MonoBehaviour:
   m_ObjectHideFlags: 0
