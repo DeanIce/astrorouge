@@ -74,6 +74,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputActions.Player.Sprint.started += SprintToggle;
         playerInputActions.Player.Sprint.canceled += SprintToggle;
         playerInputActions.Player.Sprint.Enable();
+        playerInputActions.Player.MeleeAttack.performed += MeleeAttack;
+        playerInputActions.Player.MeleeAttack.Enable();
+        playerInputActions.Player.RangedAttack.performed += RangedAttack;
+        playerInputActions.Player.RangedAttack.Enable();
     }
 
 
@@ -115,5 +119,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
+    }
+
+    public void MeleeAttack(InputAction.CallbackContext obj)
+    {
+
+    }
+
+    public void RangedAttack(InputAction.CallbackContext obj)
+    {
+
     }
 }

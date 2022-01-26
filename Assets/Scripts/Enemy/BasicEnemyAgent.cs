@@ -34,6 +34,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Swapping to collider and layer based detection
     int playerLayer = 9;
     Rigidbody targetRb;
+    public Rigidbody TargetRb { get => targetRb; }
 
     void Start()
     {
@@ -90,13 +91,14 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         }
     }
 
-    public void Hunt(Collider target)
+    public virtual void Hunt(Collider target)
     {
         DoGravity();
 
         // NEW MOVEMENT HERE
         targetRb = target.GetComponent<Rigidbody>();
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+        //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
 
         // Jumping
         if (targetRb.transform.position.y > transform.position.y && IsGrounded()) 
