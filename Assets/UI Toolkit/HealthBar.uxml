@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="HealthBar" style="flex-direction: row; height: 20px; justify-content: space-between; width: 200px; background-color: rgba(204, 113, 113, 255); align-items: stretch; flex-wrap: nowrap; overflow: visible; visibility: visible; flex-shrink: 1; position: relative;">
+        <ui:VisualElement name="Health" style="width: 100%; background-color: rgba(9, 255, 0, 255); position: relative; align-items: stretch; justify-content: flex-start; height: auto; overflow: visible; visibility: visible;" />
+        <ui:Label text="100/100" display-tooltip-when-elided="true" name="HealthText" style="align-items: flex-start; position: absolute; flex-direction: column; left: 40%; top: auto; right: auto; bottom: auto; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; padding-top: 1px; padding-bottom: 0; padding-right: 0; padding-left: 0; -unity-text-align: upper-center; height: auto; width: auto; overflow: visible; visibility: visible;" />
+    </ui:VisualElement>
+</ui:UXML>
