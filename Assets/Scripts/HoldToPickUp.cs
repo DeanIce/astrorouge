@@ -21,6 +21,12 @@ public class HoldToPickUp : MonoBehaviour
     private IPickup itemBeingPickedUp;
     private float currentPickupTimerElapsed;
 
+    private IInventory inventory;
+
+    private void Start() {
+        inventory = GetComponent<IInventory>();
+    }
+
     private void Update()
     {
         SelectItemBeingPickedupFromRay();
@@ -65,12 +71,14 @@ public class HoldToPickUp : MonoBehaviour
     }
 
     private void SelectItemBeingPickedupFromRay() {
-        Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
-        Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red);
-
+        Vector3 start = transform.position;
+        Vector3 end = transform.forward * 30f;
+        // Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
+        // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, 3f, layerMask))
+        Debug.DrawLine(start, end, Color.red);
+        if (Physics.Raycast(start, transform.forward, out hitInfo, 30f, layerMask))
         {
             var hitItem = hitInfo.collider.GetComponent<IPickup>();
 
@@ -94,6 +102,7 @@ public class HoldToPickUp : MonoBehaviour
     private void MoveItemToInventory()
     {
         Destroy(itemBeingPickedUp.gameObject);
+        inventory.Add_Item(new IItem("dagger", inventory.item_two_background_texture));
         itemBeingPickedUp = null;
     }
 }

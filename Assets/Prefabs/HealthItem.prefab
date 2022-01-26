@@ -319,8 +319,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4053026656214364037}
-  - component: {fileID: 2481398220776274794}
   - component: {fileID: 5281655491400480127}
+  - component: {fileID: 1650892789407370615}
   m_Layer: 8
   m_Name: HealthItem
   m_TagString: Untagged
@@ -345,18 +345,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2481398220776274794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8066953347718497980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f503ffc52217bc419e5fec673a6cd05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &5281655491400480127
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -370,3 +358,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1650892789407370615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066953347718497980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84b4718fd9ef9ed468317183ea2048db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

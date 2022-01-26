@@ -17,6 +17,8 @@ public class IInventory : MonoBehaviour
    Dictionary<IItem, int> inventory = new Dictionary<IItem, int>();
    private InventoryUIController uic;
 
+   public GameObject inventoryui;
+
    // prototype items
    IItem item_one;
    IItem item_two;
@@ -25,13 +27,13 @@ public class IInventory : MonoBehaviour
    public Texture2D item_two_background_texture;
 
    void Start() {
-       uic = GetComponent<InventoryUIController>();
+       uic = inventoryui.GetComponent<InventoryUIController>();
        item_one = new IItem("dagger", new StyleBackground(item_one_background_texture));
        item_two = new IItem("coin_pouch", new StyleBackground(item_two_background_texture));
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.A)) {
+        if (Input.GetKeyDown(KeyCode.V)) {
             Add_Item(item_one);
         } 
         if (Input.GetKeyDown(KeyCode.B)) {
