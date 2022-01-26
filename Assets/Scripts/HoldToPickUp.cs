@@ -10,7 +10,7 @@ public class HoldToPickUp : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
     [SerializeField]
-    private float pickupTime = 2f;
+    private float pickupTime = 1f;
     [SerializeField]
     private RectTransform pickupImageRoot;
     [SerializeField]
@@ -66,11 +66,11 @@ public class HoldToPickUp : MonoBehaviour
 
     private void SelectItemBeingPickedupFromRay() {
         Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
-        Debug.DrawRay(ray.origin, ray.direction * 3f, Color.red);
+        Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
 
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, 3f, layerMask))
+        if (Physics.Raycast(ray, out hitInfo, 25f, layerMask))
         {
             var hitItem = hitInfo.collider.GetComponent<IItem>();
 
