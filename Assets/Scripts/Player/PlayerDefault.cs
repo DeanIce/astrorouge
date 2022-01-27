@@ -13,6 +13,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     //variables that may be needed by other things
     public float range = 2;
+    public float meleeRange = 0.25f;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
@@ -131,24 +132,42 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         isSprinting = !isSprinting;
     }
 
+    public void Attack(bool melee)
+    {
+        RaycastHit[] hits;
+        
+        if (melee)
+        {
+            hits = Physics.RaycastAll(transform.position, transform.forward, meleeRange, enemyMask);
+            StartCoroutine(Attack());
+        }
+        else
+        {
+            hits = Physics.RaycastAll(transform.position, transform.forward, range, enemyMask);
+            StartCoroutine(RangedAttack());
+        }
+
+        if (hits.Length != 0)
+        {
+            //check for an enemy in the things the ray hit by whether it has an IEnemy
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
+                }
+            }
+        }
+    }
+    
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
-        StartCoroutine(Attack());
+        Attack(true);
     }
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, range, enemyMask))
-        {
-            var hitItem = hit.collider.GetComponent<IEnemy>();
-
-            if (hitItem != null)
-            {
-                hitItem.TakeDmg(5);
-            }
-        }
-        StartCoroutine(RangedAttack());
+        Attack(false);
     }
 
     private IEnumerator Attack()
