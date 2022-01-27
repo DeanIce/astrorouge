@@ -7,7 +7,7 @@ public class MeleeEnemy : BasicEnemyAgent
 {
     //new public variables
     public MeshRenderer rend;
-    public int attackRange = 2;
+    public float attackRange = 1.5f;
 
     //static variable to track how many enemies are currently attacking
     public static int attackers = 0;
@@ -17,11 +17,14 @@ public class MeleeEnemy : BasicEnemyAgent
 
     public override void Hunt(Collider target)
     {
+        //base.Hunt(target);
+        
         DoGravity();
         Rigidbody TargetRb = target.GetComponent<Rigidbody>();
-
+        
         //attacking
-        if (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && attackers < 2)
+        if (Physics.Raycast(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player")) && attackers < 2) 
+        //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && attackers < 2)
         {
             if (!attacking)
             {

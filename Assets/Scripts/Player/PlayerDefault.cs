@@ -13,7 +13,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     //variables that may be needed by other things
     public float range = 2;
-    public float meleeRange = 0.25f;
+    public float meleeRange = 2;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
