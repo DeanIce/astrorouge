@@ -71,6 +71,7 @@ public class HoldToPickUp : MonoBehaviour
         var end = transform.forward * 30f;
         // Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
         // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
+        // Physics.Raycast(ray, out hitInfo, 25f, layerMask)
         RaycastHit hitInfo;
 
         Debug.DrawLine(start, end, Color.red);
