@@ -34,7 +34,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Swapping to collider and layer based detection
     int playerLayer = 9;
     Rigidbody targetRb;
-    public Rigidbody TargetRb { get => targetRb; }
 
     void Start()
     {
@@ -98,7 +97,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // NEW MOVEMENT HERE
         targetRb = target.GetComponent<Rigidbody>();
         rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
-        //use slerp
         transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10);
         //old version, swapped for rb.moveposition to be physics-based
         //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);

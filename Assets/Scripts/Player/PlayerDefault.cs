@@ -14,6 +14,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     //variables that may be needed by other things
     public float range = 2;
     public float meleeRange = 2;
+    public float health;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
@@ -182,5 +183,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         rend2.enabled = true;
         yield return new WaitForSeconds(0.25f);
         rend2.enabled = false;
+    }
+
+    public void TakeDmg(float dmg)
+    {
+        // Temp, add damage negation and other maths here later.
+        health -= dmg;
+        if (health <= 0f)
+        {
+            //run end
+        }
     }
 }

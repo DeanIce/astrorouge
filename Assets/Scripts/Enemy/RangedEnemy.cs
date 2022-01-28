@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gravity;
 
-public class MeleeEnemy : BasicEnemyAgent
+public class RangedEnemy : BasicEnemyAgent
 {
     //new public variables
     public MeshRenderer rend;
-    public float attackRange = 1.5f;
+    public float attackRange = 3f;
 
     // Private enemy specific variables
     private bool attacking = false;
@@ -17,9 +17,9 @@ public class MeleeEnemy : BasicEnemyAgent
         //base.Hunt(target);
 
         DoGravity();
-        
+
         //attacking
-        if (Physics.Raycast(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"))) 
+        if (Physics.Raycast(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player")))
         //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
         {
             //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
