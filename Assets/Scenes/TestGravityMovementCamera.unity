@@ -681,7 +681,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.3690722, y: 1}
+    m_SensorSize: {x: 2.530474, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -935,6 +935,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7912339023148837955, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 43.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023148837955, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 43.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023148837955, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 43.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023312049561, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: outerRadius
+      value: 28.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023312049561, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: outerFalloffRadius
+      value: 30.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7912339023312049572, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_Name
       value: Planet Spawner (Left)
@@ -982,6 +1002,10 @@ PrefabInstance:
     - target: {fileID: 7912339023312049574, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023312049575, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: size
+      value: 43.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
