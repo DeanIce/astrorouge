@@ -5,20 +5,20 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using Managers;
 
-public class UIController : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
-    public Button newGameButton;
+    public delegate void Resume();
+    public static event Resume OnResume;
+
+    public Button continueButton;
     public Button settingsButton;
     public Button settingsBackButton;
-    public Button aboutBackButton;
-    public Button quitButton;
-    public Button aboutButton;
+    public Button mainMenuButton;
     public Toggle muteButton;
     public Slider musicSlider;
     public Slider sfxSlider;
     public VisualElement settingsMenu;
-    public VisualElement mainMenu;
-    public VisualElement aboutMenu;
+    public VisualElement pauseMenu;
 
     private bool muteValue;
     private float musicVolumeValue;
@@ -33,14 +33,12 @@ public class UIController : MonoBehaviour
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         settingsMenu = root.Q<VisualElement>("SettingsMenu");
-        mainMenu = root.Q<VisualElement>("MainMenu");
-        aboutMenu = root.Q<VisualElement>("AboutMenu");
+        pauseMenu = root.Q<VisualElement>("PauseMenu");
 
         //Main Menu buttons
-        newGameButton = mainMenu.Q<Button>("newgame-button");
-        settingsButton = mainMenu.Q<Button>("settings-button");
-        aboutButton = mainMenu.Q<Button>("about-button");
-        quitButton = mainMenu.Q<Button>("quit-button");
+        continueButton = pauseMenu.Q<Button>("continue-button");
+        settingsButton = pauseMenu.Q<Button>("settings-button");
+        mainMenuButton = pauseMenu.Q<Button>("main-menu-button");
 
         //Settings buttons
         settingsBackButton = settingsMenu.Q<Button>("back-button");
@@ -48,15 +46,10 @@ public class UIController : MonoBehaviour
         musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
         sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
 
-        //About buttons
-        aboutBackButton = aboutMenu.Q<Button>("back-button");
-
-        quitButton.clicked += QuitButtonPressed;
-        newGameButton.clicked += NewGameButtonPressed;
+        continueButton.clicked += ContinueButtonPressed;
         settingsButton.clicked += SettingsButtonPressed;
-        aboutButton.clicked += AboutButtonPressed;
         settingsBackButton.clicked += BackButtonPressed;
-        aboutBackButton.clicked += BackButtonPressed;
+        mainMenuButton.clicked += MainMenuButtonPressed;
 
         muteValue = muteButton.value;
         musicVolumeValue = musicSlider.value;
@@ -64,38 +57,50 @@ public class UIController : MonoBehaviour
 
         AudioManager.Instance.PlayMusic(mainMenuMusic);
     }
+    private void OnEnable()
+    {
+        PauseController.OnPauseDisplay += DisplayPause;
+    }
+    private void OnDisable()
+    {
+        PauseController.OnPauseDisplay -= DisplayPause;
+    }
 
-    void NewGameButtonPressed()
+    void DisplayPause(bool isPaused)
+    {
+        if (isPaused)
+        {
+            pauseMenu.style.display = DisplayStyle.None;
+        }
+        else
+        {
+            pauseMenu.style.display = DisplayStyle.Flex;
+        }
+    }
+
+    void ContinueButtonPressed()
     {
         AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        SceneManager.LoadScene("SampleScene");
+        if (OnResume != null)
+            OnResume();
     }
+
 
     void SettingsButtonPressed()
     {
         AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
         settingsMenu.style.display = DisplayStyle.Flex;
-        mainMenu.style.display = DisplayStyle.None;
-        aboutMenu.style.display = DisplayStyle.None;
+        pauseMenu.style.display = DisplayStyle.None;
     }
-    void AboutButtonPressed()
+    void MainMenuButtonPressed()
     {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.None;
-        mainMenu.style.display = DisplayStyle.None;
-        aboutMenu.style.display = DisplayStyle.Flex;
-    }
-    void QuitButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        Application.Quit();
+        SceneManager.LoadScene("MainMenuTest");
     }
     void BackButtonPressed()
     {
         AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
         settingsMenu.style.display = DisplayStyle.None;
-        mainMenu.style.display = DisplayStyle.Flex;
-        aboutMenu.style.display = DisplayStyle.None;
+        pauseMenu.style.display = DisplayStyle.Flex;
     }
 
     private void Update()
