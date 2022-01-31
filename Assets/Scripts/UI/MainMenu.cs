@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using Managers;
 
-public class UIController : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     public Button newGameButton;
     public Button settingsButton;
