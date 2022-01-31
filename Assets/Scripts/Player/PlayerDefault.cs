@@ -34,13 +34,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private InputAction movement, look;
 
     // Constants
-    private PlayerInputActions playerInputActions;
     private Rigidbody rb;
 
-    private void Awake()
-    {
-        playerInputActions = new PlayerInputActions();
-    }
 
     private void Start()
     {
@@ -76,29 +71,33 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnEnable()
     {
-        movement = playerInputActions.Player.Movement;
+        var playerInputMap = InputManager.inputActions.Player;
+
+        movement = playerInputMap.Movement;
         movement.Enable();
-        look = playerInputActions.Player.Look;
+        look = playerInputMap.Look;
         look.Enable();
 
-        playerInputActions.Player.Jump.performed += Jump;
-        playerInputActions.Player.Jump.Enable();
-        playerInputActions.Player.Sprint.started += SprintToggle;
-        playerInputActions.Player.Sprint.canceled += SprintToggle;
-        playerInputActions.Player.Sprint.Enable();
-        playerInputActions.Player.MeleeAttack.performed += MeleeAttack;
-        playerInputActions.Player.MeleeAttack.Enable();
-        playerInputActions.Player.RangedAttack.performed += RangedAttack;
-        playerInputActions.Player.RangedAttack.Enable();
-    }
+        playerInputMap.Jump.performed += Jump;
+        playerInputMap.Jump.Enable();
+        playerInputMap.Sprint.started += SprintToggle;
+        playerInputMap.Sprint.canceled += SprintToggle;
+        playerInputMap.Sprint.Enable();
+        playerInputMap.PauseGame.Enable();
+        playerInputMap.MeleeAttack.performed += MeleeAttack;
+        playerInputMap.MeleeAttack.Enable();
+        playerInputMap.RangedAttack.performed += RangedAttack;
+        playerInputMap.RangedAttack.Enable();
 
+    }
 
     private void OnDisable()
     {
+        var playerInputMap = InputManager.inputActions.Player;
         movement.Disable();
         look.Disable();
-        playerInputActions.Player.Jump.Disable();
-        playerInputActions.Player.Sprint.Disable();
+        playerInputMap.Sprint.Disable();
+        playerInputMap.Jump.performed -= Jump;
     }
 
     // Translates 2D input into 3D looking direction
