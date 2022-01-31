@@ -5,22 +5,13 @@ public class PauseController : MonoBehaviour
 {
     public delegate void PauseDisplay(bool paused);
 
-    public static bool isPaused;
-
-    private void Start()
-    {
-        // action.Pause.PauseGame.performed += _ => Pause();
-    }
-
-
     private void OnEnable()
     {
         var playerInputMap = InputManager.inputActions.Player;
         var pauseInputMap = InputManager.inputActions.PauseMenu;
 
         pauseInputMap.Back.performed += PlayGame;
-        PauseMenu.OnResume += Pause;
-        // action.Enable();
+        playerInputMap.PauseGame.performed += PauseGame;
     }
 
     private void OnDisable()
@@ -30,32 +21,25 @@ public class PauseController : MonoBehaviour
 
         pauseInputMap.Back.performed -= PlayGame;
 
-        PauseMenu.OnResume -= Pause;
-        // action.Disable();
+        playerInputMap.PauseGame.performed -= PauseGame;
     }
 
     public static event PauseDisplay OnPauseDisplay;
 
 
-    private void PlayGame(InputAction.CallbackContext obj)
+    public void PauseGame(InputAction.CallbackContext obj)
     {
-        print("Play received");
-        InputManager.ToggleActionMap(InputManager.inputActions.Player);
+        Time.timeScale = 0f;
+        // print("Pause received");
+        OnPauseDisplay?.Invoke(false);
+        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
     }
 
-    public void Pause()
+    public void PlayGame(InputAction.CallbackContext obj)
     {
-        if (isPaused)
-        {
-            Time.timeScale = 0f;
-            isPaused = !isPaused;
-            OnPauseDisplay?.Invoke(isPaused);
-        }
-        else
-        {
-            Time.timeScale = 1;
-            isPaused = !isPaused;
-            OnPauseDisplay?.Invoke(isPaused);
-        }
+        Time.timeScale = 1;
+        // print("Play received");
+        OnPauseDisplay?.Invoke(true);
+        InputManager.ToggleActionMap(InputManager.inputActions.Player);
     }
 }

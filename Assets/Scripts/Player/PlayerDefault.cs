@@ -71,7 +71,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.Sprint.started += SprintToggle;
         playerInputMap.Sprint.canceled += SprintToggle;
         playerInputMap.Sprint.Enable();
-        playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
     }
 
@@ -81,7 +80,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         movement.Disable();
         look.Disable();
         playerInputMap.Sprint.Disable();
-        playerInputMap.PauseGame.performed -= PauseGame;
         playerInputMap.Jump.performed -= Jump;
     }
 
@@ -101,7 +99,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
-        print("Jump received");
         if (isGrounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -116,12 +113,5 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
-    }
-
-
-    private void PauseGame(InputAction.CallbackContext obj)
-    {
-        print("Pause received");
-        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
     }
 }

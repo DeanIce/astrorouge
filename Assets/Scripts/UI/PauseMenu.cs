@@ -1,34 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 using Managers;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class PauseMenu : MonoBehaviour
 {
     public delegate void Resume();
-    public static event Resume OnResume;
-
-    public Button continueButton;
-    public Button settingsButton;
-    public Button settingsBackButton;
-    public Button mainMenuButton;
-    public Toggle muteButton;
-    public Slider musicSlider;
-    public Slider sfxSlider;
-    public VisualElement settingsMenu;
-    public VisualElement pauseMenu;
-
-    private bool muteValue;
-    private float musicVolumeValue;
-    private float sfxVolumeValue;
 
     public AudioClip mainMenuMusic;
     public AudioClip buttonPressSoundEffect;
 
+    public Button continueButton;
+    public Button mainMenuButton;
+    public Slider musicSlider;
+    private float musicVolumeValue;
+    public Toggle muteButton;
+
+    private bool muteValue;
+    public VisualElement pauseMenu;
+    public Button settingsBackButton;
+    public Button settingsButton;
+    public VisualElement settingsMenu;
+    public Slider sfxSlider;
+    private float sfxVolumeValue;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -57,51 +54,6 @@ public class PauseMenu : MonoBehaviour
 
         AudioManager.Instance.PlayMusic(mainMenuMusic);
     }
-    private void OnEnable()
-    {
-        PauseController.OnPauseDisplay += DisplayPause;
-    }
-    private void OnDisable()
-    {
-        PauseController.OnPauseDisplay -= DisplayPause;
-    }
-
-    void DisplayPause(bool isPaused)
-    {
-        if (isPaused)
-        {
-            pauseMenu.style.display = DisplayStyle.None;
-        }
-        else
-        {
-            pauseMenu.style.display = DisplayStyle.Flex;
-        }
-    }
-
-    void ContinueButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        if (OnResume != null)
-            OnResume();
-    }
-
-
-    void SettingsButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.Flex;
-        pauseMenu.style.display = DisplayStyle.None;
-    }
-    void MainMenuButtonPressed()
-    {
-        SceneManager.LoadScene("MainMenuTest");
-    }
-    void BackButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.None;
-        pauseMenu.style.display = DisplayStyle.Flex;
-    }
 
     private void Update()
     {
@@ -122,5 +74,55 @@ public class PauseMenu : MonoBehaviour
             sfxVolumeValue = sfxSlider.value;
             AudioManager.Instance.SetSFXVolume(sfxVolumeValue);
         }
+    }
+
+    private void OnEnable()
+    {
+        PauseController.OnPauseDisplay += DisplayPause;
+    }
+
+    private void OnDisable()
+    {
+        PauseController.OnPauseDisplay -= DisplayPause;
+    }
+
+
+    private void DisplayPause(bool isPaused)
+    {
+        if (isPaused)
+            pauseMenu.style.display = DisplayStyle.None;
+        else
+            pauseMenu.style.display = DisplayStyle.Flex;
+    }
+
+    private void ContinueButtonPressed()
+    {
+        // print("continue");
+        Time.timeScale = 1;
+        InputManager.ToggleActionMap(InputManager.inputActions.Player);
+        DisplayPause(true);
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        // if (OnResume != null)
+        //     OnResume();
+    }
+
+
+    private void SettingsButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        settingsMenu.style.display = DisplayStyle.Flex;
+        pauseMenu.style.display = DisplayStyle.None;
+    }
+
+    private void MainMenuButtonPressed()
+    {
+        SceneManager.LoadScene("MainMenuTest");
+    }
+
+    private void BackButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        settingsMenu.style.display = DisplayStyle.None;
+        pauseMenu.style.display = DisplayStyle.Flex;
     }
 }
