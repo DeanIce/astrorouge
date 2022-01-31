@@ -18,7 +18,6 @@ public class MeleeEnemy : BasicEnemyAgent
 
         DoGravity();
 
-        Debug.DrawRay(transform.position, Body.transform.forward);
         //attacking
         if (Physics.Raycast(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"))) 
         //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
@@ -38,7 +37,7 @@ public class MeleeEnemy : BasicEnemyAgent
         rend.enabled = true;
         attacking = true;
         yield return new WaitForSeconds(1f);
-        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
