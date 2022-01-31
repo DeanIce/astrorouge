@@ -23,13 +23,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private InputAction movement, look;
 
     // Constants
-    private PlayerInputActions playerInputActions;
     private Rigidbody rb;
 
-    private void Awake()
-    {
-        playerInputActions = new PlayerInputActions();
-    }
 
     private void Start()
     {
@@ -64,25 +59,30 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnEnable()
     {
-        movement = playerInputActions.Player.Movement;
+        var playerInputMap = InputManager.inputActions.Player;
+
+        movement = playerInputMap.Movement;
         movement.Enable();
-        look = playerInputActions.Player.Look;
+        look = playerInputMap.Look;
         look.Enable();
 
-        playerInputActions.Player.Jump.performed += Jump;
-        playerInputActions.Player.Jump.Enable();
-        playerInputActions.Player.Sprint.started += SprintToggle;
-        playerInputActions.Player.Sprint.canceled += SprintToggle;
-        playerInputActions.Player.Sprint.Enable();
+        playerInputMap.Jump.performed += Jump;
+        playerInputMap.Jump.Enable();
+        playerInputMap.Sprint.started += SprintToggle;
+        playerInputMap.Sprint.canceled += SprintToggle;
+        playerInputMap.Sprint.Enable();
+        playerInputMap.PauseGame.performed += PauseGame;
+        playerInputMap.PauseGame.Enable();
     }
-
 
     private void OnDisable()
     {
+        var playerInputMap = InputManager.inputActions.Player;
         movement.Disable();
         look.Disable();
-        playerInputActions.Player.Jump.Disable();
-        playerInputActions.Player.Sprint.Disable();
+        playerInputMap.Sprint.Disable();
+        playerInputMap.PauseGame.performed -= PauseGame;
+        playerInputMap.Jump.performed -= Jump;
     }
 
     // Translates 2D input into 3D looking direction
@@ -101,6 +101,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
+        print("Jump received");
         if (isGrounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -115,5 +116,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
+    }
+
+
+    private void PauseGame(InputAction.CallbackContext obj)
+    {
+        print("Pause received");
+        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
     }
 }

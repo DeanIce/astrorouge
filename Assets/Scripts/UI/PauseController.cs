@@ -1,36 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PauseController : MonoBehaviour
 {
     public delegate void PauseDisplay(bool paused);
-    public static event PauseDisplay OnPauseDisplay;
+
     public static bool isPaused;
-
-    private PauseAction action;
-
-    private void Awake()
-    {
-        action = new PauseAction();
-    }
-
-    private void OnEnable()
-    {
-        PauseMenu.OnResume += Pause;
-        action.Enable();
-    }
-    private void OnDisable()
-    {
-        PauseMenu.OnResume -= Pause;
-        action.Disable();
-    }
 
     private void Start()
     {
-        action.Pause.PauseGame.performed += _ => Pause();
+        // action.Pause.PauseGame.performed += _ => Pause();
     }
+
+
+    private void OnEnable()
+    {
+        var playerInputMap = InputManager.inputActions.Player;
+        var pauseInputMap = InputManager.inputActions.PauseMenu;
+
+        pauseInputMap.Back.performed += PlayGame;
+        PauseMenu.OnResume += Pause;
+        // action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        var playerInputMap = InputManager.inputActions.Player;
+        var pauseInputMap = InputManager.inputActions.PauseMenu;
+
+        pauseInputMap.Back.performed -= PlayGame;
+
+        PauseMenu.OnResume -= Pause;
+        // action.Disable();
+    }
+
+    public static event PauseDisplay OnPauseDisplay;
+
+
+    private void PlayGame(InputAction.CallbackContext obj)
+    {
+        print("Play received");
+        InputManager.ToggleActionMap(InputManager.inputActions.Player);
+    }
+
     public void Pause()
     {
         if (isPaused)
