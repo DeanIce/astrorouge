@@ -30,6 +30,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool wandering = false;
     private bool hunting = false;
     private bool rotating = false;
+    [SerializeField] private GameObject detector;
+    private Renderer detectorMaterial;
+    private Color green = new Color(0, 1, 0, 0.5f);
+    private Color red = new Color(1, 0, 0, 0.5f);
+    [SerializeField] private GameObject body;
+    public GameObject Body { get => body; }
 
     // Swapping to collider and layer based detection
     int playerLayer = 9;
@@ -38,6 +44,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        detectorMaterial = detector.GetComponent<Renderer>();
         // b = new Bounds(rb.position, new Vector3(20, 5, 20));
         // distanceToGround = b.extents.y;
         //playerBounds = playerCollider.bounds;
@@ -57,7 +64,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // Two states, either hunting or wandering
         if (!hunting)
         {
-            Wander(transform.forward);
+            detectorMaterial.material.SetColor("_BaseColor", green);
+            Wander(body.transform.forward);
+        }
+        else 
+        {
+            detectorMaterial.material.SetColor("_BaseColor", red);
         }
     }
 
@@ -92,12 +104,17 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public virtual void Hunt(Collider target)
     {
+        //float angle = -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10;
+
         DoGravity();
 
         // NEW MOVEMENT HERE
         targetRb = target.GetComponent<Rigidbody>();
         rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
-        transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10);
+        body.transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) / 10);
+        //rb.MoveRotation(Quaternion.LookRotation(target.transform.position - transform.position, transform.up));
+        //rb.MoveRotation(Quaternion.FromToRotation(transform.forward, target.transform.position - transform.position) * transform.rotation);
+        //transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10);
         //old version, swapped for rb.moveposition to be physics-based
         //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
 

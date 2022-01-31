@@ -17,9 +17,10 @@ public class MeleeEnemy : BasicEnemyAgent
         //base.Hunt(target);
 
         DoGravity();
-        
+
+        Debug.DrawRay(transform.position, Body.transform.forward);
         //attacking
-        if (Physics.Raycast(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"))) 
+        if (Physics.Raycast(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"))) 
         //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
         {
             //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
