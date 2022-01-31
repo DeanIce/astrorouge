@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1296449000640293457}
   - component: {fileID: 1296449000640293458}
   - component: {fileID: 1296449000640293459}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 1296449001509853625}
   - component: {fileID: 1296449001509853626}
   - component: {fileID: 1296449001509853627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 1296449001554218873}
   - component: {fileID: 1296449001554218874}
   - component: {fileID: 1296449001554218875}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

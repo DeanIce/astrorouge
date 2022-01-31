@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 579053813496626924}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 579053813939167213}
   - component: {fileID: 2643132715793269148}
   - component: {fileID: 5217193043119952510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerDefault
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6974edc6c012d4b9b0bb91f8065eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rend: {fileID: 0}
+  rend2: {fileID: 0}
+  range: 2
+  meleeRange: 2
+  health: 0
   extraJumpsLeft: 0
   jumpForce: 30
   extraJumpDampaner: 0.8
@@ -159,7 +164,7 @@ GameObject:
   - component: {fileID: 579053813947209478}
   - component: {fileID: 579053813947209475}
   - component: {fileID: 579053813947209476}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +247,7 @@ GameObject:
   - component: {fileID: 8286306063520317145}
   - component: {fileID: 854237869918057727}
   - component: {fileID: 1344214685834790233}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: InventoryHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +310,7 @@ GameObject:
   - component: {fileID: 7080197798261283929}
   - component: {fileID: 3520995863678270248}
   - component: {fileID: 6005080015389554002}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PickupPrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +410,7 @@ GameObject:
   - component: {fileID: 303302497557841133}
   - component: {fileID: 2908154483940228917}
   - component: {fileID: 9208370592823053500}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: TempText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +545,7 @@ GameObject:
   - component: {fileID: 6915960379093060822}
   - component: {fileID: 3699440018936128849}
   - component: {fileID: 5192949915878938503}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ImageProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +621,7 @@ GameObject:
   - component: {fileID: 7475313958377153072}
   - component: {fileID: 5894910792512699384}
   - component: {fileID: 1211838718521948076}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
