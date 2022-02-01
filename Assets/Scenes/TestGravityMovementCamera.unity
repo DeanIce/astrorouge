@@ -444,7 +444,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334089208}
-  m_LocalRotation: {x: 0.10321068, y: 0.000000004278623, z: -4.439706e-10, w: 0.99465954}
+  m_LocalRotation: {x: 0.10321068, y: -0.0000000042786223, z: 4.4397055e-10, w: 0.99465954}
   m_LocalPosition: {x: -6.2, y: -1.7999992, z: 22.599998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -754,7 +754,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000934422}
-  m_LocalRotation: {x: 0.10321068, y: 0.000000004278623, z: -4.439706e-10, w: 0.99465954}
+  m_LocalRotation: {x: 0.10321068, y: -0.0000000042786223, z: 4.4397055e-10, w: 0.99465954}
   m_LocalPosition: {x: -6.2, y: -1.7999992, z: 22.599998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -948,51 +948,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 579053813947209478, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
   m_PrefabInstance: {fileID: 1527936625}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1669820270 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 579053813939167122, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-  m_PrefabInstance: {fileID: 1527936625}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1669820276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669820270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2328b8e90ae63d4891df998ebafa546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeAttackDelay: 0
-  meleeBaseDamage: 0
-  meleeDamageMultiplier: 0
-  meleeCritChance: 0
-  meleeCritMultiplier: 0
-  meleeKnockbackForce: 0
-  rangeAttackDelay: 0
-  rangeBaseDamage: 0
-  rangeDamageMultiplier: 0
-  rangeCritChance: 0
-  rangeCritMultiplier: 0
-  rangeKnockbackForce: 0
-  rangeProjectileRange: 0
-  rangeProjectileSpeed: 0
-  maxHealth: 0
-  currentHealth: 0
-  healthRegen: 0
-  armor: 0
-  dodgeChance: 0
-  invincibilityDuration: 0
-  maxExtraJumps: 0
-  jumpForce: 0
-  extraJumpDampaner: 0
-  movementSpeed: 0
-  sprintMultiplier: 0
-  dashCharges: 0
-  dashDistance: 0
-  dashRechargeRate: 0
 --- !u!1 &1920224955
 GameObject:
   m_ObjectHideFlags: 0

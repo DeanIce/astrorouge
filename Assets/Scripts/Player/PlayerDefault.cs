@@ -9,23 +9,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float turnSpeed = Mathf.PI / 3.0f;
 
     //for testing attack purposes
-    public MeshRenderer rend;
-    public MeshRenderer rend2;
+    public MeshRenderer meleeMeshRenderer;
+    public MeshRenderer attackMeshRenderer;
 
     //variables that may be needed by other things
-    public float range = 2;
-    public float meleeRange = 2;
-    public float health;
 
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float jumpForce = 32f;
-    [SerializeField] [Range(0.5f, 1.0f)] private float extraJumpDampaner = 0.8f;
-    private readonly int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
-    private readonly float sprintSpeed = 10f;
 
     // Player stats
-    private readonly float walkSpeed = 6f;
     private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
@@ -158,12 +150,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         if (melee)
         {
-            hits = Physics.RaycastAll(transform.position, transform.forward, meleeRange, enemyMask);
+            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
+                enemyMask);
             StartCoroutine(Attack());
         }
         else
         {
-            hits = Physics.RaycastAll(transform.position, transform.forward, range, enemyMask);
+            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
+                enemyMask);
             StartCoroutine(RangedAttack());
         }
 
@@ -186,23 +180,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private IEnumerator Attack()
     {
-        rend.enabled = true;
+        meleeMeshRenderer.enabled = true;
         yield return new WaitForSeconds(0.5f);
-        rend.enabled = false;
+        meleeMeshRenderer.enabled = false;
     }
 
     private IEnumerator RangedAttack()
     {
-        rend2.enabled = true;
+        attackMeshRenderer.enabled = true;
         yield return new WaitForSeconds(0.25f);
-        rend2.enabled = false;
+        attackMeshRenderer.enabled = false;
     }
 
     public void TakeDmg(float dmg)
     {
         // Temp, add damage negation and other maths here later.
-        health -= dmg;
-        if (health <= 0f)
+        PlayerStats.Instance.currentHealth -= dmg;
+        if (PlayerStats.Instance.currentHealth <= 0f)
         {
             //run end
         }

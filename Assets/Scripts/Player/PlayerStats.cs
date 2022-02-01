@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public static PlayerStats Instance { get => _instance; }
-    private static PlayerStats _instance;
-
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
@@ -12,6 +9,7 @@ public class PlayerStats : MonoBehaviour
     public float meleeCritChance;
     public float meleeCritMultiplier;
     public float meleeKnockbackForce;
+    public float meleeAttackRange;
 
     // Range Stats
     public float rangeAttackDelay;
@@ -40,14 +38,17 @@ public class PlayerStats : MonoBehaviour
     public int dashCharges;
     public float dashDistance;
     public float dashRechargeRate;
+    public static PlayerStats Instance { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+        }
         else
         {
-            _instance = this;
+            Instance = this;
             SetDefaultValues();
         }
     }
@@ -60,6 +61,7 @@ public class PlayerStats : MonoBehaviour
         meleeCritChance = 0.1f;
         meleeCritMultiplier = 2f;
         meleeKnockbackForce = 5f;
+        meleeAttackRange = 1f;
 
         // Range Stats
         rangeAttackDelay = 2f;
