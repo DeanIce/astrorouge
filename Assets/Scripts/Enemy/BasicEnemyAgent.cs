@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Gravity;
+using UnityEngine;
 
 public class BasicEnemyAgent : MonoBehaviour, IEnemy
 {
@@ -13,35 +12,37 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public float health;
     public float movementSpeed;
     public Collider playerCollider;
-
-    // Private enemy specific variables
-    Rigidbody rb;
-    Quaternion deltaRotation;
-    Vector3 eulerAngleVelocity;
-    //Bounds b;
-    //Bounds playerBounds;
-    Vector3 newDirection;
-    Vector3 playerPosition;
-    Vector3 jumpForce = new Vector3(0f, 20f, 0f);
-    int randomRotation;
-    int leftOrRight;
-    float distanceToGround;
-    private bool isGroundedVar = true;
-    private bool wandering = false;
-    private bool hunting = false;
-    private bool rotating = false;
     [SerializeField] private GameObject detector;
-    private Renderer detectorMaterial;
-    private Color green = new Color(0, 1, 0, 0.5f);
-    private Color red = new Color(1, 0, 0, 0.5f);
     [SerializeField] private GameObject body;
-    public GameObject Body { get => body; }
+    private readonly Color green = new(0, 1, 0, 0.5f);
+    private readonly Vector3 jumpForce = new(0f, 20f, 0f);
 
     // Swapping to collider and layer based detection
-    int playerLayer = 9;
-    Rigidbody targetRb;
+    private readonly int playerLayer = 9;
+    private readonly Color red = new(1, 0, 0, 0.5f);
+    private Quaternion deltaRotation;
+    private Renderer detectorMaterial;
+    private float distanceToGround;
+    private Vector3 eulerAngleVelocity;
+    private bool hunting;
+    private bool isGroundedVar = true;
 
-    void Start()
+    private int leftOrRight;
+
+    //Bounds b;
+    //Bounds playerBounds;
+    private Vector3 newDirection;
+    private Vector3 playerPosition;
+    private int randomRotation;
+
+    // Private enemy specific variables
+    private Rigidbody rb;
+    private bool rotating;
+    private Rigidbody targetRb;
+    private bool wandering;
+    public GameObject Body => body;
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         detectorMaterial = detector.GetComponent<Renderer>();
@@ -50,7 +51,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         //playerBounds = playerCollider.bounds;
     }
 
-    void Update()
+    private void Update()
     {
         // OLD MOVEMENT HERE
         // Maybe just set b center pos instead
@@ -59,7 +60,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         //playerBounds = playerCollider.bounds;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // Two states, either hunting or wandering
         if (!hunting)
@@ -67,131 +68,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             detectorMaterial.material.SetColor("_BaseColor", green);
             Wander(body.transform.forward);
         }
-        else 
+        else
         {
             detectorMaterial.material.SetColor("_BaseColor", red);
         }
-    }
-
-    public void DoGravity()
-    {
-        // Gravity
-        var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
-        rb.AddForce(sumForce * Time.deltaTime);
-        Debug.DrawLine(transform.position, sumForce, Color.blue);
-
-        // Upright?
-        rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * transform.rotation);
-    }
-
-    public void Wander(Vector3 direction)
-    {
-
-        DoGravity();
-
-        // This code is referenced from Unity documentation
-        rb.MovePosition(rb.position + direction * Time.deltaTime * movementSpeed);
-        if (!rotating)
-        {
-            StartCoroutine(Rotate());
-        }
-        else
-        {
-            deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
-            rb.MoveRotation(rb.rotation * deltaRotation);
-        }
-    }
-
-    public virtual void Hunt(Collider target)
-    {
-        DoGravity();
-
-        // NEW MOVEMENT HERE
-        targetRb = target.GetComponent<Rigidbody>();
-        rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
-        body.transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) / 10);
-        //rb.MoveRotation(Quaternion.LookRotation(target.transform.position - transform.position, transform.up));
-        //rb.MoveRotation(Quaternion.FromToRotation(transform.forward, target.transform.position - transform.position) * transform.rotation);
-        //transform.RotateAround(transform.position, transform.up, -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10);
-        //old version, swapped for rb.moveposition to be physics-based
-        //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movementSpeed * Time.deltaTime);
-
-        // Jumping
-        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) 
-        {
-            Jump();
-        }
-
-        // OLD MOVEMENT HERE
-        // NOTE: May need to add offset to playerBounds center, potential bug here ***
-        // Rotation referenced from unity documentation
-        /*playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
-        Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
-        */
-        // Actual movement and rotation
-        /* transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
-        newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);*/
-
-        // Detect if player is above enemy, if so, then we want to jump
-        /* if (playerBounds.center.y > transform.position.y && IsGrounded())
-        {
-            Debug.Log("Jump!");
-            // Jump();
-        }*/
-    }
-
-    // Raycast jumping and grounded idea comes from here: https://answers.unity.com/questions/196381/how-do-i-check-if-my-rigidbody-player-is-grounded.html
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, distanceToGround + 0.1f);
-    }
-
-    void Jump()
-    {
-        rb.AddForce(jumpForce);
-    }
-
-    public void TakeDmg(float dmg)
-    {
-        // Temp, add damage negation and other maths here later.
-        health -= dmg;
-        if (health <= 0f)
-        {
-            Die();
-        }
-    }
-    public void Die()
-    {
-        // Temp, add animation and call other methods here later.
-        GameObject.Destroy(this.gameObject);
-        DropManager.SpawnItem(transform.position, transform.rotation);
-    }
-
-    IEnumerator Rotate()
-    {
-        // Convention
-        // 1 = Left
-        // 2 = Right
-        // This is so they don't spaz back and forth and take big rotation strides
-        // If we did it from -200 to 200, it would avg to values like 0 and 1
-        rotating = true;
-        leftOrRight = Random.Range(1, 3);
-
-        if (leftOrRight == 1)
-        {
-            randomRotation = Random.Range(-200, -100);
-        }
-        else
-        {
-            randomRotation = Random.Range(100, 200);
-        }
-
-        eulerAngleVelocity = new Vector3(0, randomRotation, 0);
-        // Note, increase this time to get slower turns and more "thinking"
-        yield return new WaitForSeconds(0.5f);
-        rotating = false;
-
     }
 
     // Swapping to collider based detection
@@ -227,10 +107,114 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer)
+        if (other.gameObject.layer == playerLayer) Hunt(other);
+    }
+
+    public void Wander(Vector3 direction)
+    {
+        DoGravity();
+
+        // This code is referenced from Unity documentation
+        rb.MovePosition(rb.position + direction * Time.deltaTime * movementSpeed);
+        if (!rotating)
         {
-            Hunt(other);
+            StartCoroutine(Rotate());
         }
+        else
+        {
+            deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
+            rb.MoveRotation(rb.rotation * deltaRotation);
+        }
+    }
+
+    public virtual void Hunt(Collider target)
+    {
+        DoGravity();
+
+        // NEW MOVEMENT HERE
+        targetRb = target.GetComponent<Rigidbody>();
+        rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+        body.transform.RotateAround(transform.position, transform.up,
+            -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) /
+            10);
+
+        // Jumping
+        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
+
+        // OLD MOVEMENT HERE
+        // NOTE: May need to add offset to playerBounds center, potential bug here ***
+        // Rotation referenced from unity documentation
+        /*playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
+        Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
+        */
+        // Actual movement and rotation
+        /* transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
+        newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);*/
+
+        // Detect if player is above enemy, if so, then we want to jump
+        /* if (playerBounds.center.y > transform.position.y && IsGrounded())
+        {
+            Debug.Log("Jump!");
+            // Jump();
+        }*/
+    }
+
+    public void TakeDmg(float dmg)
+    {
+        // Temp, add damage negation and other maths here later.
+        health -= dmg;
+        if (health <= 0f) Die();
+    }
+
+    public void Die()
+    {
+        // Temp, add animation and call other methods here later.
+        // DropManager.SpawnItem(transform.position, transform.rotation);
+        Destroy(gameObject);
+    }
+
+    public void DoGravity()
+    {
+        // Gravity
+        var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
+        rb.AddForce(sumForce * Time.deltaTime);
+        Debug.DrawLine(transform.position, sumForce, Color.blue);
+
+        // Upright?
+        rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) * transform.rotation);
+    }
+
+    // Raycast jumping and grounded idea comes from here: https://answers.unity.com/questions/196381/how-do-i-check-if-my-rigidbody-player-is-grounded.html
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distanceToGround + 0.1f);
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(jumpForce);
+    }
+
+    private IEnumerator Rotate()
+    {
+        // Convention
+        // 1 = Left
+        // 2 = Right
+        // This is so they don't spaz back and forth and take big rotation strides
+        // If we did it from -200 to 200, it would avg to values like 0 and 1
+        rotating = true;
+        leftOrRight = Random.Range(1, 3);
+
+        if (leftOrRight == 1)
+            randomRotation = Random.Range(-200, -100);
+        else
+            randomRotation = Random.Range(100, 200);
+
+        eulerAngleVelocity = new Vector3(0, randomRotation, 0);
+        // Note, increase this time to get slower turns and more "thinking"
+        yield return new WaitForSeconds(0.5f);
+        rotating = false;
     }
 
     // Temp, used for testing and debugging
