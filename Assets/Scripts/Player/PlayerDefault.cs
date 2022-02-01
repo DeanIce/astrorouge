@@ -1,5 +1,5 @@
-using Gravity;
 using System.Collections;
+using Gravity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,9 +26,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Player stats
     private readonly float walkSpeed = 6f;
+    private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
-    private LayerMask enemyMask;
     private bool isGrounded;
     private bool isSprinting;
     private InputAction movement, look;
@@ -80,15 +80,18 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         playerInputMap.Jump.performed += Jump;
         playerInputMap.Jump.Enable();
+
         playerInputMap.Sprint.started += SprintToggle;
         playerInputMap.Sprint.canceled += SprintToggle;
         playerInputMap.Sprint.Enable();
+
         playerInputMap.PauseGame.Enable();
+
         playerInputMap.MeleeAttack.performed += MeleeAttack;
         playerInputMap.MeleeAttack.Enable();
+
         playerInputMap.RangedAttack.performed += RangedAttack;
         playerInputMap.RangedAttack.Enable();
-
     }
 
     private void OnDisable()
@@ -98,6 +101,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         look.Disable();
         playerInputMap.Sprint.Disable();
         playerInputMap.Jump.performed -= Jump;
+
+        playerInputMap.MeleeAttack.Disable();
+        playerInputMap.MeleeAttack.performed -= MeleeAttack;
+        playerInputMap.RangedAttack.Disable();
+        playerInputMap.RangedAttack.performed -= RangedAttack;
     }
 
     // Translates 2D input into 3D looking direction
@@ -135,7 +143,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void Attack(bool melee)
     {
         RaycastHit[] hits;
-        
+
         if (melee)
         {
             hits = Physics.RaycastAll(transform.position, transform.forward, meleeRange, enemyMask);
@@ -148,18 +156,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         }
 
         if (hits.Length != 0)
-        {
             //check for an enemy in the things the ray hit by whether it has an IEnemy
-            foreach (RaycastHit hit in hits)
-            {
+            foreach (var hit in hits)
                 if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
-                {
                     hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
-                }
-            }
-        }
     }
-    
+
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
         Attack(true);
