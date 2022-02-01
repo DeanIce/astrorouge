@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
     private const float groundDistance = 0.1f;
+    private const float turnSpeed = Mathf.PI / 3.0f;
 
     //for testing attack purposes
     public MeshRenderer rend;
@@ -22,7 +23,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] [Range(0.5f, 1.0f)] private float extraJumpDampaner = 0.8f;
     private readonly int maxExtraJumps = 2; // Total jumps = maxExtraJumps + 1
     private readonly float sprintSpeed = 10f;
-    private readonly float turnSpeed = Mathf.PI / 3.0f;
 
     // Player stats
     private readonly float walkSpeed = 6f;
@@ -43,7 +43,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         enemyMask = LayerMask.GetMask("Enemy");
-        extraJumpsLeft = maxExtraJumps;
+        extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
     }
 
     private void FixedUpdate()
@@ -55,7 +55,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded)
-            extraJumpsLeft = maxExtraJumps;
+            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         // Calculate total displacement
         var displacement = Walk(movement.ReadValue<Vector2>());
@@ -119,19 +119,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public Vector3 Walk(Vector2 direction)
     {
         var movement = direction.x * transform.right + direction.y * transform.forward;
-        return (isSprinting ? sprintSpeed : walkSpeed) * Time.deltaTime * movement.normalized;
+        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed * Time.deltaTime * movement.normalized;
     }
 
     public void Jump(InputAction.CallbackContext obj)
     {
         if (isGrounded)
         {
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
         }
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            rb.AddForce(transform.up * jumpForce * extraJumpDampaner, ForceMode.Impulse);
+            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
         }
     }
 

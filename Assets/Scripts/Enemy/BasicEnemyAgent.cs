@@ -104,8 +104,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public virtual void Hunt(Collider target)
     {
-        //float angle = -Vector3.SignedAngle(target.transform.position - transform.position, transform.forward, transform.up) / 10;
-
         DoGravity();
 
         // NEW MOVEMENT HERE
@@ -167,6 +165,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // Temp, add animation and call other methods here later.
         GameObject.Destroy(this.gameObject);
+        DropManager.SpawnItem(transform.position, transform.rotation);
     }
 
     IEnumerator Rotate()
