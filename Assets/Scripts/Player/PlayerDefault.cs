@@ -1,3 +1,4 @@
+using System.Collections;
 using Gravity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,16 +8,25 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float groundDistance = 0.1f;
     private const float turnSpeed = Mathf.PI / 3.0f;
 
+    //for testing attack purposes
+    public MeshRenderer meleeMeshRenderer;
+    public MeshRenderer attackMeshRenderer;
+
+    //variables that may be needed by other things
+
     // Dynamic player info
     [SerializeField] private int extraJumpsLeft;
+
+    // Player stats
+    private LayerMask enemyMask;
+    private Transform groundCheck;
+    private LayerMask groundMask;
     private bool isGrounded;
     private bool isSprinting;
+    private InputAction movement, look;
 
     // Constants
     private Rigidbody rb;
-    private Transform groundCheck;
-    private LayerMask groundMask;
-    private InputAction movement, look;
 
 
     private void Start()
@@ -24,6 +34,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         rb = GetComponent<Rigidbody>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
+        enemyMask = LayerMask.GetMask("Enemy");
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
     }
 
@@ -61,10 +72,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         playerInputMap.Jump.performed += Jump;
         playerInputMap.Jump.Enable();
+
         playerInputMap.Sprint.started += SprintToggle;
         playerInputMap.Sprint.canceled += SprintToggle;
         playerInputMap.Sprint.Enable();
+
+        playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
+
+        playerInputMap.MeleeAttack.performed += MeleeAttack;
+        playerInputMap.MeleeAttack.Enable();
+
+        playerInputMap.RangedAttack.performed += RangedAttack;
+        playerInputMap.RangedAttack.Enable();
     }
 
     private void OnDisable()
@@ -74,6 +94,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         look.Disable();
         playerInputMap.Sprint.Disable();
         playerInputMap.Jump.performed -= Jump;
+
+        playerInputMap.PauseGame.Disable();
+        playerInputMap.PauseGame.performed -= PauseGame;
+
+        playerInputMap.MeleeAttack.Disable();
+        playerInputMap.MeleeAttack.performed -= MeleeAttack;
+        playerInputMap.RangedAttack.Disable();
+        playerInputMap.RangedAttack.performed -= RangedAttack;
     }
 
     // Translates 2D input into 3D looking direction
@@ -87,7 +115,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public Vector3 Walk(Vector2 direction)
     {
         var movement = direction.x * transform.right + direction.y * transform.forward;
-        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed * Time.deltaTime * movement.normalized;
+        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+               Time.deltaTime * movement.normalized;
     }
 
     public void Jump(InputAction.CallbackContext obj)
@@ -99,12 +128,77 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
+            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up,
+                ForceMode.Impulse);
         }
     }
 
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
+    }
+
+    private void PauseGame(InputAction.CallbackContext obj)
+    {
+        print("Pause received");
+        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
+    }
+
+    public void Attack(bool melee)
+    {
+        RaycastHit[] hits;
+
+        if (melee)
+        {
+            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
+                enemyMask);
+            StartCoroutine(Attack());
+        }
+        else
+        {
+            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
+                enemyMask);
+            StartCoroutine(RangedAttack());
+        }
+
+        if (hits.Length != 0)
+            //check for an enemy in the things the ray hit by whether it has an IEnemy
+            foreach (var hit in hits)
+                if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
+                    hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
+    }
+
+    public void MeleeAttack(InputAction.CallbackContext obj)
+    {
+        Attack(true);
+    }
+
+    public void RangedAttack(InputAction.CallbackContext obj)
+    {
+        Attack(false);
+    }
+
+    private IEnumerator Attack()
+    {
+        meleeMeshRenderer.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        meleeMeshRenderer.enabled = false;
+    }
+
+    private IEnumerator RangedAttack()
+    {
+        attackMeshRenderer.enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        attackMeshRenderer.enabled = false;
+    }
+
+    public void TakeDmg(float dmg)
+    {
+        // Temp, add damage negation and other maths here later.
+        PlayerStats.Instance.currentHealth -= dmg;
+        if (PlayerStats.Instance.currentHealth <= 0f)
+        {
+            //run end
+        }
     }
 }
