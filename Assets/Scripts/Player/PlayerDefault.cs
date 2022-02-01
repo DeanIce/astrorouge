@@ -85,6 +85,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.Sprint.canceled += SprintToggle;
         playerInputMap.Sprint.Enable();
 
+        playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
 
         playerInputMap.MeleeAttack.performed += MeleeAttack;
@@ -101,6 +102,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         look.Disable();
         playerInputMap.Sprint.Disable();
         playerInputMap.Jump.performed -= Jump;
+
+        playerInputMap.PauseGame.Disable();
+        playerInputMap.PauseGame.performed -= PauseGame;
 
         playerInputMap.MeleeAttack.Disable();
         playerInputMap.MeleeAttack.performed -= MeleeAttack;
@@ -119,7 +123,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public Vector3 Walk(Vector2 direction)
     {
         var movement = direction.x * transform.right + direction.y * transform.forward;
-        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed * Time.deltaTime * movement.normalized;
+        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+               Time.deltaTime * movement.normalized;
     }
 
     public void Jump(InputAction.CallbackContext obj)
@@ -131,13 +136,20 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
+            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up,
+                ForceMode.Impulse);
         }
     }
 
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
+    }
+
+    private void PauseGame(InputAction.CallbackContext obj)
+    {
+        print("Pause received");
+        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
     }
 
     public void Attack(bool melee)
