@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HoldToPickUp : MonoBehaviour
 {
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private LayerMask layerMask;
 
