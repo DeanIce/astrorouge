@@ -2,6 +2,8 @@ public class BlueItem : AbstractItem
 {
     public override void ApplyStats()
     {
-        // applies stats to player (can also be used to give special abilities to items)
+        print("before pick up: " + PlayerStats.Instance.maxExtraJumps);
+        PlayerStats.Instance.maxExtraJumps++;
+        print("after pick up: " + PlayerStats.Instance.maxExtraJumps);
     }
 }
