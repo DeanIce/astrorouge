@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// don't allow merge yet
 public class HoldToPickUp : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
