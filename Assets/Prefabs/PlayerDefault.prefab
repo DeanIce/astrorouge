@@ -127,8 +127,8 @@ GameObject:
   - component: {fileID: 579053813939167214}
   - component: {fileID: 579053813939167213}
   - component: {fileID: 2370587532675454182}
-  - component: {fileID: 5924789900246250871}
   - component: {fileID: 1018908818363566110}
+  - component: {fileID: 5313944904042844001}
   m_Layer: 9
   m_Name: PlayerDefault
   m_TagString: Untagged
@@ -242,26 +242,6 @@ MonoBehaviour:
   dashCharges: 0
   dashDistance: 0
   dashRechargeRate: 0
---- !u!114 &5924789900246250871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 579053813939167122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ae266d60f84b3242acc1fec259c6350, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  pickupTime: 1
-  pickupImageRoot: {fileID: 7475313958377153072}
-  pickupProgressImage: {fileID: 5192949915878938503}
-  itemNameText: {fileID: 9208370592823053500}
 --- !u!114 &1018908818363566110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +255,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 4080113621099687949}
+--- !u!114 &5313944904042844001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579053813939167122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cd3eec66e77204a95f136cf45f5912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  pickupTime: 1
+  pickupImageRoot: {fileID: 7475313958377153072}
+  pickupProgressImage: {fileID: 5192949915878938503}
+  itemNameText: {fileID: 9208370592823053500}
 --- !u!1 &579053813947209479
 GameObject:
   m_ObjectHideFlags: 0

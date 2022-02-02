@@ -2,9 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// don't allow merge yet
 public class HoldToPickUp : MonoBehaviour
 {
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private LayerMask layerMask;
 

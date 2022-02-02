@@ -31,6 +31,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void Start()
     {
+        print("started");
         rb = GetComponent<Rigidbody>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
