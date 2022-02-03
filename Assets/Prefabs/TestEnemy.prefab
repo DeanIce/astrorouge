@@ -263,6 +263,8 @@ MonoBehaviour:
   health: 100
   movementSpeed: 10
   playerCollider: {fileID: 0}
+  detector: {fileID: 990299161902033327}
+  body: {fileID: 990299162721349179}
 --- !u!1 &990299162721349179
 GameObject:
   m_ObjectHideFlags: 0

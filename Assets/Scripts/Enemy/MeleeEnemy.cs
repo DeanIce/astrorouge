@@ -6,11 +6,13 @@ using Gravity;
 public class MeleeEnemy : BasicEnemyAgent
 {
     //new public variables
-    public MeshRenderer rend;
+    //public MeshRenderer rend;
     public float attackRange = 1.5f;
 
     // Private enemy specific variables
     private bool attacking = false;
+
+    public bool Attacking { get { return attacking; } set { attacking = value; } }
 
     public override void Hunt(Collider target)
     {
@@ -23,7 +25,7 @@ public class MeleeEnemy : BasicEnemyAgent
         //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
         {
             //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
-            if (!attacking) StartCoroutine(Attack());
+            if (!attacking && Health > 0) StartCoroutine(Attack());
         }
         else
         {
@@ -31,10 +33,10 @@ public class MeleeEnemy : BasicEnemyAgent
         }
     }
 
-    private IEnumerator Attack()
+    public virtual IEnumerator Attack()
     {
         RaycastHit[] hits;
-        rend.enabled = true;
+        //rend.enabled = true;
         attacking = true;
         yield return new WaitForSeconds(1f);
         hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
@@ -49,7 +51,7 @@ public class MeleeEnemy : BasicEnemyAgent
                 }
             }
         }
-        rend.enabled = false;
+        //rend.enabled = false;
         attacking = false;
     }
 }
