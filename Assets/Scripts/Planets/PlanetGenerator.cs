@@ -1,7 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Utilities;
+using Debug = UnityEngine.Debug;
 
 namespace Planets
 {
@@ -16,41 +19,64 @@ namespace Planets
             CollisionRes
         }
 
+        private static Dictionary<int, SphereMesh> sphereGenerators;
+
         public ResolutionSettings resolutionSettings;
 
         public PreviewMode previewMode;
-        bool shapeSettingsUpdated;
-        public ShapeSettings shapeSettings;
-
-        static Dictionary<int, SphereMesh> sphereGenerators;
+        public ShapeSettings shape;
+        public ShaderSettings shader;
         public bool logTimers;
+        private readonly bool debugDoubleUpdate = true;
+        private int debug_numUpdates;
 
-        ComputeBuffer vertexBuffer;
-        bool shadingNoiseSettingsUpdated;
-        Mesh previewMesh;
+        private Vector2 heightMinMax;
+        private Mesh previewMesh;
+        private bool shadingNoiseSettingsUpdated;
+        private bool shapeSettingsUpdated;
 
-        Vector2 heightMinMax;
+        private ComputeBuffer vertexBuffer;
+
+        private bool InGameMode => Application.isPlaying;
+
+        private bool InEditMode => !Application.isPlaying;
+
+        public float BodyScale =>
+            // Body radius is determined by the celestial body class,
+            // which sets the local scale of the generator object (this object)
+            transform.localScale.x;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-            if (InGameMode)
-            {
-                HandleGameModeGeneration();
-            }
+            if (InGameMode) HandleGameModeGeneration();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            if (InEditMode)
+            if (InEditMode) HandleEditModeGeneration();
+        }
+
+        private void OnValidate()
+        {
+            if (shape != null)
             {
-                HandleEditModeGeneration();
+                shape.OnSettingChanged -= OnShapeSettingChanged;
+                shape.OnSettingChanged += OnShapeSettingChanged;
             }
+            // if (body.shading) {
+            //     body.shading.OnSettingChanged -= OnShadingNoiseSettingChanged;
+            //     body.shading.OnSettingChanged += OnShadingNoiseSettingChanged;
+            // }
+
+            if (resolutionSettings != null) resolutionSettings.ClampResolutions();
+
+            OnShapeSettingChanged();
         }
 
 
-        void HandleEditModeGeneration()
+        private void HandleEditModeGeneration()
         {
             if (InEditMode)
             {
@@ -67,8 +93,9 @@ namespace Planets
                     shadingNoiseSettingsUpdated = false;
                     Dummy();
 
-                    var terrainMeshTimer = System.Diagnostics.Stopwatch.StartNew();
+                    var terrainMeshTimer = Stopwatch.StartNew();
                     heightMinMax = GenerateTerrainMesh(ref previewMesh, PickTerrainRes());
+                    print(heightMinMax);
 
                     LogTimer(terrainMeshTimer, "Generate terrain mesh");
                     DrawEditModeMesh();
@@ -76,51 +103,54 @@ namespace Planets
                 // If only shading noise has changed, update it separately from shape to save time
                 else if (shadingNoiseSettingsUpdated)
                 {
-                    // shadingNoiseSettingsUpdated = false;
-                    // ComputeHelper.CreateStructuredBuffer<Vector3>(ref vertexBuffer, previewMesh.vertices);
-                    // body.shading.Initialize(body.shape);
-                    // Vector4[] shadingData = body.shading.GenerateShadingData(vertexBuffer);
-                    // previewMesh.SetUVs(0, shadingData);
-                    //
-                    // // Sometimes when changing a colour property, invalid data is returned from compute shader
-                    // // Running the shading a second time fixes it.
-                    // // Not sure if this is my bug, or Unity's (TODO: investigate)
-                    // debug_numUpdates++;
-                    // if (debugDoubleUpdate && debug_numUpdates < 2)
-                    // {
-                    //     shadingNoiseSettingsUpdated = true;
-                    //     HandleEditModeGeneration();
-                    // }
-                    //
-                    // if (debug_numUpdates == 2)
-                    // {
-                    //     debug_numUpdates = 0;
-                    // }
+                    shadingNoiseSettingsUpdated = false;
+                    ComputeHelper.CreateStructuredBuffer(ref vertexBuffer, previewMesh.vertices);
+                    shader.Initialize(shape);
+                    var shadingData = shader.GenerateShadingData(vertexBuffer);
+                    previewMesh.SetUVs(0, shadingData);
+
+                    // Sometimes when changing a colour property, invalid data is returned from compute shader
+                    // Running the shading a second time fixes it.
+                    // Not sure if this is my bug, or Unity's (TODO: investigate)
+                    debug_numUpdates++;
+                    if (debugDoubleUpdate && debug_numUpdates < 2)
+                    {
+                        shadingNoiseSettingsUpdated = true;
+                        HandleEditModeGeneration();
+                    }
+
+                    if (debug_numUpdates == 2) debug_numUpdates = 0;
                 }
             }
 
             // Update shading
-            // if (body.shading)
-            // {
-            //     // Set material properties
-            //     body.shading.Initialize(body.shape);
-            //     body.shading.SetTerrainProperties(body.shading.terrainMaterial, heightMinMax, BodyScale);
-            // }
+            if (shader != null)
+            {
+                // Set material properties
+                shader.Initialize(shape);
+                // print(heightMinMax);
+                shader.SetTerrainProperties(shader.terrainMaterial, heightMinMax, BodyScale);
+            }
 
             ReleaseAllBuffers(); //
         }
-        void DrawEditModeMesh () {
+
+        private void DrawEditModeMesh()
+        {
             // GameObject terrainHolder = GetOrCreateMeshObject ("Terrain Mesh", previewMesh, body.shading.terrainMaterial);
-            GameObject terrainHolder = GetOrCreateMeshObject ("Terrain Mesh", previewMesh, new Material(Shader.Find("Standard")));
+            var terrainHolder =
+                GetOrCreateMeshObject("Terrain Mesh", previewMesh, new Material(Shader.Find("Standard")));
         }
 
         // Gets child object with specified name.
         // If it doesn't exist, then creates object with that name, adds mesh renderer/filter and attaches mesh and material
-        GameObject GetOrCreateMeshObject (string name, Mesh mesh, Material material) {
+        private GameObject GetOrCreateMeshObject(string name, Mesh mesh, Material material)
+        {
             // Find/create object
-            var child = transform.Find (name);
-            if (!child) {
-                child = new GameObject (name).transform;
+            var child = transform.Find(name);
+            if (!child)
+            {
+                child = new GameObject(name).transform;
                 child.parent = transform;
                 child.localPosition = Vector3.zero;
                 child.localRotation = Quaternion.identity;
@@ -130,39 +160,34 @@ namespace Planets
 
             // Add mesh components
             MeshFilter filter;
-            if (!child.TryGetComponent<MeshFilter> (out filter)) {
-                filter = child.gameObject.AddComponent<MeshFilter> ();
-            }
+            if (!child.TryGetComponent(out filter)) filter = child.gameObject.AddComponent<MeshFilter>();
             filter.sharedMesh = mesh;
 
             MeshRenderer renderer;
-            if (!child.TryGetComponent<MeshRenderer> (out renderer)) {
-                renderer = child.gameObject.AddComponent<MeshRenderer> ();
-            }
+            if (!child.TryGetComponent(out renderer)) renderer = child.gameObject.AddComponent<MeshRenderer>();
             renderer.sharedMaterial = material;
 
             return child.gameObject;
         }
 
-        
-        void LogTimer (System.Diagnostics.Stopwatch sw, string text) {
-            if (logTimers) {
-                Debug.Log (text + " " + sw.ElapsedMilliseconds + " ms.");
-            }
+
+        private void LogTimer(Stopwatch sw, string text)
+        {
+            if (logTimers) Debug.Log(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         // Generates terrain mesh based on heights generated by the Shape object
         // Shading data from the Shading object is stored in the mesh uvs
         // Returns the min/max height of the terrain
-        Vector2 GenerateTerrainMesh(ref Mesh mesh, int resolution)
+        private Vector2 GenerateTerrainMesh(ref Mesh mesh, int resolution)
         {
             var (vertices, triangles) = CreateSphereVertsAndTris(resolution);
-            ComputeHelper.CreateStructuredBuffer<Vector3>(ref vertexBuffer, vertices);
+            ComputeHelper.CreateStructuredBuffer(ref vertexBuffer, vertices);
 
-            float edgeLength = (vertices[triangles[0]] - vertices[triangles[1]]).magnitude;
+            var edgeLength = (vertices[triangles[0]] - vertices[triangles[1]]).magnitude;
 
             // Set heights
-            float[] heights = shapeSettings.CalculateHeights(vertexBuffer);
+            var heights = shape.CalculateHeights(vertexBuffer);
 
             // // Perturb vertices to give terrain a less perfectly smooth appearance
             // if (shapeSettings.perturbVertices && body.shape.perturbCompute) {
@@ -179,11 +204,11 @@ namespace Planets
             // }
 
             // Calculate terrain min/max height and set heights of vertices
-            float minHeight = float.PositiveInfinity;
-            float maxHeight = float.NegativeInfinity;
-            for (int i = 0; i < heights.Length; i++)
+            var minHeight = float.PositiveInfinity;
+            var maxHeight = float.NegativeInfinity;
+            for (var i = 0; i < heights.Length; i++)
             {
-                float height = heights[i];
+                var height = heights[i];
                 vertices[i] *= height;
                 minHeight = Mathf.Min(minHeight, height);
                 maxHeight = Mathf.Max(maxHeight, height);
@@ -205,9 +230,9 @@ namespace Planets
             // because surfaceshader wants normals in tangent space
             var normals = mesh.normals;
             var crudeTangents = new Vector4[mesh.vertices.Length];
-            for (int i = 0; i < vertices.Length; i++)
+            for (var i = 0; i < vertices.Length; i++)
             {
-                Vector3 normal = normals[i];
+                var normal = normals[i];
                 crudeTangents[i] = new Vector4(-normal.z, 0, normal.x, 1);
             }
 
@@ -215,47 +240,39 @@ namespace Planets
 
             return new Vector2(minHeight, maxHeight);
         }
-        
-        // Generate sphere (or reuse if already generated) and return a copy of the vertices and triangles
-        (Vector3[] vertices, int[] triangles) CreateSphereVertsAndTris (int resolution) {
-            if (sphereGenerators == null) {
-                sphereGenerators = new Dictionary<int, SphereMesh> ();
-            }
 
-            if (!sphereGenerators.ContainsKey (resolution)) {
-                sphereGenerators.Add (resolution, new SphereMesh (resolution));
-            }
+        // Generate sphere (or reuse if already generated) and return a copy of the vertices and triangles
+        private (Vector3[] vertices, int[] triangles) CreateSphereVertsAndTris(int resolution)
+        {
+            if (sphereGenerators == null) sphereGenerators = new Dictionary<int, SphereMesh>();
+
+            if (!sphereGenerators.ContainsKey(resolution)) sphereGenerators.Add(resolution, new SphereMesh(resolution));
 
             var generator = sphereGenerators[resolution];
 
             var vertices = new Vector3[generator.Vertices.Length];
             var triangles = new int[generator.Triangles.Length];
-            System.Array.Copy (generator.Vertices, vertices, vertices.Length);
-            System.Array.Copy (generator.Triangles, triangles, triangles.Length);
+            Array.Copy(generator.Vertices, vertices, vertices.Length);
+            Array.Copy(generator.Triangles, triangles, triangles.Length);
             return (vertices, triangles);
         }
 
-        void CreateMesh(ref Mesh mesh, int numVertices)
+        private void CreateMesh(ref Mesh mesh, int numVertices)
         {
-            const int vertexLimit16Bit = 1 << 16 - 1; // 65535
+            const int vertexLimit16Bit = 1 << (16 - 1); // 65535
             if (mesh == null)
-            {
                 mesh = new Mesh();
-            }
             else
-            {
                 mesh.Clear();
-            }
 
-            mesh.indexFormat = (numVertices < vertexLimit16Bit)
-                ? UnityEngine.Rendering.IndexFormat.UInt16
-                : UnityEngine.Rendering.IndexFormat.UInt32;
+            mesh.indexFormat = numVertices < vertexLimit16Bit
+                ? IndexFormat.UInt16
+                : IndexFormat.UInt32;
         }
 
         public int PickTerrainRes()
         {
             if (!Application.isPlaying)
-            {
                 switch (previewMode)
                 {
                     case PreviewMode.LOD0:
@@ -267,60 +284,32 @@ namespace Planets
                     case PreviewMode.CollisionRes:
                         return resolutionSettings.collider;
                 }
-            }
 
             return 0;
         }
 
-        void HandleGameModeGeneration()
+        private void HandleGameModeGeneration()
         {
         }
 
-        void Dummy()
+        private void Dummy()
         {
             // Crude fix for a problem I was having where the values in the vertex buffer were *occasionally* all zero at start of game
             // This function runs the compute shader once with single dummy input, after which it seems the problem doesn't occur
             // (Waiting until Time.frameCount > 3 before generating is another gross hack that seems to fix the problem)
             // I don't know why...
-            Vector3[] vertices = new Vector3[] {Vector3.zero};
-            ComputeHelper.CreateStructuredBuffer<Vector3>(ref vertexBuffer, vertices);
-            shapeSettings.CalculateHeights(vertexBuffer);
+            Vector3[] vertices = {Vector3.zero};
+            ComputeHelper.CreateStructuredBuffer(ref vertexBuffer, vertices);
+            shape.CalculateHeights(vertexBuffer);
         }
 
-        bool InGameMode => Application.isPlaying;
-
-        bool InEditMode => !Application.isPlaying;
-
-        void ReleaseAllBuffers()
+        private void ReleaseAllBuffers()
         {
             ComputeHelper.Release(vertexBuffer);
-            if (shapeSettings != null)
-            {
-                shapeSettings.ReleaseBuffers();
-            }
+            if (shape != null) shape.ReleaseBuffers();
             // if (body.shading) {
             //     body.shading.ReleaseBuffers ();
             // }
-        }
-
-        void OnValidate()
-        {
-            if (shapeSettings != null)
-            {
-                shapeSettings.OnSettingChanged -= OnShapeSettingChanged;
-                shapeSettings.OnSettingChanged += OnShapeSettingChanged;
-            }
-            // if (body.shading) {
-            //     body.shading.OnSettingChanged -= OnShadingNoiseSettingChanged;
-            //     body.shading.OnSettingChanged += OnShadingNoiseSettingChanged;
-            // }
-
-            if (resolutionSettings != null)
-            {
-                resolutionSettings.ClampResolutions();
-            }
-
-            OnShapeSettingChanged();
         }
 
         public void OnShapeSettingChanged()
@@ -328,9 +317,9 @@ namespace Planets
             shapeSettingsUpdated = true;
         }
 
-        bool CanGenerateMesh()
+        private bool CanGenerateMesh()
         {
-            return ComputeHelper.CanRunEditModeCompute && shapeSettings != null && shapeSettings.heightMapCompute;
+            return ComputeHelper.CanRunEditModeCompute && shape != null && shape.heightMapCompute;
         }
     }
 }
