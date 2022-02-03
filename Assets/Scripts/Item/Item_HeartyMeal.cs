@@ -2,6 +2,9 @@ public class Item_HeartyMeal : AbstractItem
 {
     public override void ApplyStats()
     {
-        // applies stats to player (can also be used to give special abilities to items)
+        print("before pick up: " + PlayerStats.Instance.maxHealth);
+        double maxHealthIncrease = PlayerStats.Instance.maxHealth * 1.4; // 40% increase
+        PlayerStats.Instance.maxHealth = (int) maxHealthIncrease; 
+        print("after pick up: " + PlayerStats.Instance.maxHealth);
     }
 }

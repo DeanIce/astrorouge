@@ -102,6 +102,7 @@ public class HoldToPickUp : MonoBehaviour
     {
         Destroy(itemBeingPickedUp.gameObject);
         inventory.AddItem(itemBeingPickedUp);
+        itemBeingPickedUp.ApplyStats();
         itemBeingPickedUp = null;
     }
 }
