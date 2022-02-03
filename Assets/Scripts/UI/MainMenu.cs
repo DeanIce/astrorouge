@@ -1,34 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 using Managers;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button newGameButton;
-    public Button settingsButton;
-    public Button settingsBackButton;
-    public Button aboutBackButton;
-    public Button quitButton;
-    public Button aboutButton;
-    public Toggle muteButton;
-    public Slider musicSlider;
-    public Slider sfxSlider;
-    public VisualElement settingsMenu;
-    public VisualElement mainMenu;
-    public VisualElement aboutMenu;
-
-    private bool muteValue;
-    private float musicVolumeValue;
-    private float sfxVolumeValue;
-
     public AudioClip mainMenuMusic;
     public AudioClip buttonPressSoundEffect;
+    public string mainScene;
+    public Button aboutBackButton;
+    public Button aboutButton;
+    public VisualElement aboutMenu;
+    public VisualElement mainMenu;
+    public Slider musicSlider;
+    private float musicVolumeValue;
+    public Toggle muteButton;
+
+    private bool muteValue;
+
+    public Button newGameButton;
+    public Button quitButton;
+    public Button settingsBackButton;
+    public Button settingsButton;
+    public VisualElement settingsMenu;
+    public Slider sfxSlider;
+    private float sfxVolumeValue;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -65,39 +64,6 @@ public class MainMenu : MonoBehaviour
         AudioManager.Instance.PlayMusic(mainMenuMusic);
     }
 
-    void NewGameButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        SceneManager.LoadScene("SampleScene");
-    }
-
-    void SettingsButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.Flex;
-        mainMenu.style.display = DisplayStyle.None;
-        aboutMenu.style.display = DisplayStyle.None;
-    }
-    void AboutButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.None;
-        mainMenu.style.display = DisplayStyle.None;
-        aboutMenu.style.display = DisplayStyle.Flex;
-    }
-    void QuitButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        Application.Quit();
-    }
-    void BackButtonPressed()
-    {
-        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        settingsMenu.style.display = DisplayStyle.None;
-        mainMenu.style.display = DisplayStyle.Flex;
-        aboutMenu.style.display = DisplayStyle.None;
-    }
-
     private void Update()
     {
         if (muteValue != muteButton.value)
@@ -117,5 +83,42 @@ public class MainMenu : MonoBehaviour
             sfxVolumeValue = sfxSlider.value;
             AudioManager.Instance.SetSFXVolume(sfxVolumeValue);
         }
+    }
+
+    private void NewGameButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        SceneManager.LoadScene(mainScene);
+        EventManager.instance.Play();
+    }
+
+    private void SettingsButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        settingsMenu.style.display = DisplayStyle.Flex;
+        mainMenu.style.display = DisplayStyle.None;
+        aboutMenu.style.display = DisplayStyle.None;
+    }
+
+    private void AboutButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        settingsMenu.style.display = DisplayStyle.None;
+        mainMenu.style.display = DisplayStyle.None;
+        aboutMenu.style.display = DisplayStyle.Flex;
+    }
+
+    private void QuitButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        Application.Quit();
+    }
+
+    private void BackButtonPressed()
+    {
+        AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+        settingsMenu.style.display = DisplayStyle.None;
+        mainMenu.style.display = DisplayStyle.Flex;
+        aboutMenu.style.display = DisplayStyle.None;
     }
 }
