@@ -1,5 +1,6 @@
 using System.Collections;
 using Gravity;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,6 +44,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // Gravity
         var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
         rb.AddForce(sumForce * Time.deltaTime);
+        // print(sumForce);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -140,8 +142,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        print("Pause received");
-        InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
+        EventManager.instance.Pause();
     }
 
     public void Attack(bool melee)

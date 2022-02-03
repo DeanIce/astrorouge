@@ -1,33 +1,33 @@
 using Managers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class PauseMenu : MonoBehaviour
 {
-    public delegate void Resume();
-
     public AudioClip mainMenuMusic;
     public AudioClip buttonPressSoundEffect;
 
-    public Button continueButton;
-    public Button mainMenuButton;
-    public Slider musicSlider;
+    private Button continueButton;
+    private Button mainMenuButton;
+    private Slider musicSlider;
     private float musicVolumeValue;
-    public Toggle muteButton;
+    private Toggle muteButton;
 
     private bool muteValue;
-    public VisualElement pauseMenu;
-    public Button settingsBackButton;
-    public Button settingsButton;
-    public VisualElement settingsMenu;
-    public Slider sfxSlider;
+    private VisualElement pauseMenu;
+
+    private VisualElement root;
+    private Button settingsBackButton;
+    private Button settingsButton;
+    private VisualElement settingsMenu;
+    private Slider sfxSlider;
     private float sfxVolumeValue;
 
     // Start is called before the first frame update
     private void Start()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        root = GetComponent<UIDocument>().rootVisualElement;
 
         settingsMenu = root.Q<VisualElement>("SettingsMenu");
         pauseMenu = root.Q<VisualElement>("PauseMenu");
@@ -55,6 +55,7 @@ public class PauseMenu : MonoBehaviour
         AudioManager.Instance.PlayMusic(mainMenuMusic);
     }
 
+
     private void Update()
     {
         if (muteValue != muteButton.value)
@@ -78,32 +79,41 @@ public class PauseMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        PauseController.OnPauseDisplay += DisplayPause;
+        EventManager.instance.pauseGame += PauseGame;
+        EventManager.instance.playGame += PlayGame;
+        InputManager.inputActions.PauseMenu.Back.performed += PlayGame;
     }
 
     private void OnDisable()
     {
-        PauseController.OnPauseDisplay -= DisplayPause;
+        EventManager.instance.pauseGame -= PauseGame;
+        EventManager.instance.playGame -= PlayGame;
+        InputManager.inputActions.PauseMenu.Back.performed -= PlayGame;
     }
 
-
-    private void DisplayPause(bool isPaused)
+    private void PauseGame()
     {
-        if (isPaused)
-            pauseMenu.style.display = DisplayStyle.None;
-        else
-            pauseMenu.style.display = DisplayStyle.Flex;
+        root.SetEnabled(true);
+        pauseMenu.style.display = DisplayStyle.Flex;
     }
+
+    private void PlayGame()
+    {
+        pauseMenu.style.display = DisplayStyle.None;
+        root.SetEnabled(false);
+    }
+
+    private void PlayGame(InputAction.CallbackContext obj)
+    {
+        settingsMenu.style.display = DisplayStyle.None;
+        EventManager.instance.Play();
+    }
+
 
     private void ContinueButtonPressed()
     {
-        // print("continue");
-        Time.timeScale = 1;
-        InputManager.ToggleActionMap(InputManager.inputActions.Player);
-        DisplayPause(true);
         AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        // if (OnResume != null)
-        //     OnResume();
+        EventManager.instance.Play();
     }
 
 
@@ -116,7 +126,7 @@ public class PauseMenu : MonoBehaviour
 
     private void MainMenuButtonPressed()
     {
-        SceneManager.LoadScene("MainMenuTest");
+        EventManager.instance.Menu();
     }
 
     private void BackButtonPressed()
