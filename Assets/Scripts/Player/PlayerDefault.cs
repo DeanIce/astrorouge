@@ -197,6 +197,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
+        //Doesn't actually matter once we implement game over
+        if (PlayerStats.Instance.currentHealth < 0)
+            PlayerStats.Instance.currentHealth = 0;
+
+        gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f)
         {
             //run end

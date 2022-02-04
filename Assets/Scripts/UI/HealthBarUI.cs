@@ -13,6 +13,8 @@ public class HealthBarUI : MonoBehaviour
 
     private Camera mainCamera;
 
+    private float maxHealth =100;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +23,13 @@ public class HealthBarUI : MonoBehaviour
         health = healthBar.Q<VisualElement>("Health");
         healthText = healthBar.Q<TextElement>("HealthText");
 
-        //set initial hp for testing
-        SetHealth(70, 100);
+        maxHealth = gameObject.GetComponent<BasicEnemyAgent>().health;
+
+        healthBar.style.display = DisplayStyle.None;
+        
+        //Disables health text display
+        healthText.text = "";
+
         SetPosition();
     }
 
@@ -38,8 +45,14 @@ public class HealthBarUI : MonoBehaviour
     //call SetHealth whenever health needs adjusted
     public void SetHealth(float hp, float maxHp)
     {
-        healthText.text = hp + "/" + maxHp;
-        health.style.width = new StyleLength(Length.Percent((hp / maxHp) * 100));
+        maxHealth = maxHp;     
+        health.style.width = new StyleLength(Length.Percent((hp / maxHealth) * 100));
+    }
+
+    public void SetHealth(float hp)
+    {
+        healthBar.style.display = DisplayStyle.Flex;
+        health.style.width = new StyleLength(Length.Percent((hp / maxHealth) * 100));
     }
 
     // Update is called once per frame

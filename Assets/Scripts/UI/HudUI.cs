@@ -13,6 +13,8 @@ public class HudUI : MonoBehaviour
     private VisualElement expBar;
     private TextElement expLevelText;
 
+    private float maxHealth = 100;
+
     public int level = 0;
     void Start()
     {
@@ -25,15 +27,17 @@ public class HudUI : MonoBehaviour
         expBar = root.Q<VisualElement>("Exp_Bar_Fill");
         expLevelText = root.Q<TextElement>("LevelText");
 
+        maxHealth = PlayerStats.Instance.maxHealth;
+        SetHealth(maxHealth);
+
         LevelUp();
-        SetHealth(99, 100);
         SetExp(10, 100);
     }
 
-    public void SetHealth(float hp, float maxHp)
+    public void SetHealth(float hp)
     {
-        healthBarText.text = hp + " / " + maxHp;
-        float percentRemaining = (hp / maxHp) * 100;
+        healthBarText.text = hp + " / " + maxHealth;
+        float percentRemaining = (hp / maxHealth) * 100;
         //Temporary Corner of HUD fix
         if(percentRemaining <= 3)
         {
