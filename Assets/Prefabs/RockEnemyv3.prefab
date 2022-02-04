@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5958863282680410575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4024846696499321801}
+  m_Layer: 10
+  m_Name: HealthBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4024846696499321801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958863282680410575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.55, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8674004264568269384}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8674004264568269388
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +43,8 @@ GameObject:
   - component: {fileID: 8674004264568269387}
   - component: {fileID: 8674004264568269431}
   - component: {fileID: 6893982116740583811}
+  - component: {fileID: 8219184373377036648}
+  - component: {fileID: 7840181817857497916}
   m_Layer: 10
   m_Name: RockEnemyv3
   m_TagString: Untagged
@@ -33,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 8674004264596043208}
   - {fileID: 8160020369618523161}
+  - {fileID: 4024846696499321801}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,6 +118,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8219184373377036648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8674004264568269388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a2aefb3f532834a9eb0c5411741cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFollow: {fileID: 4024846696499321801}
+--- !u!114 &7840181817857497916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8674004264568269388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 58634ae041bb39f49bf39956aa7b2ef2, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 65f7c2e69b69184429a972d133f0dcee, type: 3}
+  m_SortingOrder: 0
 --- !u!1 &8674004264596043212
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,17 +304,21 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b8df8ab8873f74eba9da2a31c239048d, type: 2}
+    - target: {fileID: 9500000, guid: d2bd0cb3902bea546838641220b75779, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: -0.019839823
+      value: 0.0014829636
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.37124586
+      value: 0.3774258
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.z
@@ -259,7 +326,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 1.4480095
+      value: 1.4266868
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 1.4110571
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -292,5 +363,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.7444625, y: 3.286129, z: 1}
-  m_Center: {x: 0.002906084, y: 1.627531, z: 0}
+  m_Size: {x: 2.7377965, y: 3.238182, z: 1}
+  m_Center: {x: -0.00580585, y: 1.6336288, z: 0}

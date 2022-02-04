@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuTest.unity
     guid: ad1cbe0c253dc3a429e7b74f65798209
   - enabled: 1
-    path: Assets/Scenes/TestGravityMovementCamera.unity
+    path: Assets/Scenes/RockEnemyTest.unity
     guid: 6ef8b65c8732c0b4580a1ad816ae4851
   - enabled: 1
     path: Assets/Scenes/Win.unity
