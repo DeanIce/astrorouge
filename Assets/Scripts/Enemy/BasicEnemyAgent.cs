@@ -10,6 +10,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     // Public variables that the game manager or other objects may need
     public float health;
+    public float Health {get => health; }
     public float movementSpeed;
     public Collider playerCollider;
     [SerializeField] private GameObject detector;
@@ -21,7 +22,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private readonly int playerLayer = 9;
     private readonly Color red = new(1, 0, 0, 0.5f);
     private Quaternion deltaRotation;
-    private Renderer detectorMaterial;
+    private Renderer detectorRenderer;
     private float distanceToGround;
     private Vector3 eulerAngleVelocity;
     private bool hunting;
@@ -40,13 +41,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool rotating;
     private Rigidbody targetRb;
     private bool wandering;
+    public bool Wandering { get => wandering; }
     public GameObject Body => body;
+    private bool dying;
+    public bool Dying { get => dying; set { dying = value; } }
 
-
-    private void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
-        detectorMaterial = detector.GetComponent<Renderer>();
+        detectorRenderer = detector.GetComponent<Renderer>();
+        dying = false;
         // b = new Bounds(rb.position, new Vector3(20, 5, 20));
         // distanceToGround = b.extents.y;
         //playerBounds = playerCollider.bounds;
@@ -61,23 +65,31 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         //playerBounds = playerCollider.bounds;
     }
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         // Two states, either hunting or wandering
+        if (!hunting && !dying)
+        {
+            Wander(body.transform.forward);
+        }
+        else if (dying)
+        {
+            DoGravity();
+        }
+
         if (!hunting)
         {
-            detectorMaterial.material.SetColor("_BaseColor", green);
-            Wander(body.transform.forward);
+            detectorRenderer.material.SetColor("_BaseColor", green);
         }
         else
         {
-            detectorMaterial.material.SetColor("_BaseColor", red);
+            detectorRenderer.material.SetColor("_BaseColor", red);
         }
     }
 
     // Swapping to collider based detection
     // This is for attacking
-    private void OnCollisionEnter(Collision collision)
+    public virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == playerLayer)
         {
@@ -108,10 +120,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer) Hunt(other);
+        if (other.gameObject.layer == playerLayer && !dying) Hunt(other);
     }
 
-    public void Wander(Vector3 direction)
+    public virtual void Wander(Vector3 direction)
     {
         DoGravity();
 
@@ -169,7 +181,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (health <= 0f) Die();
     }
 
-    public void Die()
+    public virtual void Die()
     {
         // Temp, add animation and call other methods here later.
         // DropManager.SpawnItem(transform.position, transform.rotation);
