@@ -7,7 +7,10 @@ namespace Planets
     [Serializable]
     public class ShaderSettings
     {
+        private const int textureResolution = 50;
         public bool hasOcean;
+
+        public Gradient gradient;
 
         public EarthColours customizedCols;
         public EarthColours randomizedCols;
@@ -24,6 +27,11 @@ namespace Planets
         public Material terrainMaterial;
         protected Vector4[] cachedShadingData;
         private ComputeBuffer shadingBuffer;
+        private Texture2D texture;
+
+        private ShaderSettings()
+        {
+        }
 
         public event Action OnSettingChanged;
 
@@ -62,9 +70,22 @@ namespace Planets
         // Set shading properties on terrain
         public virtual void SetTerrainProperties(Material material, Vector2 heightMinMax, float bodyScale)
         {
-            material.SetVector("heightMinMax", heightMinMax);
+            if (texture == null)
+            {
+                Debug.Log("recreate texture");
+                texture = new Texture2D(textureResolution, 1);
+            }
+
+            material.SetVector("_heightMinMax", heightMinMax);
             material.SetFloat("oceanLevel", oceanLevel);
             material.SetFloat("bodyScale", bodyScale);
+            Debug.Log(texture);
+
+            var colors = new Color[textureResolution];
+            for (var i = 0; i < textureResolution; i++) colors[i] = gradient.Evaluate(i / (textureResolution - 1f));
+            texture.SetPixels(colors);
+            texture.Apply();
+            material.SetTexture("_Texture", texture);
 
             if (randomize)
             {

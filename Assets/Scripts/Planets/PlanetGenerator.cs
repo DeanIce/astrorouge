@@ -26,7 +26,7 @@ namespace Planets
         public PreviewMode previewMode;
         public ShapeSettings shape;
         public ShaderSettings shader;
-        public bool logTimers;
+        public bool logTimers = true;
         private readonly bool debugDoubleUpdate = true;
         private int debug_numUpdates;
 
@@ -95,7 +95,7 @@ namespace Planets
 
                     var terrainMeshTimer = Stopwatch.StartNew();
                     heightMinMax = GenerateTerrainMesh(ref previewMesh, PickTerrainRes());
-                    print(heightMinMax);
+
 
                     LogTimer(terrainMeshTimer, "Generate terrain mesh");
                     DrawEditModeMesh();
@@ -128,8 +128,7 @@ namespace Planets
             {
                 // Set material properties
                 shader.Initialize(shape);
-                // print(heightMinMax);
-                shader.SetTerrainProperties(shader.terrainMaterial, heightMinMax, BodyScale);
+                shader.SetTerrainProperties(shader.terrainMaterial, heightMinMax, 1f);
             }
 
             ReleaseAllBuffers(); //
@@ -137,9 +136,9 @@ namespace Planets
 
         private void DrawEditModeMesh()
         {
-            // GameObject terrainHolder = GetOrCreateMeshObject ("Terrain Mesh", previewMesh, body.shading.terrainMaterial);
-            var terrainHolder =
-                GetOrCreateMeshObject("Terrain Mesh", previewMesh, new Material(Shader.Find("Standard")));
+            var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", previewMesh, shader.terrainMaterial);
+            //var terrainHolder =
+            //GetOrCreateMeshObject("Terrain Mesh", previewMesh, new Material(Shader.Find("Standard")));
         }
 
         // Gets child object with specified name.
@@ -222,8 +221,8 @@ namespace Planets
 
             // Shading noise data
             // body.shading.Initialize (body.shape);
-            // Vector4[] shadingData = body.shading.GenerateShadingData (vertexBuffer);
-            // mesh.SetUVs (0, shadingData);
+            var shadingData = shader.GenerateShadingData(vertexBuffer);
+            mesh.SetUVs(0, shadingData);
 
             // Create crude tangents (vectors perpendicular to surface normal)
             // This is needed (even though normal mapping is being done with triplanar)
