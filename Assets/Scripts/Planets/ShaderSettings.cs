@@ -43,15 +43,10 @@ namespace Planets
         // Set shading properties on terrain
         public virtual void SetTerrainProperties(Material material, Vector2 heightMinMax, float bodyScale)
         {
-            if (texture == null)
-            {
-                Debug.Log("recreate texture");
-                texture = new Texture2D(TextureResolution, 1);
-            }
+            if (texture == null) texture = new Texture2D(TextureResolution, 1);
 
             material.SetVector(minMaxId, heightMinMax);
             material.SetFloat(oceanLevelId, oceanLevel);
-            Debug.Log(texture);
 
             var colors = new Color[TextureResolution];
             for (var i = 0; i < TextureResolution; i++) colors[i] = gradient.Evaluate(i / (TextureResolution - 1f));

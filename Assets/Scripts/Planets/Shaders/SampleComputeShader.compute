@@ -1,9 +1,8 @@
-// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
 #include "Includes/FractalNoise.cginc"
 #include "Includes/Math.cginc"
-
+//
 
 StructuredBuffer<float3> vertices;
 RWStructuredBuffer<float> heights;
@@ -51,5 +50,4 @@ void CSMain(uint id : SV_DispatchThreadID)
 
     // Set terrain data
     heights[id] = finalHeight;
-    //heights[id] = 1;
 }

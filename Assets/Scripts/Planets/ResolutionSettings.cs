@@ -7,6 +7,7 @@ namespace Planets
     public class ResolutionSettings
     {
         private const int MaxAllowedResolution = 500;
+        public const int NumLODLevels = 3;
         public int lod0 = 300;
         public int lod1 = 100;
         public int lod2 = 50;

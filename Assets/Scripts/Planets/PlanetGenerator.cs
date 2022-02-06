@@ -27,13 +27,21 @@ namespace Planets
         public ShapeSettings shape;
         public ShaderSettings shader;
         public bool logTimers = true;
+
         private readonly bool debugDoubleUpdate = true;
+
+        // Game mode data 
+        private int activeLODIndex = -1;
+        private Mesh collisionMesh;
         private int debugNumUpdates;
 
         private Vector2 heightMinMax;
+        private Mesh[] lodMeshes;
         private Mesh previewMesh;
         private bool shaderSettingsUpdated;
         private bool shapeSettingsUpdated;
+        private Material terrainMatInstance;
+        private MeshFilter terrainMeshFilter;
 
         private ComputeBuffer vertexBuffer;
 
@@ -49,7 +57,11 @@ namespace Planets
         // Start is called before the first frame update
         private void Start()
         {
-            if (InGameMode) HandleGameModeGeneration();
+            if (InGameMode)
+            {
+                HandleGameModeGeneration();
+                SetLOD(0);
+            }
         }
 
         // Update is called once per frame
@@ -283,8 +295,82 @@ namespace Planets
             return 0;
         }
 
+        public void SetLOD(int lodIndex)
+        {
+            if (lodIndex != activeLODIndex && terrainMeshFilter)
+            {
+                activeLODIndex = lodIndex;
+                terrainMeshFilter.sharedMesh = lodMeshes[lodIndex];
+            }
+        }
+
+        // Handles creation of celestial body when entering game mode
+        // This differs from the edit-mode version in the following ways:
+        // • creates all LOD meshes and stores them in mesh array (to be picked based on player position)
+        // • creates its own instances of materials so multiple bodies can exist with their own shading
+        // • doesn't support updating of shape/shading values once generated
         private void HandleGameModeGeneration()
         {
+            if (true /*CanGenerateMesh()*/)
+            {
+                var lodTimer = Stopwatch.StartNew();
+                Dummy();
+
+                // Generate LOD meshes
+                lodMeshes = new Mesh[ResolutionSettings.NumLODLevels];
+                for (var i = 0; i < lodMeshes.Length; i++)
+                {
+                    var lodTerrainHeightMinMax =
+                        GenerateTerrainMesh(ref lodMeshes[i], resolutionSettings.GetLODResolution(i));
+                    // Use min/max height of first (most detailed) LOD
+                    if (i == 0) heightMinMax = lodTerrainHeightMinMax;
+                }
+
+                // Generate collision mesh
+                GenerateCollisionMesh(resolutionSettings.collider);
+
+                // Create terrain renderer and set shading properties on the instanced material
+                terrainMatInstance = new Material(shader.terrainMaterial);
+                shader.Initialize(shape);
+                shader.SetTerrainProperties(terrainMatInstance, heightMinMax, bodyScale);
+                var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", null, terrainMatInstance);
+                terrainMeshFilter = terrainHolder.GetComponent<MeshFilter>();
+                LogTimer(lodTimer, "Generate all LODs");
+
+                // Add collider
+                MeshCollider collider;
+                if (!terrainHolder.TryGetComponent(out collider)) collider = terrainHolder.AddComponent<MeshCollider>();
+
+                var collisionBakeTimer = Stopwatch.StartNew();
+                MeshBaker.BakeMeshImmediate(collisionMesh);
+                collider.sharedMesh = collisionMesh;
+                LogTimer(collisionBakeTimer, "Bake Mesh collider");
+            }
+            else
+            {
+                Debug.Log("Could not generate mesh");
+            }
+
+            ReleaseAllBuffers();
+        }
+
+        private void GenerateCollisionMesh(int resolution)
+        {
+            var (vertices, triangles) = CreateSphereVertsAndTris(resolution);
+            ComputeHelper.CreateStructuredBuffer(ref vertexBuffer, vertices);
+
+            // Set heights
+            var heights = shape.CalculateHeights(vertexBuffer);
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                var height = heights[i];
+                vertices[i] *= height;
+            }
+
+            // Create mesh
+            CreateMesh(ref collisionMesh, vertices.Length);
+            collisionMesh.vertices = vertices;
+            collisionMesh.triangles = triangles;
         }
 
         private void Dummy()
