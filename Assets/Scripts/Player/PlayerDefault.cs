@@ -6,29 +6,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
-    private const float groundDistance = 0.1f;
-    private const float turnSpeed = Mathf.PI / 3.0f;
-
-    //for testing attack purposes
+    // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
-    public MeshRenderer attackMeshRenderer;
 
-    //variables that may be needed by other things
-
-    // Dynamic player info
+    // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
-
-    // Player stats
-    private LayerMask enemyMask;
-    private Transform groundCheck;
-    private LayerMask groundMask;
     private bool isGrounded;
     private bool isSprinting;
+
+    // References
+    private Rigidbody rb;
+    private Transform groundCheck;
+    private LayerMask groundMask;
+    private LayerMask enemyMask;
     private InputAction movement, look;
 
     // Constants
-    private Rigidbody rb;
-
+    private const float groundDistance = 0.1f;
+    private const float turnSpeed = Mathf.PI / 3.0f;
 
     private void Start()
     {
@@ -147,7 +142,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Attack(bool melee)
     {
-        RaycastHit[] hits;
+        RaycastHit[] hits = new RaycastHit[0];
 
         if (melee)
         {
@@ -157,9 +152,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         }
         else
         {
-            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
-                enemyMask);
-            StartCoroutine(RangedAttack());
+            ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+                PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+                PlayerStats.Instance.GetRangeDamage());
         }
 
         if (hits.Length != 0)
@@ -184,13 +181,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         meleeMeshRenderer.enabled = true;
         yield return new WaitForSeconds(0.5f);
         meleeMeshRenderer.enabled = false;
-    }
-
-    private IEnumerator RangedAttack()
-    {
-        attackMeshRenderer.enabled = true;
-        yield return new WaitForSeconds(0.25f);
-        attackMeshRenderer.enabled = false;
     }
 
     public void TakeDmg(float dmg)

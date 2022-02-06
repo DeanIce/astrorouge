@@ -1,7 +1,10 @@
 using UnityEngine;
 
+
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
@@ -15,9 +18,9 @@ public class PlayerStats : MonoBehaviour
     public float rangeAttackDelay;
     public int rangeBaseDamage;
     public float rangeDamageMultiplier;
-    public float rangeCritChance;
+    [Range(0.0f, 1.0f)] public float rangeCritChance;
     public float rangeCritMultiplier;
-    public float rangeKnockbackForce;
+    public float rangeKnockbackForce; // TODO (Simon): Incorporate into 'death throe' of Projectiles
     public float rangeProjectileRange;
     public float rangeProjectileSpeed;
 
@@ -38,7 +41,6 @@ public class PlayerStats : MonoBehaviour
     public int dashCharges;
     public float dashDistance;
     public float dashRechargeRate;
-    public static PlayerStats Instance { get; private set; }
 
     private void Awake()
     {
@@ -51,6 +53,14 @@ public class PlayerStats : MonoBehaviour
             Instance = this;
             SetDefaultValues();
         }
+    }
+
+    public float GetRangeDamage()
+    {
+        if (Random.value <= rangeCritChance)
+            return rangeBaseDamage * rangeDamageMultiplier * rangeCritMultiplier;
+        else
+            return rangeBaseDamage * rangeDamageMultiplier;
     }
 
     private void SetDefaultValues()
@@ -71,7 +81,7 @@ public class PlayerStats : MonoBehaviour
         rangeCritMultiplier = 2f;
         rangeKnockbackForce = 2f;
         rangeProjectileRange = 20f;
-        rangeProjectileSpeed = 1f;
+        rangeProjectileSpeed = 10f;
 
         // Defense Stats
         maxHealth = 100;
