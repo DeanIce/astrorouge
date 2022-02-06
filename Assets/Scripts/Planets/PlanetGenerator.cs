@@ -28,11 +28,11 @@ namespace Planets
         public ShaderSettings shader;
         public bool logTimers = true;
         private readonly bool debugDoubleUpdate = true;
-        private int debug_numUpdates;
+        private int debugNumUpdates;
 
         private Vector2 heightMinMax;
         private Mesh previewMesh;
-        private bool shadingNoiseSettingsUpdated;
+        private bool shaderSettingsUpdated;
         private bool shapeSettingsUpdated;
 
         private ComputeBuffer vertexBuffer;
@@ -41,7 +41,7 @@ namespace Planets
 
         private bool InEditMode => !Application.isPlaying;
 
-        public float BodyScale =>
+        public float bodyScale =>
             // Body radius is determined by the celestial body class,
             // which sets the local scale of the generator object (this object)
             transform.localScale.x;
@@ -65,10 +65,12 @@ namespace Planets
                 shape.OnSettingChanged -= OnShapeSettingChanged;
                 shape.OnSettingChanged += OnShapeSettingChanged;
             }
-            // if (body.shading) {
-            //     body.shading.OnSettingChanged -= OnShadingNoiseSettingChanged;
-            //     body.shading.OnSettingChanged += OnShadingNoiseSettingChanged;
-            // }
+
+            if (shader != null)
+            {
+                shader.OnSettingChanged -= OnShaderSettingChanged;
+                shader.OnSettingChanged += OnShaderSettingChanged;
+            }
 
             if (resolutionSettings != null) resolutionSettings.ClampResolutions();
 
@@ -90,7 +92,7 @@ namespace Planets
                 if (shapeSettingsUpdated)
                 {
                     shapeSettingsUpdated = false;
-                    shadingNoiseSettingsUpdated = false;
+                    shaderSettingsUpdated = false;
                     Dummy();
 
                     var terrainMeshTimer = Stopwatch.StartNew();
@@ -101,34 +103,31 @@ namespace Planets
                     DrawEditModeMesh();
                 }
                 // If only shading noise has changed, update it separately from shape to save time
-                else if (shadingNoiseSettingsUpdated)
+                else if (shaderSettingsUpdated)
                 {
-                    shadingNoiseSettingsUpdated = false;
-                    ComputeHelper.CreateStructuredBuffer(ref vertexBuffer, previewMesh.vertices);
+                    shaderSettingsUpdated = false;
                     shader.Initialize(shape);
-                    var shadingData = shader.GenerateShadingData(vertexBuffer);
-                    previewMesh.SetUVs(0, shadingData);
 
                     // Sometimes when changing a colour property, invalid data is returned from compute shader
                     // Running the shading a second time fixes it.
                     // Not sure if this is my bug, or Unity's (TODO: investigate)
-                    debug_numUpdates++;
-                    if (debugDoubleUpdate && debug_numUpdates < 2)
+                    debugNumUpdates++;
+                    if (debugDoubleUpdate && debugNumUpdates < 2)
                     {
-                        shadingNoiseSettingsUpdated = true;
+                        shaderSettingsUpdated = true;
                         HandleEditModeGeneration();
                     }
 
-                    if (debug_numUpdates == 2) debug_numUpdates = 0;
+                    if (debugNumUpdates == 2) debugNumUpdates = 0;
                 }
             }
 
             // Update shading
-            if (shader != null)
+            if (shader != null && shader.terrainMaterial != null)
             {
                 // Set material properties
                 shader.Initialize(shape);
-                shader.SetTerrainProperties(shader.terrainMaterial, heightMinMax, 1f);
+                shader.SetTerrainProperties(shader?.terrainMaterial, heightMinMax, 1f);
             }
 
             ReleaseAllBuffers(); //
@@ -136,20 +135,19 @@ namespace Planets
 
         private void DrawEditModeMesh()
         {
-            var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", previewMesh, shader.terrainMaterial);
-            //var terrainHolder =
-            //GetOrCreateMeshObject("Terrain Mesh", previewMesh, new Material(Shader.Find("Standard")));
+            var _ = GetOrCreateMeshObject("Terrain Mesh", previewMesh, shader.terrainMaterial);
         }
 
         // Gets child object with specified name.
         // If it doesn't exist, then creates object with that name, adds mesh renderer/filter and attaches mesh and material
-        private GameObject GetOrCreateMeshObject(string name, Mesh mesh, Material material)
+        private GameObject GetOrCreateMeshObject(string gameObjectName, Mesh mesh, Material material)
         {
             // Find/create object
-            var child = transform.Find(name);
+            var child = transform.Find(gameObjectName);
             if (!child)
             {
-                child = new GameObject(name).transform;
+                print("Creating new Terrain Mesh.");
+                child = new GameObject(gameObjectName).transform;
                 child.parent = transform;
                 child.localPosition = Vector3.zero;
                 child.localRotation = Quaternion.identity;
@@ -158,13 +156,13 @@ namespace Planets
             }
 
             // Add mesh components
-            MeshFilter filter;
-            if (!child.TryGetComponent(out filter)) filter = child.gameObject.AddComponent<MeshFilter>();
-            filter.sharedMesh = mesh;
+            if (!child.TryGetComponent(out MeshFilter meshFilter))
+                meshFilter = child.gameObject.AddComponent<MeshFilter>();
+            meshFilter.sharedMesh = mesh;
 
-            MeshRenderer renderer;
-            if (!child.TryGetComponent(out renderer)) renderer = child.gameObject.AddComponent<MeshRenderer>();
-            renderer.sharedMaterial = material;
+            if (!child.TryGetComponent(out MeshRenderer meshRenderer))
+                meshRenderer = child.gameObject.AddComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = material;
 
             return child.gameObject;
         }
@@ -188,19 +186,21 @@ namespace Planets
             // Set heights
             var heights = shape.CalculateHeights(vertexBuffer);
 
-            // // Perturb vertices to give terrain a less perfectly smooth appearance
-            // if (shapeSettings.perturbVertices && body.shape.perturbCompute) {
-            // 	ComputeShader perturbShader = body.shape.perturbCompute;
-            // 	float maxperturbStrength = body.shape.perturbStrength * edgeLength / 2;
-            //
-            // 	perturbShader.SetBuffer (0, "points", vertexBuffer);
-            // 	perturbShader.SetInt ("numPoints", vertices.Length);
-            // 	perturbShader.SetFloat ("maxStrength", maxperturbStrength);
-            //
-            // 	ComputeHelper.Run (perturbShader, vertices.Length);
-            // 	Vector3[] pertData = new Vector3[vertices.Length];
-            // 	vertexBuffer.GetData (vertices);
-            // }
+            // Perturb vertices to give terrain a less perfectly smooth appearance
+            if (shape.perturbVertices && shape.perturbCompute)
+            {
+                var perturbShader = shape.perturbCompute;
+                var maxperturbStrength = shape.perturbStrength * edgeLength / 2;
+
+                perturbShader.SetBuffer(0, "points", vertexBuffer);
+                perturbShader.SetInt("numPoints", vertices.Length);
+                perturbShader.SetFloat("maxStrength", maxperturbStrength);
+
+                ComputeHelper.Run(perturbShader, vertices.Length);
+                var pertData = new Vector3[vertices.Length];
+                vertexBuffer.GetData(vertices);
+            }
+
 
             // Calculate terrain min/max height and set heights of vertices
             var minHeight = float.PositiveInfinity;
@@ -219,14 +219,10 @@ namespace Planets
             mesh.SetTriangles(triangles, 0, true);
             mesh.RecalculateNormals(); //
 
-            // Shading noise data
-            // body.shading.Initialize (body.shape);
-            var shadingData = shader.GenerateShadingData(vertexBuffer);
-            mesh.SetUVs(0, shadingData);
 
             // Create crude tangents (vectors perpendicular to surface normal)
             // This is needed (even though normal mapping is being done with triplanar)
-            // because surfaceshader wants normals in tangent space
+            // because surface shader wants normals in tangent space
             var normals = mesh.normals;
             var crudeTangents = new Vector4[mesh.vertices.Length];
             for (var i = 0; i < vertices.Length; i++)
@@ -243,7 +239,7 @@ namespace Planets
         // Generate sphere (or reuse if already generated) and return a copy of the vertices and triangles
         private (Vector3[] vertices, int[] triangles) CreateSphereVertsAndTris(int resolution)
         {
-            if (sphereGenerators == null) sphereGenerators = new Dictionary<int, SphereMesh>();
+            sphereGenerators ??= new Dictionary<int, SphereMesh>();
 
             if (!sphereGenerators.ContainsKey(resolution)) sphereGenerators.Add(resolution, new SphereMesh(resolution));
 
@@ -269,7 +265,7 @@ namespace Planets
                 : IndexFormat.UInt32;
         }
 
-        public int PickTerrainRes()
+        private int PickTerrainRes()
         {
             if (!Application.isPlaying)
                 switch (previewMode)
@@ -311,9 +307,14 @@ namespace Planets
             // }
         }
 
-        public void OnShapeSettingChanged()
+        private void OnShapeSettingChanged()
         {
             shapeSettingsUpdated = true;
+        }
+
+        private void OnShaderSettingChanged()
+        {
+            shaderSettingsUpdated = true;
         }
 
         private bool CanGenerateMesh()

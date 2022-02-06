@@ -170,9 +170,9 @@ namespace Planets
             nextIndex++;
         }
 
-        public void AddRange(IEnumerable<T> items)
+        public void AddRange(IEnumerable<T> itemsToAdd)
         {
-            foreach (var item in items) Add(item);
+            foreach (var item in itemsToAdd) Add(item);
         }
     }
 }

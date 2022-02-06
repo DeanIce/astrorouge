@@ -9,6 +9,11 @@ namespace Planets
     public class ShapeSettings
     {
         public ComputeShader heightMapCompute;
+        public bool perturbVertices;
+        public ComputeShader perturbCompute;
+
+        [Range(0, 1)] public float perturbStrength = 0.7f;
+
         public int seed;
         public Vector4 testParams;
 
@@ -24,6 +29,7 @@ namespace Planets
         public SimpleNoiseSettings continentNoise;
 
         public SimpleNoiseSettings maskNoise;
+        public RidgeNoiseSettings ridgeNoise;
 
         private ComputeBuffer heightBuffer;
 
@@ -63,7 +69,7 @@ namespace Planets
         {
             var prng = new PRNG(seed);
             continentNoise.SetComputeValues(heightMapCompute, prng, "_continents");
-            // ridgeNoise.SetComputeValues(heightMapCompute, prng, "_mountains");
+            ridgeNoise.SetComputeValues(heightMapCompute, prng, "_mountains");
             maskNoise.SetComputeValues(heightMapCompute, prng, "_mask");
 
             heightMapCompute.SetFloat("oceanDepthMultiplier", oceanDepthMultiplier);

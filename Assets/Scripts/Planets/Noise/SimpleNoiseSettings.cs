@@ -22,14 +22,14 @@ namespace Planets.Noise
         }
 
         // Set values using custom scale and elevation
-        public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float scale, float elevation)
+        public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float newScale, float newElevation)
         {
-            SetComputeValues(cs, prng, varSuffix, scale, elevation, persistence);
+            SetComputeValues(cs, prng, varSuffix, newScale, newElevation, persistence);
         }
 
         // Set values using custom scale and elevation
-        public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float scale, float elevation,
-            float persistence)
+        public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float newScale, float newElevation,
+            float newPersistence)
         {
             var seededOffset = new Vector3(prng.Value(), prng.Value(), prng.Value()) * prng.Value() * 10000;
 
@@ -41,15 +41,15 @@ namespace Planets.Noise
                 seededOffset.z + offset.z,
                 numLayers,
                 // [1]
-                persistence,
+                newPersistence,
                 lacunarity,
-                scale,
-                elevation,
+                newScale,
+                newElevation,
                 // [2]
                 verticalShift
             };
 
-            cs.SetFloats("noiseParams" + varSuffix, noiseParams);
+            cs.SetFloats($"noiseParams{varSuffix}", noiseParams);
         }
     }
 }

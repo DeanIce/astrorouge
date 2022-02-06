@@ -6,7 +6,7 @@ namespace Planets
     [Serializable]
     public class ResolutionSettings
     {
-        private const int maxAllowedResolution = 500;
+        private const int MaxAllowedResolution = 500;
         public int lod0 = 300;
         public int lod1 = 100;
         public int lod2 = 50;
@@ -29,10 +29,10 @@ namespace Planets
 
         public void ClampResolutions()
         {
-            lod0 = Mathf.Min(maxAllowedResolution, lod0);
-            lod1 = Mathf.Min(maxAllowedResolution, lod1);
-            lod2 = Mathf.Min(maxAllowedResolution, lod2);
-            collider = Mathf.Min(maxAllowedResolution, collider);
+            lod0 = Mathf.Min(MaxAllowedResolution, lod0);
+            lod1 = Mathf.Min(MaxAllowedResolution, lod1);
+            lod2 = Mathf.Min(MaxAllowedResolution, lod2);
+            collider = Mathf.Min(MaxAllowedResolution, collider);
         }
     }
 }
