@@ -8,7 +8,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
-    public MeshRenderer attackMeshRenderer;
 
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
@@ -153,9 +152,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         }
         else
         {
-            //hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
-            //    enemyMask);
-            //StartCoroutine(RangedAttack());
             ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
                 PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
                 LayerMask.GetMask("Enemy", "Ground"),
@@ -185,13 +181,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         meleeMeshRenderer.enabled = true;
         yield return new WaitForSeconds(0.5f);
         meleeMeshRenderer.enabled = false;
-    }
-
-    private IEnumerator RangedAttack()
-    {
-        attackMeshRenderer.enabled = true;
-        yield return new WaitForSeconds(0.25f);
-        attackMeshRenderer.enabled = false;
     }
 
     public void TakeDmg(float dmg)
