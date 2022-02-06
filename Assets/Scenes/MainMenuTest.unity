@@ -303,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuMusic: {fileID: 8300000, guid: 7923e375bd4ac7645bb82b6d057e8b3c, type: 3}
   buttonPressSoundEffect: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
+  mainScene: TestGravityMovementCamera
 --- !u!114 &706962816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591599492}
+  - component: {fileID: 1591599493}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -495,6 +497,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1591599493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591599491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df692b2d645040f4aae325445824558a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1737274372
 GameObject:
   m_ObjectHideFlags: 0
