@@ -17,9 +17,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // References
     private Rigidbody rb;
-    private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
+    private LayerMask enemyMask;
     private InputAction movement, look;
 
     // Constants
@@ -143,7 +143,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Attack(bool melee)
     {
-        RaycastHit[] hits;
+        RaycastHit[] hits = new RaycastHit[0];
 
         if (melee)
         {
@@ -153,9 +153,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         }
         else
         {
-            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
-                enemyMask);
-            StartCoroutine(RangedAttack());
+            //hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.rangeProjectileRange,
+            //    enemyMask);
+            //StartCoroutine(RangedAttack());
+            ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+                PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+                PlayerStats.Instance.GetRangeDamage());
         }
 
         if (hits.Length != 0)
