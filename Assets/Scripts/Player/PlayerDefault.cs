@@ -6,29 +6,25 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
-    private const float groundDistance = 0.1f;
-    private const float turnSpeed = Mathf.PI / 3.0f;
-
-    //for testing attack purposes
+    // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
     public MeshRenderer attackMeshRenderer;
 
-    //variables that may be needed by other things
-
-    // Dynamic player info
+    // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
+    private bool isGrounded;
+    private bool isSprinting;
 
-    // Player stats
+    // References
+    private Rigidbody rb;
     private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
-    private bool isGrounded;
-    private bool isSprinting;
     private InputAction movement, look;
 
     // Constants
-    private Rigidbody rb;
-
+    private const float groundDistance = 0.1f;
+    private const float turnSpeed = Mathf.PI / 3.0f;
 
     private void Start()
     {

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
@@ -38,7 +40,6 @@ public class PlayerStats : MonoBehaviour
     public int dashCharges;
     public float dashDistance;
     public float dashRechargeRate;
-    public static PlayerStats Instance { get; private set; }
 
     private void Awake()
     {
