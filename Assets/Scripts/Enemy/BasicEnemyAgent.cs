@@ -63,6 +63,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // Potential Bug here **
         //b = new Bounds(rb.position, new Vector3(20, 5, 20));
         //playerBounds = playerCollider.bounds;
+
+        // TEMP FOR TESTING DROPS
+        /*if (Input.GetKeyDown(KeyCode.L))
+        {
+            Die();
+        }*/
     }
 
     public virtual void FixedUpdate()
@@ -184,7 +190,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void Die()
     {
         // Temp, add animation and call other methods here later.
-        // DropManager.SpawnItem(transform.position, transform.rotation);
+        DropManager.SpawnItem(transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

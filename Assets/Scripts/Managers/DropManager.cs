@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class DropManager : MonoBehaviour
 {
-    // Temporary workaround because I'm dumb
+    /*
+     * Over engineering ideas:
+     * - Make it so only certain enemies can drop certain objects via editor functionality
+     */
+
+    // We can do this with events later
     public GameObject[] drops;
+    public int[] weights;
     private static GameObject[] staticDrops;
+    private static int[] staticWeights;
 
     private void Awake()
     {
         staticDrops = drops;
+        staticWeights = weights;
     }
 
     // This is what enemies will call when they die, all logic done here
@@ -21,19 +29,58 @@ public class DropManager : MonoBehaviour
         GameObject.Instantiate(spawnItem, location, rotation);
     }
 
-    // Will need more logic to narrow down eligible item nums
+    
+    /*
+     * Beware all ye who come here, here is my convention
+     * Each item is assigned a weight, the higher the number the more likely it is to drop
+     * The lower the number, the less likely.
+     * All item weights are added together as one big number and then segmented, then a random number is found in said big number
+     * Example here:
+     * Item 1: Weight 10
+     * Item 2: Weight 30
+     * Total: 40
+     * If random yields 0-10, item 1 will be dropped, 11-30, item 2 will be dropped
+     * 
+     * IMPORTANT NOTE: WHEN ADDING THINGS TO THE DROP MANAGER IN THE EDITOR, THE INDICES CORRESPOND 1:1
+     * THAT IS, INDEX 0 OF DROPS WILL HAVE THE WEIGHT AT INDEX 0 OF WEIGHTS
+     */
     private static int GetItemNum()
     {
-        // Example loot table ideas
-        // If level one, limit range from 0 to X where X is the beginning of stronger level 2 items
-        // If enemy type is X, limit range from Y to Z 
-        return Random.Range(0, staticDrops.Length);
+        int totalWeight = 0;
+        foreach(int item in staticWeights)
+        {
+            totalWeight += item;
+        }
+        return Random.Range(0, totalWeight);
     }
 
     // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
     private static GameObject GetSpawnItem()
     {
-        int lootNum = GetItemNum();
-        return staticDrops[lootNum];
+        // Which item we're going to spawn
+        int currentSelection = 0;
+        
+        // The sum of weights up to index thus far
+        int currentWeightIndex = 0;
+
+        // The weighted number selection
+        int selectedWeight = GetItemNum();
+        Debug.Log("Item # " + selectedWeight);
+
+        for (int i = 0; i < staticWeights.Length; i++)
+        {
+            if (selectedWeight > currentWeightIndex)
+            {
+                currentSelection = i;
+            }
+            else
+            {
+                // For loop so I don't have to manually play with indices
+                // No reason to go through rest of for loop though if we find our selection
+                break;
+            }
+            currentWeightIndex += staticWeights[i];
+        }
+        return staticDrops[currentSelection];
     }
 }
