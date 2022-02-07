@@ -65,6 +65,7 @@ public class DropManager : MonoBehaviour
 
         // The weighted number selection
         int selectedWeight = GetItemNum();
+        Debug.Log("Item # " + selectedWeight);
 
         for (int i = 0; i < staticWeights.Length; i++)
         {
