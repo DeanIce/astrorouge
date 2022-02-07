@@ -1,6 +1,7 @@
 ﻿using Managers;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
+
 namespace CustomEditors
 {
     [CustomEditor(typeof(EventManager))]
@@ -9,25 +10,18 @@ namespace CustomEditors
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            EditorGUILayout.LabelField("Trigger Events Manually:",EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Trigger Events Manually:", EditorStyles.boldLabel);
 
             var eventManager = (EventManager) target;
-            if (GUILayout.Button("Win"))
-            {
-                eventManager.Win();
-            }            
-            if (GUILayout.Button("Play"))
-            {
-                eventManager.Play ();
-            }            
-            if (GUILayout.Button("Pause"))
-            {
-                eventManager.Pause();
-            }            
-            if (GUILayout.Button("Menu"))
-            {
-                eventManager.Menu();
-            }
+            if (GUILayout.Button("Win")) eventManager.Win();
+
+            if (GUILayout.Button("Play")) eventManager.Play();
+
+            if (GUILayout.Button("Pause")) eventManager.Pause();
+
+            if (GUILayout.Button("Menu")) eventManager.Menu();
+
+            if (GUILayout.Button("Recap")) eventManager.Recap();
         }
     }
 }

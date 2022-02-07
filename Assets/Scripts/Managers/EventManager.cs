@@ -87,9 +87,18 @@ namespace Managers
             SceneManager.LoadScene("Win");
         }
 
+        public void Recap()
+        {
+            log("request recap");
+            mode = Mode.Recap;
+            InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
+            recap?.Invoke();
+            SceneManager.LoadScene("Recap");
+        }
+
         private void log(object o)
         {
-            if (logEvents) print(o);
+            if (logEvents) print($"EventManager: {o}");
         }
     }
 }
