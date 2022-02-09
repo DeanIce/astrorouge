@@ -1,0 +1,14 @@
+#Top {
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
+}
+
+#Left {
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
+}
+
+#Right {
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
+}
