@@ -53,9 +53,10 @@ public class SpawnObjects : MonoBehaviour
         {
             // FIX PARENT AND SCALE
             spawnLocation = ObjectSpawnLocation(vertices);
-            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.LookRotation(spawnLocation));
-            placeObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.LookRotation(new Vector3(-spawnLocation.z, 0, spawnLocation.x)));
+            placeObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
+            Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
     }
 }
