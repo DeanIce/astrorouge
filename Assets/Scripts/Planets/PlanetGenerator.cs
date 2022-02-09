@@ -41,7 +41,8 @@ namespace Planets
         private bool shaderSettingsUpdated;
         private bool shapeSettingsUpdated;
         private Material terrainMatInstance;
-        private MeshFilter terrainMeshFilter;
+        //private MeshFilter terrainMeshFilter;
+        public MeshFilter terrainMeshFilter { get; private set; }
 
         private ComputeBuffer vertexBuffer;
 
