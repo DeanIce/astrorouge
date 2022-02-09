@@ -1,5 +1,5 @@
 # AstroRogue
-A stranded space soldier crash lands light years from Earth. With no communication and a barely functioning ship, can they make it home?
+A stranded space soldier crash lands light years from Earth. With no communication and a barely functioning ship, can you make it home?
 
 Jump, shoot, slash, and upgrade your way through procedurally generated levels that get increasingly difficult to get back home. Fight a wide variety of diverse foes that inhabit alien planets. Defeat powerful bosses to obtain powerful upgrades. Obtain new and unique persistent technology to keep your runs fun and fresh. Save your home world.
 
