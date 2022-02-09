@@ -104,7 +104,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     }
 
     // Detected
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == playerLayer)
         {
@@ -124,7 +124,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     }
 
     // Hunting
-    private void OnTriggerStay(Collider other)
+    public virtual void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == playerLayer && !dying) Hunt(other);
     }
