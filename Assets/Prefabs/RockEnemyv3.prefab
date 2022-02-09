@@ -314,23 +314,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.x
-      value: 0.0014829636
+      value: 0.3879165
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.y
-      value: 0.3774258
+      value: 0.17976391
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Center.z
-      value: -0.09512591
+      value: 0.22935612
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Extent.x
-      value: 1.4266868
+      value: 0.562926
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_AABB.m_Extent.y
-      value: 1.4110571
+      value: 0.5020331
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.20976122
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: d2bd0cb3902bea546838641220b75779, type: 3}
       propertyPath: m_Materials.Array.data[0]
