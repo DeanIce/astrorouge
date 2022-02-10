@@ -25,8 +25,9 @@ namespace Managers
 
         public string scenePlay;
 
-
         public static EventManager instance { get; private set; }
+
+        public RunStats runStats = new RunStats();
 
         public Mode mode { get; private set; }
 
