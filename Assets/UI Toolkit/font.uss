@@ -12,3 +12,59 @@
     -unity-font-definition: none;
     -unity-font: resource('NEXON Football Gothic B');
 }
+
+.noodle-header {
+    background-color: rgba(103, 9, 9, 255);
+    color: rgba(238, 238, 238, 255);
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 12px;
+    padding-left: 14px;
+    -unity-font-style: bold;
+}
+
+.noodle-stats-header {
+    -unity-text-align: upper-left;
+    -unity-font-style: bold;
+    padding-top: 8px;
+    font-size: 18px;
+    padding-left: 14px;
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_BannerFrame05_White2.png?fileID=2800000&guid=78cff3b42b90c234e8223f512b5c3e1c&type=3#Frame_BannerFrame05_White2');
+    margin-left: 13px;
+    margin-top: 6px;
+    -unity-slice-left: 0;
+    -unity-slice-right: 0;
+    height: 38px;
+    width: 375px;
+    -unity-background-image-tint-color: rgb(25, 125, 86);
+}
+
+.noodle-button {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_Itemframe02_N_Red.Png?fileID=2800000&guid=e068976dfaeb7f94b92e0c8147c1b3d9&type=3#Frame_Itemframe02_N_Red');
+    background-color: rgba(255, 255, 255, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    height: 100px;
+}
+
+.noodle-stats-view {
+    flex-grow: 0;
+    width: 50%;
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_CardFrame02_Green1.png?fileID=2800000&guid=985d81e350969554892d417a327c1432&type=3#Frame_CardFrame02_Green1');
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
+    -unity-slice-left: 33;
+    -unity-slice-right: 101;
+    -unity-slice-top: 69;
+    -unity-slice-bottom: 60;
+}
