@@ -36,13 +36,13 @@ public class BasicProjectile : MonoBehaviour, IProjectile
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (((1 << collision.gameObject.layer) | collisionLayer) == collisionLayer)
+        if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            collision.gameObject.GetComponent<IEnemy>()?.TakeDmg(damage);
-            collision.gameObject.GetComponent<IProjectile>()?.TakeDmg(damage);
-            collision.gameObject.GetComponent<IPlayer>()?.TakeDmg(damage);
+            other.gameObject.GetComponent<IEnemy>()?.TakeDmg(damage);
+            other.gameObject.GetComponent<IProjectile>()?.TakeDmg(damage);
+            other.gameObject.GetComponent<IPlayer>()?.TakeDmg(damage);
             currHealth = 0;
         }
     }

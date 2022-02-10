@@ -140,40 +140,37 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         EventManager.instance.Pause();
     }
 
-    public void Attack(bool melee)
+    public void MeleeAttack(InputAction.CallbackContext obj)
     {
-        RaycastHit[] hits = new RaycastHit[0];
+        // TODO (Simon): Move beam attack into different action
+        ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
+            transform.forward,
+            LayerMask.GetMask("Enemy", "Ground"),
+            LayerMask.GetMask("Ground"),
+            0.1f, // TODO (Simon): Mess with value
+            PlayerStats.Instance.GetRangeDamage(),
+            PlayerStats.Instance.rangeProjectileRange);
 
-        if (melee)
-        {
-            hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
-                enemyMask);
-            StartCoroutine(Attack());
-        }
-        else
-        {
-            ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-                PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
-                LayerMask.GetMask("Enemy", "Ground"),
-                PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-                PlayerStats.Instance.GetRangeDamage());
-        }
-
-        if (hits.Length != 0)
+        // TODO (Simon): Figure out alternate melee attack
+        /*hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
+            enemyMask);
+        StartCoroutine(Attack());
+        
+         if (hits.Length != 0)
             //check for an enemy in the things the ray hit by whether it has an IEnemy
             foreach (var hit in hits)
                 if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
                     hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
-    }
-
-    public void MeleeAttack(InputAction.CallbackContext obj)
-    {
-        Attack(true);
+         */
     }
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
-        Attack(false);
+        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
     }
 
     private IEnumerator Attack()
