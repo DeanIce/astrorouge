@@ -5,12 +5,14 @@ using UnityEngine;
 public class SpawnObjects : MonoBehaviour
 {
     // For procedurally spawning things
+    public GameObject planet;
     public GameObject[] environmentAssets;
     public int[] numOfAsset;
     private Planets.PlanetGenerator planetGen;
     private Mesh mesh;
     private Vector3[] vertices;
     bool ran = false;
+    public float yOffset;
 
     private void Start()
     {
@@ -51,10 +53,14 @@ public class SpawnObjects : MonoBehaviour
         Vector3 spawnLocation = new Vector3();
         for (int i = 0; i < numToSpawn; i++)
         {
-            // FIX PARENT AND SCALE
+            // FIX PARENT AND SCALE AND ROTATION
             spawnLocation = ObjectSpawnLocation(vertices);
-            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.LookRotation(new Vector3(-spawnLocation.z, 0, spawnLocation.x)));
-            placeObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            placeObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            placeObject.transform.LookAt(planet.transform.position);
+            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(-90, 0, 0);
+
+            // Debug
             Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
             Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
