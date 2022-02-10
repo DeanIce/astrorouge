@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Recap.unity
     guid: cb71024e343398c478c53352f3492481
+  - enabled: 1
+    path: Assets/Scenes/TestGravityMovementCamera.unity
+    guid: 1d43e8130f5193d4c9c2d77ef1558ea0
   m_configObjects: {}

@@ -17,8 +17,6 @@ namespace Managers
 {
     public class AudioManager : MonoBehaviour
     {
-        private static AudioManager instance;
-
         // Determines which music source is playing. If true, music1 is playing, if false, music2 is playing.
         private bool currentMusicSource;
         private bool isMuted;
@@ -27,35 +25,29 @@ namespace Managers
         private AudioSource music2;
         private AudioSource sfx;
 
-        public static AudioManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = FindObjectOfType<AudioManager>();
-                    if (instance == null)
-                        instance = new GameObject("Audio Manager", typeof(AudioManager)).GetComponent<AudioManager>();
-                }
-
-                return instance;
-            }
-            private set => instance = value;
-        }
+        public static AudioManager Instance { get; private set; }
 
         private void Awake()
         {
-            // Don't destroy this instance!
-            DontDestroyOnLoad(gameObject);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+                // Don't destroy this instance!
+                DontDestroyOnLoad(gameObject);
 
-            // Construct audio sources with references.
-            music1 = gameObject.AddComponent<AudioSource>();
-            music2 = gameObject.AddComponent<AudioSource>();
-            sfx = gameObject.AddComponent<AudioSource>();
+                // Construct audio sources with references.
+                music1 = gameObject.AddComponent<AudioSource>();
+                music2 = gameObject.AddComponent<AudioSource>();
+                sfx = gameObject.AddComponent<AudioSource>();
 
-            // Loop variables.
-            music1.loop = true;
-            music2.loop = true;
+                // Loop variables.
+                music1.loop = true;
+                music2.loop = true;
+            }
         }
 
         // Plays music immediately, with no fade in or effect.
