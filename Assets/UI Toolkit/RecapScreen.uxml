@@ -38,15 +38,15 @@
             </ui:VisualElement>
             <ui:VisualElement name="BottomDecorator" class="noodle-blue-cap" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_LineFrame01_White2.png?fileID=2800000&amp;guid=498af2afaed86434f9a8a22678f79c9e&amp;type=3#Frame_LineFrame01_White2&apos;); width: 100%; height: 20px; -unity-slice-right: 15; -unity-slice-left: 15; -unity-slice-bottom: 0;" />
             <ui:VisualElement name="Buttons" style="flex-direction: row;">
-                <ui:Button text="MENU" display-tooltip-when-elided="true" class="noodle-button" style="width: 50%;">
+                <ui:Button text="MENU" display-tooltip-when-elided="true" name="MenuButton" class="noodle-button" style="width: 50%;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_3Lines_White.png?fileID=2800000&amp;guid=be1541afdd9e69748b85ed313b057090&amp;type=3#Icon_PictoIcon_3Lines_White&apos;); width: 35px; height: 35px;" />
                 </ui:Button>
-                <ui:Button text="EXIT" display-tooltip-when-elided="true" class="noodle-button" style="width: 50%;">
+                <ui:Button text="EXIT" display-tooltip-when-elided="true" name="ExitButton" class="noodle-button" style="width: 50%;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_Close_White.png?fileID=2800000&amp;guid=e4b7042159a6a2342a3af6b2a3357a8d&amp;type=3#Icon_PictoIcon_Close_White&apos;); width: 35px; height: 35px;" />
                 </ui:Button>
             </ui:VisualElement>
-            <ui:VisualElement name="Retry" style="margin-top: -17px;">
-                <ui:Button text="RETRY" display-tooltip-when-elided="true" class="noodle-button" style="height: 156px; font-size: 59px;">
+            <ui:VisualElement name="Bottom" style="margin-top: -17px;">
+                <ui:Button text="RETRY" display-tooltip-when-elided="true" name="RetryButton" class="noodle-button" style="height: 156px; font-size: 59px;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_Auto_White.png?fileID=2800000&amp;guid=b28587a20afbcc048be20b8a96ff0a3e&amp;type=3#Icon_PictoIcon_Auto_White&apos;); width: 45px; height: 45px;" />
                 </ui:Button>
             </ui:VisualElement>
