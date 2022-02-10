@@ -111,7 +111,7 @@ public class MainMenu : MonoBehaviour
     private void QuitButtonPressed()
     {
         AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
-        Application.Quit();
+        EventManager.instance.Exit();
     }
 
     private void BackButtonPressed()

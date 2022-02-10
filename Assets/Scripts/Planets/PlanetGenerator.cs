@@ -41,7 +41,8 @@ namespace Planets
         private bool shaderSettingsUpdated;
         private bool shapeSettingsUpdated;
         private Material terrainMatInstance;
-        private MeshFilter terrainMeshFilter;
+        //private MeshFilter terrainMeshFilter;
+        public MeshFilter terrainMeshFilter { get; private set; }
 
         private ComputeBuffer vertexBuffer;
 
@@ -244,6 +245,12 @@ namespace Planets
             }
 
             mesh.SetTangents(crudeTangents);
+
+            // PROCEDURALLY SPAWN HERE?
+            /*for (int i = 0; i < environmentAssets.Length; i++)
+            {
+                //SpawnObject(vertices, environmentAssets[i], numOfAsset[i]);
+            }*/
 
             return new Vector2(minHeight, maxHeight);
         }

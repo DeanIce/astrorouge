@@ -25,8 +25,9 @@ namespace Managers
 
         public string scenePlay;
 
-
         public static EventManager instance { get; private set; }
+
+        public RunStats runStats = new RunStats();
 
         public Mode mode { get; private set; }
 
@@ -45,7 +46,7 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, loading;
+        public event Action pauseGame, playGame, menu, win, recap, loading, exit;
 
         // Player UI events (Todo: Dennis)
         public event Action playerStatsChanged;
@@ -99,6 +100,11 @@ namespace Managers
         private void log(object o)
         {
             if (logEvents) print($"EventManager: {o}");
+        }
+
+        public void Exit()
+        {
+            Application.Quit();
         }
     }
 }
