@@ -97,6 +97,8 @@ public class SpawnObjects : MonoBehaviour
         int initialSpawnIndex = UnityEngine.Random.Range(0, vertices.Count - numToSpawn);
         for (int i = 0; i < numToSpawn; i++)
         {
+            // We can +i here since we manually prevented overflow in our selection
+            // NOTE: Vertices are contiguous in memory
             GameObject placeObject = Instantiate(objectToSpawn, vertices[initialSpawnIndex + i], Quaternion.identity);
 
             // TEMP: Scale down huge assets
