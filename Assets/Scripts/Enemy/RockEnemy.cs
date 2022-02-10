@@ -5,6 +5,7 @@ using UnityEngine;
 public class RockEnemy : MeleeEnemy
 {
     private int attack;
+    private bool started;
     
     Animator animator;
 
@@ -12,6 +13,7 @@ public class RockEnemy : MeleeEnemy
     {
         animator = GetComponentInChildren<Animator>();
         Dying = false;
+        started = false;
         attack = 0;
         base.Start();
     }
@@ -19,7 +21,8 @@ public class RockEnemy : MeleeEnemy
     public override void FixedUpdate()
     {
         if (Wandering) attack = 0;
-        base.FixedUpdate();
+        if (started) base.FixedUpdate();
+        else DoGravity();
     }
 
     public override IEnumerator Attack()
@@ -72,6 +75,21 @@ public class RockEnemy : MeleeEnemy
         }
     }
 
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (!started && other.gameObject.layer == LayerMask.NameToLayer("Player")) StartCoroutine(Appear(other));
+        else base.OnTriggerEnter(other);
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        if (started)
+        {
+            base.OnTriggerEnter(other);
+            base.OnTriggerStay(other);
+        }
+    }
+
     public override void Die()
     {
         if (!Dying) StartCoroutine(DieCo());
@@ -84,5 +102,12 @@ public class RockEnemy : MeleeEnemy
         animator.SetBool("death", true);
         yield return new WaitForSecondsRealtime(10);
         Destroy(gameObject);
+    }
+
+    private IEnumerator Appear(Collider other)
+    {
+        animator.SetBool("rubbleToIdle", true);
+        yield return new WaitForSecondsRealtime(5);
+        started = true;
     }
 }

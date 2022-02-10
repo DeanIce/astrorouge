@@ -5,12 +5,14 @@ using UnityEngine;
 public class SnakeEnemy : RangedEnemy
 {
     Animator animator;
-    [SerializeField] GameObject projectile;
+    ProjectileFactory factory;
+    [SerializeField] GameObject mouth;
 
     public override void Start()
     {
         Dying = false;
         animator = GetComponentInChildren<Animator>();
+        factory = ProjectileFactory.Instance;
         base.Start();
     }
 
@@ -21,9 +23,18 @@ public class SnakeEnemy : RangedEnemy
         Attacking = true;
         animator.SetBool("attack3", true);
         yield return new WaitForSeconds(2f);
-        GameObject ball = Instantiate(projectile);
-        ball.transform.position = transform.position + transform.up * 3;
-        ball.GetComponent<Rigidbody>().MoveRotation(Quaternion.FromToRotation(ball.transform.forward, transform.forward) * transform.rotation);
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    factory.CreateBasicProjectile(mouth.transform.position, hit.collider.gameObject.transform.position - mouth.transform.position, LayerMask.GetMask("Player", "Ground"), 5, 5);
+                }
+            }
+        }
         //rend.enabled = false;
         Attacking = false;
         animator.SetBool("attack3", false);
