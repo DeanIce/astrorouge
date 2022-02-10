@@ -83,7 +83,11 @@ public class RockEnemy : MeleeEnemy
 
     public override void OnTriggerStay(Collider other)
     {
-        if (started) base.OnTriggerStay(other);
+        if (started)
+        {
+            base.OnTriggerEnter(other);
+            base.OnTriggerStay(other);
+        }
     }
 
     public override void Die()
@@ -105,6 +109,5 @@ public class RockEnemy : MeleeEnemy
         animator.SetBool("rubbleToIdle", true);
         yield return new WaitForSecondsRealtime(5);
         started = true;
-        base.OnTriggerEnter(other);
     }
 }
