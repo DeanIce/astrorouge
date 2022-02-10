@@ -5,12 +5,13 @@ using UnityEngine;
 public class SnakeEnemy : RangedEnemy
 {
     Animator animator;
-    [SerializeField] GameObject projectile;
+    ProjectileFactory factory;
 
     public override void Start()
     {
         Dying = false;
         animator = GetComponentInChildren<Animator>();
+        factory = ProjectileFactory.Instance;
         base.Start();
     }
 
@@ -21,9 +22,7 @@ public class SnakeEnemy : RangedEnemy
         Attacking = true;
         animator.SetBool("attack3", true);
         yield return new WaitForSeconds(2f);
-        GameObject ball = Instantiate(projectile);
-        ball.transform.position = transform.position + transform.up * 3;
-        ball.GetComponent<Rigidbody>().MoveRotation(Quaternion.FromToRotation(ball.transform.forward, transform.forward) * transform.rotation);
+        factory.CreateBasicProjectile(transform.position, transform.forward, LayerMask.GetMask("Player", "Ground"), 5, 5);
         //rend.enabled = false;
         Attacking = false;
         animator.SetBool("attack3", false);
