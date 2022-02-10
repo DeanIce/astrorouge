@@ -21,16 +21,17 @@
     margin-top: 0;
     margin-bottom: 12px;
     padding-left: 14px;
-    -unity-font-style: bold;
     padding-top: 4px;
     padding-bottom: 4px;
-    font-size: 17px;
+    font-size: 20px;
+    -unity-font-definition: none;
+    -unity-font: resource('Oxanium-ExtraBold');
 }
 
 .noodle-stats-header {
     -unity-text-align: upper-left;
     -unity-font-style: bold;
-    padding-top: 6px;
+    padding-top: 10px;
     font-size: 26px;
     padding-left: 14px;
     background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_BannerFrame05_White2.png?fileID=2800000&guid=78cff3b42b90c234e8223f512b5c3e1c&type=3#Frame_BannerFrame05_White2');
@@ -46,7 +47,7 @@
 .noodle-button {
     padding-left: 55px;
     padding-right: 39px;
-    padding-top: 0;
+    padding-top: 5px;
     padding-bottom: 0;
     margin-left: 0;
     margin-right: 0;
@@ -92,4 +93,6 @@
 
 #RecapUI {
     color: rgb(253, 215, 255);
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
 }

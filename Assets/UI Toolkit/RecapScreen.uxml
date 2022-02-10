@@ -20,7 +20,7 @@
     <ui:VisualElement name="RecapUI" style="width: 100%; height: 100%; position: absolute; flex-direction: row; opacity: 1; background-color: rgb(26, 27, 31); color: rgb(255, 255, 255);">
         <ui:VisualElement name="LeftPanel" style="width: 38%; padding-left: 12px; padding-right: 12px; padding-top: 12px; padding-bottom: 12px;">
             <ui:VisualElement class="noodle-header">
-                <ui:Label text="CONTROLI INTERFACE" display-tooltip-when-elided="true" />
+                <ui:Label text="CONTROL INTERFACE" display-tooltip-when-elided="true" enable-rich-text="true" />
             </ui:VisualElement>
             <ui:VisualElement name="Terminal" style="height: auto; flex-grow: 1; flex-basis: 50%;">
                 <ui:VisualElement name="TopDecorator" class="noodle-blue-cap" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_LineFrame01_White1.png?fileID=2800000&amp;guid=1768903bed093fc448ea226b5c4c659d&amp;type=3#Frame_LineFrame01_White1&apos;); width: 100%; height: 49px; -unity-slice-right: 15; -unity-slice-left: 15;" />
