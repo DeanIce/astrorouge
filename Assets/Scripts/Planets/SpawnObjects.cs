@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnObjects : MonoBehaviour
@@ -10,7 +11,7 @@ public class SpawnObjects : MonoBehaviour
     public int[] numOfAsset;
     private Planets.PlanetGenerator planetGen;
     private Mesh mesh;
-    private Vector3[] vertices;
+    private List<Vector3> vertices;
     bool ran = false;
     public float yOffset;
 
@@ -26,7 +27,7 @@ public class SpawnObjects : MonoBehaviour
         if (planetGen.terrainMeshFilter.sharedMesh.vertices != null && !ran)
         {
             // Set our vertices guaranteed non null
-            vertices = planetGen.terrainMeshFilter.sharedMesh.vertices;
+            vertices = planetGen.terrainMeshFilter.sharedMesh.vertices.ToList();
 
             for (int i = 0; i < environmentAssets.Length; i++)
             {
@@ -37,16 +38,19 @@ public class SpawnObjects : MonoBehaviour
         }
     }
 
-    private Vector3 ObjectSpawnLocation(Vector3[] vertices)
+    private Vector3 ObjectSpawnLocation(List<Vector3> vertices)
     {
-        // BUG: Figure out way to remove vertices from list
-        int randIndex = UnityEngine.Random.Range(0, vertices.Length);
+        int randIndex = UnityEngine.Random.Range(0, vertices.Count);
+        Vector3 newLoc = vertices[randIndex];
+
+        // This prevents spawning 2 things at the same location in rare instances
+        vertices.RemoveAt(randIndex);
+
         //Debug.Log("Chose index: " + randIndex + " which is vertex: " + vertices[randIndex]);
-        // here
-        return vertices[randIndex];
+        return newLoc;
     }
 
-    private void SpawnObject(Vector3[] vertices, GameObject objectToSpawn, int numToSpawn)
+    private void SpawnObject(List<Vector3> vertices, GameObject objectToSpawn, int numToSpawn)
     {
         // We need this here so we can set rotation
         Vector3 spawnLocation = new Vector3();
