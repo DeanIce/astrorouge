@@ -53,12 +53,14 @@ public class SpawnObjects : MonoBehaviour
         Vector3 spawnLocation = new Vector3();
         for (int i = 0; i < numToSpawn; i++)
         {
-            // FIX PARENT AND SCALE AND ROTATION
+            // FIX SCALE
+            // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
             spawnLocation = ObjectSpawnLocation(vertices);
             GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
             placeObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
             placeObject.transform.LookAt(planet.transform.position);
             placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.parent = planet.transform;
 
             // Debug
             Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
