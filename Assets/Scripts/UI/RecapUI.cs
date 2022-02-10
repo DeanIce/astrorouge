@@ -6,6 +6,9 @@ namespace UI
     public class RecapUI : MonoBehaviour
     {
         public VisualTreeAsset statDoc;
+        private Button buttonExit;
+        private Button buttonMenu;
+        private Button buttonRetry;
         private Label quip;
         private ScrollView scrollView;
 
@@ -18,6 +21,10 @@ namespace UI
             quip.text = $"\"{quote}\"";
 
             scrollView = root.Q<ScrollView>("ScrollView");
+
+            buttonMenu = root.Q<Button>("MenuButton");
+            buttonExit = root.Q<Button>("ExitButton");
+            buttonRetry = root.Q<Button>("RetryButton");
         }
 
         private void Update()
