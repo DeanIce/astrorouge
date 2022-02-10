@@ -40,9 +40,8 @@ public class SpawnObjects : MonoBehaviour
     private Vector3 ObjectSpawnLocation(Vector3[] vertices)
     {
         // BUG: Figure out way to remove vertices from list
-        // TODO: Add potential y offset parameter
         int randIndex = UnityEngine.Random.Range(0, vertices.Length);
-        Debug.Log("Chose index: " + randIndex + " which is vertex: " + vertices[randIndex]);
+        //Debug.Log("Chose index: " + randIndex + " which is vertex: " + vertices[randIndex]);
         // here
         return vertices[randIndex];
     }
@@ -57,14 +56,24 @@ public class SpawnObjects : MonoBehaviour
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
             spawnLocation = ObjectSpawnLocation(vertices);
             GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+
+            // TEMP: Scale down huge assets
             placeObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+
+            // Find the center of our origin
             placeObject.transform.LookAt(planet.transform.position);
+
+            // First orient stemming out from planet
+            // THEN randomly rotate on plane, NEED to do in this order
             placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(0, UnityEngine.Random.Range(0, 180), 0);
+
+            // Set Parent
             placeObject.transform.parent = planet.transform;
 
             // Debug
-            Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
-            Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
+            //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
+            //Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
     }
 }
