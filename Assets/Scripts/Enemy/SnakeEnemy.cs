@@ -6,6 +6,7 @@ public class SnakeEnemy : RangedEnemy
 {
     Animator animator;
     ProjectileFactory factory;
+    [SerializeField] GameObject mouth;
 
     public override void Start()
     {
@@ -22,7 +23,18 @@ public class SnakeEnemy : RangedEnemy
         Attacking = true;
         animator.SetBool("attack3", true);
         yield return new WaitForSeconds(2f);
-        factory.CreateBasicProjectile(transform.position, transform.forward, LayerMask.GetMask("Player", "Ground"), 5, 5);
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    factory.CreateBasicProjectile(mouth.transform.position, hit.collider.gameObject.transform.position - mouth.transform.position, LayerMask.GetMask("Player", "Ground"), 5, 5);
+                }
+            }
+        }
         //rend.enabled = false;
         Attacking = false;
         animator.SetBool("attack3", false);

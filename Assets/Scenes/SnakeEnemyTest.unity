@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &69242371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2025109476969112673, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
+  m_PrefabInstance: {fileID: 6092937446405950152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &152547055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1118,6 +1123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SnakeEnemyv1
       objectReference: {fileID: 0}
+    - target: {fileID: 6092937446732967474, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
+      propertyPath: mouth
+      value: 
+      objectReference: {fileID: 69242371}
     - target: {fileID: 6092937446732967476, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
       propertyPath: m_Constraints
       value: 112

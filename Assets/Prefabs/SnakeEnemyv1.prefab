@@ -182,7 +182,7 @@ MonoBehaviour:
   detector: {fileID: 6092937444741584247}
   body: {fileID: 2025109476969112669}
   attackRange: 10
-  projectile: {fileID: 273046510899308153, guid: 0e80f93f97e3f8a44994112fe03c7cc2, type: 3}
+  mouth: {fileID: 2025109476969112673}
 --- !u!1001 &6092937445538043410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -648,3 +648,8 @@ CapsuleCollider:
   m_Height: 6.040783
   m_Direction: 1
   m_Center: {x: 0.011404395, y: 1.9501705, z: 0}
+--- !u!1 &2025109476969112673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5230038188746994291, guid: c68204ddcf0a54e84ae80ea4fcfb7559, type: 3}
+  m_PrefabInstance: {fileID: 6092937445538043410}
+  m_PrefabAsset: {fileID: 0}
