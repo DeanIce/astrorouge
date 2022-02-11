@@ -9,7 +9,7 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
-    public class EventManager : MonoBehaviour
+    public class EventManager : ManagerBase
     {
         public enum Mode
         {
@@ -21,13 +21,12 @@ namespace Managers
             Loading
         }
 
-        public bool logEvents = true;
 
         public string scenePlay;
 
-        public static EventManager instance { get; private set; }
+        public RunStats runStats = new();
 
-        public RunStats runStats = new RunStats();
+        public static EventManager instance { get; private set; }
 
         public Mode mode { get; private set; }
 
@@ -97,10 +96,6 @@ namespace Managers
             SceneManager.LoadScene("Recap");
         }
 
-        private void log(object o)
-        {
-            if (logEvents) print($"EventManager: {o}");
-        }
 
         public void Exit()
         {

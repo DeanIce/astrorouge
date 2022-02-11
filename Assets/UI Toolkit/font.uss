@@ -112,10 +112,6 @@
     align-items: center;
     justify-content: flex-start;
     -unity-background-scale-mode: scale-to-fit;
-    margin-left: 17px;
-    margin-right: 17px;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .noodle-pause-button > .noodle-icon {

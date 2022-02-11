@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : ManagerBase
     {
         // Determines which music source is playing. If true, music1 is playing, if false, music2 is playing.
         private bool currentMusicSource;

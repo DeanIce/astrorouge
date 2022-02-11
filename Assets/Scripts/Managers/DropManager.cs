@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DropManager : MonoBehaviour
 {
+    private static GameObject[] staticDrops;
+
+    private static int[] staticWeights;
     /*
      * Over engineering ideas:
      * - Make it so only certain enemies can drop certain objects via editor functionality
@@ -12,8 +13,6 @@ public class DropManager : MonoBehaviour
     // We can do this with events later
     public GameObject[] drops;
     public int[] weights;
-    private static GameObject[] staticDrops;
-    private static int[] staticWeights;
 
     private void Awake()
     {
@@ -24,12 +23,12 @@ public class DropManager : MonoBehaviour
     // This is what enemies will call when they die, all logic done here
     public static void SpawnItem(Vector3 location, Quaternion rotation)
     {
-        GameObject spawnItem = GetSpawnItem();
+        var spawnItem = GetSpawnItem();
         Debug.Log("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
-        GameObject.Instantiate(spawnItem, location, rotation);
+        Instantiate(spawnItem, location, rotation);
     }
 
-    
+
     /*
      * Beware all ye who come here, here is my convention
      * Each item is assigned a weight, the higher the number the more likely it is to drop
@@ -46,11 +45,8 @@ public class DropManager : MonoBehaviour
      */
     private static int GetItemNum()
     {
-        int totalWeight = 0;
-        foreach(int item in staticWeights)
-        {
-            totalWeight += item;
-        }
+        var totalWeight = 0;
+        foreach (var item in staticWeights) totalWeight += item;
         return Random.Range(0, totalWeight);
     }
 
@@ -58,29 +54,26 @@ public class DropManager : MonoBehaviour
     private static GameObject GetSpawnItem()
     {
         // Which item we're going to spawn
-        int currentSelection = 0;
-        
+        var currentSelection = 0;
+
         // The sum of weights up to index thus far
-        int currentWeightIndex = 0;
+        var currentWeightIndex = 0;
 
         // The weighted number selection
-        int selectedWeight = GetItemNum();
+        var selectedWeight = GetItemNum();
         Debug.Log("Item # " + selectedWeight);
 
-        for (int i = 0; i < staticWeights.Length; i++)
+        for (var i = 0; i < staticWeights.Length; i++)
         {
             if (selectedWeight > currentWeightIndex)
-            {
                 currentSelection = i;
-            }
             else
-            {
                 // For loop so I don't have to manually play with indices
                 // No reason to go through rest of for loop though if we find our selection
                 break;
-            }
             currentWeightIndex += staticWeights[i];
         }
+
         return staticDrops[currentSelection];
     }
 }
