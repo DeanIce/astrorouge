@@ -25,7 +25,7 @@ public class ProjectileController : BasicEnemyAgent
     public override void Wander(Vector3 direction)
     {
         // This code is referenced from Unity documentation
-        r123.MovePosition(r123.position + direction * Time.deltaTime * movementSpeed);
+        r123.MovePosition(r123.position + movementSpeed * Time.deltaTime * direction);
     }
 
     public override void OnCollisionEnter(Collision collision)

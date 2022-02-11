@@ -181,7 +181,6 @@ MonoBehaviour:
   playerCollider: {fileID: 0}
   detector: {fileID: 4206840892215311296}
   body: {fileID: 4206840892211294848}
-  rend: {fileID: 4206840892627653211}
   attackRange: 3
 --- !u!1 &4206840892211294848
 GameObject:
@@ -295,7 +294,7 @@ GameObject:
   - component: {fileID: 4206840892215311301}
   - component: {fileID: 4206840892215311302}
   - component: {fileID: 4206840892215311303}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}

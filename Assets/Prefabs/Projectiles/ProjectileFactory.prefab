@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicProjectile: {fileID: 2171838815963128636, guid: bbf3e585e9ddb774485cea06717d1ce0, type: 3}
+  beamProjectile: {fileID: 2171838815963128636, guid: 0d75a7de362a12c4b9a0c7899e4f10b0, type: 3}

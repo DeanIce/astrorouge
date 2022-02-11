@@ -20,7 +20,7 @@ public class PlayerStats : MonoBehaviour
     public float rangeDamageMultiplier;
     [Range(0.0f, 1.0f)] public float rangeCritChance;
     public float rangeCritMultiplier;
-    public float rangeKnockbackForce; // TODO (Simon): Incorporate into 'death throe' of Projectiles
+    public float rangeKnockbackForce; // TODO (Simon): Incorporate into 'collision' of Projectiles
     public float rangeProjectileRange;
     public float rangeProjectileSpeed;
 
