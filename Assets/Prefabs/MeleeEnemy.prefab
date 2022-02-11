@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 1296449001530609913}
   - component: {fileID: 1296449001530609914}
   - component: {fileID: 1296449001530609915}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
