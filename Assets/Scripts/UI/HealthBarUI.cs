@@ -15,6 +15,10 @@ public class HealthBarUI : MonoBehaviour
 
     private float maxHealth =100;
 
+    // timer
+    float timer = 0;
+    bool timerReached = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,12 +51,29 @@ public class HealthBarUI : MonoBehaviour
     {
         maxHealth = maxHp;     
         health.style.width = new StyleLength(Length.Percent((hp / maxHealth) * 100));
+        // start timer
+        StartTimer();
     }
 
     public void SetHealth(float hp)
     {
         healthBar.style.display = DisplayStyle.Flex;
         health.style.width = new StyleLength(Length.Percent((hp / maxHealth) * 100));
+        // start timer
+        StartTimer();
+    }
+
+    private void HideHealth() {
+        healthBar.style.display = DisplayStyle.None;
+        print("hiding healthbar");
+    }
+
+    private void StartTimer() {
+        if (timerReached) {
+            timerReached = false;
+            timer = 0;
+            print("starting healthbar timer");
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +82,15 @@ public class HealthBarUI : MonoBehaviour
         if (TargetFollow != null)
         {
             SetPosition();
+        }
+
+        if (!timerReached) {
+            timer += Time.deltaTime;
+        }
+        if (!timerReached && timer > 10) {
+            HideHealth();
+            print("healthbar timer reached");
+            timerReached = true;
         }
     }
 }
