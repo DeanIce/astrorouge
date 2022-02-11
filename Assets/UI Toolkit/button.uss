@@ -1,8 +1,8 @@
 .button {
-    height: 45px;
-    width: 198px;
-    background-color: rgba(205, 248, 247, 255);
-    color: rgba(0, 0, 0, 255);
+    height: 52px;
+    width: 361px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(211, 212, 217);
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
@@ -16,13 +16,20 @@
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 20px;
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/alt.png?fileID=2800000&guid=f2e6c3a078a2ec449af1b4d506cf41b1&type=3#alt');
+    -unity-background-image-tint-color: rgb(156, 156, 156);
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
+    -unity-font-definition: none;
+    -unity-font: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Fonts/Oxanium-ExtraBold.ttf?fileID=12800000&guid=3f64bfdaecce69b449b8230ed45dcde4&type=3#Oxanium-ExtraBold');
+    transition-duration: 100ms;
+    padding-top: 35px;
+    padding-bottom: 34px;
 }
 
 .button:hover {
-    height: 45px;
-    width: 198px;
-    background-color: rgb(98, 248, 247);
-    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
@@ -31,29 +38,17 @@
     border-bottom-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
     font-size: 20px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
 .button:active {
-    height: 45px;
-    width: 198px;
-    background-color: rgb(24, 67, 67);
     color: rgb(180, 180, 180);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
     font-size: 20px;
+    scale: 0.95;
+}
+
+.main-menu-title {
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
 }
