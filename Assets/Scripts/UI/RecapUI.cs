@@ -18,7 +18,7 @@ namespace UI
             var root = GetComponent<UIDocument>().rootVisualElement;
 
             quip = root.Q<Label>("TerminalContent");
-            var (quote, source) = Quotes.Get();
+            var (quote, _) = Quotes.Get();
             quip.text += $"\"{quote}\"";
 
             scrollView = root.Q<ScrollView>("ScrollView");

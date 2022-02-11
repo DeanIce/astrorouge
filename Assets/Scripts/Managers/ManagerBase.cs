@@ -6,7 +6,7 @@ namespace Managers
     {
         public bool logEvents = true;
 
-        protected void log(object o)
+        protected void LOG(object o)
         {
             if (logEvents) print($"EventManager: {o}");
         }
