@@ -133,6 +133,11 @@ Todo: add assets here... names not links
             {
                 creditsScroll.style.marginTop = new StyleLength(val - scrollSpeed);
             }
+            else if (scrolling && val <= -scrollAmount)
+            {
+                BackButtonPressed();
+                scrolling = false;
+            }
             else
             {
                 creditsScroll.style.marginTop = new StyleLength(0f);
@@ -160,7 +165,6 @@ Todo: add assets here... names not links
             settingsMenu.style.display = DisplayStyle.None;
             mainMenu.style.display = DisplayStyle.None;
             aboutMenu.style.display = DisplayStyle.Flex;
-            print("start credits scroll");
             scrolling = true;
         }
 

@@ -303,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuMusic: {fileID: 8300000, guid: 7923e375bd4ac7645bb82b6d057e8b3c, type: 3}
   buttonPressSoundEffect: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
-  scrollSpeed: 4
+  scrollSpeed: 0.4
   scrollAmount: 1000
 --- !u!114 &706962816
 MonoBehaviour:
