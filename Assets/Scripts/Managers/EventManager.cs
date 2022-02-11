@@ -9,7 +9,7 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
-    public class EventManager : MonoBehaviour
+    public class EventManager : ManagerBase
     {
         public enum Mode
         {
@@ -21,13 +21,12 @@ namespace Managers
             Loading
         }
 
-        public bool logEvents = true;
 
         public string scenePlay;
 
-        public static EventManager instance { get; private set; }
+        public RunStats runStats = new();
 
-        public RunStats runStats = new RunStats();
+        public static EventManager instance { get; private set; }
 
         public Mode mode { get; private set; }
 
@@ -46,14 +45,14 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, loading, exit;
+        public event Action pauseGame, playGame, menu, win, recap, exit;
 
         // Player UI events (Todo: Dennis)
         public event Action playerStatsChanged;
 
         public void Pause()
         {
-            log("request pause");
+            LOG("request pause");
             mode = Mode.Pause;
             Time.timeScale = 0f;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
@@ -62,7 +61,7 @@ namespace Managers
 
         public void Play()
         {
-            log("request play");
+            LOG("request play");
             if (mode != Mode.Pause) SceneManager.LoadScene(scenePlay);
             mode = Mode.Play;
             Time.timeScale = 1;
@@ -72,7 +71,7 @@ namespace Managers
 
         public void Menu()
         {
-            log("request menu");
+            LOG("request menu");
             mode = Mode.Menu;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             menu?.Invoke();
@@ -81,7 +80,7 @@ namespace Managers
 
         public void Win()
         {
-            log("request win");
+            LOG("request win");
             mode = Mode.Win;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             win?.Invoke();
@@ -90,20 +89,17 @@ namespace Managers
 
         public void Recap()
         {
-            log("request recap");
+            LOG("request recap");
             mode = Mode.Recap;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             recap?.Invoke();
             SceneManager.LoadScene("Recap");
         }
 
-        private void log(object o)
-        {
-            if (logEvents) print($"EventManager: {o}");
-        }
 
         public void Exit()
         {
+            exit?.Invoke();
             Application.Quit();
         }
     }

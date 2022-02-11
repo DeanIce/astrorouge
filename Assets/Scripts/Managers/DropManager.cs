@@ -1,36 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DropManager : MonoBehaviour
+namespace Managers
 {
-    /*
+    public class DropManager : MonoBehaviour
+    {
+        private static GameObject[] staticDrops;
+
+        private static int[] staticWeights;
+        /*
      * Over engineering ideas:
      * - Make it so only certain enemies can drop certain objects via editor functionality
      */
 
-    // We can do this with events later
-    public GameObject[] drops;
-    public int[] weights;
-    private static GameObject[] staticDrops;
-    private static int[] staticWeights;
+        // We can do this with events later
+        public GameObject[] drops;
+        public int[] weights;
 
-    private void Awake()
-    {
-        staticDrops = drops;
-        staticWeights = weights;
-    }
+        private void Awake()
+        {
+            staticDrops = drops;
+            staticWeights = weights;
+        }
 
-    // This is what enemies will call when they die, all logic done here
-    public static void SpawnItem(Vector3 location, Quaternion rotation)
-    {
-        GameObject spawnItem = GetSpawnItem();
-        Debug.Log("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
-        GameObject.Instantiate(spawnItem, location, rotation);
-    }
+        // This is what enemies will call when they die, all logic done here
+        public static void SpawnItem(Vector3 location, Quaternion rotation)
+        {
+            var spawnItem = GetSpawnItem();
+            Debug.Log("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
+            Instantiate(spawnItem, location, rotation);
+        }
 
-    
-    /*
+
+        /*
      * Beware all ye who come here, here is my convention
      * Each item is assigned a weight, the higher the number the more likely it is to drop
      * The lower the number, the less likely.
@@ -44,43 +45,38 @@ public class DropManager : MonoBehaviour
      * IMPORTANT NOTE: WHEN ADDING THINGS TO THE DROP MANAGER IN THE EDITOR, THE INDICES CORRESPOND 1:1
      * THAT IS, INDEX 0 OF DROPS WILL HAVE THE WEIGHT AT INDEX 0 OF WEIGHTS
      */
-    private static int GetItemNum()
-    {
-        int totalWeight = 0;
-        foreach(int item in staticWeights)
+        private static int GetItemNum()
         {
-            totalWeight += item;
+            var totalWeight = 0;
+            foreach (var item in staticWeights) totalWeight += item;
+            return Random.Range(0, totalWeight);
         }
-        return Random.Range(0, totalWeight);
-    }
 
-    // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
-    private static GameObject GetSpawnItem()
-    {
-        // Which item we're going to spawn
-        int currentSelection = 0;
-        
-        // The sum of weights up to index thus far
-        int currentWeightIndex = 0;
-
-        // The weighted number selection
-        int selectedWeight = GetItemNum();
-        Debug.Log("Item # " + selectedWeight);
-
-        for (int i = 0; i < staticWeights.Length; i++)
+        // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
+        private static GameObject GetSpawnItem()
         {
-            if (selectedWeight > currentWeightIndex)
+            // Which item we're going to spawn
+            var currentSelection = 0;
+
+            // The sum of weights up to index thus far
+            var currentWeightIndex = 0;
+
+            // The weighted number selection
+            var selectedWeight = GetItemNum();
+            Debug.Log("Item # " + selectedWeight);
+
+            for (var i = 0; i < staticWeights.Length; i++)
             {
-                currentSelection = i;
+                if (selectedWeight > currentWeightIndex)
+                    currentSelection = i;
+                else
+                    // For loop so I don't have to manually play with indices
+                    // No reason to go through rest of for loop though if we find our selection
+                    break;
+                currentWeightIndex += staticWeights[i];
             }
-            else
-            {
-                // For loop so I don't have to manually play with indices
-                // No reason to go through rest of for loop though if we find our selection
-                break;
-            }
-            currentWeightIndex += staticWeights[i];
+
+            return staticDrops[currentSelection];
         }
-        return staticDrops[currentSelection];
     }
 }

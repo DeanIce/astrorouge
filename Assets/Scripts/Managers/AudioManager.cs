@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : ManagerBase
     {
         // Determines which music source is playing. If true, music1 is playing, if false, music2 is playing.
         private bool currentMusicSource;
@@ -25,17 +25,17 @@ namespace Managers
         private AudioSource music2;
         private AudioSource sfx;
 
-        public static AudioManager Instance { get; private set; }
+        public static AudioManager instance { get; private set; }
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (instance != null && instance != this)
             {
                 Destroy(gameObject);
             }
             else
             {
-                Instance = this;
+                instance = this;
                 // Don't destroy this instance!
                 DontDestroyOnLoad(gameObject);
 
