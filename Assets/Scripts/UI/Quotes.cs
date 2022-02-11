@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Quotes
+    public static class Quotes
     {
-        public static List<(string, string)> quotes = new()
+        private static readonly List<(string, string)> quotes = new()
         {
             ("I can't help thinking somewhere in the universe there has to be something better than man. Has to be.",
                 "Planet Of The Apes"),
@@ -26,7 +26,6 @@ namespace UI
         public static (string, string) Get()
         {
             var index = Random.Range(0, quotes.Count);
-            Debug.Log(index);
             return quotes[index];
         }
     }

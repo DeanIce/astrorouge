@@ -1,5 +1,6 @@
 using System.Collections;
 using Gravity;
+using Managers;
 using UnityEngine;
 
 public class BasicEnemyAgent : MonoBehaviour, IEnemy
@@ -10,7 +11,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     // Public variables that the game manager or other objects may need
     public float health;
-    public float Health {get => health; }
     public float movementSpeed;
     public Collider playerCollider;
     [SerializeField] private GameObject detector;
@@ -40,17 +40,17 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
-    private bool wandering;
-    public bool Wandering { get => wandering; }
+    public float Health => health;
+    public bool Wandering { get; private set; }
+
     public GameObject Body => body;
-    private bool dying;
-    public bool Dying { get => dying; set { dying = value; } }
+    public bool Dying { get; set; }
 
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         detectorRenderer = detector.GetComponent<Renderer>();
-        dying = false;
+        Dying = false;
         // b = new Bounds(rb.position, new Vector3(20, 5, 20));
         // distanceToGround = b.extents.y;
         //playerBounds = playerCollider.bounds;
@@ -74,23 +74,14 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void FixedUpdate()
     {
         // Two states, either hunting or wandering
-        if (!hunting && !dying)
-        {
+        if (!hunting && !Dying)
             Wander(body.transform.forward);
-        }
-        else if (dying)
-        {
-            DoGravity();
-        }
+        else if (Dying) DoGravity();
 
         if (!hunting)
-        {
             detectorRenderer.material.SetColor("_BaseColor", green);
-        }
         else
-        {
             detectorRenderer.material.SetColor("_BaseColor", red);
-        }
     }
 
     // Swapping to collider based detection
@@ -108,7 +99,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         if (other.gameObject.layer == playerLayer)
         {
-            wandering = false;
+            Wandering = false;
             hunting = true;
         }
     }
@@ -118,7 +109,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         if (other.gameObject.layer == playerLayer)
         {
-            wandering = true;
+            Wandering = true;
             hunting = false;
         }
     }
@@ -126,7 +117,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer && !dying) Hunt(other);
+        if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
     public virtual void Wander(Vector3 direction)

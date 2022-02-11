@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b9db49491b32b4cb3e50fb63502533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logEvents: 1
+  logEvents: 0
   scenePlay: TestGravityMovementCamera
 --- !u!114 &5915032664712744906
 MonoBehaviour:
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f7729b2b795014da7111b95d626f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logEvents: 1
 --- !u!114 &6854432826354650640
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, loading, exit;
+        public event Action pauseGame, playGame, menu, win, recap, exit;
 
         // Player UI events (Todo: Dennis)
         public event Action playerStatsChanged;
@@ -99,6 +99,7 @@ namespace Managers
 
         public void Exit()
         {
+            exit?.Invoke();
             Application.Quit();
         }
     }

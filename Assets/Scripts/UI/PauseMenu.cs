@@ -53,6 +53,8 @@ public class PauseMenu : MonoBehaviour
         sfxVolumeValue = sfxSlider.value;
 
         AudioManager.Instance.PlayMusic(mainMenuMusic);
+
+        PlayGame();
     }
 
 
