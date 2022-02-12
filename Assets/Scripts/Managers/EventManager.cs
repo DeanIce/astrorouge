@@ -57,6 +57,8 @@ namespace Managers
             Time.timeScale = 0f;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             pauseGame?.Invoke();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void Play()
@@ -67,6 +69,8 @@ namespace Managers
             Time.timeScale = 1;
             InputManager.ToggleActionMap(InputManager.inputActions.Player);
             playGame?.Invoke();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public void Menu()
@@ -76,6 +80,8 @@ namespace Managers
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             menu?.Invoke();
             SceneManager.LoadScene("MainMenuTest");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void Win()
@@ -85,6 +91,8 @@ namespace Managers
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             win?.Invoke();
             SceneManager.LoadScene("Win");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
         public void Recap()
@@ -94,6 +102,8 @@ namespace Managers
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
             recap?.Invoke();
             SceneManager.LoadScene("Recap");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
 
 
