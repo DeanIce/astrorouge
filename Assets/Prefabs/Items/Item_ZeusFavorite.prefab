@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2654275363856777169
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6513492183265041460}
+    m_Modifications:
+    - target: {fileID: 1715948884031618, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_Name
+      value: SM_Icon_Weather_Lightning_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043517827071758, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5aaffcab5453c59489d87018888a05b8, type: 3}
+--- !u!1001 &7180453132791201108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611345242582634266, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_Name
+      value: Item_ZeusFavorite
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+--- !u!1 &4063987857298518606 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6611345242582634266, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+  m_PrefabInstance: {fileID: 7180453132791201108}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8049879995786855608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4063987857298518606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4296103a838222e47b55ba3625f704f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Zeus' Favorite
+  itemIcon: {fileID: 2800000, guid: 79366abd4d7553946a526f3fbda04723, type: 3}
+--- !u!4 &6513492183265041460 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4162041519204196704, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+  m_PrefabInstance: {fileID: 7180453132791201108}
+  m_PrefabAsset: {fileID: 0}
