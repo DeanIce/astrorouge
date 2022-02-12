@@ -175,6 +175,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // Temp, add damage negation and other maths here later.
         health -= dmg;
         gameObject.GetComponent<HealthBarUI>().SetHealth(health);
+        gameObject.GetComponent<HealthBarUI>().SetDamage(dmg);
         if (health <= 0f) Die();
     }
 
