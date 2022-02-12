@@ -25,6 +25,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float groundDistance = 0.1f;
     private const float turnSpeed = Mathf.PI / 3.0f;
 
+    public GameObject followTarget;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,6 +34,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         groundMask = LayerMask.GetMask("Ground");
         enemyMask = LayerMask.GetMask("Enemy");
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+
+        //Temporary placement
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()
@@ -50,12 +56,37 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var displacement = Walk(movement.ReadValue<Vector2>());
         rb.MovePosition(transform.position + displacement);
 
+       
+        //Rotates Follow Target
+        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * turnSpeed, Vector3.up);
+
+        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().y * turnSpeed, Vector3.right);
+
+        var eAngles = followTarget.transform.localEulerAngles;
+        eAngles.z = 0;
+
+        var eAngleX = followTarget.transform.localEulerAngles.x;
+
+        if (eAngleX > 180 && eAngleX < 330)
+        {
+            eAngles.x = 330;
+        }
+        else if (eAngleX < 180 && eAngleX > 50)
+        {
+            eAngles.x = 50;
+        }
+
+        followTarget.transform.localEulerAngles = eAngles;    
+ 
         // Calculate lookAt vector then increment quaternion
         var lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
-                        Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+                       Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+
+        followTarget.transform.localEulerAngles = new Vector3(eAngles.x, 0, 0);
+
     }
 
     private void OnEnable()
