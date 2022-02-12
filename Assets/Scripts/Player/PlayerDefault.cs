@@ -24,6 +24,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Constants
     private const float groundDistance = 0.1f;
     private const float turnSpeed = Mathf.PI / 3.0f;
+    [SerializeField] private float sensitivity = 0.2f;
 
     public GameObject followTarget;
 
@@ -36,8 +37,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         //Temporary placement
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     private void FixedUpdate()
@@ -58,22 +58,22 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
        
         //Rotates Follow Target
-        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * turnSpeed, Vector3.up);
+        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
 
-        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().y * turnSpeed, Vector3.right);
+        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
 
         var eAngles = followTarget.transform.localEulerAngles;
         eAngles.z = 0;
 
         var eAngleX = followTarget.transform.localEulerAngles.x;
 
-        if (eAngleX > 180 && eAngleX < 330)
+        if (eAngleX > 180 && eAngleX < 340)
         {
-            eAngles.x = 330;
+            eAngles.x = 340;
         }
-        else if (eAngleX < 180 && eAngleX > 50)
+        else if (eAngleX < 180 && eAngleX > 40)
         {
-            eAngles.x = 50;
+            eAngles.x = 40;
         }
 
         followTarget.transform.localEulerAngles = eAngles;    
@@ -136,7 +136,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public Vector3 Look(Vector2 direction)
     {
         return Vector3.RotateTowards(transform.forward, transform.right * Mathf.Sign(direction.x),
-            turnSpeed * Time.deltaTime * Mathf.Abs(direction.x), 0.0f);
+            sensitivity * Time.deltaTime * Mathf.Abs(direction.x), 0.0f);
     }
 
     // Translates 2D input into 3D displacement
