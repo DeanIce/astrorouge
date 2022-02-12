@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logEvents: 0
-  scenePlay: TestGravityMovementCamera
+  scenePlay: MasterScene
 --- !u!114 &5915032664712744906
 MonoBehaviour:
   m_ObjectHideFlags: 0
