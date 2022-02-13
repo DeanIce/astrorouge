@@ -4,8 +4,8 @@
         <ui:VisualElement name="header" style="flex-direction: row; justify-content: space-between; padding-top: 24px; padding-bottom: 3px;">
             <ui:Label text="Settings" display-tooltip-when-elided="true" style="-unity-font: resource(&apos;NEXON Football Gothic B&apos;); -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 32px;" />
             <ui:VisualElement style="flex-direction: row;">
-                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-settings" />
-                <ui:Button text="Exit" display-tooltip-when-elided="true" name="back-button" />
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-settings" class="settings-button" />
+                <ui:Button text="Exit" display-tooltip-when-elided="true" name="back-button" class="settings-button" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:ScrollView vertical-scroller-visibility="Auto" horizontal-scroller-visibility="Hidden" style="margin-top: 0; height: 834px; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; font-size: 16px;">
