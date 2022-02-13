@@ -361,7 +361,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f98c929de24bf5b0652422f70fae40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userSettings: {fileID: 0}
+  settings:
+    displayMode: Fullscreen
+    fov: 60
+    resolution: TODO
+    screenShake: 1
+    volumeGame: 1
+    volumeMaster: 1
+    volumeMusic: 1
 --- !u!1 &1036262569
 GameObject:
   m_ObjectHideFlags: 0

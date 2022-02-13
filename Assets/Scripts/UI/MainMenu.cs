@@ -62,7 +62,7 @@ Todo: add assets here... names not links
 
         private bool scrolling;
 
-        // private Button settingsBackButton;
+        private Button settingsBackButton;
         private Button settingsButton;
 
         private VisualElement settingsMenu;
@@ -85,7 +85,7 @@ Todo: add assets here... names not links
             quitButton = mainMenu.Q<Button>("quit-button");
 
             //Settings buttons
-            // settingsBackButton = settingsMenu.Q<Button>("back-button");
+            settingsBackButton = settingsMenu.Q<Button>("back-button");
             // muteButton = settingsMenu.Q<Toggle>("mute-button");
             // musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
             // sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
@@ -99,7 +99,7 @@ Todo: add assets here... names not links
             newGameButton.clicked += NewGameButtonPressed;
             settingsButton.clicked += SettingsButtonPressed;
             aboutButton.clicked += AboutButtonPressed;
-            // settingsBackButton.clicked += BackButtonPressed;
+            settingsBackButton.clicked += BackButtonPressed;
             aboutBackButton.clicked += BackButtonPressed;
 
             // muteValue = muteButton.value;

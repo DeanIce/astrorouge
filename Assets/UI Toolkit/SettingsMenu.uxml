@@ -3,7 +3,10 @@
     <ui:VisualElement class="settings" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Popup/Popup_Frame03_Navy.png?fileID=2800000&amp;guid=bd0e6a39a0e67974f85d3107721356c1&amp;type=3#Popup_Frame03_Navy&apos;); width: 765px; height: 936px; padding-left: 66px; padding-right: 66px; -unity-slice-left: 500; -unity-slice-right: 500; -unity-slice-top: 263; -unity-slice-bottom: 252; padding-top: 0; padding-bottom: 25px;">
         <ui:VisualElement name="header" style="flex-direction: row; justify-content: space-between; padding-top: 24px; padding-bottom: 3px;">
             <ui:Label text="Settings" display-tooltip-when-elided="true" style="-unity-font: resource(&apos;NEXON Football Gothic B&apos;); -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 32px;" />
-            <ui:Button text="Button" display-tooltip-when-elided="true" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-settings" />
+                <ui:Button text="Exit" display-tooltip-when-elided="true" name="back-button" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:ScrollView vertical-scroller-visibility="Auto" horizontal-scroller-visibility="Hidden" style="margin-top: 0; height: 834px; padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; font-size: 16px;">
             <ui:Label text="Video" display-tooltip-when-elided="true" class="setting-header" />
@@ -12,9 +15,9 @@
             <ui:Slider picking-mode="Ignore" label="FOV" value="70" high-value="110" name="fov" low-value="50" class="setting-slider" />
             <ui:Slider picking-mode="Ignore" label="Screen Shake" value="1" high-value="1" name="screen-shake" low-value="0" class="setting-slider" />
             <ui:Label text="Audio" display-tooltip-when-elided="true" class="setting-header" />
-            <ui:Slider picking-mode="Ignore" label="Master Volume" value="100" high-value="100" name="volume-master" class="setting-slider" />
-            <ui:Slider picking-mode="Ignore" label="Music Volume" value="100" high-value="100" name="volume-music" class="setting-slider" />
-            <ui:Slider picking-mode="Ignore" label="Game Volume" value="100" high-value="100" name="volume-game" class="setting-slider" />
+            <ui:Slider picking-mode="Ignore" label="Master Volume" value="100" high-value="1" name="volume-master" class="setting-slider" />
+            <ui:Slider picking-mode="Ignore" label="Music Volume" value="100" high-value="1" name="volume-music" class="setting-slider" />
+            <ui:Slider picking-mode="Ignore" label="Game Volume" value="100" high-value="1" name="volume-game" class="setting-slider" />
             <ui:Label text="Gameplay" display-tooltip-when-elided="true" class="setting-header" />
             <ui:Label text="Maybe have stuff in here like toggle/hold sprint etc." display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
             <ui:Label text="Input" display-tooltip-when-elided="true" class="setting-header" />

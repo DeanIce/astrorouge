@@ -47,7 +47,6 @@ namespace Managers
 
         public static T Load<T>(string name) where T : new()
         {
-            Debug.Log(Application.persistentDataPath);
             T data;
             var serializer = new XmlSerializer(typeof(T));
             var destination = Application.persistentDataPath + "/" + name + ".dat";
