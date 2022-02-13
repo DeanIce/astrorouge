@@ -49,21 +49,25 @@ Todo: add assets here... names not links
         private VisualElement aboutMenu;
 
         private Label creditsScroll;
-        private VisualElement mainMenu;
-        private Slider musicSlider;
-        private float musicVolumeValue;
-        private Toggle muteButton;
 
-        private bool muteValue;
+        private VisualElement mainMenu;
+        // private Slider musicSlider;
+        // private float musicVolumeValue;
+        // private Toggle muteButton;
+
+        // private bool muteValue;
 
         private Button newGameButton;
         private Button quitButton;
+
         private bool scrolling;
-        private Button settingsBackButton;
+
+        // private Button settingsBackButton;
         private Button settingsButton;
+
         private VisualElement settingsMenu;
-        private Slider sfxSlider;
-        private float sfxVolumeValue;
+        // private Slider sfxSlider;
+        // private float sfxVolumeValue;
 
         // Start is called before the first frame update
         private void Start()
@@ -81,10 +85,10 @@ Todo: add assets here... names not links
             quitButton = mainMenu.Q<Button>("quit-button");
 
             //Settings buttons
-            settingsBackButton = settingsMenu.Q<Button>("back-button");
-            muteButton = settingsMenu.Q<Toggle>("mute-button");
-            musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
-            sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
+            // settingsBackButton = settingsMenu.Q<Button>("back-button");
+            // muteButton = settingsMenu.Q<Toggle>("mute-button");
+            // musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
+            // sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
 
             //About buttons
             aboutBackButton = aboutMenu.Q<Button>("back-button");
@@ -95,12 +99,12 @@ Todo: add assets here... names not links
             newGameButton.clicked += NewGameButtonPressed;
             settingsButton.clicked += SettingsButtonPressed;
             aboutButton.clicked += AboutButtonPressed;
-            settingsBackButton.clicked += BackButtonPressed;
+            // settingsBackButton.clicked += BackButtonPressed;
             aboutBackButton.clicked += BackButtonPressed;
 
-            muteValue = muteButton.value;
-            musicVolumeValue = musicSlider.value;
-            sfxVolumeValue = sfxSlider.value;
+            // muteValue = muteButton.value;
+            // musicVolumeValue = musicSlider.value;
+            // sfxVolumeValue = sfxSlider.value;
 
             AudioManager.instance.PlayMusic(mainMenuMusic);
         }
@@ -108,23 +112,23 @@ Todo: add assets here... names not links
 
         private void Update()
         {
-            if (muteValue != muteButton.value)
-            {
-                muteValue = muteButton.value;
-                AudioManager.instance.ToggleMute();
-            }
+            // if (muteValue != muteButton.value)
+            // {
+            //     muteValue = muteButton.value;
+            //     AudioManager.instance.ToggleMute();
+            // }
+            //
+            // if (musicVolumeValue != musicSlider.value)
+            // {
+            //     musicVolumeValue = musicSlider.value;
+            //     AudioManager.instance.SetMusicVolume(musicVolumeValue);
+            // }
 
-            if (musicVolumeValue != musicSlider.value)
-            {
-                musicVolumeValue = musicSlider.value;
-                AudioManager.instance.SetMusicVolume(musicVolumeValue);
-            }
-
-            if (sfxVolumeValue != sfxSlider.value)
-            {
-                sfxVolumeValue = sfxSlider.value;
-                AudioManager.instance.SetSFXVolume(sfxVolumeValue);
-            }
+            // if (sfxVolumeValue != sfxSlider.value)
+            // {
+            //     sfxVolumeValue = sfxSlider.value;
+            //     AudioManager.instance.SetSFXVolume(sfxVolumeValue);
+            // }
 
             // Cute hack to get scrolling credits
             // Todo: make credit scroll more resolution and aspect ratio independent

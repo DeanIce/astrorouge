@@ -1,0 +1,67 @@
+.settings {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic B');
+}
+
+.setting-slider {
+    width: 98%;
+    color: rgb(255, 255, 255);
+    margin-bottom: 13px;
+}
+
+.setting-slider #unity-drag-container {
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Slider13_Frame.png?fileID=2800000&guid=292c3fe485293804397f92d664a19fab&type=3#Slider13_Frame');
+    -unity-slice-left: 38;
+    -unity-slice-top: 29;
+    -unity-slice-right: 38;
+    -unity-slice-bottom: 38;
+}
+
+.setting-slider #unity-dragger {
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Slider13_Handle.png?fileID=2800000&guid=b0e6ab6b4d28cae48bfe91aafc8ad221&type=3#Slider13_Handle');
+    background-color: rgba(255, 255, 255, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    width: 41px;
+    height: 33px;
+    margin-top: -14px;
+}
+
+.setting-slider #unity-tracker {
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Slider13_Fill.png?fileID=2800000&guid=bb60d664ade2c8d4b9db9713499da58e&type=3#Slider13_Fill');
+    display: none;
+    -unity-text-align: middle-left;
+}
+
+.setting-header {
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    -unity-font-style: normal;
+    padding-top: 16px;
+    -unity-font: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Fonts/Oxanium-ExtraBold.ttf?fileID=12800000&guid=3f64bfdaecce69b449b8230ed45dcde4&type=3#Oxanium-ExtraBold');
+}
+
+.settings-dropdown {
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-left;
+}
+
+.settings-dropdown .unity-base-popup-field__input {
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_ListFrame05_Navy.png?fileID=2800000&guid=1e505b738f4415b47be38300ab96ea54&type=3#Frame_ListFrame05_Navy');
+    background-color: rgba(255, 255, 255, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    -unity-slice-left: 40;
+    -unity-slice-right: 32;
+    -unity-slice-top: 35;
+    -unity-slice-bottom: 30;
+    height: 50px;
+    padding-left: 31px;
+    padding-right: 23px;
+    padding-bottom: 14px;
+}
