@@ -12,9 +12,6 @@ namespace UI
 
         private Button continueButton;
         private Button mainMenuButton;
-        private Slider musicSlider;
-        private float musicVolumeValue;
-        private Toggle muteButton;
 
         private bool muteValue;
         private VisualElement pauseMenu;
@@ -23,8 +20,6 @@ namespace UI
         private Button settingsBackButton;
         private Button settingsButton;
         private VisualElement settingsMenu;
-        private Slider sfxSlider;
-        private float sfxVolumeValue;
 
         // Start is called before the first frame update
         private void Start()
@@ -41,45 +36,18 @@ namespace UI
 
             //Settings buttons
             settingsBackButton = settingsMenu.Q<Button>("back-button");
-            muteButton = settingsMenu.Q<Toggle>("mute-button");
-            musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
-            sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
 
             continueButton.clicked += ContinueButtonPressed;
             settingsButton.clicked += SettingsButtonPressed;
             settingsBackButton.clicked += BackButtonPressed;
             mainMenuButton.clicked += MainMenuButtonPressed;
 
-            muteValue = muteButton.value;
-            musicVolumeValue = musicSlider.value;
-            sfxVolumeValue = sfxSlider.value;
 
             AudioManager.instance.PlayMusic(mainMenuMusic);
 
             PlayGame();
         }
 
-
-        private void Update()
-        {
-            if (muteValue != muteButton.value)
-            {
-                muteValue = muteButton.value;
-                AudioManager.instance.ToggleMute();
-            }
-
-            if (musicVolumeValue != musicSlider.value)
-            {
-                musicVolumeValue = musicSlider.value;
-                AudioManager.instance.SetMusicVolume(musicVolumeValue);
-            }
-
-            if (sfxVolumeValue != sfxSlider.value)
-            {
-                sfxVolumeValue = sfxSlider.value;
-                AudioManager.instance.SetSFXVolume(sfxVolumeValue);
-            }
-        }
 
         private void OnEnable()
         {
@@ -104,6 +72,7 @@ namespace UI
         private void PlayGame()
         {
             pauseMenu.style.display = DisplayStyle.None;
+            settingsMenu.style.display = DisplayStyle.None;
             root.SetEnabled(false);
         }
 
@@ -125,7 +94,6 @@ namespace UI
         {
             AudioManager.instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.Flex;
-            pauseMenu.style.display = DisplayStyle.None;
         }
 
         private void MainMenuButtonPressed()

@@ -17,6 +17,8 @@ namespace Managers
 {
     public class AudioManager : ManagerBase
     {
+        public AudioClip buttonClick;
+
         // Determines which music source is playing. If true, music1 is playing, if false, music2 is playing.
         private bool currentMusicSource;
         private bool isMuted;
@@ -43,11 +45,29 @@ namespace Managers
                 music1 = gameObject.AddComponent<AudioSource>();
                 music2 = gameObject.AddComponent<AudioSource>();
                 sfx = gameObject.AddComponent<AudioSource>();
+                print("start");
 
                 // Loop variables.
                 music1.loop = true;
                 music2.loop = true;
             }
+        }
+
+        private void OnEnable()
+        {
+            EventManager.instance.settingsUpdated += UpdateLevels;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.instance.settingsUpdated -= UpdateLevels;
+        }
+
+        private void UpdateLevels(UserSettings settings)
+        {
+            LOG($"music: {settings.volumeMusic}, game: {settings.volumeGame}");
+            SetMusicVolume(settings.volumeMusic);
+            SetSFXVolume(settings.volumeGame);
         }
 
         // Plays music immediately, with no fade in or effect.
@@ -148,6 +168,7 @@ namespace Managers
         {
             music1.volume = volume;
             music2.volume = volume;
+            LOG(music1.volume + " " + music2.volume);
         }
 
         // Modify Volume for sound effects.

@@ -47,6 +47,10 @@ namespace Managers
         // Game State events
         public event Action pauseGame, playGame, menu, win, recap, exit;
 
+
+        // Settings event
+        public event Action<UserSettings> settingsUpdated;
+
         // Player UI events (Todo: Dennis)
         public event Action playerStatsChanged;
 
@@ -111,6 +115,12 @@ namespace Managers
         {
             exit?.Invoke();
             Application.Quit();
+        }
+
+        public void UpdateSettings(UserSettings settings, string name)
+        {
+            PersistentUpgrades.Save(settings, name);
+            settingsUpdated?.Invoke(settings);
         }
     }
 }
