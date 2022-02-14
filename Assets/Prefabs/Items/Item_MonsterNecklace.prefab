@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Monster Necklace
+  itemDescription: Adds chance to drop healing orbs on enemy death
   itemIcon: {fileID: 2800000, guid: 8c99c0eded2e99a448fb1b1ba79409e1, type: 3}
 --- !u!4 &5403468561193338392 stripped
 Transform:

@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Air Horn
+  itemDescription: Adds chance to create a shockwave
   itemIcon: {fileID: 2800000, guid: aed48e4f65db38443b6a006083b53f93, type: 3}
 --- !u!4 &6967541791782442940 stripped
 Transform:

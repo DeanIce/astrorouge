@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Jumping Feather
-  itemDescription: 
+  itemDescription: Increases jumps by 1
   itemIcon: {fileID: 2800000, guid: 8521c1f11dcd7db49a4eef460e3ea75c, type: 3}
 --- !u!1001 &4325168160260086399
 PrefabInstance:

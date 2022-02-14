@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Hold This...
+  itemDescription: Adds chance for enemies to explode after getting hit and on death
   itemIcon: {fileID: 2800000, guid: d6b64316487d1c7408200e2aa3e580da, type: 3}
 --- !u!1001 &9017670180988937190
 PrefabInstance:

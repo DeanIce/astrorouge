@@ -154,4 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Hearty Meal
+  itemDescription: Increases max health by 40%
   itemIcon: {fileID: 2800000, guid: 1afe0108d3465264ea64528464d4a652, type: 3}

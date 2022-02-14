@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Evasive Maneuvers
+  itemDescription: Increases dodge chance by 10%
   itemIcon: {fileID: 2800000, guid: c11b629bc635c6d41b243924e75eea40, type: 3}
 --- !u!1001 &7577352322202395766
 PrefabInstance:

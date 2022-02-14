@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Knockback
-  itemDescription: 
+  itemDescription: Increased knockback force by 20%
   itemIcon: {fileID: 2800000, guid: 029016a299b98404ab381c572599aeca, type: 3}
 --- !u!1001 &6730318099873182368
 PrefabInstance:

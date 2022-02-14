@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Undead Servant
+  itemDescription: Adds chance to summon friendly companion to fight for you
   itemIcon: {fileID: 2800000, guid: 5dd2ece5cf1e43d41bd7367de5c75a6b, type: 3}
 --- !u!4 &7564094431684937353 stripped
 Transform:

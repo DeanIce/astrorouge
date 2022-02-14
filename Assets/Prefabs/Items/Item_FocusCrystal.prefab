@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Focus Crystal
+  itemDescription: Increased damage to nearby enemies
   itemIcon: {fileID: 2800000, guid: 13e50b3591a3cd343bc33b07575306c8, type: 3}
 --- !u!1001 &6958026927633319068
 PrefabInstance:

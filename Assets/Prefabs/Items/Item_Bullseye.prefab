@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Bullseye
+  itemDescription: Increases projectile range by 20%
   itemIcon: {fileID: 2800000, guid: 7ceb2be32bfca754f94c818795ff8928, type: 3}
 --- !u!1001 &8795539105964221688
 PrefabInstance:

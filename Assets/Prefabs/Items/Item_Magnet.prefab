@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Magnet
+  itemDescription: Attract items from an increased distance
   itemIcon: {fileID: 2800000, guid: 2293d77bcd32c3742b33eaab057dea8a, type: 3}
 --- !u!4 &7617602788083784071 stripped
 Transform:

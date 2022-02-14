@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Old Fashion Mustache
+  itemDescription: Adds a fancy mustache
   itemIcon: {fileID: 2800000, guid: 9ff61c3691a9f264f994c5b9aad2c954, type: 3}
 --- !u!4 &7491359922852767314 stripped
 Transform:

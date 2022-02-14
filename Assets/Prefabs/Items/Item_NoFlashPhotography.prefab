@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: No Flash Photography
+  itemDescription: Adds chance to stun an enemy
   itemIcon: {fileID: 2800000, guid: 0b1c4096d768acc4b95f4053faea97f3, type: 3}
 --- !u!1001 &4314175953100258331
 PrefabInstance:
