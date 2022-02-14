@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 706962815}
   - component: {fileID: 706962817}
   - component: {fileID: 706962816}
+  - component: {fileID: 706962818}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -348,6 +349,26 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &706962818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706962812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f98c929de24bf5b0652422f70fae40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    displayMode: Fullscreen
+    fov: 60
+    resolution: TODO
+    screenShake: 1
+    volumeGame: 1
+    volumeMaster: 1
+    volumeMusic: 1
 --- !u!1 &1036262569
 GameObject:
   m_ObjectHideFlags: 0
