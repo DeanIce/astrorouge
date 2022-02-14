@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Knockback
+  itemDescription: 
   itemIcon: {fileID: 2800000, guid: 029016a299b98404ab381c572599aeca, type: 3}
 --- !u!1001 &6730318099873182368
 PrefabInstance:
@@ -98,19 +99,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.51
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -118,7 +119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.172
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4893038497224990, guid: c8b37b349fefc994e9c27635096845a9, type: 3}
       propertyPath: m_LocalRotation.w
