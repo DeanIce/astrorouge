@@ -7,6 +7,7 @@ public class ProjectileFactory : MonoBehaviour
     // All projectile prefabs
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
+    [SerializeField] private GameObject burnProjectile;
 
     // Start is called before the first frame update
     private void Awake()
@@ -38,5 +39,13 @@ public class ProjectileFactory : MonoBehaviour
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
         
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
+    }
+
+    public void CreateBurnProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    {
+        GameObject newProjectile = Instantiate(burnProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<FlameBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
+        newProjectile.transform.position = position;
     }
 }

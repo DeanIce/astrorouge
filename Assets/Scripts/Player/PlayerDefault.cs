@@ -197,7 +197,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
-        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+        // TESTING BURN PROJECTILES originally --> CreateBasicProjectile
+        ProjectileFactory.Instance.CreateBurnProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
