@@ -8,6 +8,7 @@ public class ProjectileFactory : MonoBehaviour
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
     [SerializeField] private GameObject burnProjectile;
+    [SerializeField] private GameObject poisonProjectile;
 
     // Start is called before the first frame update
     private void Awake()
@@ -46,6 +47,13 @@ public class ProjectileFactory : MonoBehaviour
         GameObject newProjectile = Instantiate(burnProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<FlameBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
+        newProjectile.transform.position = position;
+    }
+    public void CreatePoisonProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    {
+        GameObject newProjectile = Instantiate(poisonProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<PoisonBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
     }
 }

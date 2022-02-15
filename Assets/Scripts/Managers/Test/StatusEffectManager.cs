@@ -6,6 +6,7 @@ public class StatusEffectManager : MonoBehaviour
 {
     private IEnemy enemy;
     public List<int> burnTickTimes = new List<int>();
+    public List<int> poisonTickTimes = new List<int>();
 
     void Start()
     {
@@ -36,6 +37,32 @@ public class StatusEffectManager : MonoBehaviour
             enemy.TakeDmg(5);
             burnTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
+        }
+    }
+    public void ApplyPoison(int ticks)
+    {
+        if (poisonTickTimes.Count <= 0)
+        {
+            poisonTickTimes.Add(ticks);
+            StartCoroutine(Poison());
+        }
+        else
+        {
+            poisonTickTimes.Add(ticks);
+        }
+    }
+
+    IEnumerator Poison()
+    {
+        while (poisonTickTimes.Count > 0)
+        {
+            for (int i = 0; i < poisonTickTimes.Count; i++)
+            {
+                poisonTickTimes[i]--;
+            }
+            enemy.TakeDmg(10);
+            poisonTickTimes.RemoveAll(num => num == 0);
+            yield return new WaitForSeconds(1f);
         }
     }
 }
