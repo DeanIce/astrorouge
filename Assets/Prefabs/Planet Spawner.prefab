@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7912339023312049575}
   - component: {fileID: 7912339023312049561}
   - component: {fileID: 6032951466801601469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Planet Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

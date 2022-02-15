@@ -170,8 +170,8 @@ namespace Planets
                 child.localPosition = Vector3.zero;
                 child.localRotation = Quaternion.identity;
                 child.localScale = Vector3.one;
-                // child.gameObject.layer = gameObject.layer;
-                child.gameObject.layer = LayerMask.GetMask("Ground");
+                child.gameObject.layer = gameObject.layer;
+                // child.gameObject.layer = LayerMask.GetMask("Ground");
             }
 
             // Add mesh components
@@ -326,45 +326,39 @@ namespace Planets
         // • doesn't support updating of shape/shading values once generated
         private void HandleGameModeGeneration()
         {
-            if (true /*CanGenerateMesh()*/)
+            var lodTimer = Stopwatch.StartNew();
+            Dummy();
+
+            // Generate LOD meshes
+            lodMeshes = new Mesh[ResolutionSettings.NumLODLevels];
+            for (var i = 0; i < lodMeshes.Length; i++)
             {
-                var lodTimer = Stopwatch.StartNew();
-                Dummy();
-
-                // Generate LOD meshes
-                lodMeshes = new Mesh[ResolutionSettings.NumLODLevels];
-                for (var i = 0; i < lodMeshes.Length; i++)
-                {
-                    var lodTerrainHeightMinMax =
-                        GenerateTerrainMesh(ref lodMeshes[i], resolutionSettings.GetLODResolution(i));
-                    // Use min/max height of first (most detailed) LOD
-                    if (i == 0) heightMinMax = lodTerrainHeightMinMax;
-                }
-
-                // Generate collision mesh
-                GenerateCollisionMesh(resolutionSettings.collider);
-
-                // Create terrain renderer and set shading properties on the instanced material
-                terrainMatInstance = new Material(shader.terrainMaterial);
-                shader.Initialize(shape);
-                shader.SetTerrainProperties(terrainMatInstance, heightMinMax, bodyScale);
-                var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", null, terrainMatInstance);
-                terrainMeshFilter = terrainHolder.GetComponent<MeshFilter>();
-                LogTimer(lodTimer, "Generate all LODs");
-
-                // Add collider
-                MeshCollider collider;
-                if (!terrainHolder.TryGetComponent(out collider)) collider = terrainHolder.AddComponent<MeshCollider>();
-
-                var collisionBakeTimer = Stopwatch.StartNew();
-                MeshBaker.BakeMeshImmediate(collisionMesh);
-                collider.sharedMesh = collisionMesh;
-                LogTimer(collisionBakeTimer, "Bake Mesh collider");
+                var lodTerrainHeightMinMax =
+                    GenerateTerrainMesh(ref lodMeshes[i], resolutionSettings.GetLODResolution(i));
+                // Use min/max height of first (most detailed) LOD
+                if (i == 0) heightMinMax = lodTerrainHeightMinMax;
             }
-            else
-            {
-                Debug.Log("Could not generate mesh");
-            }
+
+            // Generate collision mesh
+            GenerateCollisionMesh(resolutionSettings.collider);
+
+            // Create terrain renderer and set shading properties on the instanced material
+            terrainMatInstance = new Material(shader.terrainMaterial);
+            shader.Initialize(shape);
+            shader.SetTerrainProperties(terrainMatInstance, heightMinMax, bodyScale);
+            var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", null, terrainMatInstance);
+            terrainMeshFilter = terrainHolder.GetComponent<MeshFilter>();
+            LogTimer(lodTimer, "Generate all LODs");
+
+            // Add collider
+            MeshCollider collider;
+            if (!terrainHolder.TryGetComponent(out collider)) collider = terrainHolder.AddComponent<MeshCollider>();
+
+            var collisionBakeTimer = Stopwatch.StartNew();
+            MeshBaker.BakeMeshImmediate(collisionMesh);
+            collider.sharedMesh = collisionMesh;
+            LogTimer(collisionBakeTimer, "Bake Mesh collider");
+
 
             ReleaseAllBuffers();
         }
