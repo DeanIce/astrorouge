@@ -20,6 +20,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private LayerMask groundMask;
     private LayerMask enemyMask;
     private InputAction movement, look;
+    private Animator animator;
 
     // Constants
     private const float groundDistance = 0.1f;
@@ -31,6 +32,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         enemyMask = LayerMask.GetMask("Enemy");
@@ -142,6 +144,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Translates 2D input into 3D displacement
     public Vector3 Walk(Vector2 direction)
     {
+        //Debug.Log("X Axis: " + Input.GetAxis("Horizontal") + ", Y Axis: " + Input.GetAxis("Vertical"));
+        HandleAnimation();
+
         var movement = direction.x * transform.right + direction.y * transform.forward;
         return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
@@ -149,6 +154,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
+        HandleAnimation();
+
         if (isGrounded)
         {
             rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
@@ -224,5 +231,18 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         {
             //run end
         }
+    }
+
+    private void HandleAnimation()
+    {
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+        float jumping = Input.GetAxis("Jump");
+
+        if (verticalMovement >= 0.05f) animator.SetBool("isWalking", true);
+        if (verticalMovement < 0.05f) animator.SetBool("isWalking", false);
+
+        if (verticalMovement >= 0.05f && isSprinting) animator.SetBool("isRunning", true);
+        if (verticalMovement < 0.05f || !isSprinting) animator.SetBool("isRunning", false);
     }
 }
