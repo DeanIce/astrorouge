@@ -8,7 +8,9 @@ namespace Managers
 
         protected void LOG(object o)
         {
-            if (logEvents) print($"EventManager: {o}");
+            var type = GetType().UnderlyingSystemType;
+            var className = type.Name;
+            if (logEvents) print($"{className}: {o}");
         }
     }
 }

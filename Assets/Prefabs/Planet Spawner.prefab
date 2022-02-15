@@ -75,7 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a4480140d6af459132fdfcffac0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundLayer: Ground
   scale: 7
   resolutionSettings:
     lod0: 300
@@ -152,4 +151,4 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 77009afb73171814faab2d4db25bfd92, type: 2}
-  logTimers: 1
+  logTimers: 0
