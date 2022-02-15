@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4014463406395459265}
   - component: {fileID: 4014463406395459267}
   - component: {fileID: 4014463406395459266}
+  - component: {fileID: 5955223653057071076}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -95,3 +96,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuMusic: {fileID: 0}
   buttonPressSoundEffect: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
+--- !u!114 &5955223653057071076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4014463406395459279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f98c929de24bf5b0652422f70fae40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    displayMode: Fullscreen
+    fov: 60
+    resolution: TODO
+    screenShake: 1
+    volumeGame: 1
+    volumeMaster: 1
+    volumeMusic: 1
