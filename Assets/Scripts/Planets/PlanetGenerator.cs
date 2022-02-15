@@ -19,7 +19,11 @@ namespace Planets
             CollisionRes
         }
 
+
         private static Dictionary<int, SphereMesh> sphereGenerators;
+
+
+        public float scale;
 
         public ResolutionSettings resolutionSettings;
 
@@ -41,10 +45,11 @@ namespace Planets
         private bool shaderSettingsUpdated;
         private bool shapeSettingsUpdated;
         private Material terrainMatInstance;
-        //private MeshFilter terrainMeshFilter;
-        public MeshFilter terrainMeshFilter { get; private set; }
 
         private ComputeBuffer vertexBuffer;
+
+        //private MeshFilter terrainMeshFilter;
+        public MeshFilter terrainMeshFilter { get; private set; }
 
         private bool InGameMode => Application.isPlaying;
 
@@ -61,7 +66,7 @@ namespace Planets
             if (InGameMode)
             {
                 HandleGameModeGeneration();
-                SetLOD(0);
+                SetLOD(1);
             }
         }
 
@@ -165,7 +170,8 @@ namespace Planets
                 child.localPosition = Vector3.zero;
                 child.localRotation = Quaternion.identity;
                 child.localScale = Vector3.one;
-                child.gameObject.layer = gameObject.layer;
+                // child.gameObject.layer = gameObject.layer;
+                child.gameObject.layer = LayerMask.GetMask("Ground");
             }
 
             // Add mesh components
@@ -176,6 +182,8 @@ namespace Planets
             if (!child.TryGetComponent(out MeshRenderer meshRenderer))
                 meshRenderer = child.gameObject.AddComponent<MeshRenderer>();
             meshRenderer.sharedMaterial = material;
+
+            child.transform.localScale = new Vector3(scale, scale, scale);
 
             return child.gameObject;
         }
