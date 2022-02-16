@@ -13,6 +13,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private int extraJumpsLeft;
     private bool isGrounded;
     private bool isSprinting;
+    private Direction oldDir;
+    private Direction dir;
 
     // References
     private Rigidbody rb;
@@ -26,6 +28,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float groundDistance = 0.1f;
     private const float turnSpeed = Mathf.PI / 3.0f;
     [SerializeField] private float sensitivity = 0.2f;
+
+    //Animation Enumerator
+    private enum Direction
+    {
+        IDLE, FORWARD, BACKWARD, LEFT, RIGHT, FORWARDLEFT, FORWARDRIGHT, BACKLEFT, BACKRIGHT
+    }
 
     public GameObject followTarget;
 
@@ -145,7 +153,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public Vector3 Walk(Vector2 direction)
     {
         //Debug.Log("X Axis: " + Input.GetAxis("Horizontal") + ", Y Axis: " + Input.GetAxis("Vertical"));
-        HandleAnimation();
+        HandleMoveAnimation(direction);
 
         var movement = direction.x * transform.right + direction.y * transform.forward;
         return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
@@ -154,7 +162,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
-        HandleAnimation();
+        HandleJumpAnimation();
 
         if (isGrounded)
         {
@@ -233,16 +241,109 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         }
     }
 
-    private void HandleAnimation()
+    private void HandleMoveAnimation(Vector2 direction)
     {
-        float horizontalMovement = Input.GetAxis("Horizontal");
-        float verticalMovement = Input.GetAxis("Vertical");
+        float threshold = 0.05f;
+        dir = Direction.IDLE;
+
+        if (direction.y > threshold)
+        {
+            
+            if (direction.x > threshold) dir = Direction.FORWARDRIGHT;
+            else if (direction.x < -threshold) dir = Direction.FORWARDLEFT;
+            else dir = Direction.FORWARD;
+        }
+        else if (direction.y < -threshold)
+        {
+            if (direction.x < -threshold) dir = Direction.BACKLEFT;
+            else if (direction.x > threshold) dir = Direction.BACKRIGHT;
+            else dir = Direction.BACKWARD;
+        }
+        else
+        {
+            if (direction.x < -threshold) dir = Direction.LEFT;
+            if (direction.x > threshold) dir = Direction.RIGHT;
+        }
+
+        if (dir != oldDir)
+        {
+            switch (dir)
+            {
+                case Direction.FORWARD:
+                    animator.SetBool("isWalkingForward", true);
+                    Debug.Log("Moving forward");
+                    break;
+                case Direction.FORWARDLEFT:
+                    animator.SetBool("isWalkingForwardLeft", true);
+                    break;
+                case Direction.FORWARDRIGHT:
+                    animator.SetBool("isWalkingForwardRight", true);
+                    break;
+                case Direction.LEFT:
+                    animator.SetBool("isWalkingLeft", true);
+                    break;
+                case Direction.RIGHT:
+                    animator.SetBool("isWalkingRight", true);
+                    break;
+                case Direction.BACKWARD:
+                    animator.SetBool("isWalkingBackward", true);
+                    break;
+                case Direction.BACKLEFT:
+                    animator.SetBool("isWalkingBackLeft", true);
+                    break;
+                case Direction.BACKRIGHT:
+                    animator.SetBool("isWalkingBackRight", true);
+                    break;
+                case Direction.IDLE:
+                    animator.SetBool("isIdle", true);
+                    break;
+                default:
+                    break;
+            }
+
+            switch (oldDir)
+            {
+                case Direction.FORWARD:
+                    animator.SetBool("isWalkingForward", false);
+                    break;
+                case Direction.FORWARDLEFT:
+                    animator.SetBool("isWalkingForwardLeft", false);
+                    break;
+                case Direction.FORWARDRIGHT:
+                    animator.SetBool("isWalkingForwardRight", false);
+                    break;
+                case Direction.LEFT:
+                    animator.SetBool("isWalkingLeft", false);
+                    break;
+                case Direction.RIGHT:
+                    animator.SetBool("isWalkingRight", false);
+                    break;
+                case Direction.BACKWARD:
+                    animator.SetBool("isWalkingBackward", false);
+                    break;
+                case Direction.BACKLEFT:
+                    animator.SetBool("isWalkingBackLeft", false);
+                    break;
+                case Direction.BACKRIGHT:
+                    animator.SetBool("isWalkingBackRight", false);
+                    break;
+                case Direction.IDLE:
+                    animator.SetBool("isIdle", false);
+                    break;
+                default:
+                    break;
+            }
+
+            oldDir = dir;
+
+            Debug.Log("Current State: " + dir);
+        }
+
+        if (isSprinting) animator.SetTrigger("isRunning");
+    }
+
+    private void HandleJumpAnimation()
+    {
         float jumping = Input.GetAxis("Jump");
-
-        if (verticalMovement >= 0.05f) animator.SetBool("isWalking", true);
-        if (verticalMovement < 0.05f) animator.SetBool("isWalking", false);
-
-        if (verticalMovement >= 0.05f && isSprinting) animator.SetBool("isRunning", true);
-        if (verticalMovement < 0.05f || !isSprinting) animator.SetBool("isRunning", false);
     }
 }
