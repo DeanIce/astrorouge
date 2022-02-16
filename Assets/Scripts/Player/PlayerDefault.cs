@@ -339,7 +339,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             Debug.Log("Current State: " + dir);
         }
 
-        if (isSprinting) animator.SetTrigger("isRunning");
+        if (isSprinting) animator.SetBool("isRunning", true);
+        else animator.SetBool("isRunning", false);
     }
 
     private void HandleJumpAnimation()
