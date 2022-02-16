@@ -150,7 +150,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
-        print($"jump {isGrounded} {extraJumpsLeft}");
         if (isGrounded)
         {
             rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
