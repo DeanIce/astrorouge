@@ -45,7 +45,6 @@ namespace Managers
                 music1 = gameObject.AddComponent<AudioSource>();
                 music2 = gameObject.AddComponent<AudioSource>();
                 sfx = gameObject.AddComponent<AudioSource>();
-                print("start");
 
                 // Loop variables.
                 music1.loop = true;
