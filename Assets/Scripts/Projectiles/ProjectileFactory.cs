@@ -23,12 +23,14 @@ public class ProjectileFactory : MonoBehaviour
         }
     }
 
-    public void CreateBasicProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan,  float damage, float health = 1)
+    public GameObject CreateBasicProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan,  float damage, float health = 1)
     {
         GameObject newProjectile = Instantiate(basicProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<BasicProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
+
+        return newProjectile;
     }
 
     public void CreateBeamProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, LayerMask stopsAt, float duration, float damage, float range)
@@ -49,11 +51,12 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<FlameBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
     }
+
     public void CreatePoisonProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
     {
-        GameObject newProjectile = Instantiate(poisonProjectile);
-        newProjectile.transform.parent = gameObject.transform;
-        newProjectile.GetComponent<PoisonBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
-        newProjectile.transform.position = position;
+        GameObject newProjectile = CreateBasicProjectile(position, velocity, collidesWith, lifeSpan, damage, health);
+
+        PoisonEffect effect = newProjectile.AddComponent<PoisonEffect>();
+        effect.InitializeValues(collidesWith);
     }
 }
