@@ -61,6 +61,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded)
             extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
+        animator.SetBool("isGrounded", isGrounded);
 
         // Calculate total displacement
         var displacement = Walk(movement.ReadValue<Vector2>());
@@ -152,7 +154,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Translates 2D input into 3D displacement
     public Vector3 Walk(Vector2 direction)
     {
-        //Debug.Log("X Axis: " + Input.GetAxis("Horizontal") + ", Y Axis: " + Input.GetAxis("Vertical"));
         HandleMoveAnimation(direction);
 
         var movement = direction.x * transform.right + direction.y * transform.forward;
@@ -162,11 +163,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
-        HandleJumpAnimation();
 
         if (isGrounded)
         {
             rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
+            HandleJumpAnimation();
         }
         else if (extraJumpsLeft > 0)
         {
@@ -237,7 +238,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f)
         {
-            //run end
+            HandleDeathAnimation();
         }
     }
 
@@ -336,7 +337,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
             oldDir = dir;
 
-            Debug.Log("Current State: " + dir);
+            //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
         if (isSprinting) animator.SetBool("isRunning", true);
@@ -345,6 +346,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void HandleJumpAnimation()
     {
-        float jumping = Input.GetAxis("Jump");
+        animator.SetTrigger("isJumping");
+    }
+
+    private void HandleDeathAnimation()
+    {
+        animator.SetBool("isAlive", false);
     }
 }
