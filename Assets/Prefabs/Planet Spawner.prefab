@@ -123,8 +123,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912339023312049574}
-  - component: {fileID: 6032951466801601469}
   - component: {fileID: 7912339023312049561}
+  - component: {fileID: 6032951466801601469}
+  - component: {fileID: 6949590311287083881}
   m_Layer: 6
   m_Name: Planet Spawner
   m_TagString: Untagged
@@ -148,6 +149,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7912339023312049561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912339023312049572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c191437f17df4a45996321d24ccc1c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: 9.81
+  outerRadius: 28.2
+  outerFalloffRadius: 30.42
 --- !u!114 &6032951466801601469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,8 +252,7 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 77009afb73171814faab2d4db25bfd92, type: 2}
-  logTimers: 0
---- !u!114 &7912339023312049561
+--- !u!114 &6949590311287083881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,10 +261,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 7912339023312049572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c191437f17df4a45996321d24ccc1c8, type: 3}
+  m_Script: {fileID: 11500000, guid: a0b6740bb1daa0f46ae016d7b83f015c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  gravity: 9.81
-  outerRadius: 28.2
-  outerFalloffRadius: 30.42
+  clusterAssets:
+  - prefab: {fileID: 187062, guid: 3da6cabdb2d06ad4ab1068a9b2a231cd, type: 3}
+    count: 15
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 121542, guid: 1e8a1f848e20325468b33aa9d904bce7, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  environmentAssets:
+  - prefab: {fileID: 190414, guid: 653c97bd88b4b084d87714542c43ee5a, type: 3}
+    count: 100
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 101680, guid: 487da53ead5d8b34f829f38dfa345485, type: 3}
+    count: 100
+    scale: {x: 1, y: 1, z: 1}
