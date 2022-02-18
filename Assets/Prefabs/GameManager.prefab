@@ -88,8 +88,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663c483ea59b2db489bbafec5ebac70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logEvents: 0
   drops:
-  - {fileID: 8021474509505148560, guid: 0105da7022f6ee04899593a961bc6a04, type: 3}
-  - {fileID: 8066953347718497980, guid: 3fe1f9f20bff13a49941ad6cbcb91a14, type: 3}
-  - {fileID: 7644601308496093282, guid: 40c695dcf479b514e8ade70a3aece0cc, type: 3}
-  weights: 640000006400000064000000
+  - prefab: {fileID: 8021474509505148560, guid: 0105da7022f6ee04899593a961bc6a04, type: 3}
+    weight: 100
+  - prefab: {fileID: 7644601308496093282, guid: 40c695dcf479b514e8ade70a3aece0cc, type: 3}
+    weight: 300
+  - prefab: {fileID: 8066953347718497980, guid: 3fe1f9f20bff13a49941ad6cbcb91a14, type: 3}
+    weight: 200

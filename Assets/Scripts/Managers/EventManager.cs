@@ -9,39 +9,15 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
-    public class EventManager : ManagerBase
+    public class EventManager : ManagerSingleton<EventManager>
     {
-        public enum Mode
-        {
-            Play,
-            Pause,
-            Menu,
-            Win,
-            Recap,
-            Loading
-        }
-
-
         public string scenePlay;
 
+        // public static EventManager instance { get; private set; }
+
+        private Mode mode = Mode.Play;
+
         public RunStats runStats = new();
-
-        public static EventManager instance { get; private set; }
-
-        public Mode mode { get; private set; }
-
-        private void Awake()
-        {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-        }
 
 
         // Game State events
@@ -68,7 +44,11 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
-            if (mode != Mode.Pause) SceneManager.LoadScene(scenePlay);
+            if (mode != Mode.Pause)
+            {
+                SceneManager.LoadScene(scenePlay);
+            }
+
             mode = Mode.Play;
             Time.timeScale = 1;
             InputManager.ToggleActionMap(InputManager.inputActions.Player);
@@ -121,6 +101,16 @@ namespace Managers
         {
             PersistentUpgrades.Save(settings, name);
             settingsUpdated?.Invoke(settings);
+        }
+
+        private enum Mode
+        {
+            Play,
+            Pause,
+            Menu,
+            Win,
+            Recap,
+            Loading
         }
     }
 }

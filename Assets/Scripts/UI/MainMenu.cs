@@ -106,7 +106,7 @@ Todo: add assets here... names not links
             // musicVolumeValue = musicSlider.value;
             // sfxVolumeValue = sfxSlider.value;
 
-            AudioManager.instance.PlayMusic(mainMenuMusic);
+            AudioManager.Instance.PlayMusic(mainMenuMusic);
         }
 
 
@@ -151,13 +151,13 @@ Todo: add assets here... names not links
 
         private void NewGameButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
-            EventManager.instance.Play();
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            EventManager.Instance.Play();
         }
 
         private void SettingsButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.Flex;
             mainMenu.style.display = DisplayStyle.None;
             aboutMenu.style.display = DisplayStyle.None;
@@ -165,7 +165,7 @@ Todo: add assets here... names not links
 
         private void AboutButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.None;
             mainMenu.style.display = DisplayStyle.None;
             aboutMenu.style.display = DisplayStyle.Flex;
@@ -174,13 +174,13 @@ Todo: add assets here... names not links
 
         private void QuitButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
-            EventManager.instance.Exit();
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            EventManager.Instance.Exit();
         }
 
         private void BackButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.None;
             mainMenu.style.display = DisplayStyle.Flex;
             aboutMenu.style.display = DisplayStyle.None;

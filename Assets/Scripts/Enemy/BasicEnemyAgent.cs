@@ -26,6 +26,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private float distanceToGround;
     private Vector3 eulerAngleVelocity;
     private bool hunting;
+
+    private bool iAmAlive = true;
     private bool isGroundedVar = true;
 
     private int leftOrRight;
@@ -75,13 +77,22 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // Two states, either hunting or wandering
         if (!hunting && !Dying)
+        {
             Wander(body.transform.forward);
-        else if (Dying) DoGravity();
+        }
+        else if (Dying)
+        {
+            DoGravity();
+        }
 
         if (!hunting)
+        {
             detectorRenderer.material.SetColor("_BaseColor", green);
+        }
         else
+        {
             detectorRenderer.material.SetColor("_BaseColor", red);
+        }
     }
 
     // Swapping to collider based detection
@@ -117,7 +128,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
+        if (other.gameObject.layer == playerLayer && !Dying)
+        {
+            Hunt(other);
+        }
     }
 
     public virtual void Wander(Vector3 direction)
@@ -149,7 +163,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             10);
 
         // Jumping
-        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
+        if (targetRb.transform.position.y > transform.position.y && IsGrounded())
+        {
+            Jump();
+        }
 
         // OLD MOVEMENT HERE
         // NOTE: May need to add offset to playerBounds center, potential bug here ***
@@ -185,6 +202,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public virtual void Die()
     {
+        iAmAlive = false;
         // Temp, add animation and call other methods here later.
         DropManager.SpawnItem(transform.position, transform.rotation);
         // hide the health bar upon death
@@ -225,9 +243,13 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         leftOrRight = Random.Range(1, 3);
 
         if (leftOrRight == 1)
+        {
             randomRotation = Random.Range(-200, -100);
+        }
         else
+        {
             randomRotation = Random.Range(100, 200);
+        }
 
         eulerAngleVelocity = new Vector3(0, randomRotation, 0);
         // Note, increase this time to get slower turns and more "thinking"
