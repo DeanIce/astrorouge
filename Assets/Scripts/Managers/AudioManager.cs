@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class AudioManager : ManagerBase
+    public class AudioManager : ManagerBase<AudioManager>
     {
         public AudioClip buttonClick;
 
@@ -27,29 +27,34 @@ namespace Managers
         private AudioSource music2;
         private AudioSource sfx;
 
-        public static AudioManager instance { get; private set; }
+        // public static AudioManager instance { get; private set; }
 
-        private void Awake()
+        // private void Awake()
+        // {
+        //     if (instance != null && instance != this)
+        //     {
+        //         Destroy(gameObject);
+        //     }
+        //     else
+        //     {
+        //         instance = this;
+        //         // Don't destroy this instance!
+        //         DontDestroyOnLoad(gameObject);
+        //
+        //
+        //     }
+        // }
+
+        private void Start()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                instance = this;
-                // Don't destroy this instance!
-                DontDestroyOnLoad(gameObject);
+            // Construct audio sources with references.
+            music1 = gameObject.AddComponent<AudioSource>();
+            music2 = gameObject.AddComponent<AudioSource>();
+            sfx = gameObject.AddComponent<AudioSource>();
 
-                // Construct audio sources with references.
-                music1 = gameObject.AddComponent<AudioSource>();
-                music2 = gameObject.AddComponent<AudioSource>();
-                sfx = gameObject.AddComponent<AudioSource>();
-
-                // Loop variables.
-                music1.loop = true;
-                music2.loop = true;
-            }
+            // Loop variables.
+            music1.loop = true;
+            music2.loop = true;
         }
 
         private void OnEnable()
@@ -187,9 +192,13 @@ namespace Managers
         public void ToggleMute()
         {
             if (!isMuted)
+            {
                 music1.mute = music2.mute = sfx.mute = isMuted = true;
+            }
             else
+            {
                 music1.mute = music2.mute = sfx.mute = isMuted = false;
+            }
         }
     }
 }
