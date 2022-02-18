@@ -178,7 +178,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             gameObject.GetComponent<HealthBarUI>().SetHealth(health);
             // make damage popup
             bool isCriticalHit = Random.Range(0, 100) < 30;
-            DamagePopupUI.Create(transform.position, (int) dmg, isCriticalHit);
+            DamagePopupUI.Create(transform, (int) dmg, isCriticalHit);
 
             if (health <= 0f) Die();
         }

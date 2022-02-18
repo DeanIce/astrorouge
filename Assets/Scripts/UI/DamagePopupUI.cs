@@ -11,17 +11,20 @@ public class DamagePopupUI : MonoBehaviour
         }
     }
     private static GameObject _damagePopupPF;
+    public Transform enemyTrans {get; set;}
     
     // create a Damage Popup
-    public static DamagePopupUI Create(Vector3 position, int damageAmount, bool isCriticalHit) {
+    public static DamagePopupUI Create(Transform enemyTransform, int damageAmount, bool isCriticalHit) {
         GameObject damagePopupInstance = Instantiate(DamagePopupPF);
 
         // TODO (Sonja): figure out which of the following update the position
-        damagePopupInstance.transform.position = position;
+        damagePopupInstance.transform.position = enemyTransform.position;
         //damagePopupInstance.GetComponent<RectTransform>().position = position;
 
         DamagePopupUI damagePopupUI = damagePopupInstance.GetComponent<DamagePopupUI>();
         damagePopupUI.Setup(damageAmount, isCriticalHit);
+
+        damagePopupUI.enemyTrans = enemyTransform;
 
         return damagePopupUI;
     }
@@ -49,13 +52,13 @@ public class DamagePopupUI : MonoBehaviour
         }
 
         textColor = textMesh.color;
-        disappearTimer = 0.5f;
+        disappearTimer = 5f;
         
     }
 
     private void Update() {
-        float moveYSpeed = 20f;
-        transform.position += new Vector3(0, moveYSpeed) * Time.deltaTime;
+        float moveSpeed = 20f;
+        transform.position +=  enemyTrans.up * moveSpeed * Time.deltaTime;
 
         disappearTimer -= Time.deltaTime;
         if (disappearTimer < 0) {
