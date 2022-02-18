@@ -19,8 +19,6 @@ public class HealthBarUI : MonoBehaviour
     float healthBarTimer = 0;
     bool healthBarTimerReached = false;
 
-    // [SerializeField] private Transform damagePopup;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +34,7 @@ public class HealthBarUI : MonoBehaviour
         //Disables health text display
         healthText.text = "";
 
-        DamageStart();
-
         SetHealthBarPosition();
-    }
-
-    private void DamageStart() {
-        DamagePopupUI.Create(Vector3.zero, 300);
     }
 
     //sets the position of the health bar

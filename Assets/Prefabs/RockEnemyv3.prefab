@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 6893982116740583811}
   - component: {fileID: 8219184373377036648}
   - component: {fileID: 7840181817857497916}
-  - component: {fileID: 557229820}
   m_Layer: 10
   m_Name: RockEnemyv3
   m_TagString: Untagged
@@ -132,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetFollow: {fileID: 4024846696499321801}
-  damagePopup: {fileID: 2237388914102956775, guid: 479b982d383612a4b93cee8cf239948a, type: 3}
 --- !u!114 &7840181817857497916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,18 +147,6 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 65f7c2e69b69184429a972d133f0dcee, type: 3}
   m_SortingOrder: 0
---- !u!114 &557229820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8674004264568269388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70614882122a98f4f9d58ca8186fbc70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8674004264596043212
 GameObject:
   m_ObjectHideFlags: 0

@@ -172,11 +172,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public void TakeDmg(float dmg)
     {
-        // Temp, add damage negation and other maths here later.
-        health -= dmg;
-        gameObject.GetComponent<HealthBarUI>().SetHealth(health);
-        // make damage popup
-        if (health <= 0f) Die();
+        if (!Dying)  {
+            // Temp, add damage negation and other maths here later.
+            health -= dmg;
+            gameObject.GetComponent<HealthBarUI>().SetHealth(health);
+            // make damage popup
+            bool isCriticalHit = Random.Range(0, 100) < 30;
+            DamagePopupUI.Create(transform.position + Vector3.up, (int) dmg, isCriticalHit);
+
+            if (health <= 0f) Die();
+        }
     }
 
     public virtual void Die()
