@@ -189,14 +189,18 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public void TakeDmg(float dmg)
     {
-        if (!Dying)  {
+        if (!Dying)
+        {
             // Temp, add damage negation and other maths here later.
             health -= dmg;
             gameObject.GetComponent<HealthBarUI>().SetHealth(health);
             // make damage popup TODO:: change the "false" to when this is a critical hit. I think this would require adding a parameter and passing the critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
-            if (health <= 0f) Die();
+            if (health <= 0f)
+            {
+                Die();
+            }
         }
     }
 
@@ -204,7 +208,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         iAmAlive = false;
         // Temp, add animation and call other methods here later.
-        DropManager.SpawnItem(transform.position, transform.rotation);
+        DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         // hide the health bar upon death
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         Destroy(gameObject);

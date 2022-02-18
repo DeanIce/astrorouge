@@ -39,6 +39,7 @@ public class DamagePopupUI : MonoBehaviour
     public void Setup(int damageAmount, bool isCriticalHit) {
         textMesh.SetText(damageAmount.ToString());
         
+        
         if (isCriticalHit) {
             textMesh.color = Color.red;
             textMesh.fontSize = 25;
