@@ -3,7 +3,7 @@
 namespace Managers
 {
     [ExecuteInEditMode]
-    public class DevTools : ManagerBase<DevTools>
+    public class DevTools : ManagerSingleton<DevTools>
     {
         public static bool drawPlanets = false;
 

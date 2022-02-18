@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Managers
 {
-    public class DropManager : ManagerBase<DropManager>
+    public class DropManager : ManagerSingleton<DropManager>
     {
         /*
      * Over engineering ideas:

@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class AudioManager : ManagerBase<AudioManager>
+    public class AudioManager : ManagerSingleton<AudioManager>
     {
         public AudioClip buttonClick;
 
