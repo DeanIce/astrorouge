@@ -43,7 +43,7 @@ namespace UI
             mainMenuButton.clicked += MainMenuButtonPressed;
 
 
-            AudioManager.instance.PlayMusic(mainMenuMusic);
+            AudioManager.Instance.PlayMusic(mainMenuMusic);
 
             PlayGame();
         }
@@ -51,15 +51,15 @@ namespace UI
 
         private void OnEnable()
         {
-            EventManager.instance.pauseGame += PauseGame;
-            EventManager.instance.playGame += PlayGame;
+            EventManager.Instance.pauseGame += PauseGame;
+            EventManager.Instance.playGame += PlayGame;
             InputManager.inputActions.PauseMenu.Back.performed += PlayGame;
         }
 
         private void OnDisable()
         {
-            EventManager.instance.pauseGame -= PauseGame;
-            EventManager.instance.playGame -= PlayGame;
+            EventManager.Instance.pauseGame -= PauseGame;
+            EventManager.Instance.playGame -= PlayGame;
             InputManager.inputActions.PauseMenu.Back.performed -= PlayGame;
         }
 
@@ -79,31 +79,31 @@ namespace UI
         private void PlayGame(InputAction.CallbackContext obj)
         {
             settingsMenu.style.display = DisplayStyle.None;
-            EventManager.instance.Play();
+            EventManager.Instance.Play();
         }
 
 
         private void ContinueButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
-            EventManager.instance.Play();
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            EventManager.Instance.Play();
         }
 
 
         private void SettingsButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.Flex;
         }
 
         private void MainMenuButtonPressed()
         {
-            EventManager.instance.Menu();
+            EventManager.Instance.Menu();
         }
 
         private void BackButtonPressed()
         {
-            AudioManager.instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.None;
             pauseMenu.style.display = DisplayStyle.Flex;
         }

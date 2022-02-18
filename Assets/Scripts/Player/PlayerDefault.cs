@@ -209,7 +209,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        EventManager.instance.Pause();
+        EventManager.Instance.Pause();
     }
 
     public void MeleeAttack(InputAction.CallbackContext obj)
