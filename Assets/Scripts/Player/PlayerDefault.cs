@@ -19,19 +19,24 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float sensitivity = 0.2f;
 
     public GameObject followTarget;
+    private Animator animator;
+    private Direction dir;
     private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
     private bool isSprinting;
     private InputAction movement, look;
+    private Direction oldDir;
 
     // References
     private Rigidbody rb;
 
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
         enemyMask = LayerMask.GetMask("Enemy");
@@ -49,8 +54,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded)
+        {
+            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        }
 
-        if (isGrounded) extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
+        animator.SetBool("isGrounded", isGrounded);
 
         // Calculate total displacement
         var displacement = Walk(movement.ReadValue<Vector2>());
@@ -69,8 +79,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var eAngleX = followTarget.transform.localEulerAngles.x;
 
         if (eAngleX > 180 && eAngleX < 340)
+        {
             eAngles.x = 340;
-        else if (eAngleX < 180 && eAngleX > 40) eAngles.x = 40;
+        }
+        else if (eAngleX < 180 && eAngleX > 40)
+        {
+            eAngles.x = 40;
+        }
 
         followTarget.transform.localEulerAngles = eAngles;
 
@@ -130,7 +145,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnDrawGizmos()
     {
-        if (groundCheck) Gizmos.DrawSphere(groundCheck.position, groundDistance);
+        if (groundCheck)
+        {
+            Gizmos.DrawSphere(groundCheck.position, groundDistance);
+        }
     }
 
     // Translates 2D input into 3D looking direction
@@ -143,6 +161,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Translates 2D input into 3D displacement
     public Vector3 Walk(Vector2 direction)
     {
+        HandleMoveAnimation(direction);
+
         var movement = direction.x * transform.right + direction.y * transform.forward;
         return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
@@ -153,6 +173,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (isGrounded)
         {
             rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
+            HandleJumpAnimation();
         }
         else if (extraJumpsLeft > 0)
         {
@@ -167,19 +188,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         isSprinting = !isSprinting;
     }
 
+
     public void TakeDmg(float dmg)
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0)
+        {
             PlayerStats.Instance.currentHealth = 0;
+        }
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f)
         {
-            //run end
+            HandleDeathAnimation();
         }
+        // Todo: recap scene
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
@@ -225,5 +250,159 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         meleeMeshRenderer.enabled = true;
         yield return new WaitForSeconds(0.5f);
         meleeMeshRenderer.enabled = false;
+    }
+
+
+    private void HandleMoveAnimation(Vector2 direction)
+    {
+        var threshold = 0.05f;
+        dir = Direction.IDLE;
+
+        if (direction.y > threshold)
+        {
+            if (direction.x > threshold)
+            {
+                dir = Direction.FORWARDRIGHT;
+            }
+            else if (direction.x < -threshold)
+            {
+                dir = Direction.FORWARDLEFT;
+            }
+            else
+            {
+                dir = Direction.FORWARD;
+            }
+        }
+        else if (direction.y < -threshold)
+        {
+            if (direction.x < -threshold)
+            {
+                dir = Direction.BACKLEFT;
+            }
+            else if (direction.x > threshold)
+            {
+                dir = Direction.BACKRIGHT;
+            }
+            else
+            {
+                dir = Direction.BACKWARD;
+            }
+        }
+        else
+        {
+            if (direction.x < -threshold)
+            {
+                dir = Direction.LEFT;
+            }
+
+            if (direction.x > threshold)
+            {
+                dir = Direction.RIGHT;
+            }
+        }
+
+        if (dir != oldDir)
+        {
+            switch (dir)
+            {
+                case Direction.FORWARD:
+                    animator.SetBool("isWalkingForward", true);
+                    break;
+                case Direction.FORWARDLEFT:
+                    animator.SetBool("isWalkingForwardLeft", true);
+                    break;
+                case Direction.FORWARDRIGHT:
+                    animator.SetBool("isWalkingForwardRight", true);
+                    break;
+                case Direction.LEFT:
+                    animator.SetBool("isWalkingLeft", true);
+                    break;
+                case Direction.RIGHT:
+                    animator.SetBool("isWalkingRight", true);
+                    break;
+                case Direction.BACKWARD:
+                    animator.SetBool("isWalkingBackward", true);
+                    break;
+                case Direction.BACKLEFT:
+                    animator.SetBool("isWalkingBackLeft", true);
+                    break;
+                case Direction.BACKRIGHT:
+                    animator.SetBool("isWalkingBackRight", true);
+                    break;
+                case Direction.IDLE:
+                    animator.SetBool("isIdle", true);
+                    break;
+            }
+
+            switch (oldDir)
+            {
+                case Direction.FORWARD:
+                    animator.SetBool("isWalkingForward", false);
+                    break;
+                case Direction.FORWARDLEFT:
+                    animator.SetBool("isWalkingForwardLeft", false);
+                    break;
+                case Direction.FORWARDRIGHT:
+                    animator.SetBool("isWalkingForwardRight", false);
+                    break;
+                case Direction.LEFT:
+                    animator.SetBool("isWalkingLeft", false);
+                    break;
+                case Direction.RIGHT:
+                    animator.SetBool("isWalkingRight", false);
+                    break;
+                case Direction.BACKWARD:
+                    animator.SetBool("isWalkingBackward", false);
+                    break;
+                case Direction.BACKLEFT:
+                    animator.SetBool("isWalkingBackLeft", false);
+                    break;
+                case Direction.BACKRIGHT:
+                    animator.SetBool("isWalkingBackRight", false);
+                    break;
+                case Direction.IDLE:
+                    animator.SetBool("isIdle", false);
+                    break;
+            }
+
+            oldDir = dir;
+
+            //See direction states of player: Debug.Log("Current State: " + dir);
+        }
+
+        if (isSprinting)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+    }
+
+    private void HandleJumpAnimation()
+    {
+        animator.SetTrigger("isJumping");
+    }
+
+    private void HandleDeathAnimation()
+    {
+        animator.SetBool("isAlive", false);
+    }
+
+    // Constants
+
+    //Animation Enumerator
+    private enum Direction
+    {
+        IDLE,
+        FORWARD,
+        BACKWARD,
+        LEFT,
+        RIGHT,
+        FORWARDLEFT,
+        FORWARDRIGHT,
+        BACKLEFT,
+        BACKRIGHT
     }
 }
