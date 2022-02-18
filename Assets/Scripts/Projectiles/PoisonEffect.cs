@@ -15,9 +15,8 @@ public class PoisonEffect : MonoBehaviour
         }
     }
 
-    /// <param name="collidesWith">A layermask of ALL the layers the projectile will collide with</param>
-    public void InitializeValues(LayerMask collidesWith)
+    public void InitializeValues(GameObject Projectile)
     {
-        collisionLayer = collidesWith;
+        collisionLayer = Projectile.GetComponent<BasicProjectile>().collisionLayer;
     }
 }

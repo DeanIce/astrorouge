@@ -9,7 +9,7 @@ public class BasicProjectile : MonoBehaviour, IProjectile
 
     // Set at initialization
     private Rigidbody rb;
-    private LayerMask collisionLayer;
+    public LayerMask collisionLayer;
     private float damage;
 
     // Start is called before the first frame update

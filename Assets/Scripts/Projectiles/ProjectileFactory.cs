@@ -7,8 +7,6 @@ public class ProjectileFactory : MonoBehaviour
     // All projectile prefabs
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
-    [SerializeField] private GameObject burnProjectile;
-    [SerializeField] private GameObject poisonProjectile;
 
     // Start is called before the first frame update
     private void Awake()
@@ -30,6 +28,10 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<BasicProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
 
+        //AddPoison(newProjectile);
+        newProjectile.AddComponent<PoisonEffect>();
+        newProjectile.GetComponent<PoisonEffect>().InitializeValues(newProjectile);
+
         return newProjectile;
     }
 
@@ -46,17 +48,15 @@ public class ProjectileFactory : MonoBehaviour
 
     public void CreateBurnProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
     {
-        GameObject newProjectile = Instantiate(burnProjectile);
-        newProjectile.transform.parent = gameObject.transform;
-        newProjectile.GetComponent<FlameBulletProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
-        newProjectile.transform.position = position;
+        GameObject newProjectile = CreateBasicProjectile(position, velocity, collidesWith, lifeSpan, damage, health);
+        BurnEffect effect = newProjectile.AddComponent<BurnEffect>();
+        effect.InitializeValues(collidesWith);
     }
 
-    public void CreatePoisonProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    public void AddPoison(GameObject Projectile)
     {
-        GameObject newProjectile = CreateBasicProjectile(position, velocity, collidesWith, lifeSpan, damage, health);
+        Projectile.AddComponent<PoisonEffect>();
+        Projectile.GetComponent<PoisonEffect>().InitializeValues(Projectile);
 
-        PoisonEffect effect = newProjectile.AddComponent<PoisonEffect>();
-        effect.InitializeValues(collidesWith);
     }
 }
