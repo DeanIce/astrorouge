@@ -19,35 +19,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float sensitivity = 0.2f;
 
     public GameObject followTarget;
+    private Animator animator;
+    private Direction dir;
     private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
     private bool isSprinting;
-    private Direction oldDir;
-    private Direction dir;
     private InputAction movement, look;
+    private Direction oldDir;
 
     // References
     private Rigidbody rb;
-    private Transform groundCheck;
-    private LayerMask groundMask;
-    private LayerMask enemyMask;
-    private InputAction movement, look;
-    private Animator animator;
 
-    // Constants
-    private const float groundDistance = 0.1f;
-    private const float turnSpeed = Mathf.PI / 3.0f;
-    [SerializeField] private float sensitivity = 0.2f;
-
-    //Animation Enumerator
-    private enum Direction
-    {
-        IDLE, FORWARD, BACKWARD, LEFT, RIGHT, FORWARDLEFT, FORWARDRIGHT, BACKLEFT, BACKRIGHT
-    }
-
-    public GameObject followTarget;
 
     private void Start()
     {
@@ -59,7 +43,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         //Temporary placement
-        
     }
 
     private void FixedUpdate()
@@ -72,7 +55,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded)
+        {
             extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        }
+
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
 
@@ -93,8 +79,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var eAngleX = followTarget.transform.localEulerAngles.x;
 
         if (eAngleX > 180 && eAngleX < 340)
+        {
             eAngles.x = 340;
-        else if (eAngleX < 180 && eAngleX > 40) eAngles.x = 40;
+        }
+        else if (eAngleX < 180 && eAngleX > 40)
+        {
+            eAngles.x = 40;
+        }
 
         followTarget.transform.localEulerAngles = eAngles;
 
@@ -154,7 +145,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnDrawGizmos()
     {
-        if (groundCheck) Gizmos.DrawSphere(groundCheck.position, groundDistance);
+        if (groundCheck)
+        {
+            Gizmos.DrawSphere(groundCheck.position, groundDistance);
+        }
     }
 
     // Translates 2D input into 3D looking direction
@@ -194,19 +188,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         isSprinting = !isSprinting;
     }
 
+
     public void TakeDmg(float dmg)
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0)
+        {
             PlayerStats.Instance.currentHealth = 0;
+        }
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f)
         {
-            //run end
+            HandleDeathAnimation();
         }
+        // Todo: recap scene
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
@@ -254,43 +252,53 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         meleeMeshRenderer.enabled = false;
     }
 
-    public void TakeDmg(float dmg)
-    {
-        // Temp, add damage negation and other maths here later.
-        PlayerStats.Instance.currentHealth -= dmg;
-        //Doesn't actually matter once we implement game over
-        if (PlayerStats.Instance.currentHealth < 0)
-            PlayerStats.Instance.currentHealth = 0;
-
-        gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
-        if (PlayerStats.Instance.currentHealth <= 0f)
-        {
-            HandleDeathAnimation();
-        }
-    }
 
     private void HandleMoveAnimation(Vector2 direction)
     {
-        float threshold = 0.05f;
+        var threshold = 0.05f;
         dir = Direction.IDLE;
 
         if (direction.y > threshold)
         {
-            
-            if (direction.x > threshold) dir = Direction.FORWARDRIGHT;
-            else if (direction.x < -threshold) dir = Direction.FORWARDLEFT;
-            else dir = Direction.FORWARD;
+            if (direction.x > threshold)
+            {
+                dir = Direction.FORWARDRIGHT;
+            }
+            else if (direction.x < -threshold)
+            {
+                dir = Direction.FORWARDLEFT;
+            }
+            else
+            {
+                dir = Direction.FORWARD;
+            }
         }
         else if (direction.y < -threshold)
         {
-            if (direction.x < -threshold) dir = Direction.BACKLEFT;
-            else if (direction.x > threshold) dir = Direction.BACKRIGHT;
-            else dir = Direction.BACKWARD;
+            if (direction.x < -threshold)
+            {
+                dir = Direction.BACKLEFT;
+            }
+            else if (direction.x > threshold)
+            {
+                dir = Direction.BACKRIGHT;
+            }
+            else
+            {
+                dir = Direction.BACKWARD;
+            }
         }
         else
         {
-            if (direction.x < -threshold) dir = Direction.LEFT;
-            if (direction.x > threshold) dir = Direction.RIGHT;
+            if (direction.x < -threshold)
+            {
+                dir = Direction.LEFT;
+            }
+
+            if (direction.x > threshold)
+            {
+                dir = Direction.RIGHT;
+            }
         }
 
         if (dir != oldDir)
@@ -299,7 +307,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             {
                 case Direction.FORWARD:
                     animator.SetBool("isWalkingForward", true);
-                    Debug.Log("Moving forward");
                     break;
                 case Direction.FORWARDLEFT:
                     animator.SetBool("isWalkingForwardLeft", true);
@@ -324,8 +331,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
                     break;
                 case Direction.IDLE:
                     animator.SetBool("isIdle", true);
-                    break;
-                default:
                     break;
             }
 
@@ -358,8 +363,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
                 case Direction.IDLE:
                     animator.SetBool("isIdle", false);
                     break;
-                default:
-                    break;
             }
 
             oldDir = dir;
@@ -367,8 +370,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
-        if (isSprinting) animator.SetBool("isRunning", true);
-        else animator.SetBool("isRunning", false);
+        if (isSprinting)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
     }
 
     private void HandleJumpAnimation()
@@ -379,5 +388,21 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void HandleDeathAnimation()
     {
         animator.SetBool("isAlive", false);
+    }
+
+    // Constants
+
+    //Animation Enumerator
+    private enum Direction
+    {
+        IDLE,
+        FORWARD,
+        BACKWARD,
+        LEFT,
+        RIGHT,
+        FORWARDLEFT,
+        FORWARDRIGHT,
+        BACKLEFT,
+        BACKRIGHT
     }
 }
