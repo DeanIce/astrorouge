@@ -63,7 +63,7 @@ public class HealthBarUI : MonoBehaviour
         StartHealthBarTimer();
     }
 
-    private void HideHealth() {
+    public void HideHealth() {
         healthBar.style.display = DisplayStyle.None;
         //print("hiding healthbar");
     }

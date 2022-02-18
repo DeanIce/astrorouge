@@ -14,12 +14,8 @@ public class DamagePopupUI : MonoBehaviour
     public Transform enemyTrans {get; set;}
     
     // create a Damage Popup
-    public static DamagePopupUI Create(Transform enemyTransform, int damageAmount, bool isCriticalHit) {
-        GameObject damagePopupInstance = Instantiate(DamagePopupPF);
-
-        // TODO (Sonja): figure out which of the following update the position
-        damagePopupInstance.transform.position = enemyTransform.position;
-        //damagePopupInstance.GetComponent<RectTransform>().position = position;
+    public static DamagePopupUI Create(Transform enemyTransform, Quaternion rotation, int damageAmount, bool isCriticalHit) {
+        GameObject damagePopupInstance = Instantiate(DamagePopupPF, enemyTransform.position, rotation);
 
         DamagePopupUI damagePopupUI = damagePopupInstance.GetComponent<DamagePopupUI>();
         damagePopupUI.Setup(damageAmount, isCriticalHit);
@@ -52,12 +48,12 @@ public class DamagePopupUI : MonoBehaviour
         }
 
         textColor = textMesh.color;
-        disappearTimer = 5f;
+        disappearTimer = 0.5f;
         
     }
 
     private void Update() {
-        float moveSpeed = 20f;
+        float moveSpeed = 10f;
         transform.position +=  enemyTrans.up * moveSpeed * Time.deltaTime;
 
         disappearTimer -= Time.deltaTime;
