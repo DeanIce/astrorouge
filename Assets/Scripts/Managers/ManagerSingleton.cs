@@ -6,17 +6,17 @@ namespace Managers
     {
         public bool logEvents = true;
 
-        public static T instance { get; private set; }
+        public static T Instance { get; private set; }
 
         private void Awake()
         {
-            if (instance != null && instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
             }
             else
             {
-                instance = this as T;
+                Instance = this as T;
                 if (Application.isPlaying)
                 {
                     DontDestroyOnLoad(gameObject);

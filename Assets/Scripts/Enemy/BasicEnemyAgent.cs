@@ -203,7 +203,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         iAmAlive = false;
         // Temp, add animation and call other methods here later.
-        DropManager.instance.SpawnItem(transform.position, transform.rotation);
+        DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

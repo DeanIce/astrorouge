@@ -47,8 +47,8 @@ namespace UI
             // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
             saveSettings.clicked += () =>
             {
-                AudioManager.instance.PlaySFX(AudioManager.instance.buttonClick);
-                EventManager.instance.UpdateSettings(settings, saveFile);
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
+                EventManager.Instance.UpdateSettings(settings, saveFile);
             };
 
             // Set values when the panel is created
@@ -66,7 +66,7 @@ namespace UI
             musicVolume.value = settings.volumeMusic;
             masterVolume.value = settings.volumeMaster;
             // silly hack to trigger settings events immediately
-            EventManager.instance.UpdateSettings(settings, saveFile);
+            EventManager.Instance.UpdateSettings(settings, saveFile);
         }
     }
 }

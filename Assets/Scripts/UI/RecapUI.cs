@@ -45,18 +45,18 @@ namespace UI
         private void DoMenu()
         {
             // Todo: some nice animations for the transition to main menu
-            EventManager.instance.Menu();
+            EventManager.Instance.Menu();
         }
 
         private void DoExit()
         {
-            EventManager.instance.Exit();
+            EventManager.Instance.Exit();
         }
 
         private void DoRetry()
         {
             // Todo: some nice animations for the transition to retry
-            EventManager.instance.Play();
+            EventManager.Instance.Play();
         }
     }
 }
