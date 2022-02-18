@@ -6,15 +6,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerDefault : MonoBehaviour, IPlayer
 {
+    // Constants
+    private const float groundDistance = 0.1f;
+
+    private const float turnSpeed = Mathf.PI / 3.0f;
+
     // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
 
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
+    [SerializeField] private float sensitivity = 0.2f;
+
+    public GameObject followTarget;
+    private LayerMask enemyMask;
+    private Transform groundCheck;
+    private LayerMask groundMask;
     private bool isGrounded;
     private bool isSprinting;
     private Direction oldDir;
     private Direction dir;
+    private InputAction movement, look;
 
     // References
     private Rigidbody rb;
@@ -68,11 +80,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var displacement = Walk(movement.ReadValue<Vector2>());
         rb.MovePosition(transform.position + displacement);
 
-       
+
         //Rotates Follow Target
         followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
 
-        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
+        followTarget.transform.rotation *=
+            Quaternion.AngleAxis(look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
 
         var eAngles = followTarget.transform.localEulerAngles;
         eAngles.z = 0;
@@ -80,25 +93,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var eAngleX = followTarget.transform.localEulerAngles.x;
 
         if (eAngleX > 180 && eAngleX < 340)
-        {
             eAngles.x = 340;
-        }
-        else if (eAngleX < 180 && eAngleX > 40)
-        {
-            eAngles.x = 40;
-        }
+        else if (eAngleX < 180 && eAngleX > 40) eAngles.x = 40;
 
-        followTarget.transform.localEulerAngles = eAngles;    
- 
+        followTarget.transform.localEulerAngles = eAngles;
+
         // Calculate lookAt vector then increment quaternion
         var lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
-                       Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+                        Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
 
         followTarget.transform.localEulerAngles = new Vector3(eAngles.x, 0, 0);
-
     }
 
     private void OnEnable()
@@ -144,6 +151,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.RangedAttack.performed -= RangedAttack;
     }
 
+
+    private void OnDrawGizmos()
+    {
+        if (groundCheck) Gizmos.DrawSphere(groundCheck.position, groundDistance);
+    }
+
     // Translates 2D input into 3D looking direction
     public Vector3 Look(Vector2 direction)
     {
@@ -163,7 +176,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void Jump(InputAction.CallbackContext obj)
     {
-
         if (isGrounded)
         {
             rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
@@ -180,6 +192,21 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void SprintToggle(InputAction.CallbackContext obj)
     {
         isSprinting = !isSprinting;
+    }
+
+    public void TakeDmg(float dmg)
+    {
+        // Temp, add damage negation and other maths here later.
+        PlayerStats.Instance.currentHealth -= dmg;
+        //Doesn't actually matter once we implement game over
+        if (PlayerStats.Instance.currentHealth < 0)
+            PlayerStats.Instance.currentHealth = 0;
+
+        gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
+        if (PlayerStats.Instance.currentHealth <= 0f)
+        {
+            //run end
+        }
     }
 
     private void PauseGame(InputAction.CallbackContext obj)

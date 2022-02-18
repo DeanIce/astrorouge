@@ -1,48 +1,58 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Planets;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SpawnObjects : MonoBehaviour
 {
-    // For procedurally spawning things
-    public GameObject planet;
-    private Planets.PlanetGenerator planetGen;
-    private Mesh mesh;
-    private List<Vector3> vertices;
-    bool ran = false;
+    public AssetCount[] clusterAssets;
 
-    // Collection of spawn objects
-    public GameObject[] environmentAssets;
-    public int[] numOfAsset;
-    public GameObject[] clusterAssets;
-    public int[] numInCluster;
+    public AssetCount[] environmentAssets;
+    private Mesh mesh;
+    private PlanetGenerator planetGen;
+
+    private PlanetGenerator planetGenerator;
+    private bool ran;
+
+    protected internal int totalSpawned;
+    private List<Vector3> vertices;
 
     private void Start()
     {
-        planetGen = GetComponent<Planets.PlanetGenerator>();
+        planetGen = GetComponent<PlanetGenerator>();
+        planetGenerator = GetComponent<PlanetGenerator>();
     }
 
     // Fix later
     private void Update()
     {
         // We need to wait for shader stuff to finish, once it does run our gen
-        if (planetGen.terrainMeshFilter.sharedMesh.vertices != null && !ran)
+        if (planetGen.terrainMeshFilter && planetGen.terrainMeshFilter.sharedMesh.vertices != null && !ran)
         {
             // Set our vertices guaranteed non null
             vertices = planetGen.terrainMeshFilter.sharedMesh.vertices.ToList();
 
             // Spawn all of our clusters
-            for (int j = 0; j < clusterAssets.Length; j++)
+            foreach (var pair in clusterAssets)
             {
-                SpawnCluster(clusterAssets[j], numInCluster[j]);
+                var asset = pair.prefab;
+                var count = pair.count;
+                var scale = pair.scale;
+                SpawnCluster(asset, count, scale);
             }
 
             // Spawn all of our random stuff
-            for (int i = 0; i < environmentAssets.Length; i++)
+            foreach (var pair in environmentAssets)
             {
-                SpawnObject(environmentAssets[i], numOfAsset[i]);
+                var asset = pair.prefab;
+                var count = pair.count;
+                var scale = pair.scale;
+                SpawnObject(asset, count, scale);
             }
+
+            // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
             // Flag so we dont run indefinitely
             ran = true;
         }
@@ -50,8 +60,8 @@ public class SpawnObjects : MonoBehaviour
 
     private Vector3 ObjectSpawnLocation()
     {
-        int randIndex = UnityEngine.Random.Range(0, vertices.Count);
-        Vector3 newLoc = vertices[randIndex];
+        var randIndex = Random.Range(0, vertices.Count);
+        var newLoc = vertices[randIndex] * planetGenerator.scale;
 
         // This prevents spawning 2 things at the same location in rare instances
         vertices.RemoveAt(randIndex);
@@ -60,63 +70,80 @@ public class SpawnObjects : MonoBehaviour
         return newLoc;
     }
 
-    private void SpawnObject(GameObject objectToSpawn, int numToSpawn)
+    private void SpawnObject(GameObject objectToSpawn, int numToSpawn, Vector3 scale)
     {
         // We need this here so we can set rotation
-        Vector3 spawnLocation = new Vector3();
-        for (int i = 0; i < numToSpawn; i++)
+        var spawnLocation = new Vector3();
+        for (var i = 0; i < numToSpawn; i++)
         {
             // FIX SCALE
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
             spawnLocation = ObjectSpawnLocation();
-            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            spawnLocation += transform.position;
+            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            placeObject.transform.localScale = scale;
 
             // Find the center of our origin
-            placeObject.transform.LookAt(planet.transform.position);
+            placeObject.transform.LookAt(transform.position);
 
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
-            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(0, UnityEngine.Random.Range(0, 180), 0);
+            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, Random.Range(0, 180), 0);
 
             // Set Parent
-            placeObject.transform.parent = planet.transform;
+            placeObject.transform.parent = transform;
 
             // Debug
             //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
             //Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
+
+        totalSpawned += numToSpawn;
     }
 
-    private void SpawnCluster(GameObject objectToSpawn, int numToSpawn)
+    private void SpawnCluster(GameObject objectToSpawn, int numToSpawn, Vector3 scale)
     {
         // This is to prevent overflow (i.e. random index is the last element in the vertex list)
-        int initialSpawnIndex = UnityEngine.Random.Range(0, vertices.Count - numToSpawn);
-        for (int i = 0; i < numToSpawn; i++)
+        var initialSpawnIndex = Random.Range(0, vertices.Count - numToSpawn);
+        for (var i = 0; i < numToSpawn; i++)
         {
             // We can +i here since we manually prevented overflow in our selection
             // NOTE: Vertices are contiguous in memory
-            GameObject placeObject = Instantiate(objectToSpawn, vertices[initialSpawnIndex + i], Quaternion.identity);
+            var placeObject = Instantiate(objectToSpawn, vertices[initialSpawnIndex + i], Quaternion.identity);
 
             // TEMP: Scale down huge assets
-            placeObject.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            placeObject.transform.localScale = scale;
 
             // Find the center of our origin
-            placeObject.transform.LookAt(planet.transform.position);
+            placeObject.transform.LookAt(transform.position);
 
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
-            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation = placeObject.transform.rotation * Quaternion.Euler(0, UnityEngine.Random.Range(0, 180), 0);
+            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, Random.Range(0, 180), 0);
 
             // Set Parent
-            placeObject.transform.parent = planet.transform;
+            placeObject.transform.parent = transform;
 
             // Remove vertex from list so we don't spawn 2 things at same spot
             vertices.RemoveAt(initialSpawnIndex + i);
         }
+
+        totalSpawned += numToSpawn;
+    }
+    // Collection of spawn objects
+    // public GameObject[] environmentAssets;
+    // public int[] numOfAsset;
+
+    [Serializable]
+    public class AssetCount
+    {
+        public GameObject prefab;
+        public int count;
+        public Vector3 scale = Vector3.one;
     }
 }

@@ -4,7 +4,7 @@ namespace Gravity
 {
     public class Source : MonoBehaviour
     {
-        public Rigidbody rb;
+        protected Rigidbody rb;
 
         private void Start()
         {
