@@ -1,17 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonEffect : MonoBehaviour
+public class SmiteEffect : MonoBehaviour
 {
-    // Set at initialization
     private LayerMask collisionLayer;
-    private int poisonTicks = 4;
 
     private void OnTriggerEnter(Collider other)
     {
-        //refreshes the amount of poison ticks on an enemy
+        //refreshes the amount of burn ticks on an enemy
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer && other.GetComponent<StatusEffectManager>() != null)
         {
-            other.GetComponent<StatusEffectManager>().ApplyPoison(poisonTicks);
+            other.GetComponent<StatusEffectManager>().ApplySmite();
         }
     }
 

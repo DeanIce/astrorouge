@@ -29,8 +29,10 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.transform.position = position;
 
         //AddPoison(newProjectile);
-        newProjectile.AddComponent<PoisonEffect>();
-        newProjectile.GetComponent<PoisonEffect>().InitializeValues(newProjectile);
+        //AddBurn(newProjectile);
+        //AddLightning(newProjectile);
+        //AddSmite(newProjectile);
+        AddRadioactive(newProjectile);
 
         return newProjectile;
     }
@@ -46,17 +48,33 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
     }
 
-    public void CreateBurnProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    public void AddBurn(GameObject Projectile)
     {
-        GameObject newProjectile = CreateBasicProjectile(position, velocity, collidesWith, lifeSpan, damage, health);
-        BurnEffect effect = newProjectile.AddComponent<BurnEffect>();
-        effect.InitializeValues(collidesWith);
+        Projectile.AddComponent<BurnEffect>();
+        Projectile.GetComponent<BurnEffect>().InitializeValues(Projectile);
     }
 
     public void AddPoison(GameObject Projectile)
     {
         Projectile.AddComponent<PoisonEffect>();
         Projectile.GetComponent<PoisonEffect>().InitializeValues(Projectile);
+    }
 
+    public void AddLightning(GameObject Projectile)
+    {
+        Projectile.AddComponent<LightningEffect>();
+        Projectile.GetComponent<LightningEffect>().InitializeValues(Projectile);
+    }
+
+    public void AddRadioactive(GameObject Projectile)
+    {
+        Projectile.AddComponent<RadioactiveEffect>();
+        Projectile.GetComponent<RadioactiveEffect>().InitializeValues(Projectile);
+    }
+
+    public void AddSmite(GameObject Projectile)
+    {
+        Projectile.AddComponent<SmiteEffect>();
+        Projectile.GetComponent<SmiteEffect>().InitializeValues(Projectile);
     }
 }
