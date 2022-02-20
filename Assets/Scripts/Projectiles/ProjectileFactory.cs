@@ -28,11 +28,12 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<BasicProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
 
+        //testing -> add a method to check and add all determined effects
         //AddPoison(newProjectile);
         //AddBurn(newProjectile);
         //AddLightning(newProjectile);
         //AddSmite(newProjectile);
-        AddRadioactive(newProjectile);
+        //AddRadioactive(newProjectile);
 
         return newProjectile;
     }
