@@ -9,8 +9,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Constants
     private const float groundDistance = 0.1f;
 
-    private const float turnSpeed = Mathf.PI / 3.0f;
-
     // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
 
@@ -21,7 +19,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public GameObject followTarget;
     private Animator animator;
     private Direction dir;
-    private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
@@ -32,14 +29,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // References
     private Rigidbody rb;
 
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        enemyMask = LayerMask.GetMask("Enemy");
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         //Temporary placement
@@ -214,7 +209,28 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
-        // TODO (Simon): Move beam attack into different action
+        // TODO (Simon): Figure out alternate melee attack
+        // BeamAttack();
+        LobAttack();
+    }
+
+    public void RangedAttack(InputAction.CallbackContext obj)
+    {
+        BasicAttack();
+        // HitscanAttack();
+    }
+
+    private void BasicAttack()
+    {
+        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private void BeamAttack()
+    {
         ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
             transform.forward,
             LayerMask.GetMask("Enemy", "Ground"),
@@ -222,33 +238,24 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             0.1f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
-
-        // TODO (Simon): Figure out alternate melee attack
-        /*hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
-            enemyMask);
-        StartCoroutine(Attack());
-        
-         if (hits.Length != 0)
-            //check for an enemy in the things the ray hit by whether it has an IEnemy
-            foreach (var hit in hits)
-                if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
-                    hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
-         */
     }
 
-    public void RangedAttack(InputAction.CallbackContext obj)
+    private void HitscanAttack()
     {
-        /*ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
-        */
         _ = ProjectileFactory.Instance.CreateHitscanProjectile(transform.position + transform.forward * 0.5f,
             transform.forward,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
+    }
+
+    private void LobAttack()
+    {
+        _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
     }
 
     private void HandleMoveAnimation(Vector2 direction)
@@ -335,29 +342,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
-        if (isSprinting)
-        {
-            animator.SetBool("isRunning", true);
-        }
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
+        animator.SetBool("isRunning", isSprinting);
     }
 
-    private void HandleJumpAnimation()
-    {
-        animator.SetTrigger("isJumping");
-    }
-
-    private void HandleDeathAnimation()
-    {
-        animator.SetBool("isAlive", false);
-    }
+    private void HandleJumpAnimation() => animator.SetTrigger("isJumping");
+    private void HandleDeathAnimation() => animator.SetBool("isAlive", false);
 
     // Constants
 
-    //Animation Enumerator
+    // Animation Enumerator
     // bit representation is Forward,Back,Right,Left
     private enum Direction
     {

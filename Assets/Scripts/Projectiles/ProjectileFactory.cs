@@ -7,6 +7,7 @@ public class ProjectileFactory : MonoBehaviour
     // All projectile prefabs
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
+    [SerializeField] private GameObject gravityProjectile;
     [SerializeField] private GameObject hitscanProjectile;
 
     // Start is called before the first frame update
@@ -48,6 +49,16 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<HitscanProjectile>().InitializeValues(collidesWith, damage, range);
         newProjectile.transform.SetPositionAndRotation(position,
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
+
+        return newProjectile;
+    }
+
+    public GameObject CreateGravityProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    {
+        GameObject newProjectile = Instantiate(gravityProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<GravityProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
+        newProjectile.transform.position = position;
 
         return newProjectile;
     }
