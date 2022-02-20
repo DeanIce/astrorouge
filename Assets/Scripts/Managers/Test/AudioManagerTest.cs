@@ -42,25 +42,25 @@ namespace Managers.Test
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) AudioManager.instance.PlaySFX(sampleSoundEffect);
+            if (Input.GetKeyDown(KeyCode.Space)) AudioManager.Instance.PlaySFX(sampleSoundEffect);
 
-            if (Input.GetKeyDown(KeyCode.Alpha1)) AudioManager.instance.PlayMusic(sampleMusic1);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) AudioManager.Instance.PlayMusic(sampleMusic1);
 
-            if (Input.GetKeyDown(KeyCode.Alpha2)) AudioManager.instance.PlayMusic(sampleMusic2);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) AudioManager.Instance.PlayMusic(sampleMusic2);
 
-            if (Input.GetKeyDown(KeyCode.Alpha3)) AudioManager.instance.PlayMusicWithCrossfade(sampleMusic1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) AudioManager.Instance.PlayMusicWithCrossfade(sampleMusic1);
 
-            if (Input.GetKeyDown(KeyCode.Alpha4)) AudioManager.instance.PlayMusicWithCrossfade(sampleMusic2);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) AudioManager.Instance.PlayMusicWithCrossfade(sampleMusic2);
 
-            if (Input.GetKeyDown(KeyCode.Alpha5)) AudioManager.instance.FadeIn(sampleMusic1);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) AudioManager.Instance.FadeIn(sampleMusic1);
 
-            if (Input.GetKeyDown(KeyCode.Alpha6)) AudioManager.instance.FadeIn(sampleMusic2);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) AudioManager.Instance.FadeIn(sampleMusic2);
 
-            if (Input.GetKeyDown(KeyCode.Alpha7)) AudioManager.instance.FadeOut();
+            if (Input.GetKeyDown(KeyCode.Alpha7)) AudioManager.Instance.FadeOut();
 
-            if (Input.GetKeyDown(KeyCode.Alpha0)) AudioManager.instance.StopAudio();
+            if (Input.GetKeyDown(KeyCode.Alpha0)) AudioManager.Instance.StopAudio();
 
-            if (Input.GetKeyDown(KeyCode.M)) AudioManager.instance.ToggleMute();
+            if (Input.GetKeyDown(KeyCode.M)) AudioManager.Instance.ToggleMute();
         }
     }
 }

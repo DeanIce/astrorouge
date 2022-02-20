@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetFollow: {fileID: 3747875904902306027}
+  damagePopup: {fileID: 2237388914102956775, guid: 479b982d383612a4b93cee8cf239948a, type: 3}
 --- !u!114 &2453730767701220867
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7689409263527498331}
+  - component: {fileID: 1718721338396914493}
   - component: {fileID: 7689409263527498332}
   - component: {fileID: 5915032664712744906}
   - component: {fileID: 6854432826354650640}
@@ -34,6 +35,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1718721338396914493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7689409263527498333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c585da603ec48978d68d6f674818321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logEvents: 1
 --- !u!114 &7689409263527498332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f7729b2b795014da7111b95d626f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logEvents: 1
+  logEvents: 0
   buttonClick: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
 --- !u!114 &6854432826354650640
 MonoBehaviour:
@@ -74,8 +88,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663c483ea59b2db489bbafec5ebac70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  logEvents: 0
   drops:
-  - {fileID: 8021474509505148560, guid: 0105da7022f6ee04899593a961bc6a04, type: 3}
-  - {fileID: 8066953347718497980, guid: 3fe1f9f20bff13a49941ad6cbcb91a14, type: 3}
-  - {fileID: 7644601308496093282, guid: 40c695dcf479b514e8ade70a3aece0cc, type: 3}
-  weights: 640000006400000064000000
+  - prefab: {fileID: 8021474509505148560, guid: 0105da7022f6ee04899593a961bc6a04, type: 3}
+    weight: 100
+  - prefab: {fileID: 7644601308496093282, guid: 40c695dcf479b514e8ade70a3aece0cc, type: 3}
+    weight: 300
+  - prefab: {fileID: 8066953347718497980, guid: 3fe1f9f20bff13a49941ad6cbcb91a14, type: 3}
+    weight: 200

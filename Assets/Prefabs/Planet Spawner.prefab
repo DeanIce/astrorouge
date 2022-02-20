@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7912339023148837952
+--- !u!1 &2718177326817181847
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7912339023148837955}
-  - component: {fileID: 7912339023148837959}
-  - component: {fileID: 7912339023148837956}
-  - component: {fileID: 7912339023148837957}
-  - component: {fileID: 7912339023148837954}
+  - component: {fileID: 3502664784186646373}
+  - component: {fileID: 6256196925203032705}
+  - component: {fileID: 347449612997625949}
+  - component: {fileID: 5569489780176727160}
+  - component: {fileID: 4630584243235036000}
   m_Layer: 6
-  m_Name: child
+  m_Name: Ocean
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7912339023148837955
+--- !u!4 &3502664784186646373
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023148837952}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 2718177326817181847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 37.4, y: 37.4, z: 37.4}
+  m_LocalScale: {x: 14, y: 14, z: 14}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7912339023312049574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7912339023148837959
+--- !u!33 &6256196925203032705
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023148837952}
+  m_GameObject: {fileID: 2718177326817181847}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7912339023148837956
+--- !u!23 &347449612997625949
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023148837952}
+  m_GameObject: {fileID: 2718177326817181847}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -85,26 +85,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7912339023148837957
+--- !u!135 &5569489780176727160
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023148837952}
+  m_GameObject: {fileID: 2718177326817181847}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7912339023148837954
+--- !u!54 &4630584243235036000
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023148837952}
+  m_GameObject: {fileID: 2718177326817181847}
   serializedVersion: 2
   m_Mass: 1000
   m_Drag: 0
@@ -123,9 +123,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912339023312049574}
-  - component: {fileID: 7912339023312049575}
   - component: {fileID: 7912339023312049561}
-  m_Layer: 0
+  - component: {fileID: 6032951466801601469}
+  - component: {fileID: 6949590311287083881}
+  m_Layer: 6
   m_Name: Planet Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,23 +145,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7912339023148837955}
+  - {fileID: 3502664784186646373}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7912339023312049575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912339023312049572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ec4f186c0ec1e04b876ac0d1bbbfe48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: 37.4
 --- !u!114 &7912339023312049561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +161,120 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c191437f17df4a45996321d24ccc1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   gravity: 9.81
   outerRadius: 28.2
   outerFalloffRadius: 30.42
+--- !u!114 &6032951466801601469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912339023312049572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607a4480140d6af459132fdfcffac0f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 7
+  resolutionSettings:
+    lod0: 300
+    lod1: 100
+    lod2: 50
+    collider: 100
+  previewMode: 1
+  shape:
+    heightMapCompute: {fileID: 7200000, guid: f0e0eebaa6ec5434f91d34b454ce0007, type: 3}
+    perturbVertices: 1
+    perturbCompute: {fileID: 7200000, guid: 6fbe47eba355493794a325a225ec47b9, type: 3}
+    perturbStrength: 0.75
+    seed: 0
+    testParams: {x: 0, y: 0, z: 0, w: 0}
+    oceanDepthMultiplier: 7.67
+    oceanFloorDepth: 0.18
+    oceanFloorSmoothing: 0.79
+    mountainBlend: 1.16
+    continentNoise:
+      numLayers: 6
+      lacunarity: 2
+      persistence: 0.5
+      scale: 1
+      elevation: 2.64
+      verticalShift: 0
+      offset: {x: 0, y: 0, z: 0}
+    maskNoise:
+      numLayers: 3
+      lacunarity: 1.66
+      persistence: 0.55
+      scale: 1.09
+      elevation: 1
+      verticalShift: 0.02
+      offset: {x: 0, y: 0, z: 0}
+    ridgeNoise:
+      numLayers: 5
+      lacunarity: 4
+      persistence: 0.5
+      scale: -2.05
+      power: 2.18
+      elevation: 2.97
+      gain: 0.8
+      verticalShift: 0.09
+      peakSmoothing: 1
+  shader:
+    gradient:
+      serializedVersion: 2
+      key0: {r: 0, g: 0.02941639, b: 0.9811321, a: 1}
+      key1: {r: 0.754717, g: 0.7050033, b: 0.28123888, a: 1}
+      key2: {r: 0, g: 0.6509434, b: 0.093458235, a: 1}
+      key3: {r: 0.4433962, g: 0.37428743, b: 0.13594696, a: 0}
+      key4: {r: 1, g: 1, b: 1, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 12914
+      ctime2: 31611
+      ctime3: 41441
+      ctime4: 52043
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 55705
+      atime3: 65535
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 5
+      m_NumAlphaKeys: 2
+    oceanLevel: 0
+    terrainMaterial: {fileID: 2100000, guid: 77009afb73171814faab2d4db25bfd92, type: 2}
+--- !u!114 &6949590311287083881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912339023312049572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b6740bb1daa0f46ae016d7b83f015c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clusterAssets:
+  - prefab: {fileID: 187062, guid: 3da6cabdb2d06ad4ab1068a9b2a231cd, type: 3}
+    count: 15
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 121542, guid: 1e8a1f848e20325468b33aa9d904bce7, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  environmentAssets:
+  - prefab: {fileID: 190414, guid: 653c97bd88b4b084d87714542c43ee5a, type: 3}
+    count: 100
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 101680, guid: 487da53ead5d8b34f829f38dfa345485, type: 3}
+    count: 100
+    scale: {x: 1, y: 1, z: 1}
