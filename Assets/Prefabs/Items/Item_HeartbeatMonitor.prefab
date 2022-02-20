@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Heartbeat Monitor
+  itemDescription: Increases health regeneration by 20%
   itemIcon: {fileID: 2800000, guid: c684ecf97534e554b886998d37aff4ad, type: 3}
 --- !u!1001 &8468487709020162947
 PrefabInstance:

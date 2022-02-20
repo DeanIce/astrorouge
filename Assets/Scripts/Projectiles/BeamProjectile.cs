@@ -1,15 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BeamProjectile : MonoBehaviour, IProjectile
+public class BeamProjectile : BaseProjectile
 {
-    // Dynamic values
-    [SerializeField] private float timeLeft;
-    private float currHealth;
-
-    // Set at initialization
-    private LayerMask collisionLayer;
-    private float damage;
-
     void FixedUpdate()
     {
         if (currHealth < 0.01f)
@@ -34,26 +27,15 @@ public class BeamProjectile : MonoBehaviour, IProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            other.gameObject.GetComponent<IEnemy>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IProjectile>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IPlayer>()?.TakeDmg(damage);
+            CollisionResponse(other.gameObject);
             // Beam does NOT die after delivering damage
         }
     }
 
-    public Vector3 Displacement(float deltaTime)
-    {
-        return Vector3.zero;
-    }
+    public override Vector3 Displacement(float deltaTime) => Vector3.zero;
+    public override void TakeDmg(float incDamage) { }
 
-    public void TakeDmg(float incDamage)
-    {
-        currHealth -= incDamage;
-        if (currHealth < 0)
-            Die();
-    }
-
-    public void Die()
+    public override void Die()
     {
         Destroy(gameObject);
     }

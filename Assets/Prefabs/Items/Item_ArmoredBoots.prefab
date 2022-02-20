@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Armored Boots
+  itemDescription: +10 Armor
   itemIcon: {fileID: 2800000, guid: e1398f4def829c546a1b33fb56b83ad1, type: 3}
 --- !u!4 &7633596819793597057 stripped
 Transform:

@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Super Computer Chip
+  itemDescription: Decreases dash cooldown by 10%
   itemIcon: {fileID: 2800000, guid: 7b6d713370bcf1e4087e6eaa621aadda, type: 3}
 --- !u!4 &5046297137863179791 stripped
 Transform:
