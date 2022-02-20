@@ -1,21 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LightningEffect : MonoBehaviour
+public class LightningEffect : IEffect
 {
-    private LayerMask collisionLayer;
-
-    private void OnTriggerEnter(Collider other)
+    public void ApplyEffect(GameObject target)
     {
-        if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer && other.GetComponent<StatusEffectManager>() != null)
-        {
-            other.GetComponent<StatusEffectManager>().ApplyLightning();
-        }
-    }
-
-    public void InitializeValues(GameObject Projectile)
-    {
-        collisionLayer = Projectile.GetComponent<BasicProjectile>().collisionLayer;
+        StatusEffectManager sem = target.GetComponent<StatusEffectManager>();
+        if (sem != null)
+            sem.ApplyLightning();
     }
 }

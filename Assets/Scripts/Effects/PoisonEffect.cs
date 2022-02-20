@@ -1,21 +1,13 @@
 using UnityEngine;
 
-public class PoisonEffect : MonoBehaviour
-{
-    private LayerMask collisionLayer;
+public class PoisonEffect : IEffect
+{    
     private int poisonTicks = 4;
 
-    private void OnTriggerEnter(Collider other)
+    public void ApplyEffect(GameObject target)
     {
-        //refreshes the amount of poison ticks on an enemy
-        if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer && other.GetComponent<StatusEffectManager>() != null)
-        {
-            other.GetComponent<StatusEffectManager>().ApplyPoison(poisonTicks);
-        }
-    }
-
-    public void InitializeValues(GameObject Projectile)
-    {
-        collisionLayer = Projectile.GetComponent<BasicProjectile>().collisionLayer;
+        StatusEffectManager sem = target.GetComponent<StatusEffectManager>();
+        if (sem != null)
+            sem.ApplyPoison(poisonTicks);
     }
 }

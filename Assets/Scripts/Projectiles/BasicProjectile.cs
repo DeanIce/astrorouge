@@ -1,16 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicProjectile : MonoBehaviour, IProjectile
+public class BasicProjectile : BaseProjectile
 {
-    // Dynamic values
-    [SerializeField] private Vector3 velocity;
-    [SerializeField] private float timeLeft;
-    private float currHealth;
-
     // Set at initialization
     private Rigidbody rb;
-    public LayerMask collisionLayer;
-    private float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -40,9 +34,7 @@ public class BasicProjectile : MonoBehaviour, IProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            other.gameObject.GetComponent<IEnemy>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IProjectile>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IPlayer>()?.TakeDmg(damage);
+            CollisionResponse(other.gameObject);
             currHealth = 0;
         }
     }
@@ -64,19 +56,7 @@ public class BasicProjectile : MonoBehaviour, IProjectile
         this.damage = damage;
     }
 
-    public Vector3 Displacement(float deltaTime)
-    {
-        return deltaTime * velocity;
-    }
-
-    public void TakeDmg(float incDamage)
-    {
-        currHealth -= incDamage;
-        if (currHealth < 0)
-            Die();
-    }
-
-    public void Die()
+    public override void Die()
     {
         Destroy(gameObject);
     }

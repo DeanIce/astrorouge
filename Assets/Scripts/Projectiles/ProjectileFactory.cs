@@ -49,33 +49,28 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
     }
 
-    public void AddBurn(GameObject Projectile)
+    public void AddBurn(GameObject projectile)
     {
-        Projectile.AddComponent<BurnEffect>();
-        Projectile.GetComponent<BurnEffect>().InitializeValues(Projectile);
+        projectile.GetComponent<IProjectile>().AttachEffect(new BurnEffect());
     }
 
-    public void AddPoison(GameObject Projectile)
+    public void AddPoison(GameObject projectile)
     {
-        Projectile.AddComponent<PoisonEffect>();
-        Projectile.GetComponent<PoisonEffect>().InitializeValues(Projectile);
+        projectile.GetComponent<IProjectile>().AttachEffect(new PoisonEffect());
     }
 
-    public void AddLightning(GameObject Projectile)
+    public void AddLightning(GameObject projectile)
     {
-        Projectile.AddComponent<LightningEffect>();
-        Projectile.GetComponent<LightningEffect>().InitializeValues(Projectile);
+        projectile.GetComponent<IProjectile>().AttachEffect(new LightningEffect());
     }
 
-    public void AddRadioactive(GameObject Projectile)
+    public void AddRadioactive(GameObject projectile)
     {
-        Projectile.AddComponent<RadioactiveEffect>();
-        Projectile.GetComponent<RadioactiveEffect>().InitializeValues(Projectile);
+        projectile.GetComponent<IProjectile>().AttachEffect(new RadioactiveEffect());
     }
 
-    public void AddSmite(GameObject Projectile)
+    public void AddSmite(GameObject projectile)
     {
-        Projectile.AddComponent<SmiteEffect>();
-        Projectile.GetComponent<SmiteEffect>().InitializeValues(Projectile);
+        projectile.GetComponent<IProjectile>().AttachEffect(new SmiteEffect());
     }
 }
