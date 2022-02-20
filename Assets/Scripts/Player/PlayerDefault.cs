@@ -238,68 +238,33 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
-        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
+        /*ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+        */
+        _ = ProjectileFactory.Instance.CreateHitscanProjectile(transform.position + transform.forward * 0.5f,
+            transform.forward,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.GetRangeDamage(),
+            PlayerStats.Instance.rangeProjectileRange);
     }
-
-    private IEnumerator Attack()
-    {
-        meleeMeshRenderer.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        meleeMeshRenderer.enabled = false;
-    }
-
 
     private void HandleMoveAnimation(Vector2 direction)
     {
         var threshold = 0.05f;
+
+        // bit representation is concatenation of booleans Forward?, Back?, Right?, Left?
         dir = Direction.IDLE;
-
         if (direction.y > threshold)
-        {
-            if (direction.x > threshold)
-            {
-                dir = Direction.FORWARDRIGHT;
-            }
-            else if (direction.x < -threshold)
-            {
-                dir = Direction.FORWARDLEFT;
-            }
-            else
-            {
-                dir = Direction.FORWARD;
-            }
-        }
+            dir |= Direction.FORWARD;
         else if (direction.y < -threshold)
-        {
-            if (direction.x < -threshold)
-            {
-                dir = Direction.BACKLEFT;
-            }
-            else if (direction.x > threshold)
-            {
-                dir = Direction.BACKRIGHT;
-            }
-            else
-            {
-                dir = Direction.BACKWARD;
-            }
-        }
-        else
-        {
-            if (direction.x < -threshold)
-            {
-                dir = Direction.LEFT;
-            }
-
-            if (direction.x > threshold)
-            {
-                dir = Direction.RIGHT;
-            }
-        }
+            dir |= Direction.BACKWARD;
+        if (direction.x > threshold)
+            dir |= Direction.RIGHT;
+        else if (direction.x < -threshold)
+            dir |= Direction.LEFT;
 
         if (dir != oldDir)
         {
@@ -393,16 +358,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Constants
 
     //Animation Enumerator
+    // bit representation is Forward,Back,Right,Left
     private enum Direction
     {
-        IDLE,
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT,
-        FORWARDLEFT,
-        FORWARDRIGHT,
-        BACKLEFT,
-        BACKRIGHT
+        IDLE = 0b0000,
+        FORWARD = 0b1000,
+        BACKWARD = 0b0100,
+        LEFT = 0b0001,
+        RIGHT = 0b0010,
+        FORWARDLEFT = 0b1001,
+        FORWARDRIGHT = 0b1010,
+        BACKLEFT = 0b0101,
+        BACKRIGHT = 0b0110
     }
 }

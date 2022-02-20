@@ -7,6 +7,7 @@ public class ProjectileFactory : MonoBehaviour
     // All projectile prefabs
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
+    [SerializeField] private GameObject hitscanProjectile;
 
     // Start is called before the first frame update
     private void Awake()
@@ -38,5 +39,16 @@ public class ProjectileFactory : MonoBehaviour
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
         
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
+    }
+
+    public GameObject CreateHitscanProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, float damage, float range)
+    {
+        GameObject newProjectile = Instantiate(hitscanProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<HitscanProjectile>().InitializeValues(collidesWith, damage, range);
+        newProjectile.transform.SetPositionAndRotation(position,
+            newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
+
+        return newProjectile;
     }
 }
