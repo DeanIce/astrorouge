@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Tomahawk
+  itemDescription: Increases melee damage by 20%
   itemIcon: {fileID: 2800000, guid: 5f746c16a86fc3e47aac6e47cce0e1ae, type: 3}
 --- !u!4 &5083286410954368202 stripped
 Transform:

@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3824014246501231882
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8889023111809481258}
+    m_Modifications:
+    - target: {fileID: 1327330024077150, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_Name
+      value: SM_Icon_Cross_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991265104611200, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0da84d17589af3247930d311b07edd38, type: 3}
+--- !u!1001 &4800465401537616714
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 868238605635233315, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611345242582634266, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+      propertyPath: m_Name
+      value: Item_DivineJudgement
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+--- !u!1 &1828068517063726160 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6611345242582634266, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+  m_PrefabInstance: {fileID: 4800465401537616714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8908844649965470963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828068517063726160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e238e56797261b547aad5951f51ef93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Divine Judgement
+  itemDescription: Adds a small chance to instantly kill a basic enemy
+  itemIcon: {fileID: 2800000, guid: 0af10d244bc01794099ca23c5ce771ba, type: 3}
+--- !u!4 &8889023111809481258 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4162041519204196704, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+  m_PrefabInstance: {fileID: 4800465401537616714}
+  m_PrefabAsset: {fileID: 0}
