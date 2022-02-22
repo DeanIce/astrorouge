@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class HitscanProjectile : MonoBehaviour, IProjectile
+public class HitscanProjectile : BaseProjectile
 {
     // Set at initialization
-    private LayerMask collisionLayer;
-    private float damage;
     private float range;
 
     // Update is called once per frame
@@ -35,10 +33,10 @@ public class HitscanProjectile : MonoBehaviour, IProjectile
         this.range = range;
     }
 
-    public Vector3 Displacement(float deltaTime) => Vector3.zero;
-    public void TakeDmg(float incDamage) { }
+    public override Vector3 Displacement(float deltaTime) => Vector3.zero;
+    public override void TakeDmg(float incDamage) { }
 
-    public void Die()
+    public override void Die()
     {
         Destroy(gameObject);
     }

@@ -1,17 +1,10 @@
 using Gravity;
 using UnityEngine;
 
-public class GravityProjectile : MonoBehaviour, IProjectile
+public class GravityProjectile : BaseProjectile
 {
-    // Dynamic values
-    [SerializeField] private Vector3 velocity;
-    [SerializeField] private float timeLeft;
-    private float currHealth;
-
     // Set at initialization
     private Rigidbody rb;
-    private LayerMask collisionLayer;
-    private float damage;
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +37,7 @@ public class GravityProjectile : MonoBehaviour, IProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            other.gameObject.GetComponent<IEnemy>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IProjectile>()?.TakeDmg(damage);
-            other.gameObject.GetComponent<IPlayer>()?.TakeDmg(damage);
+            CollisionResponse(other.gameObject);
             currHealth = 0;
         }
     }
@@ -68,19 +59,7 @@ public class GravityProjectile : MonoBehaviour, IProjectile
         this.damage = damage;
     }
 
-    public Vector3 Displacement(float deltaTime)
-    {
-        return deltaTime * velocity;
-    }
-
-    public void TakeDmg(float incDamage)
-    {
-        currHealth -= incDamage;
-        if (currHealth < 0)
-            Die();
-    }
-
-    public void Die()
+    public override void Die()
     {
         Destroy(gameObject);
     }
