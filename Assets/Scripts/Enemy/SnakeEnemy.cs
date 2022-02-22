@@ -7,6 +7,7 @@ public class SnakeEnemy : RangedEnemy
     Animator animator;
     ProjectileFactory factory;
     [SerializeField] GameObject mouth;
+    [SerializeField] float poisonChance = 0.5f;
 
     public override void Start()
     {
@@ -19,6 +20,7 @@ public class SnakeEnemy : RangedEnemy
     public override IEnumerator Attack()
     {
         RaycastHit[] hits;
+        GameObject projectile;
         //rend.enabled = true;
         Attacking = true;
         animator.SetBool("attack3", true);
@@ -31,7 +33,8 @@ public class SnakeEnemy : RangedEnemy
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
-                    factory.CreateBasicProjectile(mouth.transform.position, hit.collider.gameObject.transform.position - mouth.transform.position, LayerMask.GetMask("Player", "Ground"), 5, 5);
+                    projectile = factory.CreateBasicProjectile(mouth.transform.position, hit.collider.gameObject.transform.position - mouth.transform.position, LayerMask.GetMask("Player", "Ground"), 5, 5);
+                    if (Random.value < poisonChance) factory.AddPoison(projectile);
                 }
             }
         }

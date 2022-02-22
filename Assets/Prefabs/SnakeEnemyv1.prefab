@@ -195,9 +195,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.75089866
-  m_Height: 5.903927
+  m_Height: 5.574313
   m_Direction: 1
-  m_Center: {x: -0.000000059604645, y: 2.064211, z: 0}
+  m_Center: {x: -0.000000059604645, y: 1.0643859, z: 0}
 --- !u!114 &6092937446732967474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +217,7 @@ MonoBehaviour:
   body: {fileID: 2025109476969112669}
   attackRange: 10
   mouth: {fileID: 2025109476969112673}
+  poisonChance: 0.5
 --- !u!114 &1890924933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5230038188746763887, guid: c68204ddcf0a54e84ae80ea4fcfb7559, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.02
       objectReference: {fileID: 0}
     - target: {fileID: 5230038188746763887, guid: c68204ddcf0a54e84ae80ea4fcfb7559, type: 3}
       propertyPath: m_LocalPosition.z
@@ -708,9 +709,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.7394942
-  m_Height: 6.040783
+  m_Height: 5.612299
   m_Direction: 1
-  m_Center: {x: 0.011404395, y: 1.9501705, z: 0}
+  m_Center: {x: 0.011404395, y: 3.0953455, z: 0}
 --- !u!1 &2025109476969112673 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5230038188746994291, guid: c68204ddcf0a54e84ae80ea4fcfb7559, type: 3}
