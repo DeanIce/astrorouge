@@ -1,15 +1,17 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 // don't allow merge yet
 public class HoldToPickUp : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private LayerMask layerMask;
 
     [SerializeField] private float pickupTime = 1f;
+
+    [SerializeField] private float distance;
 
     [SerializeField] private RectTransform pickupImageRoot;
 
@@ -23,9 +25,39 @@ public class HoldToPickUp : MonoBehaviour
 
     private AbstractItem itemBeingPickedUp;
 
+    private InputAction pickup;
+
+    private bool isKeyDown;
+
     private void Start()
     {
         inventory = GetComponent<Inventory>();
+    }
+
+    private void OnEnable() {
+        var playerInputMap = InputManager.inputActions.Player;
+        pickup = playerInputMap.Pickup;
+        // playerInputMap.Pickup.started += PickupStarted;
+        playerInputMap.Pickup.performed += PickupPerformed;
+        pickup.Enable();
+    }
+
+    private void OnDisable() {
+        var playerInputMap = InputManager.inputActions.Player;
+        pickup = playerInputMap.Pickup;
+        // playerInputMap.Pickup.started -= PickupStarted;
+        playerInputMap.Pickup.performed -= PickupPerformed;
+        pickup.Disable();
+    }
+
+    // public void PickupStarted(InputAction.CallbackContext obj) {
+    //     isKeyDown = true;
+    //     print("key down");
+    // }
+
+    public void PickupPerformed(InputAction.CallbackContext obj) {
+        isKeyDown = !isKeyDown;
+        print(isKeyDown);
     }
 
     private void Update()
@@ -36,7 +68,8 @@ public class HoldToPickUp : MonoBehaviour
         {
             pickupImageRoot.gameObject.SetActive(true);
 
-            if (Input.GetKey(KeyCode.E)) // change to work with new input system
+
+            if (isKeyDown) // change to work with new input system
                 IncrementPickupProgressAndTryComplete();
             else
                 currentPickupTimerElapsed = 0f;
@@ -76,7 +109,7 @@ public class HoldToPickUp : MonoBehaviour
         RaycastHit hitInfo;
 
         Debug.DrawLine(start, end, Color.red);
-        if (Physics.Raycast(start, transform.forward, out hitInfo, 30f, layerMask))
+        if (Physics.Raycast(start, transform.forward, out hitInfo, distance, layerMask))
         {
             var hitItem = hitInfo.collider.GetComponent<AbstractItem>();
 
