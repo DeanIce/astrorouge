@@ -19,8 +19,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float sensitivity = 0.2f;
     [SerializeField] private LayerMask projectileLayerMask = new LayerMask();
     [SerializeField] private GameObject followTarget;
+    [SerializeField] private GameObject fireLocation;
 
-    public GameObject fireLocation;
     private Animator animator;
     private Direction dir;
     private LayerMask enemyMask;
@@ -218,10 +218,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // TODO (Simon): Move beam attack into different action
         ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
-            transform.forward,
+            AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.1f, // TODO (Simon): Mess with value
+            0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
 
@@ -240,18 +240,24 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
-        Vector3 mouseWorldPos = Vector3.zero;
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 32);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, projectileLayerMask))
-        {
-            mouseWorldPos = raycastHit.point;
-        }
+        
         ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (mouseWorldPos - fireLocation.transform.position).normalized,
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private Vector3 AttackVector()
+    {
+        Vector3 mouseWorldPos = Vector3.zero;
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 32);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, projectileLayerMask))
+        {
+            mouseWorldPos = raycastHit.point;
+        }
+        return (mouseWorldPos - fireLocation.transform.position).normalized;
     }
 
     private IEnumerator Attack()
