@@ -14,7 +14,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
     [SerializeField] private float sensitivity = 0.2f;
-    [SerializeField] private LayerMask projectileLayerMask = new LayerMask();
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
 
@@ -244,14 +243,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.rangeProjectileRange);
     }
 
-    private Vector3 AttackVector()
-    {
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 32);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-
-        return (ray.GetPoint(400) - fireLocation.transform.position).normalized;
-    }
-
     private void LobAttack(InputAction.CallbackContext obj)
     {
         _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
@@ -259,6 +250,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private Vector3 AttackVector()
+    {
+        Vector2 screenCenterPoint = new(Screen.width / 2f, (Screen.height / 2f) + 32); // Magic number: 32
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
 
     private void HandleMoveAnimation(Vector2 direction)
