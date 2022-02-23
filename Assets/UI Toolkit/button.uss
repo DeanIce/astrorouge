@@ -48,6 +48,10 @@
     scale: 0.95;
 }
 
+.button:focus {
+    font-size: 50px;
+}
+
 .main-menu-title {
     -unity-font-definition: none;
     -unity-font: resource('NEXON Football Gothic B');

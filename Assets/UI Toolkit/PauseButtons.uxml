@@ -8,12 +8,12 @@
                 <ui:VisualElement class="noodle-icon" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_MenuIcon07_Continue_s.png?fileID=2800000&amp;guid=36e6d8fac27786e4ea274fdebcda8384&amp;type=3#Icon_MenuIcon07_Continue_s&apos;); -unity-background-scale-mode: scale-and-crop;" />
                 <ui:Label text="RESUME" display-tooltip-when-elided="true" />
             </ui:Button>
-            <ui:Button display-tooltip-when-elided="true" name="settings-button" class="noodle-pause-button" style="background-color: rgba(188, 188, 188, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-image: none; margin-left: 40px; margin-right: 40px;">
+            <ui:Button display-tooltip-when-elided="true" name="settings-button" tabindex="1" class="noodle-pause-button" style="background-color: rgba(188, 188, 188, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-image: none; margin-left: 40px; margin-right: 40px;">
                 <ui:VisualElement name="backdrop" class="noodle-pause-backdrop" />
                 <ui:VisualElement class="noodle-icon" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_MenuIcon07_Setting_s.png?fileID=2800000&amp;guid=728a5a14713e26f4b8c64dad92b4ab51&amp;type=3#Icon_MenuIcon07_Setting_s&apos;); -unity-background-scale-mode: scale-and-crop;" />
                 <ui:Label text="SETTINGS" display-tooltip-when-elided="true" />
             </ui:Button>
-            <ui:Button display-tooltip-when-elided="true" name="main-menu-button" class="noodle-pause-button" style="background-color: rgba(188, 188, 188, 0); background-image: none;">
+            <ui:Button display-tooltip-when-elided="true" name="main-menu-button" tabindex="2" class="noodle-pause-button" style="background-color: rgba(188, 188, 188, 0); background-image: none;">
                 <ui:VisualElement name="backdrop" class="noodle-pause-backdrop" />
                 <ui:VisualElement class="noodle-icon" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_MenuIcon07_Exit_s.png?fileID=2800000&amp;guid=13da750f4a0a45044b75a34346f3cd59&amp;type=3#Icon_MenuIcon07_Exit_s&apos;); -unity-background-scale-mode: scale-and-crop;" />
                 <ui:Label text="MENU" display-tooltip-when-elided="true" />

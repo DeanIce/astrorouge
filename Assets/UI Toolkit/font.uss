@@ -136,3 +136,7 @@
 .noodle-pause-button:hover > .noodle-pause-backdrop {
     background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Btn_MenuButton_Hexagon01_s.png?fileID=2800000&guid=7e944630b9af9674586f2f699aa7c7fe&type=3#Btn_MenuButton_Hexagon01_s');
 }
+
+.noodle-pause-button:focus {
+    font-size: 50px;
+}
