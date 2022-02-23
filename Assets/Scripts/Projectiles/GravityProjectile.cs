@@ -1,6 +1,7 @@
+using Gravity;
 using UnityEngine;
 
-public class BasicProjectile : BaseProjectile
+public class GravityProjectile : BaseProjectile
 {
     // Set at initialization
     private Rigidbody rb;
@@ -19,6 +20,9 @@ public class BasicProjectile : BaseProjectile
             Die();
             return;
         }
+
+        Vector3 sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
+        velocity += 0.01f * Time.deltaTime * sumForce;
 
         rb.MovePosition(transform.position + Displacement(Time.deltaTime));
         timeLeft -= Time.deltaTime;
