@@ -19,8 +19,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float sensitivity = 0.2f;
     [SerializeField] private LayerMask projectileLayerMask = new LayerMask();
     [SerializeField] private GameObject followTarget;
+    [SerializeField] private GameObject fireLocation;
 
-    public GameObject fireLocation;
     private Animator animator;
     private Direction dir;
     private LayerMask enemyMask;
@@ -217,11 +217,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
         // TODO (Simon): Move beam attack into different action
-        ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
-            transform.forward,
+        ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.postion,
+            AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.1f, // TODO (Simon): Mess with value
+            0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
 
@@ -239,15 +239,20 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     }
 
     public void RangedAttack(InputAction.CallbackContext obj)
+    {     
+        ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.postion,
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private Vector3 AttackVector()
     {
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 32);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
-        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (ray.GetPoint(400) - fireLocation.transform.position).normalized,
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
+        return (ray.GetPoint(400) - fireLocation.transform.position).normalized;
     }
 
     private IEnumerator Attack()
