@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 // don't allow merge yet
 public class HoldToPickUp : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private LayerMask layerMask;
 
