@@ -68,10 +68,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
 
         //Rotates Follow Target
-        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
+        followTarget.transform.rotation *= Quaternion.AngleAxis(-look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
 
         followTarget.transform.rotation *=
-            Quaternion.AngleAxis(look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
+            Quaternion.AngleAxis(-look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
 
         var eAngles = followTarget.transform.localEulerAngles;
         eAngles.z = 0;
