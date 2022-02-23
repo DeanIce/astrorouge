@@ -1,4 +1,3 @@
-using System.Collections;
 using Gravity;
 using Managers;
 using UnityEngine;
@@ -113,11 +112,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
 
-        playerInputMap.MeleeAttack.performed += MeleeAttack;
-        playerInputMap.MeleeAttack.Enable();
-
-        playerInputMap.RangedAttack.performed += RangedAttack;
-        playerInputMap.RangedAttack.Enable();
+        playerInputMap.PrimaryAttack.performed += BasicAttack;
+        playerInputMap.PrimaryAttack.Enable();
+        playerInputMap.SecondaryAttack.performed += BeamAttack;
+        playerInputMap.SecondaryAttack.Enable();
+        playerInputMap.UtilityAction.performed += HitscanAttack;
+        playerInputMap.UtilityAction.Enable();
+        playerInputMap.SpecialAction.performed += LobAttack;
+        playerInputMap.SpecialAction.Enable();
     }
 
     private void OnDisable()
@@ -131,10 +133,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.Disable();
         playerInputMap.PauseGame.performed -= PauseGame;
 
-        playerInputMap.MeleeAttack.Disable();
-        playerInputMap.MeleeAttack.performed -= MeleeAttack;
-        playerInputMap.RangedAttack.Disable();
-        playerInputMap.RangedAttack.performed -= RangedAttack;
+        playerInputMap.PrimaryAttack.Disable();
+        playerInputMap.PrimaryAttack.performed -= BasicAttack;
+        playerInputMap.SecondaryAttack.Disable();
+        playerInputMap.SecondaryAttack.performed -= BeamAttack;
+        playerInputMap.UtilityAction.Disable();
+        playerInputMap.UtilityAction.performed -= HitscanAttack;
+        playerInputMap.SpecialAction.Disable();
+        playerInputMap.SpecialAction.performed -= LobAttack;
     }
 
 
@@ -207,20 +213,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         EventManager.Instance.Pause();
     }
 
-    public void MeleeAttack(InputAction.CallbackContext obj)
-    {
-        // TODO (Simon): Figure out alternate melee attack
-        // BeamAttack();
-        LobAttack();
-    }
-
-    public void RangedAttack(InputAction.CallbackContext obj)
-    {
-        BasicAttack();
-        // HitscanAttack();
-    }
-
-    private void BasicAttack()
+    private void BasicAttack(InputAction.CallbackContext obj)
     {
         ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
@@ -229,18 +222,18 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.GetRangeDamage());
     }
 
-    private void BeamAttack()
+    private void BeamAttack(InputAction.CallbackContext obj)
     {
         ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
             transform.forward,
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.1f, // TODO (Simon): Mess with value
+            0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
     }
 
-    private void HitscanAttack()
+    private void HitscanAttack(InputAction.CallbackContext obj)
     {
         _ = ProjectileFactory.Instance.CreateHitscanProjectile(transform.position + transform.forward * 0.5f,
             transform.forward,
@@ -249,7 +242,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.rangeProjectileRange);
     }
 
-    private void LobAttack()
+    private void LobAttack(InputAction.CallbackContext obj)
     {
         _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
