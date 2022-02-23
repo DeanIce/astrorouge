@@ -217,7 +217,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void MeleeAttack(InputAction.CallbackContext obj)
     {
         // TODO (Simon): Move beam attack into different action
-        ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.postion,
+        ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
@@ -240,7 +240,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {     
-        ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.postion,
+        ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
             PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
