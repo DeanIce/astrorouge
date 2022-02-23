@@ -17,8 +17,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
     [SerializeField] private float sensitivity = 0.2f;
+    [SerializeField] private LayerMask projectileLayerMask = new LayerMask();
+    [SerializeField] private GameObject followTarget;
 
-    public GameObject followTarget;
+    public GameObject fireLocation;
     private Animator animator;
     private Direction dir;
     private LayerMask enemyMask;
@@ -238,8 +240,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void RangedAttack(InputAction.CallbackContext obj)
     {
+        Vector3 mouseWorldPos = Vector3.zero;
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, (Screen.height / 2f) + 32);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, projectileLayerMask))
+        {
+            mouseWorldPos = raycastHit.point;
+        }
         ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * (mouseWorldPos - fireLocation.transform.position).normalized,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
