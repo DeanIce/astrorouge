@@ -1,9 +1,8 @@
 using UnityEngine;
 
-interface IEnemy
+interface IEnemy : IDamageable
 {
     void Wander(Vector3 direction);
     void Hunt(Collider target);
-    void TakeDmg(float dmg);
     void Die();
 }

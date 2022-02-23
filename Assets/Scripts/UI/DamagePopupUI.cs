@@ -33,7 +33,7 @@ public class DamagePopupUI : MonoBehaviour
     }
 
     private void Start() {
-        // Instantiate(damagePopup, Vector3.zero, Quaternion.identity);
+
     }
 
     public void Setup(int damageAmount, bool isCriticalHit) {
@@ -54,19 +54,26 @@ public class DamagePopupUI : MonoBehaviour
     }
 
     private void Update() {
-        float moveSpeed = 10f;
-        transform.position +=  enemyTrans.up * moveSpeed * Time.deltaTime;
+        if (enemyTrans != null) {
+            float moveSpeed = 10f;
+            transform.position +=  enemyTrans.up * moveSpeed * Time.deltaTime;
+            
+            Quaternion rotation = Quaternion.LookRotation(transform.position - GameObject.Find("PlayerDefault").transform.position, transform.up);
+            transform.rotation = rotation;
 
-        disappearTimer -= Time.deltaTime;
-        if (disappearTimer < 0) {
-            // start disappearing
-            float disappearSpeed = 3f;
-            textColor.a -= disappearSpeed * Time.deltaTime;
-            textMesh.color = textColor;
-            if (textColor.a < 0) {
-                Destroy(gameObject);
+            disappearTimer -= Time.deltaTime;
+            if (disappearTimer < 0) {
+                // start disappearing
+                float disappearSpeed = 3f;
+                textColor.a -= disappearSpeed * Time.deltaTime;
+                textMesh.color = textColor;
+                if (textColor.a < 0) {
+                    Destroy(gameObject);
+                }
+
             }
-
+        } else {
+            Destroy(gameObject);
         }
     }
 }

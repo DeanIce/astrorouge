@@ -2,7 +2,7 @@
 
 namespace Managers
 {
-    public abstract class ManagerSingleton<T> : MonoBehaviour where T : Component
+    public abstract class ManagerSingleton<T> : MonoBehaviour where T : ManagerSingleton<T>
     {
         public bool logEvents = true;
 

@@ -15,11 +15,13 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
     public void AttachEffect(IEffect effect) => effects.Add(effect);    
     protected void CollisionResponse(GameObject target)
     {
-        target.GetComponent<IEnemy>()?.TakeDmg(damage);
-        target.GetComponent<IProjectile>()?.TakeDmg(damage);
-        target.GetComponent<IPlayer>()?.TakeDmg(damage);
+        GameObject root = target.transform.root.gameObject;
 
-        effects.ForEach(effect => effect.ApplyEffect(target));
+        root.GetComponent<IEnemy>()?.TakeDmg(damage);
+        root.GetComponent<IProjectile>()?.TakeDmg(damage);
+        root.GetComponent<IPlayer>()?.TakeDmg(damage);
+
+        effects.ForEach(effect => effect.ApplyEffect(root));
     }
 
     public abstract void Die();

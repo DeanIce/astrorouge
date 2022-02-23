@@ -7,6 +7,8 @@ public class ProjectileFactory : MonoBehaviour
     // All projectile prefabs
     [SerializeField] private GameObject basicProjectile;
     [SerializeField] private GameObject beamProjectile;
+    [SerializeField] private GameObject gravityProjectile;
+    [SerializeField] private GameObject hitscanProjectile;
 
     // Start is called before the first frame update
     private void Awake()
@@ -38,7 +40,7 @@ public class ProjectileFactory : MonoBehaviour
         return newProjectile;
     }
 
-    public void CreateBeamProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, LayerMask stopsAt, float duration, float damage, float range)
+    public GameObject CreateBeamProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, LayerMask stopsAt, float duration, float damage, float range)
     {
         GameObject newProjectile = Instantiate(beamProjectile);
         newProjectile.transform.parent = gameObject.transform;
@@ -47,6 +49,29 @@ public class ProjectileFactory : MonoBehaviour
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
         
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
+
+        return newProjectile;
+    }
+
+    public GameObject CreateHitscanProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, float damage, float range)
+    {
+        GameObject newProjectile = Instantiate(hitscanProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<HitscanProjectile>().InitializeValues(collidesWith, damage, range);
+        newProjectile.transform.SetPositionAndRotation(position,
+            newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
+
+        return newProjectile;
+    }
+
+    public GameObject CreateGravityProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
+    {
+        GameObject newProjectile = Instantiate(gravityProjectile);
+        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.GetComponent<GravityProjectile>().InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
+        newProjectile.transform.position = position;
+
+        return newProjectile;
     }
 
     public void AddBurn(GameObject projectile)

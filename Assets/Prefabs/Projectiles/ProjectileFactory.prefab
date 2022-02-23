@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basicProjectile: {fileID: 2171838815963128636, guid: bbf3e585e9ddb774485cea06717d1ce0, type: 3}
   beamProjectile: {fileID: 2171838815963128636, guid: 0d75a7de362a12c4b9a0c7899e4f10b0, type: 3}
-  burnProjectile: {fileID: 2171838815963128636, guid: 54f7ca5293ca91a49bb9df72793f6348, type: 3}
-  poisonProjectile: {fileID: 2171838815963128636, guid: 3508eb894a004454ca589e4f04ee1a04, type: 3}
+  gravityProjectile: {fileID: 2171838815963128636, guid: 8a470b87f8d7a0a42a0b11f33d05b465, type: 3}
+  hitscanProjectile: {fileID: 2171838815963128636, guid: 10778ed6938ce584182db9443f05e5df, type: 3}

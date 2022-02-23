@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
 {
-    private IEnemy enemy;
+    private IDamageable damageable;
     public List<int> burnTickTimes = new List<int>();
     public List<int> poisonTickTimes = new List<int>();
     public List<int> radTickTimes = new List<int>();
@@ -13,10 +13,11 @@ public class StatusEffectManager : MonoBehaviour
     public int poisonDamage = 10;
     public int lightningDamage = 50;
     public int radDamage = 2;
+    public float smiteDamage = float.MaxValue;
 
     void Start()
     {
-        enemy = GetComponent<IEnemy>();
+        damageable = GetComponent<IDamageable>();
     }
 
     public void ApplyBurn(int ticks)
@@ -41,7 +42,7 @@ public class StatusEffectManager : MonoBehaviour
             {
                 burnTickTimes[i]--;
             }
-            enemy.TakeDmg(burnDamage);
+            damageable.TakeDmg(burnDamage);
             burnTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
         }
@@ -68,7 +69,7 @@ public class StatusEffectManager : MonoBehaviour
             {
                 poisonTickTimes[i]--;
             }
-            enemy.TakeDmg(poisonDamage);
+            damageable.TakeDmg(poisonDamage);
             poisonTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(1f);
         }
@@ -83,7 +84,7 @@ public class StatusEffectManager : MonoBehaviour
     IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
-        enemy.TakeDmg(lightningDamage);
+        damageable.TakeDmg(lightningDamage);
     }
 
     public void ApplySmite()
@@ -94,7 +95,7 @@ public class StatusEffectManager : MonoBehaviour
     IEnumerator Smite()
     {
         yield return new WaitForSeconds(0.1f);
-        enemy.Die();
+        damageable.TakeDmg(smiteDamage);
     }
 
     public void ApplySlow()
