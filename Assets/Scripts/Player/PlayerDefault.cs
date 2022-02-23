@@ -1,4 +1,3 @@
-using System.Collections;
 using Gravity;
 using Managers;
 using UnityEngine;
@@ -8,8 +7,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
-
-    private const float turnSpeed = Mathf.PI / 3.0f;
 
     // for testing attack purposes
     public MeshRenderer meleeMeshRenderer;
@@ -23,7 +20,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private Animator animator;
     private Direction dir;
-    private LayerMask enemyMask;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
@@ -34,14 +30,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // References
     private Rigidbody rb;
 
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         groundCheck = transform.Find("GroundCheck");
         groundMask = LayerMask.GetMask("Ground");
-        enemyMask = LayerMask.GetMask("Enemy");
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         //Temporary placement
@@ -120,11 +114,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
 
-        playerInputMap.MeleeAttack.performed += MeleeAttack;
-        playerInputMap.MeleeAttack.Enable();
-
-        playerInputMap.RangedAttack.performed += RangedAttack;
-        playerInputMap.RangedAttack.Enable();
+        playerInputMap.PrimaryAttack.performed += BasicAttack;
+        playerInputMap.PrimaryAttack.Enable();
+        playerInputMap.SecondaryAttack.performed += BeamAttack;
+        playerInputMap.SecondaryAttack.Enable();
+        playerInputMap.UtilityAction.performed += HitscanAttack;
+        playerInputMap.UtilityAction.Enable();
+        playerInputMap.SpecialAction.performed += LobAttack;
+        playerInputMap.SpecialAction.Enable();
     }
 
     private void OnDisable()
@@ -138,10 +135,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.Disable();
         playerInputMap.PauseGame.performed -= PauseGame;
 
-        playerInputMap.MeleeAttack.Disable();
-        playerInputMap.MeleeAttack.performed -= MeleeAttack;
-        playerInputMap.RangedAttack.Disable();
-        playerInputMap.RangedAttack.performed -= RangedAttack;
+        playerInputMap.PrimaryAttack.Disable();
+        playerInputMap.PrimaryAttack.performed -= BasicAttack;
+        playerInputMap.SecondaryAttack.Disable();
+        playerInputMap.SecondaryAttack.performed -= BeamAttack;
+        playerInputMap.UtilityAction.Disable();
+        playerInputMap.UtilityAction.performed -= HitscanAttack;
+        playerInputMap.SpecialAction.Disable();
+        playerInputMap.SpecialAction.performed -= LobAttack;
     }
 
 
@@ -211,40 +212,36 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void PauseGame(InputAction.CallbackContext obj)
     {
-        EventManager.instance.Pause();
+        EventManager.Instance.Pause();
     }
 
-    public void MeleeAttack(InputAction.CallbackContext obj)
+    private void BasicAttack(InputAction.CallbackContext obj)
     {
-        // TODO (Simon): Move beam attack into different action
-        ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+        _ = ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private void BeamAttack(InputAction.CallbackContext obj)
+    {
+        _ = ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
-
-        // TODO (Simon): Figure out alternate melee attack
-        /*hits = Physics.RaycastAll(transform.position, transform.forward, PlayerStats.Instance.meleeAttackRange,
-            enemyMask);
-        StartCoroutine(Attack());
-        
-         if (hits.Length != 0)
-            //check for an enemy in the things the ray hit by whether it has an IEnemy
-            foreach (var hit in hits)
-                if (hit.collider.gameObject.GetComponent<IEnemy>() != null)
-                    hit.collider.gameObject.GetComponent<IEnemy>().TakeDmg(5);
-         */
     }
-
-    public void RangedAttack(InputAction.CallbackContext obj)
-    {     
-        ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
-            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+    
+    private void HitscanAttack(InputAction.CallbackContext obj)
+    {
+        _ = ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+            AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
+            PlayerStats.Instance.GetRangeDamage(),
+            PlayerStats.Instance.rangeProjectileRange);
     }
 
     private Vector3 AttackVector()
@@ -255,61 +252,29 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         return (ray.GetPoint(400) - fireLocation.transform.position).normalized;
     }
 
-    private IEnumerator Attack()
+    private void LobAttack(InputAction.CallbackContext obj)
     {
-        meleeMeshRenderer.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        meleeMeshRenderer.enabled = false;
+        _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
     }
-
 
     private void HandleMoveAnimation(Vector2 direction)
     {
         var threshold = 0.05f;
+
+        // bit representation is concatenation of booleans Forward?, Back?, Right?, Left?
         dir = Direction.IDLE;
-
         if (direction.y > threshold)
-        {
-            if (direction.x > threshold)
-            {
-                dir = Direction.FORWARDRIGHT;
-            }
-            else if (direction.x < -threshold)
-            {
-                dir = Direction.FORWARDLEFT;
-            }
-            else
-            {
-                dir = Direction.FORWARD;
-            }
-        }
+            dir |= Direction.FORWARD;
         else if (direction.y < -threshold)
-        {
-            if (direction.x < -threshold)
-            {
-                dir = Direction.BACKLEFT;
-            }
-            else if (direction.x > threshold)
-            {
-                dir = Direction.BACKRIGHT;
-            }
-            else
-            {
-                dir = Direction.BACKWARD;
-            }
-        }
-        else
-        {
-            if (direction.x < -threshold)
-            {
-                dir = Direction.LEFT;
-            }
-
-            if (direction.x > threshold)
-            {
-                dir = Direction.RIGHT;
-            }
-        }
+            dir |= Direction.BACKWARD;
+        if (direction.x > threshold)
+            dir |= Direction.RIGHT;
+        else if (direction.x < -threshold)
+            dir |= Direction.LEFT;
 
         if (dir != oldDir)
         {
@@ -380,39 +345,26 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
-        if (isSprinting)
-        {
-            animator.SetBool("isRunning", true);
-        }
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
+        animator.SetBool("isRunning", isSprinting);
     }
 
-    private void HandleJumpAnimation()
-    {
-        animator.SetTrigger("isJumping");
-    }
-
-    private void HandleDeathAnimation()
-    {
-        animator.SetBool("isAlive", false);
-    }
+    private void HandleJumpAnimation() => animator.SetTrigger("isJumping");
+    private void HandleDeathAnimation() => animator.SetBool("isAlive", false);
 
     // Constants
 
-    //Animation Enumerator
+    // Animation Enumerator
+    // bit representation is Forward,Back,Right,Left
     private enum Direction
     {
-        IDLE,
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT,
-        FORWARDLEFT,
-        FORWARDRIGHT,
-        BACKLEFT,
-        BACKRIGHT
+        IDLE = 0b0000,
+        FORWARD = 0b1000,
+        BACKWARD = 0b0100,
+        LEFT = 0b0001,
+        RIGHT = 0b0010,
+        FORWARDLEFT = 0b1001,
+        FORWARDRIGHT = 0b1010,
+        BACKLEFT = 0b0101,
+        BACKRIGHT = 0b0110
     }
 }

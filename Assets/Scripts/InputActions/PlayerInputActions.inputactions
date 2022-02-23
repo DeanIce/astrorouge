@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Melee Attack",
+                    "name": "Primary Attack",
                     "type": "Button",
                     "id": "d0e05655-9441-462f-a9d8-3f99a5e92794",
                     "expectedControlType": "Button",
@@ -60,12 +60,39 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Ranged Attack",
+                    "name": "Secondary Attack",
                     "type": "Button",
                     "id": "0abfc23a-e187-4c27-a2bb-84d4461364af",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Utility Action",
+                    "type": "Button",
+                    "id": "11f2d532-bdcb-42c8-9c1d-d4d45c0e18ec",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Special Action",
+                    "type": "Button",
+                    "id": "e1bdf816-170d-476f-bbca-bb445c3a02da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pickup",
+                    "type": "Button",
+                    "id": "9f2dea98-d8ba-4400-8433-f0988197d255",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 }
             ],
@@ -150,7 +177,7 @@
                 {
                     "name": "",
                     "id": "e76bf019-b114-4068-8518-a2328bd69af1",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -161,7 +188,7 @@
                 {
                     "name": "",
                     "id": "038e697b-6aa8-4c56-aac6-3d8602aa43f3",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -172,7 +199,7 @@
                 {
                     "name": "",
                     "id": "a56f0f47-1891-4d53-af17-e28713604875",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -215,12 +242,23 @@
                 },
                 {
                     "name": "",
+                    "id": "65d19ae0-42a8-4101-b1a9-fd034fd70b45",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f0f79dc0-1458-4e2a-bedd-2a4aa5f26834",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Melee Attack",
+                    "action": "Primary Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,7 +269,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Melee Attack",
+                    "action": "Primary Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -242,7 +280,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ranged Attack",
+                    "action": "Secondary Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -253,7 +291,73 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ranged Attack",
+                    "action": "Secondary Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26865731-7be0-4148-918b-4447e5e04616",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Utility Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09d0316c-7c58-442d-a6d2-0bea9528f0d8",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Utility Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "47bc2f71-dbcb-44e5-b831-e326ea82a7e3",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae270e10-fac2-45a5-8e58-c7d0b5e04965",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a266684-1b63-42fc-900f-97ffc38a2526",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c074957d-79c5-4ac6-a069-e3e0b265d79a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -280,6 +384,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "3f2194fc-1903-42e4-87b2-db4a60d445d0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -368,6 +481,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Ranged Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae6ab5f3-9b18-40c4-9082-0f2be8334457",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92edf789-0581-4fa4-8e73-b19377b5e0f0",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83a82272-4338-4819-953d-d2e5aa822dfc",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class AbstractItem : MonoBehaviour
 {
     public string itemName;
+    public string itemDescription;
     public Texture2D itemIcon;
 
     public override int GetHashCode()

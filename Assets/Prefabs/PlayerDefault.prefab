@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 5313944904042844001}
   - component: {fileID: 5283267440717181788}
   - component: {fileID: 2653002068885093179}
+  - component: {fileID: 3798061513029287840}
   m_Layer: 9
   m_Name: PlayerDefault
   m_TagString: Untagged
@@ -308,6 +309,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   pickupTime: 1
+  distance: 5
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
@@ -340,6 +342,26 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 776eceaa9a21b8e47a4d5cb545acb3ac, type: 3}
   m_SortingOrder: 0
+--- !u!114 &3798061513029287840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579053813939167122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burnTickTimes: 
+  poisonTickTimes: 
+  radTickTimes: 
+  burnDamage: 5
+  poisonDamage: 10
+  lightningDamage: 50
+  radDamage: 2
+  smiteDamage: 3.4028235e+38
 --- !u!1 &4080113621099687949
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 77.76}
+  m_AnchoredPosition: {x: -150, y: 75}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2908154483940228917
@@ -679,14 +701,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.2
+  m_fontSize: 44.75
   m_fontSizeBase: 27.25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -715,7 +737,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -307.3988, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -930,6 +952,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95002627717350384, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 38f7e03aea06579429ebe644c2ed22ca, type: 3}
+    - target: {fileID: 95002627717350384, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f1ac30047c512014da90967d4f3a6609, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
 --- !u!4 &6526573759726795435 stripped
