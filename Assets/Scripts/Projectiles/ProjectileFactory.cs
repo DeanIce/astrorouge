@@ -73,7 +73,7 @@ public class ProjectileFactory : MonoBehaviour
 
         return newProjectile;
     }
-    
+
     public void AddBurn(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new BurnEffect());
