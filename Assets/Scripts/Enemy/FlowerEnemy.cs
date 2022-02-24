@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatEnemy: MeleeEnemy
+public class FlowerEnemy : MeleeEnemy
 {
     Animator animator;
 
@@ -18,8 +18,8 @@ public class BatEnemy: MeleeEnemy
     {
         //rend.enabled = true;
         Attacking = true;
-        animator.SetInteger("moving", 2);
-        yield return new WaitForSeconds(1f);
+        animator.SetInteger("moving", 3);
+        yield return new WaitForSeconds(0.7f);
         animator.SetInteger("moving", 0);
         //rend.enabled = false;
         Attacking = false;
@@ -33,7 +33,8 @@ public class BatEnemy: MeleeEnemy
     private IEnumerator DieCo()
     {
         Dying = true;
-        animator.SetInteger("moving", 14);
+        if (Random.value < 0.5) animator.SetInteger("moving", 13);
+        else animator.SetInteger("moving", 12);
         yield return new WaitForSecondsRealtime(10);
         Destroy(gameObject);
     }

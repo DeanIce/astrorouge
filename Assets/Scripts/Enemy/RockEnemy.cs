@@ -27,34 +27,22 @@ public class RockEnemy : MeleeEnemy
 
     public override IEnumerator Attack()
     {
-        RaycastHit[] hits;
         //rend.enabled = true;
         Attacking = true;
         if (attack == 0)
         {
             animator.SetBool("attack1A", true);
+            yield return new WaitForSeconds(2f);
         }
         else if (attack == 1)
         {
             animator.SetBool("attack1B", true);
+            yield return new WaitForSeconds(2f);
         }
         else if (attack == 2)
         {
             animator.SetBool("attack2", true);
-        }
-        yield return new WaitForSeconds(2f);
-        hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
-        if (hits.Length != 0)
-        {
-            //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
-                    if(attack != 2) hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
-                    else hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(10);
-                }
-            }
+            yield return new WaitForSeconds(2.4f);
         }
         //rend.enabled = false;
         Attacking = false;
