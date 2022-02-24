@@ -15,6 +15,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public Collider playerCollider;
     [SerializeField] private GameObject detector;
     [SerializeField] private GameObject body;
+    [SerializeField] private float attackRange;
+    public float AttackRange => attackRange;
     private readonly Color green = new(0, 1, 0, 0.5f);
     private readonly Vector3 jumpForce = new(0f, 20f, 0f);
 
