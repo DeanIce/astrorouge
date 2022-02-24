@@ -105,6 +105,13 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        // Todo(Logan): draw gizmos
+        // var size = detector.transform.localScale;
+        // Gizmos.DrawMesh(detector.GetComponent<MeshFilter>().sharedMesh);
+    }
+
     // Detected
     public virtual void OnTriggerEnter(Collider other)
     {
@@ -197,7 +204,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // make damage popup TODO:: change the "false" to when this is a critical hit. I think this would require adding a parameter and passing the critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
-            if (health <= 0f)
+            if (health <= 0f && iAmAlive)
             {
                 Die();
             }
