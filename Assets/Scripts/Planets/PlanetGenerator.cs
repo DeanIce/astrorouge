@@ -162,7 +162,6 @@ namespace Planets
 
                     // Sometimes when changing a colour property, invalid data is returned from compute shader
                     // Running the shading a second time fixes it.
-                    // Not sure if this is my bug, or Unity's (TODO: investigate)
                     debugNumUpdates++;
                     if (debugDoubleUpdate && debugNumUpdates < 2)
                     {
