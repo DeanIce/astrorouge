@@ -69,6 +69,7 @@ namespace UI
         {
             root.SetEnabled(true);
             pauseMenu.style.display = DisplayStyle.Flex;
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
         }
 
         private void PlayGame()
@@ -86,8 +87,7 @@ namespace UI
             }
             else
             {
-                settingsMenu.style.display = DisplayStyle.None;
-                EventManager.Instance.Play();
+                ContinueButtonPressed();
             }
         }
 
@@ -104,7 +104,6 @@ namespace UI
             AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.Flex;
             settingsOpen = true;
-            print(settingsOpen);
         }
 
         private void MainMenuButtonPressed()
