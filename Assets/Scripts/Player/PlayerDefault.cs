@@ -37,7 +37,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         groundMask = LayerMask.GetMask("Ground");
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
-        //Temporary placement
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void FixedUpdate()
@@ -233,7 +233,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
     }
-    
+
     private void HitscanAttack(InputAction.CallbackContext obj)
     {
         _ = ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
@@ -254,8 +254,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private Vector3 AttackVector()
     {
-        Vector2 screenCenterPoint = new(Screen.width / 2f, (Screen.height / 2f) + 32); // Magic number: 32
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
+        var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
@@ -267,13 +267,22 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // bit representation is concatenation of booleans Forward?, Back?, Right?, Left?
         dir = Direction.IDLE;
         if (direction.y > threshold)
+        {
             dir |= Direction.FORWARD;
+        }
         else if (direction.y < -threshold)
+        {
             dir |= Direction.BACKWARD;
+        }
+
         if (direction.x > threshold)
+        {
             dir |= Direction.RIGHT;
+        }
         else if (direction.x < -threshold)
+        {
             dir |= Direction.LEFT;
+        }
 
         if (dir != oldDir)
         {
@@ -347,8 +356,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         animator.SetBool("isRunning", isSprinting);
     }
 
-    private void HandleJumpAnimation() => animator.SetTrigger("isJumping");
-    private void HandleDeathAnimation() => animator.SetBool("isAlive", false);
+    private void HandleJumpAnimation()
+    {
+        animator.SetTrigger("isJumping");
+    }
+
+    private void HandleDeathAnimation()
+    {
+        animator.SetBool("isAlive", false);
+    }
 
     // Constants
 
