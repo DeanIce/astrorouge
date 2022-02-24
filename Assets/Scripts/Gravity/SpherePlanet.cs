@@ -6,9 +6,8 @@ namespace Gravity
     [ExecuteAlways]
     public class SpherePlanet : MonoBehaviour
     {
+        private const string ChildName = "child";
         public float size = 5f;
-
-        private readonly string childName = "child";
 
         private Transform childTransform;
 
@@ -18,12 +17,13 @@ namespace Gravity
         // Start is called before the first frame update
         private void Start()
         {
-            childTransform = transform.Find(childName);
+            childTransform = transform.Find(ChildName);
             if (childTransform == null)
             {
                 var resource = Resources.Load("PlanetTemplateSphere") as GameObject;
-                var child = Instantiate(resource, transform.position, transform.rotation);
-                child.name = childName;
+                var thisTransform = transform;
+                var child = Instantiate(resource, thisTransform.position, thisTransform.rotation);
+                child.name = ChildName;
                 childTransform = child.transform;
                 childTransform.parent = transform;
             }
@@ -34,10 +34,17 @@ namespace Gravity
         // Update is called once per frame
         private void Update()
         {
-            if (childTransform == null) childTransform = transform.Find(childName);
+            if (childTransform == null)
+            {
+                childTransform = transform.Find(ChildName);
+            }
+
             childTransform.localScale = new Vector3(size, size, size);
 
-            if (planetGenerator) planetGenerator.scale = size / 2f;
+            if (planetGenerator)
+            {
+                planetGenerator.scale = size / 2f;
+            }
         }
     }
 }

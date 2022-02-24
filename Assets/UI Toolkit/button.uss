@@ -42,6 +42,10 @@
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
+.button:focus {
+    color: rgb(255, 0, 0);
+}
+
 .button:active {
     color: rgb(180, 180, 180);
     font-size: 20px;

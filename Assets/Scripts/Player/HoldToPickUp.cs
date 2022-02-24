@@ -57,7 +57,6 @@ public class HoldToPickUp : MonoBehaviour
 
     public void PickupPerformed(InputAction.CallbackContext obj) {
         isKeyDown = !isKeyDown;
-        print(isKeyDown);
     }
 
     private void Update()

@@ -37,7 +37,7 @@ namespace Planets
 
         protected virtual void OnValidate()
         {
-            if (OnSettingChanged != null) OnSettingChanged();
+            OnSettingChanged?.Invoke();
         }
 
         public event Action OnSettingChanged;

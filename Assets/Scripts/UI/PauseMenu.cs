@@ -21,6 +21,8 @@ namespace UI
         private Button settingsButton;
         private VisualElement settingsMenu;
 
+        private bool settingsOpen;
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -53,20 +55,21 @@ namespace UI
         {
             EventManager.Instance.pauseGame += PauseGame;
             EventManager.Instance.playGame += PlayGame;
-            InputManager.inputActions.PauseMenu.Back.performed += PlayGame;
+            InputManager.inputActions.PauseMenu.Back.performed += GoBack;
         }
 
         private void OnDisable()
         {
             EventManager.Instance.pauseGame -= PauseGame;
             EventManager.Instance.playGame -= PlayGame;
-            InputManager.inputActions.PauseMenu.Back.performed -= PlayGame;
+            InputManager.inputActions.PauseMenu.Back.performed -= GoBack;
         }
 
         private void PauseGame()
         {
             root.SetEnabled(true);
             pauseMenu.style.display = DisplayStyle.Flex;
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
         }
 
         private void PlayGame()
@@ -76,10 +79,16 @@ namespace UI
             root.SetEnabled(false);
         }
 
-        private void PlayGame(InputAction.CallbackContext obj)
+        private void GoBack(InputAction.CallbackContext obj)
         {
-            settingsMenu.style.display = DisplayStyle.None;
-            EventManager.Instance.Play();
+            if (settingsOpen)
+            {
+                BackButtonPressed();
+            }
+            else
+            {
+                ContinueButtonPressed();
+            }
         }
 
 
@@ -94,6 +103,7 @@ namespace UI
         {
             AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.Flex;
+            settingsOpen = true;
         }
 
         private void MainMenuButtonPressed()
@@ -106,6 +116,7 @@ namespace UI
             AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             settingsMenu.style.display = DisplayStyle.None;
             pauseMenu.style.display = DisplayStyle.Flex;
+            settingsOpen = false;
         }
     }
 }
