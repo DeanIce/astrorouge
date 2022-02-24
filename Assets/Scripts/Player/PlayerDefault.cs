@@ -14,8 +14,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
     [SerializeField] private float sensitivity = 0.2f;
+    [SerializeField] private GameObject followTarget;
+    [SerializeField] private GameObject fireLocation;
 
-    public GameObject followTarget;
     private Animator animator;
     private Direction dir;
     private Transform groundCheck;
@@ -62,10 +63,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
 
         //Rotates Follow Target
-        followTarget.transform.rotation *= Quaternion.AngleAxis(look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
+        followTarget.transform.rotation *= Quaternion.AngleAxis(-look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
 
         followTarget.transform.rotation *=
-            Quaternion.AngleAxis(look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
+            Quaternion.AngleAxis(-look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
 
         var eAngles = followTarget.transform.localEulerAngles;
         eAngles.z = 0;
@@ -215,8 +216,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BasicAttack(InputAction.CallbackContext obj)
     {
-        ProjectileFactory.Instance.CreateBasicProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * transform.forward,
+        _ = ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
@@ -224,19 +225,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BeamAttack(InputAction.CallbackContext obj)
     {
-        ProjectileFactory.Instance.CreateBeamProjectile(transform.position + transform.forward,
-            transform.forward,
+        _ = ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+            AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
     }
-
+    
     private void HitscanAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateHitscanProjectile(transform.position + transform.forward * 0.5f,
-            transform.forward,
+        _ = ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+            AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
@@ -249,6 +250,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+    }
+
+    private Vector3 AttackVector()
+    {
+        Vector2 screenCenterPoint = new(Screen.width / 2f, (Screen.height / 2f) + 32); // Magic number: 32
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
 
     private void HandleMoveAnimation(Vector2 direction)
