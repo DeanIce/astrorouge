@@ -12,6 +12,7 @@ namespace Managers
     {
         public List<LevelDescription> levels = new();
 
+        public bool transition;
         private int current;
 
         private Random rng;
@@ -120,20 +121,6 @@ namespace Managers
 
                 EditorGUILayout.BeginHorizontal();
                 levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
-
-                // if (GUILayout.Button("<"))
-                // {
-                //     levelManager.PrevLevel();
-                // }
-                //
-                // EditorGUILayout.LabelField(
-                //     $"{currentLevel.displayName} (level {levelManager.current})",
-                //     centered
-                // );
-                // if (GUILayout.Button(">"))
-                // {
-                //     levelManager.NextLevel();
-                // }
 
 
                 if (GUILayout.Button("Load Level"))

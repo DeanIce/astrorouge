@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0853faf9dcba423a80275a1a9cccecde, type: 3}
   m_Name: SnowLevel
   m_EditorClassIdentifier: 
-  data: reeheeeheeee
   enemies:
   - prefab: {fileID: 0}
     weight: 0
@@ -24,6 +23,5 @@ MonoBehaviour:
   - prefab: {fileID: 164680, guid: ac37d177299599347819d045b97a5047, type: 3}
     count: 12
     scale: {x: 1, y: 1, z: 1}
-  numPlanetsMin: 8
-  numPlanetsMax: 10
+  numPlanets: {x: 4, y: 9}
   planetPrefab: {fileID: 3675557906244615386, guid: b11f1a94416eb8e4c9acb9286ea96e92, type: 3}

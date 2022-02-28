@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0853faf9dcba423a80275a1a9cccecde, type: 3}
   m_Name: FireLevel
   m_EditorClassIdentifier: 
-  data: reeheeeheeee
   enemies:
   - prefab: {fileID: 0}
     weight: 0
   clusterAssets: []
   environmentAssets: []
-  numPlanetsMin: 2
-  numPlanetsMax: 2
+  numPlanets: {x: 2, y: 6}
   planetPrefab: {fileID: 3675557906244615386, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}
