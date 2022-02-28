@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Levels;
 using UnityEditor;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Managers
 {
@@ -11,6 +13,8 @@ namespace Managers
         public List<LevelDescription> levels = new();
 
         private int current;
+
+        private Random rng;
 
         public LevelDescription CurrentLevel
         {
@@ -25,15 +29,17 @@ namespace Managers
             }
         }
 
+        private void Start()
+        {
+            LoadLevel();
+        }
+
 
         public void NextLevel()
         {
             if (current < levels.Count - 1)
             {
                 current++;
-                CurrentLevel.levelScriptableObject.Create();
-                LOG($"Loading {CurrentLevel.displayName} level.");
-                CurrentLevel.levelScriptableObject.Load();
             }
         }
 
@@ -42,9 +48,52 @@ namespace Managers
             if (current > 0)
             {
                 current--;
-                CurrentLevel.levelScriptableObject.Create();
-                LOG($"Loading {CurrentLevel.displayName} level.");
-                CurrentLevel.levelScriptableObject.Load();
+            }
+        }
+
+        private void LoadLevel()
+        {
+            // unload old
+            UnloadAll();
+            rng = new Random(CurrentLevel.seed);
+
+            // load current
+            CurrentLevel.root = GetOrCreate(CurrentLevel.displayName);
+            CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            LOG($"Loading {CurrentLevel.displayName} level.");
+            CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
+        }
+
+        private GameObject GetOrCreate(string gameObjectName)
+        {
+            // Find/create object
+            var child = transform.Find(gameObjectName);
+            if (!child)
+            {
+                child = new GameObject(gameObjectName).transform;
+                child.parent = transform;
+                child.localPosition = Vector3.zero;
+                child.localRotation = Quaternion.identity;
+                child.localScale = Vector3.one;
+                child.gameObject.layer = gameObject.layer;
+            }
+
+            return child.gameObject;
+        }
+
+        private void UnloadAll()
+        {
+            foreach (var level in levels)
+            {
+                if (!level.root)
+                {
+                    level.root = transform.Find(level.displayName)?.gameObject;
+                }
+
+                if (level.root)
+                {
+                    DestroyImmediate(level.root);
+                }
             }
         }
 
@@ -53,6 +102,8 @@ namespace Managers
         {
             public string displayName;
             public LevelScriptableObject levelScriptableObject;
+            public int seed;
+            protected internal GameObject root;
         }
 
         [CustomEditor(typeof(LevelManager))]
@@ -65,22 +116,37 @@ namespace Managers
                 var centered = GUI.skin.label;
                 centered.alignment = TextAnchor.MiddleCenter;
 
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button("<"))
-                {
-                    levelManager.PrevLevel();
-                }
+                var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
 
-                EditorGUILayout.LabelField(
-                    $"{currentLevel.displayName} (level {levelManager.current})",
-                    centered
-                );
-                if (GUILayout.Button(">"))
+                EditorGUILayout.BeginHorizontal();
+                levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
+
+                // if (GUILayout.Button("<"))
+                // {
+                //     levelManager.PrevLevel();
+                // }
+                //
+                // EditorGUILayout.LabelField(
+                //     $"{currentLevel.displayName} (level {levelManager.current})",
+                //     centered
+                // );
+                // if (GUILayout.Button(">"))
+                // {
+                //     levelManager.NextLevel();
+                // }
+
+
+                if (GUILayout.Button("Load Level"))
                 {
-                    levelManager.NextLevel();
+                    levelManager.LoadLevel();
                 }
 
                 EditorGUILayout.EndHorizontal();
+
+                if (GUILayout.Button("Unload All"))
+                {
+                    levelManager.UnloadAll();
+                }
 
                 base.OnInspectorGUI();
             }

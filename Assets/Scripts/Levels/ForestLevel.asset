@@ -13,3 +13,11 @@ MonoBehaviour:
   m_Name: ForestLevel
   m_EditorClassIdentifier: 
   data: reeheeeheeee
+  enemies:
+  - prefab: {fileID: 0}
+    weight: 0
+  clusterAssets: []
+  environmentAssets: []
+  numPlanetsMin: 2
+  numPlanetsMax: 5
+  planetPrefab: {fileID: 3675557906244615386, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}

@@ -376,7 +376,7 @@ namespace Planets
         // • creates all LOD meshes and stores them in mesh array (to be picked based on player position)
         // • creates its own instances of materials so multiple bodies can exist with their own shading
         // • doesn't support updating of shape/shading values once generated
-        private void HandleGameModeGeneration()
+        public void HandleGameModeGeneration()
         {
             var lodTimer = Stopwatch.StartNew();
             Dummy();
