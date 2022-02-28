@@ -423,10 +423,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 194792125, guid: 31e3d1be81e9eff44ad4ca22b66766f7, type: 3}
-      propertyPath: jumpForce
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6892715529194681645, guid: 31e3d1be81e9eff44ad4ca22b66766f7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -473,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6895362114024600655, guid: 31e3d1be81e9eff44ad4ca22b66766f7, type: 3}
       propertyPath: m_Name
-      value: Gyser
+      value: Geyser
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31e3d1be81e9eff44ad4ca22b66766f7, type: 3}
@@ -1396,7 +1392,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.2513967, y: 1}
+    m_SensorSize: {x: 2.2851639, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1980,7 +1976,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.2513967, y: 1}
+    m_SensorSize: {x: 2.2851639, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 260082926}
   - component: {fileID: 260082925}
   - component: {fileID: 260082924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: midwall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 359322508}
   - component: {fileID: 359322507}
   - component: {fileID: 359322506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: wall4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 417460955}
   - component: {fileID: 417460954}
   - component: {fileID: 417460953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ramp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 1023891479}
   - component: {fileID: 1023891478}
   - component: {fileID: 1023891477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: wall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 1088262501}
   - component: {fileID: 1088262500}
   - component: {fileID: 1088262499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: wall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1136992675}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1007,7 +1007,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.3827586, y: 1}
+    m_SensorSize: {x: 2.2851639, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1181,7 +1181,7 @@ GameObject:
   - component: {fileID: 1470477860}
   - component: {fileID: 1470477859}
   - component: {fileID: 1470477858}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: wall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1273,14 +1273,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 303302497557841133, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -150
-      objectReference: {fileID: 0}
-    - target: {fileID: 303302497557841133, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1333,18 +1325,6 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9208370592823053500, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_fontSize
-      value: 44.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 9208370592823053500, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_margin.z
-      value: -307.3988
-      objectReference: {fileID: 0}
-    - target: {fileID: 9208370592823053500, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
 --- !u!4 &1476026180 stripped
@@ -1369,7 +1349,7 @@ GameObject:
   - component: {fileID: 1813783957}
   - component: {fileID: 1813783956}
   - component: {fileID: 1813783955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1608,7 +1588,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.3827586, y: 1}
+    m_SensorSize: {x: 2.2851639, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
