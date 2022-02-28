@@ -15,17 +15,13 @@ namespace Planets
 
         public int GetLODResolution(int lodLevel)
         {
-            switch (lodLevel)
+            return lodLevel switch
             {
-                case 0:
-                    return lod0;
-                case 1:
-                    return lod1;
-                case 2:
-                    return lod2;
-            }
-
-            return lod2;
+                0 => lod0,
+                1 => lod1,
+                2 => lod2,
+                _ => lod2
+            };
         }
 
         public void ClampResolutions()

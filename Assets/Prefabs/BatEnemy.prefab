@@ -68,7 +68,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.30042267, z: 0}
 --- !u!114 &7282053787254129025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   playerCollider: {fileID: 0}
   detector: {fileID: 6876643510320757650}
   body: {fileID: 925309053821134467}
-  attackRange: 0.55
+  attackRange: 0.6
 --- !u!1 &6876643510320757650
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,8 +143,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6876643510320757650}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalPosition: {x: 0, y: -1.02, z: 0}
+  m_LocalScale: {x: 7.5, y: 2, z: 7.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6876643510276138006}
@@ -320,3 +320,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 172640, guid: 5d622e2f1b71c284da138fdaab7d1552, type: 3}
   m_PrefabInstance: {fileID: 925309053821027555}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &7113425273844666976
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925309053821134467}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.30042648, z: 0}
+--- !u!114 &8980311412772945312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925309053821134467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266be1ff46f1ef6448c421468b16795c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  damage2: 0

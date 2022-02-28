@@ -1,103 +1,293 @@
 fileFormatVersion: 2
 guid: f8811f74da1d37e4596186884f346168
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: 2bottom_leaf1.L
-    100002: 2bottom_leaf1.R
-    100004: 2bottom_leaf2.L
-    100006: 2bottom_leaf2.L_end
-    100008: 2bottom_leaf2.R
-    100010: 2bottom_leaf2.R_end
-    100012: Angry_flower.000
-    100014: Angry_flower.002
-    100016: Angry_flower.003
-    100018: Angry_Flower_arma
-    100020: //RootNode
-    100022: Angry_flower_stem
-    100024: head
-    100026: head_end
-    100028: IK
-    100030: IK2
-    100032: IK_end
-    100034: IK_target
-    100036: IK_target_end
-    100038: jaw
-    100040: jaw_end
-    100042: neck
-    100044: petals
-    100046: petals_end
-    100048: root
-    100050: spine_leaf1
-    100052: spine_leaf2
-    100054: spine_leaf2_end
-    100056: stem0
-    100058: stem1
-    100060: stem2
-    100062: stem2.001
-    100064: stem3
-    100066: upper_leaf1.L
-    100068: upper_leaf1.R
-    100070: upper_leaf2.L
-    100072: upper_leaf2.L_end
-    100074: upper_leaf2.R
-    100076: upper_leaf2.R_end
-    400000: 2bottom_leaf1.L
-    400002: 2bottom_leaf1.R
-    400004: 2bottom_leaf2.L
-    400006: 2bottom_leaf2.L_end
-    400008: 2bottom_leaf2.R
-    400010: 2bottom_leaf2.R_end
-    400012: Angry_flower.000
-    400014: Angry_flower.002
-    400016: Angry_flower.003
-    400018: Angry_Flower_arma
-    400020: //RootNode
-    400022: Angry_flower_stem
-    400024: head
-    400026: head_end
-    400028: IK
-    400030: IK2
-    400032: IK_end
-    400034: IK_target
-    400036: IK_target_end
-    400038: jaw
-    400040: jaw_end
-    400042: neck
-    400044: petals
-    400046: petals_end
-    400048: root
-    400050: spine_leaf1
-    400052: spine_leaf2
-    400054: spine_leaf2_end
-    400056: stem0
-    400058: stem1
-    400060: stem2
-    400062: stem2.001
-    400064: stem3
-    400066: upper_leaf1.L
-    400068: upper_leaf1.R
-    400070: upper_leaf2.L
-    400072: upper_leaf2.L_end
-    400074: upper_leaf2.R
-    400076: upper_leaf2.R_end
-    4300000: Angry_flower.003
-    4300002: Angry_flower.000
-    4300004: Angry_flower.002
-    4300006: Angry_flower_stem
-    7400000: Angry_Flower_attack1
-    7400002: Angry_Flower_attack2
-    7400004: Angry_Flower_cast
-    7400006: Angry_Flower_death1
-    7400008: Angry_Flower_death2
-    7400010: Angry_Flower_hit1
-    7400012: Angry_Flower_hit2
-    7400014: Angry_Flower_idle
-    9500000: //RootNode
-    13700000: Angry_flower.000
-    13700002: Angry_flower.002
-    13700004: Angry_flower.003
-    13700006: Angry_flower_stem
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: 2bottom_leaf1.L
+  - first:
+      1: 100002
+    second: 2bottom_leaf1.R
+  - first:
+      1: 100004
+    second: 2bottom_leaf2.L
+  - first:
+      1: 100006
+    second: 2bottom_leaf2.L_end
+  - first:
+      1: 100008
+    second: 2bottom_leaf2.R
+  - first:
+      1: 100010
+    second: 2bottom_leaf2.R_end
+  - first:
+      1: 100012
+    second: Angry_flower.000
+  - first:
+      1: 100014
+    second: Angry_flower.002
+  - first:
+      1: 100016
+    second: Angry_flower.003
+  - first:
+      1: 100018
+    second: Angry_Flower_arma
+  - first:
+      1: 100020
+    second: //RootNode
+  - first:
+      1: 100022
+    second: Angry_flower_stem
+  - first:
+      1: 100024
+    second: head
+  - first:
+      1: 100026
+    second: head_end
+  - first:
+      1: 100028
+    second: IK
+  - first:
+      1: 100030
+    second: IK2
+  - first:
+      1: 100032
+    second: IK_end
+  - first:
+      1: 100034
+    second: IK_target
+  - first:
+      1: 100036
+    second: IK_target_end
+  - first:
+      1: 100038
+    second: jaw
+  - first:
+      1: 100040
+    second: jaw_end
+  - first:
+      1: 100042
+    second: neck
+  - first:
+      1: 100044
+    second: petals
+  - first:
+      1: 100046
+    second: petals_end
+  - first:
+      1: 100048
+    second: root
+  - first:
+      1: 100050
+    second: spine_leaf1
+  - first:
+      1: 100052
+    second: spine_leaf2
+  - first:
+      1: 100054
+    second: spine_leaf2_end
+  - first:
+      1: 100056
+    second: stem0
+  - first:
+      1: 100058
+    second: stem1
+  - first:
+      1: 100060
+    second: stem2
+  - first:
+      1: 100062
+    second: stem2.001
+  - first:
+      1: 100064
+    second: stem3
+  - first:
+      1: 100066
+    second: upper_leaf1.L
+  - first:
+      1: 100068
+    second: upper_leaf1.R
+  - first:
+      1: 100070
+    second: upper_leaf2.L
+  - first:
+      1: 100072
+    second: upper_leaf2.L_end
+  - first:
+      1: 100074
+    second: upper_leaf2.R
+  - first:
+      1: 100076
+    second: upper_leaf2.R_end
+  - first:
+      4: 400000
+    second: 2bottom_leaf1.L
+  - first:
+      4: 400002
+    second: 2bottom_leaf1.R
+  - first:
+      4: 400004
+    second: 2bottom_leaf2.L
+  - first:
+      4: 400006
+    second: 2bottom_leaf2.L_end
+  - first:
+      4: 400008
+    second: 2bottom_leaf2.R
+  - first:
+      4: 400010
+    second: 2bottom_leaf2.R_end
+  - first:
+      4: 400012
+    second: Angry_flower.000
+  - first:
+      4: 400014
+    second: Angry_flower.002
+  - first:
+      4: 400016
+    second: Angry_flower.003
+  - first:
+      4: 400018
+    second: Angry_Flower_arma
+  - first:
+      4: 400020
+    second: //RootNode
+  - first:
+      4: 400022
+    second: Angry_flower_stem
+  - first:
+      4: 400024
+    second: head
+  - first:
+      4: 400026
+    second: head_end
+  - first:
+      4: 400028
+    second: IK
+  - first:
+      4: 400030
+    second: IK2
+  - first:
+      4: 400032
+    second: IK_end
+  - first:
+      4: 400034
+    second: IK_target
+  - first:
+      4: 400036
+    second: IK_target_end
+  - first:
+      4: 400038
+    second: jaw
+  - first:
+      4: 400040
+    second: jaw_end
+  - first:
+      4: 400042
+    second: neck
+  - first:
+      4: 400044
+    second: petals
+  - first:
+      4: 400046
+    second: petals_end
+  - first:
+      4: 400048
+    second: root
+  - first:
+      4: 400050
+    second: spine_leaf1
+  - first:
+      4: 400052
+    second: spine_leaf2
+  - first:
+      4: 400054
+    second: spine_leaf2_end
+  - first:
+      4: 400056
+    second: stem0
+  - first:
+      4: 400058
+    second: stem1
+  - first:
+      4: 400060
+    second: stem2
+  - first:
+      4: 400062
+    second: stem2.001
+  - first:
+      4: 400064
+    second: stem3
+  - first:
+      4: 400066
+    second: upper_leaf1.L
+  - first:
+      4: 400068
+    second: upper_leaf1.R
+  - first:
+      4: 400070
+    second: upper_leaf2.L
+  - first:
+      4: 400072
+    second: upper_leaf2.L_end
+  - first:
+      4: 400074
+    second: upper_leaf2.R
+  - first:
+      4: 400076
+    second: upper_leaf2.R_end
+  - first:
+      43: 4300000
+    second: Angry_flower.003
+  - first:
+      43: 4300002
+    second: Angry_flower.000
+  - first:
+      43: 4300004
+    second: Angry_flower.002
+  - first:
+      43: 4300006
+    second: Angry_flower_stem
+  - first:
+      74: 7400000
+    second: Angry_Flower_attack1
+  - first:
+      74: 7400002
+    second: Angry_Flower_attack2
+  - first:
+      74: 7400004
+    second: Angry_Flower_cast
+  - first:
+      74: 7400006
+    second: Angry_Flower_death1
+  - first:
+      74: 7400008
+    second: Angry_Flower_death2
+  - first:
+      74: 7400010
+    second: Angry_Flower_hit1
+  - first:
+      74: 7400012
+    second: Angry_Flower_hit2
+  - first:
+      74: 7400014
+    second: Angry_Flower_idle
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Angry_flower.000
+  - first:
+      137: 13700002
+    second: Angry_flower.002
+  - first:
+      137: 13700004
+    second: Angry_flower.003
+  - first:
+      137: 13700006
+    second: Angry_flower_stem
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -105,7 +295,7 @@ ModelImporter:
       name: LP_mat
     second: {fileID: 2100000, guid: 5caedb2d92982ea489243a056d0cb187, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -114,6 +304,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -134,6 +325,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_attack1
       takeName: Angry_Flower_arma|attack1
+      internalID: 0
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -154,7 +346,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.7274155
+        functionName: DoDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 5
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -162,6 +361,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_attack2
       takeName: Angry_Flower_arma|attack2
+      internalID: 0
       firstFrame: 0
       lastFrame: 25
       wrapMode: 0
@@ -190,6 +390,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_cast
       takeName: Angry_Flower_arma|cast
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -218,6 +419,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_death1
       takeName: Angry_Flower_arma|death1
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -246,6 +448,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_death2
       takeName: Angry_Flower_arma|death2
+      internalID: 0
       firstFrame: 0
       lastFrame: 28
       wrapMode: 0
@@ -274,6 +477,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_hit1
       takeName: Angry_Flower_arma|hit1
+      internalID: 0
       firstFrame: 0
       lastFrame: 15
       wrapMode: 0
@@ -302,6 +506,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_hit2
       takeName: Angry_Flower_arma|hit2
+      internalID: 0
       firstFrame: 0
       lastFrame: 15
       wrapMode: 0
@@ -330,6 +535,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Angry_Flower_idle
       takeName: Angry_Flower_arma|idle
+      internalID: 0
       firstFrame: 0
       lastFrame: 91
       wrapMode: 0
@@ -362,25 +568,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.9999999
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -389,10 +604,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -402,13 +617,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

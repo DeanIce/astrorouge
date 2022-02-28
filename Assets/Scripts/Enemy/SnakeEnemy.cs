@@ -22,7 +22,7 @@ public class SnakeEnemy : RangedEnemy
         RaycastHit[] hits;
         GameObject projectile;
         //rend.enabled = true;
-        hits = Physics.RaycastAll(transform.position, Body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player"));
         Attacking = true;
         animator.SetBool("attack3", true);
         yield return new WaitForSeconds(2f);
