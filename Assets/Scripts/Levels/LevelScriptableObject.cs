@@ -49,10 +49,9 @@ namespace Levels
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
                 planetGenerator.HandleGameModeGeneration();
                 planetGenerator.SetLOD(1);
-                // Todo
 
                 // Spawn objects
-                // Todo
+                SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets);
 
                 // Spawn enemies
                 // Todo
