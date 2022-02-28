@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Planets;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -145,5 +146,17 @@ public class SpawnObjects : MonoBehaviour
         public GameObject prefab;
         public int count;
         public Vector3 scale = Vector3.one;
+    }
+
+    [CustomEditor(typeof(SpawnObjects))]
+    public class SpawnObjectsEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            var devTools = (SpawnObjects) target;
+            EditorGUILayout.LabelField("Total assets spawned: " + devTools.totalSpawned, EditorStyles.boldLabel);
+
+            base.OnInspectorGUI();
+        }
     }
 }
