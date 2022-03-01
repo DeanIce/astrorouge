@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BatEnemy: MeleeEnemy
+public class BatEnemy : MeleeEnemy
 {
-    Animator animator;
+    private Animator animator;
 
     public override void Start()
     {
@@ -27,14 +26,11 @@ public class BatEnemy: MeleeEnemy
 
     public override void Die()
     {
-        if (!Dying) StartCoroutine(DieCo());
-    }
-
-    private IEnumerator DieCo()
-    {
-        Dying = true;
-        animator.SetInteger("moving", 14);
-        yield return new WaitForSecondsRealtime(10);
-        Destroy(gameObject);
+        if (!Dying)
+        {
+            Dying = true;
+            animator.SetInteger("moving", 14);
+            base.Die();
+        }
     }
 }

@@ -16,7 +16,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     [SerializeField] private GameObject detector;
     [SerializeField] private GameObject body;
     [SerializeField] private float attackRange;
-    public float AttackRange => attackRange;
     private readonly Color green = new(0, 1, 0, 0.5f);
     private readonly Vector3 jumpForce = new(0f, 20f, 0f);
 
@@ -24,6 +23,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private readonly int playerLayer = 9;
     private readonly Color red = new(1, 0, 0, 0.5f);
     private Quaternion deltaRotation;
+    protected float despawnTime = 1;
     private Renderer detectorRenderer;
     private float distanceToGround;
     private Vector3 eulerAngleVelocity;
@@ -44,6 +44,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
+    public float AttackRange => attackRange;
     public float Health => health;
     public bool Wandering { get; private set; }
 
@@ -79,22 +80,13 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         // Two states, either hunting or wandering
         if (!hunting && !Dying)
-        {
             Wander(body.transform.forward);
-        }
-        else if (Dying)
-        {
-            DoGravity();
-        }
+        else if (Dying) DoGravity();
 
         if (!hunting)
-        {
             detectorRenderer.material.SetColor("_BaseColor", green);
-        }
         else
-        {
             detectorRenderer.material.SetColor("_BaseColor", red);
-        }
     }
 
     // Swapping to collider based detection
@@ -137,10 +129,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer && !Dying)
-        {
-            Hunt(other);
-        }
+        if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
     public virtual void Wander(Vector3 direction)
@@ -150,9 +139,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         // This code is referenced from Unity documentation
         rb.MovePosition(rb.position + direction * Time.deltaTime * movementSpeed);
         if (!rotating)
-        {
             StartCoroutine(Rotate());
-        }
         else
         {
             deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
@@ -172,10 +159,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             10);
 
         // Jumping
-        if (targetRb.transform.position.y > transform.position.y && IsGrounded())
-        {
-            Jump();
-        }
+        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
 
         // OLD MOVEMENT HERE
         // NOTE: May need to add offset to playerBounds center, potential bug here ***
@@ -203,23 +187,28 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // Temp, add damage negation and other maths here later.
             health -= dmg;
             gameObject.GetComponent<HealthBarUI>().SetHealth(health);
-            // make damage popup TODO:: change the "false" to when this is a critical hit. I think this would require adding a parameter and passing the critical hit chance, or whenever the crit is defined.
+            // make damage popup TODO:: change the "false" to when this is a critical hit.
+            // I think this would require adding a parameter and passing the
+            // critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
-            if (health <= 0f && iAmAlive)
-            {
-                Die();
-            }
+            if (health <= 0f && iAmAlive) Die();
         }
     }
 
     public virtual void Die()
     {
         iAmAlive = false;
-        // Temp, add animation and call other methods here later.
+        print("die");
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
-        // hide the health bar upon death
         gameObject.GetComponent<HealthBarUI>().HideHealth();
+        StartCoroutine(DestroyLater());
+    }
+
+    private IEnumerator DestroyLater()
+    {
+        Dying = true;
+        yield return new WaitForSecondsRealtime(despawnTime);
         Destroy(gameObject);
     }
 
@@ -256,13 +245,9 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         leftOrRight = Random.Range(1, 3);
 
         if (leftOrRight == 1)
-        {
             randomRotation = Random.Range(-200, -100);
-        }
         else
-        {
             randomRotation = Random.Range(100, 200);
-        }
 
         eulerAngleVelocity = new Vector3(0, randomRotation, 0);
         // Note, increase this time to get slower turns and more "thinking"
