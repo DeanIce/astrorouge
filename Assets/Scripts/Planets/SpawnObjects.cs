@@ -4,7 +4,7 @@ using System.Linq;
 using Planets;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
 public class SpawnObjects : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class SpawnObjects : MonoBehaviour
         // We need to wait for shader stuff to finish, once it does run our gen
         if (planetGenerator.terrainMeshFilter && planetGenerator.terrainMeshFilter.sharedMesh.vertices != null && !ran)
         {
-            SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets);
+            SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets, new Random());
             // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
             // Flag so we dont run indefinitely
             ran = true;
@@ -38,7 +38,7 @@ public class SpawnObjects : MonoBehaviour
     }
 
     public static void SpawnProps(GameObject gameObject, PlanetGenerator planetGenerator, AssetCount[] cAssets,
-        AssetCount[] eAssets)
+        AssetCount[] eAssets, Random rng)
     {
         // Set our vertices guaranteed non null
         var vertices = planetGenerator.terrainMeshFilter.sharedMesh.vertices.ToList();
@@ -49,7 +49,7 @@ public class SpawnObjects : MonoBehaviour
             var asset = pair.prefab;
             var count = pair.count;
             var scale = pair.scale;
-            SpawnCluster(gameObject.transform, asset, count, scale, vertices);
+            SpawnCluster(gameObject.transform, asset, count, scale, vertices, rng);
         }
 
         // Spawn all of our random stuff
@@ -58,13 +58,13 @@ public class SpawnObjects : MonoBehaviour
             var asset = pair.prefab;
             var count = pair.count;
             var scale = pair.scale;
-            SpawnObject(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale);
+            SpawnObject(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
         }
     }
 
-    private static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale)
+    private static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale, Random rng)
     {
-        var randIndex = Random.Range(0, vertices.Count);
+        var randIndex = rng.Next(0, vertices.Count);
         var newLoc = vertices[randIndex] * planetScale;
 
         // This prevents spawning 2 things at the same location in rare instances
@@ -75,14 +75,14 @@ public class SpawnObjects : MonoBehaviour
     }
 
     private static void SpawnObject(Transform origin, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
-        List<Vector3> vertices, float planetScale)
+        List<Vector3> vertices, float planetScale, Random rng)
     {
         // We need this here so we can set rotation
         for (var i = 0; i < numToSpawn; i++)
         {
             // FIX SCALE
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
-            var spawnLocation = ObjectSpawnLocation(vertices, planetScale);
+            var spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
             spawnLocation += origin.position;
             var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
@@ -95,7 +95,7 @@ public class SpawnObjects : MonoBehaviour
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
             placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation *= Quaternion.Euler(0, Random.Range(0, 180), 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
 
             // Set Parent
             placeObject.transform.parent = origin;
@@ -109,10 +109,10 @@ public class SpawnObjects : MonoBehaviour
     }
 
     private static void SpawnCluster(Transform transform, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
-        List<Vector3> vertices)
+        List<Vector3> vertices, Random rng)
     {
         // This is to prevent overflow (i.e. random index is the last element in the vertex list)
-        var initialSpawnIndex = Random.Range(0, vertices.Count - numToSpawn);
+        var initialSpawnIndex = rng.Next(vertices.Count - numToSpawn);
         for (var i = 0; i < numToSpawn; i++)
         {
             // We can +i here since we manually prevented overflow in our selection
@@ -128,7 +128,7 @@ public class SpawnObjects : MonoBehaviour
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
             placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation *= Quaternion.Euler(0, Random.Range(0, 180), 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
 
             // Set Parent
             placeObject.transform.parent = transform;

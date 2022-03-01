@@ -55,7 +55,7 @@ namespace Levels
                 planetGenerator.SetLOD(1);
 
                 // Spawn objects
-                SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets);
+                SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
 
                 // Spawn enemies
                 // Todo
@@ -70,10 +70,7 @@ namespace Levels
         /// </summary>
         public void Load(GameObject root, Random rng)
         {
-            if (!isCreated)
-            {
-                Create(root, rng);
-            }
+            if (!isCreated) Create(root, rng);
 
             // Todo: actually change to scene
         }
