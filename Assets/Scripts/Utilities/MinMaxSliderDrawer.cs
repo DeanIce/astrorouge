@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Utilities
 {
+    /// <summary>
+    ///     https://github.com/GucioDevs/SimpleMinMaxSlider
+    /// </summary>
     [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
     public class MinMaxSliderDrawer : PropertyDrawer
     {
