@@ -16,7 +16,7 @@ public class SpawnObjects : MonoBehaviour
     private PlanetGenerator planetGenerator;
     private bool ran;
 
-    protected internal int totalSpawned;
+    private int totalSpawned;
     private List<Vector3> vertices;
 
     private void Start()
@@ -78,12 +78,11 @@ public class SpawnObjects : MonoBehaviour
         List<Vector3> vertices, float planetScale)
     {
         // We need this here so we can set rotation
-        var spawnLocation = new Vector3();
         for (var i = 0; i < numToSpawn; i++)
         {
             // FIX SCALE
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
-            spawnLocation = ObjectSpawnLocation(vertices, planetScale);
+            var spawnLocation = ObjectSpawnLocation(vertices, planetScale);
             spawnLocation += origin.position;
             var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
@@ -140,9 +139,6 @@ public class SpawnObjects : MonoBehaviour
 
         // totalSpawned += numToSpawn;
     }
-    // Collection of spawn objects
-    // public GameObject[] environmentAssets;
-    // public int[] numOfAsset;
 
     [Serializable]
     public class AssetCount

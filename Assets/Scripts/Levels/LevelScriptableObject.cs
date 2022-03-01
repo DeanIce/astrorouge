@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Planets;
-using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 using Utilities;
@@ -23,18 +21,8 @@ namespace Levels
 
         public GameObject planetPrefab;
 
-        private readonly Dictionary<int, JobHandle> jobHandles = new();
 
         private bool isCreated;
-
-        private void OnEnable()
-        {
-            // Todo: make this work
-            // if (numPlanetsMin > numPlanetsMax)
-            // {
-            //     numPlanetsMin = numPlanetsMax;
-            // }
-        }
 
 
         /// <summary>
@@ -44,11 +32,11 @@ namespace Levels
         /// </summary>
         public void Create(GameObject root, Random rng)
         {
-            var numPlanets = rng.Next(this.numPlanets.x, this.numPlanets.y);
+            var actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
 
 
             var position = root.transform.position;
-            for (var i = 0; i < numPlanets; i++)
+            for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
 
