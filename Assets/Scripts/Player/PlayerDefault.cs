@@ -204,9 +204,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f)
         {
-            HandleDeathAnimation();
+            Die();
         }
         // Todo: recap scene
+    }
+
+    public void Die()
+    {
+        // Trigger death events.
+        HandleDeathAnimation();
+
+        // Todo: Initialize new script to handle death, remove this script from player.
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
