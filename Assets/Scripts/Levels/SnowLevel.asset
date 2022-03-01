@@ -21,7 +21,8 @@ MonoBehaviour:
     count: 21
     scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 164680, guid: ac37d177299599347819d045b97a5047, type: 3}
-    count: 12
+    count: 2
     scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 9}
+  scale: {x: 5, y: 12}
   planetPrefab: {fileID: 3675557906244615386, guid: b11f1a94416eb8e4c9acb9286ea96e92, type: 3}

@@ -38,18 +38,15 @@ namespace Gravity
         {
             var vector = transform.position - position;
             var distance = vector.magnitude;
-            if (distance > outerFalloffRadius)
-            {
-                return Vector3.zero;
-            }
+            if (distance > outerFalloffRadius) return Vector3.zero;
 
             var g = gravity / distance;
-            if (distance > outerRadius)
-            {
-                g *= 1f - (distance - outerRadius) * outerFalloffFactor;
-            }
+            if (distance > outerRadius) g *= 1f - (distance - outerRadius) * outerFalloffFactor;
 
-            var m = rb.mass;
+            print(rb);
+            var m = 1.0f;
+            if (rb != null) m = rb.mass;
+
             return vector * (g * m);
         }
     }
