@@ -353,7 +353,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8021474509505148560}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -371,4 +371,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Red Orb
+  itemDescription: 
   itemIcon: {fileID: 2800000, guid: dede9861e8fda204781ccaf50320c651, type: 3}

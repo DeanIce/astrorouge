@@ -1,16 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RockEnemy : MeleeEnemy
 {
+    private Animator animator;
     private int attack;
     private bool started;
-    
-    Animator animator;
 
     public override void Start()
     {
+        despawnTime = 5;
         animator = GetComponentInChildren<Animator>();
         Dying = false;
         started = false;
@@ -20,9 +19,40 @@ public class RockEnemy : MeleeEnemy
 
     public override void FixedUpdate()
     {
-        if (Wandering) attack = 0;
-        if (started) base.FixedUpdate();
-        else DoGravity();
+        if (Wandering)
+        {
+            attack = 0;
+        }
+
+        if (started)
+        {
+            base.FixedUpdate();
+        }
+        else
+        {
+            DoGravity();
+        }
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (!started && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            StartCoroutine(Appear(other));
+        }
+        else
+        {
+            base.OnTriggerEnter(other);
+        }
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        if (started)
+        {
+            base.OnTriggerEnter(other);
+            base.OnTriggerStay(other);
+        }
     }
 
     public override IEnumerator Attack()
@@ -44,6 +74,7 @@ public class RockEnemy : MeleeEnemy
             animator.SetBool("attack2", true);
             yield return new WaitForSeconds(2.4f);
         }
+
         //rend.enabled = false;
         Attacking = false;
         if (attack == 0)
@@ -63,34 +94,18 @@ public class RockEnemy : MeleeEnemy
         }
     }
 
-    public override void OnTriggerEnter(Collider other)
+    public override void Die()
     {
-        if (!started && other.gameObject.layer == LayerMask.NameToLayer("Player")) StartCoroutine(Appear(other));
-        else base.OnTriggerEnter(other);
-    }
-
-    public override void OnTriggerStay(Collider other)
-    {
-        if (started)
+        if (!Dying)
         {
-            base.OnTriggerEnter(other);
-            base.OnTriggerStay(other);
+            base.Die();
+            Dying = true;
+            animator.SetBool("attack1A", false);
+            animator.SetBool("death", true);
+            // StartCoroutine(DieCo());
         }
     }
 
-    public override void Die()
-    {
-        if (!Dying) StartCoroutine(DieCo());
-    }
-
-    private IEnumerator DieCo()
-    {
-        Dying = true;
-        animator.SetBool("attack1A", false);
-        animator.SetBool("death", true);
-        yield return new WaitForSecondsRealtime(10);
-        Destroy(gameObject);
-    }
 
     private IEnumerator Appear(Collider other)
     {

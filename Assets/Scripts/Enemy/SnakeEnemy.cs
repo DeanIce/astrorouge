@@ -1,13 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SnakeEnemy : RangedEnemy
 {
-    Animator animator;
-    ProjectileFactory factory;
-    [SerializeField] GameObject mouth;
-    [SerializeField] float poisonChance = 0.5f;
+    [SerializeField] private GameObject mouth;
+    [SerializeField] private float poisonChance = 0.5f;
+    private Animator animator;
+    private ProjectileFactory factory;
 
     public override void Start()
     {
@@ -29,15 +28,21 @@ public class SnakeEnemy : RangedEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
+            foreach (var hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
-                    projectile = factory.CreateBasicProjectile(mouth.transform.position, hit.collider.gameObject.transform.position - mouth.transform.position, LayerMask.GetMask("Player", "Ground"), 5, 5);
-                    if (Random.value < poisonChance) factory.AddPoison(projectile);
+                    projectile = factory.CreateBasicProjectile(mouth.transform.position,
+                        hit.collider.gameObject.transform.position - mouth.transform.position,
+                        LayerMask.GetMask("Player", "Ground"), 5, 5);
+                    if (Random.value < poisonChance)
+                    {
+                        factory.AddPoison(projectile);
+                    }
                 }
             }
         }
+
         //rend.enabled = false;
         Attacking = false;
         animator.SetBool("attack3", false);
@@ -45,15 +50,12 @@ public class SnakeEnemy : RangedEnemy
 
     public override void Die()
     {
-        if (!Dying) StartCoroutine(DieCo());
-    }
-
-    private IEnumerator DieCo()
-    {
-        Dying = true;
-        animator.SetBool("attack3", false);
-        animator.SetBool("death", true);
-        yield return new WaitForSecondsRealtime(10);
-        Destroy(gameObject);
+        if (!Dying)
+        {
+            Dying = true;
+            animator.SetBool("attack3", false);
+            animator.SetBool("death", true);
+            base.Die();
+        }
     }
 }

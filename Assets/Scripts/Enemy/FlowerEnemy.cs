@@ -1,13 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlowerEnemy : MeleeEnemy
 {
-    Animator animator;
+    private Animator animator;
 
     public override void Start()
     {
+        despawnTime = 5;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         Dying = false;
@@ -27,15 +27,12 @@ public class FlowerEnemy : MeleeEnemy
 
     public override void Die()
     {
-        if (!Dying) StartCoroutine(DieCo());
-    }
-
-    private IEnumerator DieCo()
-    {
-        Dying = true;
-        if (Random.value < 0.5) animator.SetInteger("moving", 13);
-        else animator.SetInteger("moving", 12);
-        yield return new WaitForSecondsRealtime(10);
-        Destroy(gameObject);
+        if (!Dying)
+        {
+            Dying = true;
+            if (Random.value < 0.5) animator.SetInteger("moving", 13);
+            else animator.SetInteger("moving", 12);
+            base.Die();
+        }
     }
 }
