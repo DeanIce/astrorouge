@@ -1,4 +1,5 @@
 ﻿using System;
+using Gravity;
 using Planets;
 using UnityEditor;
 using UnityEngine;
@@ -34,35 +35,81 @@ namespace Levels
         {
             var actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
 
+            var radii = new float[actualNumPlanets];
 
-            var position = root.transform.position;
+
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                radii[i] = rngRange(rng, scale.x, scale.y);
+                Debug.Log(radii[i]);
+            }
+
+            Array.Sort(radii);
+            Array.Reverse(radii);
+
+            var points = BallDropper.DropBalls(radii);
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
-
-                var planet = Instantiate(planetPrefab, position, Quaternion.identity);
+                var planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
+                planetGenerator.scale = radii[i] - 2.0f;
 
-                var sample = rng.NextDouble();
-                var scaled = sample * (scale.y - scale.x) + scale.x;
-                var f = (float) scaled;
-                planetGenerator.scale = f;
-                position += f * 3 * Vector3.right;
+                var sphereSource = planet.GetComponent<SphereSource>();
+                sphereSource.outerRadius = radii[i];
+                sphereSource.outerFalloffRadius = radii[i] + 1f;
 
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
                 planetGenerator.SetLOD(1);
+            }
 
-                // Spawn objects
-                SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
 
-                // Spawn enemies
-                // Todo
+            if (false)
+            {
+                // var position = root.transform.position;
+                // for (var i = 0; i < actualNumPlanets; i++)
+                // {
+                //     // Create planet
+                //
+                //     var planet = Instantiate(planetPrefab, position, Quaternion.identity);
+                //     planet.transform.parent = root.transform;
+                //     var planetGenerator = planet.GetComponent<PlanetGenerator>();
+                //
+                //     var sample = rng.NextDouble();
+                //     var scaled = sample * (scale.y - scale.x) + scale.x;
+                //     var f = (float) scaled;
+                //     planetGenerator.scale = f;
+                //     position += f * 3 * Vector3.right;
+                //
+                //     // Generate LOD meshes
+                //     planetGenerator.HandleGameModeGeneration();
+                //     planetGenerator.SetLOD(1);
+                //
+                //     // Spawn objects
+                //     SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
+                //
+                //     // Spawn enemies
+                //     // Todo
+                // }
             }
 
 
             isCreated = true;
+        }
+
+        private float rngRange(Random rng, float start, float end)
+        {
+            var sample = rng.NextDouble();
+            var scaled = sample * (end - start) + start;
+            var f = (float) scaled;
+            return f;
+        }
+
+        private Vector3 rngPoint(Random rng)
+        {
+            return new Vector3((float) rng.NextDouble(), (float) rng.NextDouble(), (float) rng.NextDouble());
         }
 
         /// <summary>
