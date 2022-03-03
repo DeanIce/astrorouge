@@ -20,6 +20,9 @@ namespace Levels
         [MinMaxSlider(1, 10)] public Vector2Int numPlanets = new(3, 5);
         [MinMaxSlider(1, 50)] public Vector2 scale = new(5, 12);
 
+        public float gravityHeight;
+        public float falloffHeight;
+
         public GameObject planetPrefab;
 
 
@@ -43,7 +46,7 @@ namespace Levels
 
             for (var i = 0; i < actualNumPlanets; i++)
             {
-                radii[i] = rngRange(rng, scale.x, scale.y);
+                radii[i] = rngRange(rng, scale.x, scale.y) + gravityHeight;
                 Debug.Log(radii[i]);
             }
 
@@ -58,11 +61,11 @@ namespace Levels
                 var planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
-                planetGenerator.scale = radii[i] - 3f;
+                planetGenerator.scale = radii[i] - gravityHeight;
 
                 var sphereSource = planet.GetComponent<SphereSource>();
                 sphereSource.outerRadius = radii[i];
-                sphereSource.outerFalloffRadius = radii[i] + 3f;
+                sphereSource.outerFalloffRadius = radii[i] + falloffHeight;
 
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
