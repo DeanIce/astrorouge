@@ -44,10 +44,22 @@ namespace Levels
             }
 
 
+            var lowest = result[0];
             for (var i = 0; i < radii.Length; i++)
             {
                 result[i] = balls[i].transform.position * maxRadius * 2;
+
+                // Center the lowest planet at zero-zero-zero
+                if (result[i].y < lowest.y) lowest = result[i];
+
+                // Destroy the test ball
                 DestroyImmediate(balls[i]);
+            }
+
+            // Move all spheres to fit the lowest sphere at (0,0,0)
+            for (var i = 0; i < radii.Length; i++)
+            {
+                result[i] -= lowest;
             }
 
 

@@ -31,7 +31,10 @@ namespace Levels
         ///     Expensive process, should be invoked before the level is required.
         ///     Todo: prime target for parallelization
         /// </summary>
-        public void Create(GameObject root, Random rng)
+        /// <param name="root"></param>
+        /// <param name="rng"></param>
+        /// <returns></returns>
+        public Vector3 Create(GameObject root, Random rng)
         {
             var actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
 
@@ -48,6 +51,7 @@ namespace Levels
             Array.Reverse(radii);
 
             var points = BallDropper.DropBalls(radii);
+            var playerPosition = Vector3.zero;
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
@@ -63,40 +67,18 @@ namespace Levels
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
                 planetGenerator.SetLOD(1);
-            }
-
-
-            if (false)
-            {
-                // var position = root.transform.position;
-                // for (var i = 0; i < actualNumPlanets; i++)
-                // {
-                //     // Create planet
-                //
-                //     var planet = Instantiate(planetPrefab, position, Quaternion.identity);
-                //     planet.transform.parent = root.transform;
-                //     var planetGenerator = planet.GetComponent<PlanetGenerator>();
-                //
-                //     var sample = rng.NextDouble();
-                //     var scaled = sample * (scale.y - scale.x) + scale.x;
-                //     var f = (float) scaled;
-                //     planetGenerator.scale = f;
-                //     position += f * 3 * Vector3.right;
-                //
-                //     // Generate LOD meshes
-                //     planetGenerator.HandleGameModeGeneration();
-                //     planetGenerator.SetLOD(1);
-                //
                 //     // Spawn objects
                 //     SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
                 //
-                //     // Spawn enemies
-                //     // Todo
-                // }
+
+
+                // The player should spawn at the lowest planet
+                if (points[i] == Vector3.zero) playerPosition = Vector3.right * radii[i];
             }
 
 
             isCreated = true;
+            return playerPosition;
         }
 
         private float rngRange(Random rng, float start, float end)
