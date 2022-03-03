@@ -67,9 +67,8 @@ namespace Levels
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
                 planetGenerator.SetLOD(1);
-                //     // Spawn objects
-                //     SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
-                //
+                // Spawn objects
+                SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
 
 
                 // The player should spawn at the lowest planet
