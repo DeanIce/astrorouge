@@ -17,7 +17,7 @@ MonoBehaviour:
     weight: 0
   clusterAssets: []
   environmentAssets: []
-  numPlanets: {x: 2, y: 6}
+  numPlanets: {x: 2, y: 2}
   scale: {x: 5, y: 12}
   gravityHeight: 5
   falloffHeight: 3

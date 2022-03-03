@@ -191,7 +191,6 @@ namespace Planets
         private GameObject GetOrCreateMeshObject(string gameObjectName, Mesh mesh, Material material)
         {
             // Find/create object
-            print("reeeeee" + gameObjectName);
             var child = transform.Find(gameObjectName);
 
             var lod0 = transform.Find("Terrain Mesh_LOD0");
@@ -212,14 +211,20 @@ namespace Planets
                 lod0.parent = child;
                 lod0.AddComponent<MeshFilter>().sharedMesh = mesh;
                 lod0.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod0.localPosition = Vector3.zero;
+
+
                 lod1 = new GameObject("Terrain Mesh_LOD1").transform;
                 lod1.parent = child;
                 lod1.AddComponent<MeshFilter>().sharedMesh = mesh;
                 lod1.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod1.localPosition = Vector3.zero;
+
                 lod2 = new GameObject("Terrain Mesh_LOD2").transform;
                 lod2.parent = child;
                 lod2.AddComponent<MeshFilter>().sharedMesh = mesh;
                 lod2.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod2.localPosition = Vector3.zero;
                 print(lod0);
             }
 
@@ -234,6 +239,9 @@ namespace Planets
 
             if (!child.GetComponent<LODGroup>())
                 lodGroup = child.gameObject.AddComponent<LODGroup>();
+
+            lodGroup.fadeMode = LODFadeMode.CrossFade;
+            lodGroup.animateCrossFading = true;
 
 
             var lods = new LOD[3];
