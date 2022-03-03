@@ -17,7 +17,7 @@ namespace Levels
         /// <returns></returns>
         public static Vector3[] DropBalls(float[] radii)
         {
-            var numSteps = 2000;
+            var numSteps = 5000;
             var stepSize = .01f;
             var result = new Vector3[radii.Length];
 

@@ -54,11 +54,11 @@ namespace Levels
                 var planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
-                planetGenerator.scale = radii[i] - 2.0f;
+                planetGenerator.scale = radii[i] - 3f;
 
                 var sphereSource = planet.GetComponent<SphereSource>();
                 sphereSource.outerRadius = radii[i];
-                sphereSource.outerFalloffRadius = radii[i] + 1f;
+                sphereSource.outerFalloffRadius = radii[i] + 3f;
 
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
