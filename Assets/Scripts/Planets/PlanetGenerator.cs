@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Utilities;
@@ -40,6 +41,8 @@ namespace Planets
         private int debugNumUpdates;
 
         private Vector2 heightMinMax;
+
+        private LODGroup lodGroup;
         private Mesh[] lodMeshes;
 
         private GameObject ocean;
@@ -66,12 +69,12 @@ namespace Planets
         private void Start()
         {
             ocean = transform.Find("Ocean").gameObject;
-            var requestPlanets = DevTools.drawPlanets;
-            if (InGameMode && requestPlanets)
-            {
-                HandleGameModeGeneration();
-                SetLOD(1);
-            }
+            // var requestPlanets = DevTools.drawPlanets;
+            // if (InGameMode && requestPlanets)
+            // {
+            //     HandleGameModeGeneration();
+            //     SetLOD(1);
+            // }
         }
 
         // Update is called once per frame
@@ -81,18 +84,11 @@ namespace Planets
             if (InEditMode)
             {
                 if (requestPlanets)
-                {
                     HandleEditModeGeneration();
-                }
                 else
-                {
                     DeletePlanets();
-                }
 
-                if (!ocean)
-                {
-                    ocean = transform.Find("Ocean").gameObject;
-                }
+                if (!ocean) ocean = transform.Find("Ocean").gameObject;
             }
 
             var oceanScale = scale * 2;
@@ -132,6 +128,7 @@ namespace Planets
 
         private void HandleEditModeGeneration()
         {
+            return;
             if (InEditMode)
             {
                 ComputeHelper.shouldReleaseEditModeBuffers -= ReleaseAllBuffers;
@@ -169,10 +166,7 @@ namespace Planets
                         HandleEditModeGeneration();
                     }
 
-                    if (debugNumUpdates == 2)
-                    {
-                        debugNumUpdates = 0;
-                    }
+                    if (debugNumUpdates == 2) debugNumUpdates = 0;
                 }
             }
 
@@ -198,6 +192,11 @@ namespace Planets
         {
             // Find/create object
             var child = transform.Find(gameObjectName);
+
+            var lod0 = transform.Find("Terrain Mesh_LOD0");
+            var lod1 = transform.Find("Terrain Mesh_LOD1");
+            var lod2 = transform.Find("Terrain Mesh_LOD2");
+
             if (!child)
             {
                 child = new GameObject(gameObjectName).transform;
@@ -206,22 +205,61 @@ namespace Planets
                 child.localRotation = Quaternion.identity;
                 child.localScale = Vector3.one;
                 child.gameObject.layer = gameObject.layer;
+
+                // add LOD groups
+                lod0 = new GameObject("Terrain Mesh_LOD0").transform;
+                lod0.parent = child;
+                lod0.AddComponent<MeshFilter>().sharedMesh = mesh;
+                lod0.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod0.localPosition = Vector3.zero;
+
+
+                lod1 = new GameObject("Terrain Mesh_LOD1").transform;
+                lod1.parent = child;
+                lod1.AddComponent<MeshFilter>().sharedMesh = mesh;
+                lod1.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod1.localPosition = Vector3.zero;
+
+                lod2 = new GameObject("Terrain Mesh_LOD2").transform;
+                lod2.parent = child;
+                lod2.AddComponent<MeshFilter>().sharedMesh = mesh;
+                lod2.AddComponent<MeshRenderer>().sharedMaterial = material;
+                lod2.localPosition = Vector3.zero;
+                print(lod0);
             }
 
             // Add mesh components
-            if (!child.TryGetComponent(out MeshFilter meshFilter))
-            {
-                meshFilter = child.gameObject.AddComponent<MeshFilter>();
-            }
+            // if (!child.TryGetComponent(out MeshFilter meshFilter))
+            //     meshFilter = child.gameObject.AddComponent<MeshFilter>();
+            //
+            // meshFilter.sharedMesh = mesh;
 
-            meshFilter.sharedMesh = mesh;
+            // if (!child.TryGetComponent(out MeshRenderer meshRenderer))
+            //     meshRenderer = child.gameObject.AddComponent<MeshRenderer>();
 
-            if (!child.TryGetComponent(out MeshRenderer meshRenderer))
-            {
-                meshRenderer = child.gameObject.AddComponent<MeshRenderer>();
-            }
+            if (!child.GetComponent<LODGroup>())
+                lodGroup = child.gameObject.AddComponent<LODGroup>();
 
-            meshRenderer.sharedMaterial = material;
+            lodGroup.fadeMode = LODFadeMode.CrossFade;
+            lodGroup.animateCrossFading = true;
+
+
+            var lods = new LOD[3];
+            var renderers = new Renderer[1];
+            renderers[0] = lod0.gameObject.GetComponent<Renderer>();
+            lods[0] = new LOD(.6f, renderers);
+
+            renderers = new Renderer[1];
+            renderers[0] = lod1.gameObject.GetComponent<Renderer>();
+            lods[1] = new LOD(.3f, renderers);
+
+            renderers = new Renderer[1];
+            renderers[0] = lod2.gameObject.GetComponent<Renderer>();
+            lods[2] = new LOD(.1f, renderers);
+
+            lodGroup.SetLODs(lods);
+
+            // meshRenderer.sharedMaterial = material;
 
             child.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -231,10 +269,7 @@ namespace Planets
 
         private void LogTimer(Stopwatch sw, string text)
         {
-            if (DevTools.logPlanetInfo)
-            {
-                Debug.Log(text + " " + sw.ElapsedMilliseconds + " ms.");
-            }
+            if (DevTools.logPlanetInfo) Debug.Log(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         // Generates terrain mesh based on heights generated by the Shape object
@@ -311,10 +346,7 @@ namespace Planets
         {
             sphereGenerators ??= new Dictionary<int, SphereMesh>();
 
-            if (!sphereGenerators.ContainsKey(resolution))
-            {
-                sphereGenerators.Add(resolution, new SphereMesh(resolution));
-            }
+            if (!sphereGenerators.ContainsKey(resolution)) sphereGenerators.Add(resolution, new SphereMesh(resolution));
 
             var generator = sphereGenerators[resolution];
 
@@ -329,13 +361,9 @@ namespace Planets
         {
             const int vertexLimit16Bit = 1 << (16 - 1); // 65535
             if (mesh == null)
-            {
                 mesh = new Mesh();
-            }
             else
-            {
                 mesh.Clear();
-            }
 
             mesh.indexFormat = numVertices < vertexLimit16Bit
                 ? IndexFormat.UInt16
@@ -388,10 +416,7 @@ namespace Planets
                 var lodTerrainHeightMinMax =
                     GenerateTerrainMesh(ref lodMeshes[i], resolutionSettings.GetLODResolution(i));
                 // Use min/max height of first (most detailed) LOD
-                if (i == 0)
-                {
-                    heightMinMax = lodTerrainHeightMinMax;
-                }
+                if (i == 0) heightMinMax = lodTerrainHeightMinMax;
             }
 
             // Generate collision mesh
@@ -402,15 +427,17 @@ namespace Planets
             shader.Initialize(shape);
             shader.SetTerrainProperties(terrainMatInstance, heightMinMax, bodyScale);
             var terrainHolder = GetOrCreateMeshObject("Terrain Mesh", null, terrainMatInstance);
+
+            terrainHolder.transform.Find("Terrain Mesh_LOD0").GetComponent<MeshFilter>().sharedMesh = lodMeshes[0];
+            terrainHolder.transform.Find("Terrain Mesh_LOD1").GetComponent<MeshFilter>().sharedMesh = lodMeshes[1];
+            terrainHolder.transform.Find("Terrain Mesh_LOD2").GetComponent<MeshFilter>().sharedMesh = lodMeshes[2];
+
             terrainMeshFilter = terrainHolder.GetComponent<MeshFilter>();
             LogTimer(lodTimer, "Generate all LODs");
 
             // Add collider
             MeshCollider collider;
-            if (!terrainHolder.TryGetComponent(out collider))
-            {
-                collider = terrainHolder.AddComponent<MeshCollider>();
-            }
+            if (!terrainHolder.TryGetComponent(out collider)) collider = terrainHolder.AddComponent<MeshCollider>();
 
             var collisionBakeTimer = Stopwatch.StartNew();
             MeshBaker.BakeMeshImmediate(collisionMesh);
