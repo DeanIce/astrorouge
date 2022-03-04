@@ -93,7 +93,7 @@ public class PlayerStats : MonoBehaviour
 
         // Movement Stats
         maxExtraJumps = 2;
-        jumpForce = 32f;
+        jumpForce = 16f;
         extraJumpDampaner = 0.8f;
         movementSpeed = 6f;
         sprintMultiplier = 1.5f;

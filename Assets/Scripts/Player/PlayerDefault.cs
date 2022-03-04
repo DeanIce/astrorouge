@@ -180,7 +180,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
-            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up,
+            rb.AddForce(PlayerStats.Instance.jumpForce * transform.up,
                 ForceMode.Impulse);
         }
     }
