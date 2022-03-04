@@ -1,5 +1,5 @@
 #pragma kernel CSMain
-#include "Includes/FractalNoise.cginc"
+#include "Assets/Scripts/Planets/Shaders/Includes/FractalNoise.cginc"
 
 RWStructuredBuffer<float3> points;
 uint numPoints;
