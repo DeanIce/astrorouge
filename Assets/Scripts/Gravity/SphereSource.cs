@@ -43,7 +43,6 @@ namespace Gravity
             var g = gravity / distance;
             if (distance > outerRadius) g *= 1f - (distance - outerRadius) * outerFalloffFactor;
 
-            print(rb);
             var m = 1.0f;
             if (rb != null) m = rb.mass;
 

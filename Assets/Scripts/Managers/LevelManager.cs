@@ -13,6 +13,8 @@ namespace Managers
         public List<LevelDescription> levels = new();
 
         public bool transition;
+
+        public GameObject player;
         private int current;
 
         private Random rng;
@@ -21,10 +23,7 @@ namespace Managers
         {
             get
             {
-                if (current >= levels.Count)
-                {
-                    current = 0;
-                }
+                if (current >= levels.Count) current = 0;
 
                 return levels[current];
             }
@@ -38,18 +37,12 @@ namespace Managers
 
         public void NextLevel()
         {
-            if (current < levels.Count - 1)
-            {
-                current++;
-            }
+            if (current < levels.Count - 1) current++;
         }
 
         public void PrevLevel()
         {
-            if (current > 0)
-            {
-                current--;
-            }
+            if (current > 0) current--;
         }
 
         private void LoadLevel()
@@ -60,7 +53,8 @@ namespace Managers
 
             // load current
             CurrentLevel.root = GetOrCreate(CurrentLevel.displayName);
-            CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            var playerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            player.transform.position = playerPos;
             LOG($"Loading {CurrentLevel.displayName} level.");
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
         }
@@ -86,15 +80,9 @@ namespace Managers
         {
             foreach (var level in levels)
             {
-                if (!level.root)
-                {
-                    level.root = transform.Find(level.displayName)?.gameObject;
-                }
+                if (!level.root) level.root = transform.Find(level.displayName)?.gameObject;
 
-                if (level.root)
-                {
-                    DestroyImmediate(level.root);
-                }
+                if (level.root) DestroyImmediate(level.root);
             }
         }
 
@@ -123,17 +111,11 @@ namespace Managers
                 levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
 
 
-                if (GUILayout.Button("Load Level"))
-                {
-                    levelManager.LoadLevel();
-                }
+                if (GUILayout.Button("Load Level")) levelManager.LoadLevel();
 
                 EditorGUILayout.EndHorizontal();
 
-                if (GUILayout.Button("Unload All"))
-                {
-                    levelManager.UnloadAll();
-                }
+                if (GUILayout.Button("Unload All")) levelManager.UnloadAll();
 
                 base.OnInspectorGUI();
             }

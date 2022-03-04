@@ -27,14 +27,14 @@ public class SpawnObjects : MonoBehaviour
     // Fix later
     private void Update()
     {
-        // We need to wait for shader stuff to finish, once it does run our gen
-        if (planetGenerator.terrainMeshFilter && planetGenerator.terrainMeshFilter.sharedMesh.vertices != null && !ran)
-        {
-            SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets, new Random());
-            // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
-            // Flag so we dont run indefinitely
-            ran = true;
-        }
+        // // We need to wait for shader stuff to finish, once it does run our gen
+        // if (planetGenerator.terrainMeshFilter && planetGenerator.terrainMeshFilter.sharedMesh.vertices != null && !ran)
+        // {
+        //     SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets, new Random());
+        //     // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
+        //     // Flag so we dont run indefinitely
+        //     ran = true;
+        // }
     }
 
     public static void SpawnProps(GameObject gameObject, PlanetGenerator planetGenerator, AssetCount[] cAssets,
