@@ -281,6 +281,34 @@ MonoBehaviour:
   dashCharges: 0
   dashDistance: 0
   dashRechargeRate: 0
+  baseMeleeAttackDelay: 3
+  baseMeleeBaseDamage: 1
+  baseMeleeDamageMultiplier: 1
+  baseMeleeCritChance: 0.1
+  baseMeleeCritMultiplier: 2
+  baseMeleeKnockbackForce: 5
+  baseMeleeAttackRange: 1
+  baseRangeAttackDelay: 2
+  baseRangeBaseDamage: 1
+  baseRangeDamageMultiplier: 1
+  baseRangeCritChance: 0.1
+  baseRangeCritMultiplier: 2
+  baseRangeKnockbackForce: 2
+  baseRangeProjectileRange: 20
+  baseRangeProjectileSpeed: 10
+  baseMaxHealth: 100
+  baseHealthRegen: 0.1
+  baseArmor: 1
+  baseDodgeChance: 0
+  baseInvincibilityDuration: 1
+  baseMaxExtraJumps: 2
+  baseJumpForce: 16
+  baseExtraJumpDampaner: 0.8
+  baseMovementSpeed: 6
+  baseSprintMultiplier: 1.5
+  baseDashCharges: 0
+  baseDashDistance: 3
+  baseDashRechargeRate: 0.1
 --- !u!114 &1018908818363566110
 MonoBehaviour:
   m_ObjectHideFlags: 0
