@@ -1,6 +1,9 @@
-﻿using UnityEngine.Scripting;
+﻿using System.Linq;
+using IngameDebugConsole;
+using Managers;
+using UnityEngine.Scripting;
 
-namespace IngameDebugConsole.Commands
+namespace Utilities
 {
     public static class CustomCommands
     {
@@ -9,6 +12,24 @@ namespace IngameDebugConsole.Commands
         public static string TestCommand(string key)
         {
             return "result";
+        }
+
+        [ConsoleMethod("level.restart", "reload the current level")]
+        [Preserve]
+        public static string LevelRestart(string key)
+        {
+            LevelManager.Instance.LoadLevel();
+            return "done";
+        }
+
+        [ConsoleMethod("level.list", "list levels in the game")]
+        [Preserve]
+        public static string LevelList(string key)
+        {
+            var result = string.Join("\n",
+                LevelManager.Instance.levels.Select((description, i) => $"{i}: {description.displayName}"));
+
+            return result;
         }
 
         /*[ConsoleMethod( "prefs.int", "Sets the value of an Integer PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
