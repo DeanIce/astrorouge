@@ -8,12 +8,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Constants
     private const float groundDistance = 0.1f;
 
-    // for testing attack purposes
-    public MeshRenderer meleeMeshRenderer;
-
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float sensitivity = 0.2f;
+
+    // Inspector values
+    [SerializeField] public float sensitivity = 0.2f;
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
 
@@ -61,37 +60,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var displacement = Walk(movement.ReadValue<Vector2>());
         rb.MovePosition(transform.position + displacement);
 
-
-        //Rotates Follow Target
-        followTarget.transform.rotation *= Quaternion.AngleAxis(-look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
-
-        followTarget.transform.rotation *=
-            Quaternion.AngleAxis(-look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
-
-        var eAngles = followTarget.transform.localEulerAngles;
-        eAngles.z = 0;
-
-        var eAngleX = followTarget.transform.localEulerAngles.x;
-
-        if (eAngleX > 180 && eAngleX < 340)
-        {
-            eAngles.x = 340;
-        }
-        else if (eAngleX < 180 && eAngleX > 40)
-        {
-            eAngles.x = 40;
-        }
-
-        followTarget.transform.localEulerAngles = eAngles;
-
         // Calculate lookAt vector then increment quaternion
         var lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
-
-        followTarget.transform.localEulerAngles = new Vector3(eAngles.x, 0, 0);
     }
 
     private void OnEnable()
@@ -128,8 +102,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var playerInputMap = InputManager.inputActions.Player;
         movement.Disable();
         look.Disable();
-        playerInputMap.Sprint.Disable();
+
+        playerInputMap.Jump.Disable();
         playerInputMap.Jump.performed -= Jump;
+
+        playerInputMap.Sprint.Disable();
+        playerInputMap.Sprint.started -= SprintToggle;
+        playerInputMap.Sprint.canceled -= SprintToggle;
 
         playerInputMap.PauseGame.Disable();
         playerInputMap.PauseGame.performed -= PauseGame;
@@ -190,7 +169,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         isSprinting = !isSprinting;
     }
-
 
     public void TakeDmg(float dmg)
     {
