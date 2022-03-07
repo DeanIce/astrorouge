@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor.Compilation;
 #endif
 
-namespace Utilities
+namespace Editor
 {
     // Created by Sebastian Lague
     // https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ

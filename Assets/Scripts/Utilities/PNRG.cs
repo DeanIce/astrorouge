@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = System.Random;
 
-namespace Utilities
+namespace Editor
 {
     public class PRNG
     {
@@ -52,7 +52,11 @@ namespace Utilities
         public Vector4 RangeVector4(float minInclusive, float maxExclusive)
         {
             var vector = Vector4.zero;
-            for (var i = 0; i < 4; i++) vector[i] = Range(minInclusive, maxExclusive);
+            for (var i = 0; i < 4; i++)
+            {
+                vector[i] = Range(minInclusive, maxExclusive);
+            }
+
             return vector;
         }
 
@@ -145,7 +149,10 @@ namespace Utilities
             if (weight == Weight.None) return Value();
 
             var smallestValue = Value();
-            for (var i = 0; i < weightStrength; i++) smallestValue = Mathf.Min(smallestValue, Value());
+            for (var i = 0; i < weightStrength; i++)
+            {
+                smallestValue = Mathf.Min(smallestValue, Value());
+            }
 
             switch (weight)
             {
@@ -167,7 +174,11 @@ namespace Utilities
         public float SmallestRandom01(int n)
         {
             float smallest = 1;
-            for (var i = 0; i < n; i++) smallest = Mathf.Min(smallest, Value());
+            for (var i = 0; i < n; i++)
+            {
+                smallest = Mathf.Min(smallest, Value());
+            }
+
             return smallest;
         }
 
@@ -175,7 +186,11 @@ namespace Utilities
         public float LargestRandom01(int n)
         {
             float largest = 0;
-            for (var i = 0; i < n; i++) largest = Mathf.Max(largest, Value());
+            for (var i = 0; i < n; i++)
+            {
+                largest = Mathf.Max(largest, Value());
+            }
+
             return largest;
         }
 

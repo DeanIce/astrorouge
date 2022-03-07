@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Levels;
-using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
@@ -15,7 +13,7 @@ namespace Managers
         public bool transition;
 
         public GameObject player;
-        private int current;
+        public int current;
 
         private Random rng;
 
@@ -45,7 +43,7 @@ namespace Managers
             if (current > 0) current--;
         }
 
-        private void LoadLevel()
+        public void LoadLevel()
         {
             // unload old
             UnloadAll();
@@ -76,7 +74,7 @@ namespace Managers
             return child.gameObject;
         }
 
-        private void UnloadAll()
+        public void UnloadAll()
         {
             foreach (var level in levels)
             {
@@ -93,32 +91,6 @@ namespace Managers
             public LevelScriptableObject levelScriptableObject;
             public int seed;
             protected internal GameObject root;
-        }
-
-        [CustomEditor(typeof(LevelManager))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                var levelManager = (LevelManager) target;
-                var currentLevel = levelManager.CurrentLevel;
-                var centered = GUI.skin.label;
-                centered.alignment = TextAnchor.MiddleCenter;
-
-                var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
-
-                EditorGUILayout.BeginHorizontal();
-                levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
-
-
-                if (GUILayout.Button("Load Level")) levelManager.LoadLevel();
-
-                EditorGUILayout.EndHorizontal();
-
-                if (GUILayout.Button("Unload All")) levelManager.UnloadAll();
-
-                base.OnInspectorGUI();
-            }
         }
     }
 }
