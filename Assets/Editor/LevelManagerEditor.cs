@@ -21,11 +21,11 @@ namespace Editor
             levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
 
 
-            if (GUILayout.Button("Load Level")) levelManager.LoadLevel();
+            if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
 
             EditorGUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Unload All")) levelManager.UnloadAll();
+            if (GUILayout.Button("Unload All")) levelManager.UnloadLevel();
 
             base.OnInspectorGUI();
         }

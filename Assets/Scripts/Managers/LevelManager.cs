@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using Gravity;
@@ -21,13 +20,13 @@ namespace Managers
         public GameObject player;
 
         public float transitionDuration = 10f;
+        public int current;
 
         private readonly Stack<string> stack = new();
 
 
         private CinemachineDollyCart cinemachineDollyCart;
         private CinemachineSmoothPath cinemachineSmoothPath;
-        public int current;
 
         private Random rng;
 
@@ -52,7 +51,7 @@ namespace Managers
         }
 
 
-        private void LoadLevelSync()
+        public void LoadLevelSync()
         {
             if (Application.isPlaying)
             {
@@ -88,7 +87,7 @@ namespace Managers
         }
 
 
-        private IEnumerator LoadLevel()
+        public IEnumerator LoadLevel()
         {
             if (cinemachineDollyCart == null)
             {
@@ -194,14 +193,14 @@ namespace Managers
             return child.gameObject;
         }
 
-        private void UnloadLevel(string displayName)
+        public void UnloadLevel(string displayName)
         {
             if (displayName == null) return;
             var t = transform.Find(displayName);
             if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
         }
 
-        private void UnloadLevel()
+        public void UnloadLevel()
         {
             foreach (var levelName in stack)
             {
