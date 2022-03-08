@@ -28,6 +28,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // References
     private Rigidbody rb;
+    protected internal bool useGravity = true;
 
     private void Start()
     {
@@ -44,15 +45,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // Gravity
         var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
-        rb.AddForce(sumForce * Time.deltaTime);
+
+        if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
+
+
         // print(sumForce);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
-        {
-            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
-        }
+        if (isGrounded) extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
@@ -74,13 +75,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var eAngleX = followTarget.transform.localEulerAngles.x;
 
         if (eAngleX > 180 && eAngleX < 340)
-        {
             eAngles.x = 340;
-        }
-        else if (eAngleX < 180 && eAngleX > 40)
-        {
-            eAngles.x = 40;
-        }
+        else if (eAngleX < 180 && eAngleX > 40) eAngles.x = 40;
 
         followTarget.transform.localEulerAngles = eAngles;
 
@@ -147,10 +143,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnDrawGizmos()
     {
-        if (groundCheck)
-        {
-            Gizmos.DrawSphere(groundCheck.position, groundDistance);
-        }
+        if (groundCheck) Gizmos.DrawSphere(groundCheck.position, groundDistance);
     }
 
     // Translates 2D input into 3D looking direction
@@ -196,16 +189,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
         //Doesn't actually matter once we implement game over
-        if (PlayerStats.Instance.currentHealth < 0)
-        {
-            PlayerStats.Instance.currentHealth = 0;
-        }
+        if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
-        if (PlayerStats.Instance.currentHealth <= 0f)
-        {
-            Die();
-        }
+        if (PlayerStats.Instance.currentHealth <= 0f) Die();
         // Todo: recap scene
     }
 
@@ -275,22 +262,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // bit representation is concatenation of booleans Forward?, Back?, Right?, Left?
         dir = Direction.IDLE;
         if (direction.y > threshold)
-        {
             dir |= Direction.FORWARD;
-        }
-        else if (direction.y < -threshold)
-        {
-            dir |= Direction.BACKWARD;
-        }
+        else if (direction.y < -threshold) dir |= Direction.BACKWARD;
 
         if (direction.x > threshold)
-        {
             dir |= Direction.RIGHT;
-        }
-        else if (direction.x < -threshold)
-        {
-            dir |= Direction.LEFT;
-        }
+        else if (direction.x < -threshold) dir |= Direction.LEFT;
 
         if (dir != oldDir)
         {

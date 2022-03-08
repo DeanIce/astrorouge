@@ -8,7 +8,7 @@ namespace Managers
     {
         public static bool drawPlanets = true;
 
-        public static bool logPlanetInfo = true;
+        public static bool logPlanetInfo;
     }
 
 

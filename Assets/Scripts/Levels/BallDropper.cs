@@ -4,18 +4,11 @@ namespace Levels
 {
     public class BallDropper : MonoBehaviour
     {
-        private static GameObject self;
-
-        private void Start()
-        {
-            self = gameObject;
-        }
-
         /// <summary>
         /// </summary>
         /// <param name="radii">sorted biggest to smallest</param>
         /// <returns></returns>
-        public static Vector3[] DropBalls(float[] radii)
+        public Vector3[] DropBalls(float[] radii)
         {
             var numSteps = 5000;
             var stepSize = .01f;
@@ -31,7 +24,7 @@ namespace Levels
                 var newBall = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 newBall.transform.localScale = Vector3.one * radii[i] / maxRadius;
                 // newBall.transform.parent = self.transform;
-                newBall.transform.position = Vector3.up * i * 2 /*+ Vector3.right * i * .1f*/;
+                newBall.transform.position = Vector3.up * i * 2 + transform.position;
                 newBall.AddComponent<Rigidbody>();
                 balls[i] = newBall;
             }
