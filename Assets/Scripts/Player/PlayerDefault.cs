@@ -53,10 +53,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
-        {
-            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
-        }
+        if (isGrounded) extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
@@ -191,14 +188,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
+        EventManager.Instance.runStats.damageTaken += dmg;
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
-        if (PlayerStats.Instance.currentHealth <= 0f)
-        {
-            Die();
-        }
+        if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
     public void Die()
