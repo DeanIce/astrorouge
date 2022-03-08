@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 public class CameraTargetMovement : MonoBehaviour
 {
     // Constants
-    [Range(1, 179)] private const float maxFollowTargetAngle = 40;
-    [Range(181, 359)] private const float minFollowTargetAngle = 340; // NOTE: actually -20, but we only see positive values
+    [SerializeField] [Range(1, 179)] private float maxFollowTargetAngle = 40;
+    [SerializeField] [Range(181, 359)] private float minFollowTargetAngle = 340; // NOTE: actually -20, but we only see positive values
+    [SerializeField] private float minCameraRadius = 1;
+    [SerializeField] private float maxCameraRadius = 10;
 
     // Inspector values
     [SerializeField] private PlayerDefault pd;
@@ -54,8 +56,9 @@ public class CameraTargetMovement : MonoBehaviour
             xAngle = Mathf.Min(maxFollowTargetAngle, xAngle);
         transform.localEulerAngles = new Vector3(xAngle, 0, 0);
 
-        // Set follow radius
-        vCamera.CameraDistance = 6; //TODO (Simon): Actually have this value change
+        // Calculate and set follow radius
+        float percent = ((xAngle < 180 ? xAngle + 360 : xAngle) - minFollowTargetAngle) / (maxFollowTargetAngle + 360 - minFollowTargetAngle);
+        vCamera.CameraDistance = percent * (maxCameraRadius - minCameraRadius) + minCameraRadius;
     }
 
     private void OnEnable()

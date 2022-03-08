@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d02f0c2ad25f547b6eee475e28a0c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxFollowTargetAngle: 40
+  minFollowTargetAngle: 340
+  minCameraRadius: 4
+  maxCameraRadius: 8
   pd: {fileID: 579053813939167120}
-  vCamera: {fileID: 0}
 --- !u!1 &96047975445312255
 GameObject:
   m_ObjectHideFlags: 0
