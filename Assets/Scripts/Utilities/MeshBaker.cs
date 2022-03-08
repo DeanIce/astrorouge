@@ -2,7 +2,7 @@
 using Unity.Jobs;
 using UnityEngine;
 
-namespace Utilities
+namespace Editor
 {
     public static class MeshBaker
     {
@@ -35,9 +35,7 @@ namespace Utilities
                 jobsByMesh.Remove(mesh);
             }
             else
-            {
                 BakeMeshImmediate(mesh);
-            }
         }
     }
 

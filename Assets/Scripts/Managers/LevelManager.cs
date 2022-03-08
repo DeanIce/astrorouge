@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using Gravity;
 using Levels;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using Random = System.Random;
@@ -22,13 +20,13 @@ namespace Managers
         public GameObject player;
 
         public float transitionDuration = 10f;
+        public int current;
 
         private readonly Stack<string> stack = new();
 
 
         private CinemachineDollyCart cinemachineDollyCart;
         private CinemachineSmoothPath cinemachineSmoothPath;
-        private int current;
 
         private Random rng;
 
@@ -53,7 +51,7 @@ namespace Managers
         }
 
 
-        private void LoadLevelSync()
+        public void LoadLevelSync()
         {
             if (Application.isPlaying)
             {
@@ -89,7 +87,7 @@ namespace Managers
         }
 
 
-        private IEnumerator LoadLevel()
+        public IEnumerator LoadLevel()
         {
             if (cinemachineDollyCart == null)
             {
@@ -195,14 +193,14 @@ namespace Managers
             return child.gameObject;
         }
 
-        private void UnloadLevel(string displayName)
+        public void UnloadLevel(string displayName)
         {
             if (displayName == null) return;
             var t = transform.Find(displayName);
             if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
         }
 
-        private void UnloadLevel()
+        public void UnloadLevel()
         {
             foreach (var levelName in stack)
             {
@@ -225,34 +223,6 @@ namespace Managers
             public override string ToString()
             {
                 return displayName;
-            }
-        }
-
-        [CustomEditor(typeof(LevelManager))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                var levelManager = (LevelManager) target;
-                var currentLevel = levelManager.CurrentLevel;
-                var centered = GUI.skin.label;
-                centered.alignment = TextAnchor.MiddleCenter;
-
-                var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
-
-                EditorGUILayout.BeginHorizontal();
-                var selection = EditorGUILayout.Popup(levelManager.current, options);
-
-
-                if (selection != levelManager.current) levelManager.current = selection;
-
-                if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
-
-                EditorGUILayout.EndHorizontal();
-
-                if (GUILayout.Button("Unload All")) levelManager.UnloadLevel();
-
-                base.OnInspectorGUI();
             }
         }
     }

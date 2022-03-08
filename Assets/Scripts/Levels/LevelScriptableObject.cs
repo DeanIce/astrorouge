@@ -1,9 +1,8 @@
 ﻿using System;
+using GD.MinMaxSlider;
 using Gravity;
 using Planets;
-using UnityEditor;
 using UnityEngine;
-using Utilities;
 using Random = System.Random;
 
 namespace Levels
@@ -125,17 +124,6 @@ namespace Levels
         {
             public GameObject prefab;
             public float weight;
-        }
-
-        [CustomEditor(typeof(LevelScriptableObject))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                base.OnInspectorGUI();
-
-                // EditorGUILayout.MinMaxSlider();
-            }
         }
     }
 }

@@ -196,15 +196,5 @@ public class SpawnObjects : MonoBehaviour
         }
     }
 
-    [CustomEditor(typeof(SpawnObjects))]
-    public class SpawnObjectsEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            var devTools = (SpawnObjects) target;
-            EditorGUILayout.LabelField("Total assets spawned: " + devTools.totalSpawned, EditorStyles.boldLabel);
 
-            base.OnInspectorGUI();
-        }
-    }
 }

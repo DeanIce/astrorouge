@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor.Compilation;
+#endif
 
-namespace Utilities
+namespace Editor
 {
     // Created by Sebastian Lague
     // https://www.youtube.com/channel/UCmtyQOKKmrMVaKuRXz02jbQ
@@ -110,8 +112,10 @@ namespace Utilities
         public static void Release(params ComputeBuffer[] buffers)
         {
             for (var i = 0; i < buffers.Length; i++)
+            {
                 if (buffers[i] != null)
                     buffers[i].Release();
+            }
         }
 
         public static Vector3Int GetThreadGroupSizes(ComputeShader compute, int kernelIndex = 0)
@@ -125,7 +129,11 @@ namespace Utilities
         public static float[] PackFloats(params float[] values)
         {
             var packed = new float[values.Length * 4];
-            for (var i = 0; i < values.Length; i++) packed[i * 4] = values[i];
+            for (var i = 0; i < values.Length; i++)
+            {
+                packed[i * 4] = values[i];
+            }
+
             return values;
         }
 
@@ -159,8 +167,10 @@ namespace Utilities
         {
             playModeState = state;
             if (state == PlayModeStateChange.ExitingEditMode)
+            {
                 if (shouldReleaseEditModeBuffers != null)
                     shouldReleaseEditModeBuffers(); //
+            }
         }
 
         private static void OnCompilationStarted(object obj)
