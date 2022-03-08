@@ -1,5 +1,4 @@
 ﻿using System;
-using Editor;
 using UnityEngine;
 
 namespace Planets.Noise
