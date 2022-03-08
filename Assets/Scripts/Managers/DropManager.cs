@@ -54,6 +54,7 @@ namespace Managers
         }
 
         // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
+        // BUG: UPPER BOUNDS NOT WORKING, ALWAYS SPAWNS LAST ITEM
         private GameObject GetSpawnItem()
         {
             // Which item we're going to spawn
