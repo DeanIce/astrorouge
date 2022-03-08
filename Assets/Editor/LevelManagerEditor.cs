@@ -3,31 +3,28 @@ using Managers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+[CustomEditor(typeof(LevelManager))]
+public class LevelManagerEditor : Editor
 {
-    [CustomEditor(typeof(LevelManager))]
-    public class LevelManagerEditor : UnityEditor.Editor
+    public override void OnInspectorGUI()
     {
-        public override void OnInspectorGUI()
-        {
-            var levelManager = (LevelManager) target;
-            var currentLevel = levelManager.CurrentLevel;
-            var centered = GUI.skin.label;
-            centered.alignment = TextAnchor.MiddleCenter;
+        var levelManager = (LevelManager) target;
+        var currentLevel = levelManager.CurrentLevel;
+        var centered = GUI.skin.label;
+        centered.alignment = TextAnchor.MiddleCenter;
 
-            var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
+        var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
 
-            EditorGUILayout.BeginHorizontal();
-            levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
+        EditorGUILayout.BeginHorizontal();
+        levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
 
 
-            if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
+        if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
 
-            EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Unload All")) levelManager.UnloadLevel();
+        if (GUILayout.Button("Unload All")) levelManager.UnloadLevel();
 
-            base.OnInspectorGUI();
-        }
+        base.OnInspectorGUI();
     }
 }
