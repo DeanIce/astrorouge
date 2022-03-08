@@ -68,6 +68,7 @@ namespace Planets
         protected virtual void SetShapeData()
         {
             var prng = new PRNG(seed);
+
             continentNoise.SetComputeValues(heightMapCompute, prng, "_continents");
             ridgeNoise.SetComputeValues(heightMapCompute, prng, "_mountains");
             maskNoise.SetComputeValues(heightMapCompute, prng, "_mask");

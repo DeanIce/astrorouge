@@ -21,11 +21,6 @@ namespace Planets.Noise
             SetComputeValues(cs, prng, varSuffix, scale, elevation, persistence);
         }
 
-        // Set values using custom scale and elevation
-        public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float newScale, float newElevation)
-        {
-            SetComputeValues(cs, prng, varSuffix, newScale, newElevation, persistence);
-        }
 
         // Set values using custom scale and elevation
         public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float newScale, float newElevation,
@@ -48,7 +43,6 @@ namespace Planets.Noise
                 // [2]
                 verticalShift
             };
-
             cs.SetFloats($"noiseParams{varSuffix}", noiseParams);
         }
     }
