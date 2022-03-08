@@ -117,13 +117,24 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public virtual void Hunt(Collider target)
     {
+        RaycastHit[] hits;
+        
         DoGravity();
 
         //attacking
-        if (Physics.Raycast(transform.position, Body.transform.forward, AttackRange - 0.1f, playerLayer))
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
         {
-            //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
-            if (!attacking && Health > 0) StartCoroutine(Attack());
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
+                    if (!attacking && Health > 0) StartCoroutine(Attack());
+                    break;
+                }
+            }
         }
         else
         {
