@@ -199,7 +199,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void Die()
     {
         iAmAlive = false;
-        print("die");
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         StartCoroutine(DestroyLater());

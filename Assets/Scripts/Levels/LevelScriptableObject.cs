@@ -1,9 +1,8 @@
 ﻿using System;
+using GD.MinMaxSlider;
 using Gravity;
 using Planets;
-using UnityEditor;
 using UnityEngine;
-using Utilities;
 using Random = System.Random;
 
 namespace Levels
@@ -14,8 +13,9 @@ namespace Levels
         // Todo: boss levels
 
         public EnemyWeight[] enemies;
-        public SpawnObjects.AssetCount[] clusterAssets;
-        public SpawnObjects.AssetCount[] environmentAssets;
+        public SpawnObjects.AssetCount[] clusterAssets = Array.Empty<SpawnObjects.AssetCount>();
+        public SpawnObjects.AssetCount[] environmentAssets = Array.Empty<SpawnObjects.AssetCount>();
+        public SpawnObjects.AssetCount[] enemyAssets = Array.Empty<SpawnObjects.AssetCount>();
 
         [MinMaxSlider(1, 10)] public Vector2Int numPlanets = new(3, 5);
         [MinMaxSlider(1, 50)] public Vector2 scale = new(5, 12);
@@ -47,13 +47,14 @@ namespace Levels
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 radii[i] = rngRange(rng, scale.x, scale.y) + gravityHeight;
-                Debug.Log(radii[i]);
             }
 
             Array.Sort(radii);
             Array.Reverse(radii);
 
-            var points = BallDropper.DropBalls(radii);
+            var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
+
+            var points = ballDropper.DropBalls(radii);
             var playerPosition = Vector3.zero;
             for (var i = 0; i < actualNumPlanets; i++)
             {
@@ -70,12 +71,23 @@ namespace Levels
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
                 planetGenerator.SetLOD(1);
+
                 // Spawn objects
-                // SpawnObjects.SpawnProps(planet, planetGenerator, clusterAssets, environmentAssets, rng);
+                SpawnObjects.SpawnProps(
+                    planet,
+                    planetGenerator,
+                    clusterAssets,
+                    environmentAssets,
+                    enemyAssets,
+                    rng
+                );
 
 
                 // The player should spawn at the lowest planet
-                if (points[i] == Vector3.zero) playerPosition = Vector3.right * radii[i];
+                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 1f);
+
+                // disable for now
+                planet.SetActive(false);
             }
 
 
@@ -91,10 +103,6 @@ namespace Levels
             return f;
         }
 
-        private Vector3 rngPoint(Random rng)
-        {
-            return new Vector3((float) rng.NextDouble(), (float) rng.NextDouble(), (float) rng.NextDouble());
-        }
 
         /// <summary>
         ///     Display the level. Must be called after Create()
@@ -103,7 +111,11 @@ namespace Levels
         {
             if (!isCreated) Create(root, rng);
 
-            // Todo: actually change to scene
+            for (var i = 0; i < root.transform.childCount; i++)
+            {
+                var child = root.transform.GetChild(i);
+                child.gameObject.SetActive(true);
+            }
         }
 
 
@@ -112,17 +124,6 @@ namespace Levels
         {
             public GameObject prefab;
             public float weight;
-        }
-
-        [CustomEditor(typeof(LevelScriptableObject))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                base.OnInspectorGUI();
-
-                // EditorGUILayout.MinMaxSlider();
-            }
         }
     }
 }

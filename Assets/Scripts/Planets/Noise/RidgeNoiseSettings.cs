@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Utilities;
 using Vector3 = System.Numerics.Vector3;
 
 namespace Planets.Noise

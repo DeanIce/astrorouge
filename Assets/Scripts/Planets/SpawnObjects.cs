@@ -38,10 +38,10 @@ public class SpawnObjects : MonoBehaviour
     }
 
     public static void SpawnProps(GameObject gameObject, PlanetGenerator planetGenerator, AssetCount[] cAssets,
-        AssetCount[] eAssets, Random rng)
+        AssetCount[] eAssets, AssetCount[] enemies, Random rng)
     {
         // Set our vertices guaranteed non null
-        var vertices = planetGenerator.terrainMeshFilter.sharedMesh.vertices.ToList();
+        var vertices = planetGenerator.spawnObjectVertices.ToList();
 
         // Spawn all of our clusters
         foreach (var pair in cAssets)
@@ -59,6 +59,15 @@ public class SpawnObjects : MonoBehaviour
             var count = pair.count;
             var scale = pair.scale;
             SpawnObject(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
+        }
+
+        // Spawn all of our random stuff
+        foreach (var pair in enemies)
+        {
+            var asset = pair.prefab;
+            var count = pair.count;
+            var scale = pair.scale;
+            SpawnEnemy(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
         }
     }
 
@@ -99,6 +108,40 @@ public class SpawnObjects : MonoBehaviour
 
             // Set Parent
             placeObject.transform.parent = origin;
+
+            // Debug
+            //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
+            //Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
+        }
+
+        // totalSpawned += numToSpawn;
+    }
+
+    private static void SpawnEnemy(Transform origin, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
+        List<Vector3> vertices, float planetScale, Random rng)
+    {
+        // We need this here so we can set rotation
+        for (var i = 0; i < numToSpawn; i++)
+        {
+            // FIX SCALE
+            // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
+            var spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
+            spawnLocation += origin.position;
+            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+
+            // TEMP: Scale down huge assets
+            placeObject.transform.localScale = scale;
+
+            // Find the center of our origin
+            placeObject.transform.LookAt(origin.position);
+
+            // First orient stemming out from planet
+            // THEN randomly rotate on plane, NEED to do in this order
+            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+
+            // Set Parent
+            // placeObject.transform.parent = origin;
 
             // Debug
             //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
@@ -153,15 +196,5 @@ public class SpawnObjects : MonoBehaviour
         }
     }
 
-    [CustomEditor(typeof(SpawnObjects))]
-    public class SpawnObjectsEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            var devTools = (SpawnObjects) target;
-            EditorGUILayout.LabelField("Total assets spawned: " + devTools.totalSpawned, EditorStyles.boldLabel);
 
-            base.OnInspectorGUI();
-        }
-    }
 }

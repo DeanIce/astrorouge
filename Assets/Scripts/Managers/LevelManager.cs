@@ -1,21 +1,32 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Cinemachine;
+using DG.Tweening;
+using Gravity;
 using Levels;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Animations;
 using Random = System.Random;
 
 namespace Managers
 {
     public class LevelManager : ManagerSingleton<LevelManager>
     {
+        public bool doTransition;
         public List<LevelDescription> levels = new();
 
-        public bool transition;
 
         public GameObject player;
-        private int current;
+
+        public float transitionDuration = 10f;
+        public int current;
+
+        private readonly Stack<string> stack = new();
+
+
+        private CinemachineDollyCart cinemachineDollyCart;
+        private CinemachineSmoothPath cinemachineSmoothPath;
 
         private Random rng;
 
@@ -31,32 +42,138 @@ namespace Managers
 
         private void Start()
         {
-            LoadLevel();
+            StartCoroutine(LoadLevel());
+        }
+
+        private void Update()
+        {
+            if (player == null) player = GameObject.Find("PlayerDefault");
         }
 
 
-        public void NextLevel()
+        public void LoadLevelSync()
         {
-            if (current < levels.Count - 1) current++;
-        }
+            if (Application.isPlaying)
+            {
+                StartCoroutine(LoadLevel());
+                return;
+            }
 
-        public void PrevLevel()
-        {
-            if (current > 0) current--;
-        }
-
-        private void LoadLevel()
-        {
-            // unload old
-            UnloadAll();
+            var id = CurrentLevel.displayName + stack.Count;
             rng = new Random(CurrentLevel.seed);
 
-            // load current
-            CurrentLevel.root = GetOrCreate(CurrentLevel.displayName);
-            var playerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            player.transform.position = playerPos;
-            LOG($"Loading {CurrentLevel.displayName} level.");
+            // Do the hard work
+            CurrentLevel.root = GetOrCreate(id);
+            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            LOG($"Creating {id} level.");
+
+
+            // Wait until dolly has moved about halfway
+
+
+            // Then unload the old level
+            if (stack.Count > 0)
+            {
+                LOG($"Unload {stack.Peek()}");
+                UnloadLevel(stack.Peek());
+            }
+
+            // And load in the new level
+            LOG($"Load {CurrentLevel.displayName}");
+            CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
+
+            stack.Push(id);
+        }
+
+
+        public IEnumerator LoadLevel()
+        {
+            if (cinemachineDollyCart == null)
+            {
+                cinemachineDollyCart = transform.Find("DollyCart1").gameObject.GetComponent<CinemachineDollyCart>();
+                cinemachineSmoothPath = transform.Find("DollyTrack1").gameObject.GetComponent<CinemachineSmoothPath>();
+            }
+
+            var id = CurrentLevel.displayName + stack.Count;
+            rng = new Random(CurrentLevel.seed);
+
+            // Do the hard work
+            CurrentLevel.root = GetOrCreate(id);
+            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            LOG($"Creating {id} level.");
+
+            if (doTransition)
+            {
+                // Move out to "deep space"
+                var currentPos = player.transform.position;
+                cinemachineSmoothPath.m_Waypoints = new CinemachineSmoothPath.Waypoint[2];
+                cinemachineSmoothPath.m_Waypoints[0].position = currentPos;
+                cinemachineSmoothPath.m_Waypoints[1].position = currentPos + player.transform.up * 100;
+                cinemachineSmoothPath.InvalidateDistanceCache();
+                cinemachineDollyCart.m_Position = 0;
+                player.GetComponent<PositionConstraint>().constraintActive = true;
+                player.GetComponent<PlayerDefault>().useGravity = false;
+
+                var seq = DOTween.Sequence();
+                seq.AppendInterval(2f);
+                var tween = DOTween.To(() => cinemachineDollyCart.m_Position,
+                    x => { cinemachineDollyCart.m_Position = x; },
+                    1f, transitionDuration);
+                tween.SetEase(Ease.InCubic);
+                seq.Append(tween);
+                seq.AppendInterval(2f);
+
+                // var rotTween = player.transform.DOLocalRotate()
+
+
+                // Wait until dolly has moved about halfway
+                if (Application.isPlaying) yield return seq.WaitForCompletion();
+                LOG("We've reached deep space. Proceed with navigation.");
+            }
+
+            // Then unload the old level
+            if (stack.Count > 0)
+            {
+                LOG($"Unload {stack.Peek()}");
+                UnloadLevel(stack.Peek());
+            }
+
+
+            // And load in the new level
+            LOG($"Load {CurrentLevel.displayName}");
+            CurrentLevel.root = GetOrCreate(id);
+            CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
+
+            stack.Push(id);
+
+            if (doTransition)
+            {
+                // Move back in to the new solar system
+                var currentPos = player.transform.position;
+                var upAxisAtDestination = GravityManager.GetGravity(newPlayerPos);
+                cinemachineSmoothPath.m_Waypoints = new CinemachineSmoothPath.Waypoint[3];
+                cinemachineSmoothPath.m_Waypoints[0].position = currentPos;
+                cinemachineSmoothPath.m_Waypoints[1].position = newPlayerPos + upAxisAtDestination * -3;
+                cinemachineSmoothPath.m_Waypoints[2].position = newPlayerPos;
+
+                cinemachineSmoothPath.InvalidateDistanceCache();
+                cinemachineDollyCart.m_Position = 0;
+                var backTween = DOTween.To(() => cinemachineDollyCart.m_Position,
+                    x => { cinemachineDollyCart.m_Position = x; },
+                    1f, transitionDuration).SetEase(Ease.InOutCubic);
+
+
+                // Wait until dolly has moved all the way
+                if (Application.isPlaying) yield return backTween.WaitForCompletion();
+                player.GetComponent<PositionConstraint>().constraintActive = false;
+                player.GetComponent<PlayerDefault>().useGravity = true;
+            }
+            else
+            {
+                LOG("Loaded level and snapped Player to spawn point.");
+                player.transform.position = newPlayerPos;
+            }
         }
 
         private GameObject GetOrCreate(string gameObjectName)
@@ -76,14 +193,23 @@ namespace Managers
             return child.gameObject;
         }
 
-        private void UnloadAll()
+        public void UnloadLevel(string displayName)
         {
-            foreach (var level in levels)
-            {
-                if (!level.root) level.root = transform.Find(level.displayName)?.gameObject;
+            if (displayName == null) return;
+            var t = transform.Find(displayName);
+            if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
+        }
 
-                if (level.root) DestroyImmediate(level.root);
+        public void UnloadLevel()
+        {
+            foreach (var levelName in stack)
+            {
+                var root = transform.Find(levelName)?.gameObject;
+
+                if (root) DestroyImmediate(root);
             }
+
+            stack.Clear();
         }
 
         [Serializable]
@@ -93,31 +219,10 @@ namespace Managers
             public LevelScriptableObject levelScriptableObject;
             public int seed;
             protected internal GameObject root;
-        }
 
-        [CustomEditor(typeof(LevelManager))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
+            public override string ToString()
             {
-                var levelManager = (LevelManager) target;
-                var currentLevel = levelManager.CurrentLevel;
-                var centered = GUI.skin.label;
-                centered.alignment = TextAnchor.MiddleCenter;
-
-                var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
-
-                EditorGUILayout.BeginHorizontal();
-                levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
-
-
-                if (GUILayout.Button("Load Level")) levelManager.LoadLevel();
-
-                EditorGUILayout.EndHorizontal();
-
-                if (GUILayout.Button("Unload All")) levelManager.UnloadAll();
-
-                base.OnInspectorGUI();
+                return displayName;
             }
         }
     }

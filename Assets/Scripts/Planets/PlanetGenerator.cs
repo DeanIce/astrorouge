@@ -5,7 +5,6 @@ using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Utilities;
 using Debug = UnityEngine.Debug;
 
 namespace Planets
@@ -41,8 +40,6 @@ namespace Planets
         private int debugNumUpdates;
 
         private Vector2 heightMinMax;
-
-        private LODGroup lodGroup;
         private Mesh[] lodMeshes;
 
         private GameObject ocean;
@@ -52,6 +49,9 @@ namespace Planets
         private Material terrainMatInstance;
 
         private ComputeBuffer vertexBuffer;
+
+        public LODGroup lodGroup { get; private set; }
+        public Vector3[] spawnObjectVertices { get; private set; }
 
         //private MeshFilter terrainMeshFilter;
         public MeshFilter terrainMeshFilter { get; private set; }
@@ -225,7 +225,6 @@ namespace Planets
                 lod2.AddComponent<MeshFilter>().sharedMesh = mesh;
                 lod2.AddComponent<MeshRenderer>().sharedMaterial = material;
                 lod2.localPosition = Vector3.zero;
-                print(lod0);
             }
 
             // Add mesh components
@@ -432,7 +431,10 @@ namespace Planets
             terrainHolder.transform.Find("Terrain Mesh_LOD1").GetComponent<MeshFilter>().sharedMesh = lodMeshes[1];
             terrainHolder.transform.Find("Terrain Mesh_LOD2").GetComponent<MeshFilter>().sharedMesh = lodMeshes[2];
 
-            terrainMeshFilter = terrainHolder.GetComponent<MeshFilter>();
+            // Medium LOD used for spawning objects
+            spawnObjectVertices = lodMeshes[1].vertices;
+
+
             LogTimer(lodTimer, "Generate all LODs");
 
             // Add collider
