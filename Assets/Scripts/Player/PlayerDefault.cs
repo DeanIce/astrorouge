@@ -53,7 +53,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded) extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        if (isGrounded)
+        {
+            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
+        }
 
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
@@ -192,8 +195,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
-        if (PlayerStats.Instance.currentHealth <= 0f) Die();
-        // Todo: recap scene
+        if (PlayerStats.Instance.currentHealth <= 0f)
+        {
+            Die();
+        }
     }
 
     public void Die()
@@ -202,6 +207,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleDeathAnimation();
 
         // Todo: Initialize new script to handle death, remove this script from player.
+        GetComponent<HandleDeath>().enabled = true;
+        GetComponent<PlayerDefault>().enabled = false;
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
