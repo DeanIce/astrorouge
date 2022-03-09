@@ -109,10 +109,6 @@ namespace Managers
             var id = CurrentLevel.displayName + stack.Count;
             rng = new Random(CurrentLevel.seed);
 
-            // Do the hard work
-            CurrentLevel.root = GetOrCreate(id);
-            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            print($"Creating {id} level.");
 
             if (doTransition)
             {
@@ -143,12 +139,18 @@ namespace Managers
                 print("We've reached deep space. Proceed with navigation.");
             }
 
+
             // Then unload the old level
             if (stack.Count > 0)
             {
                 print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
+
+            // Do the hard work
+            CurrentLevel.root = GetOrCreate(id);
+            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            print($"Creating {id} level.");
 
 
             // And load in the new level
@@ -209,6 +211,12 @@ namespace Managers
             if (displayName == null) return;
             var t = transform.Find(displayName);
             if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
+
+            // delete all enemies in the scene
+            foreach (var enemy in GameObject.FindGameObjectsWithTag("enemy"))
+            {
+                Destroy(enemy);
+            }
         }
 
         public void UnloadLevel()

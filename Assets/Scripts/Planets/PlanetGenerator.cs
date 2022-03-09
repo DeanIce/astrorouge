@@ -128,7 +128,6 @@ namespace Planets
 
         private void HandleEditModeGeneration()
         {
-            return;
             if (InEditMode)
             {
                 ComputeHelper.shouldReleaseEditModeBuffers -= ReleaseAllBuffers;
@@ -193,9 +192,10 @@ namespace Planets
             // Find/create object
             var child = transform.Find(gameObjectName);
 
-            var lod0 = transform.Find("Terrain Mesh_LOD0");
-            var lod1 = transform.Find("Terrain Mesh_LOD1");
-            var lod2 = transform.Find("Terrain Mesh_LOD2");
+            Transform lod0;
+            Transform lod1;
+            Transform lod2;
+
 
             if (!child)
             {
@@ -205,6 +205,7 @@ namespace Planets
                 child.localRotation = Quaternion.identity;
                 child.localScale = Vector3.one;
                 child.gameObject.layer = gameObject.layer;
+
 
                 // add LOD groups
                 lod0 = new GameObject("Terrain Mesh_LOD0").transform;
@@ -226,6 +227,12 @@ namespace Planets
                 lod2.AddComponent<MeshRenderer>().sharedMaterial = material;
                 lod2.localPosition = Vector3.zero;
             }
+            else
+            {
+                lod0 = child.Find("Terrain Mesh_LOD0");
+                lod1 = child.Find("Terrain Mesh_LOD1");
+                lod2 = child.Find("Terrain Mesh_LOD2");
+            }
 
             // Add mesh components
             // if (!child.TryGetComponent(out MeshFilter meshFilter))
@@ -236,12 +243,13 @@ namespace Planets
             // if (!child.TryGetComponent(out MeshRenderer meshRenderer))
             //     meshRenderer = child.gameObject.AddComponent<MeshRenderer>();
 
-            if (!child.GetComponent<LODGroup>())
+            lodGroup = child.GetComponent<LODGroup>();
+            if (!lodGroup)
                 lodGroup = child.gameObject.AddComponent<LODGroup>();
+
 
             lodGroup.fadeMode = LODFadeMode.CrossFade;
             lodGroup.animateCrossFading = true;
-
 
             var lods = new LOD[3];
             var renderers = new Renderer[1];
