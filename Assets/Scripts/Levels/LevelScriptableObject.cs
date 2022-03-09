@@ -12,7 +12,6 @@ namespace Levels
     {
         // Todo: boss levels
 
-        public EnemyWeight[] enemies;
         public SpawnObjects.AssetCount[] clusterAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] environmentAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] enemyAssets = Array.Empty<SpawnObjects.AssetCount>();

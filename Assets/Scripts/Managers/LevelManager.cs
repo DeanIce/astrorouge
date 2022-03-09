@@ -11,7 +11,7 @@ using Random = System.Random;
 
 namespace Managers
 {
-    public class LevelManager : ManagerSingleton<LevelManager>
+    public class LevelManager : MonoBehaviour
     {
         public bool doTransition;
         public List<LevelDescription> levels = new();
@@ -29,6 +29,7 @@ namespace Managers
         private CinemachineSmoothPath cinemachineSmoothPath;
 
         private Random rng;
+        public static LevelManager Instance { get; private set; }
 
         public LevelDescription CurrentLevel
         {
@@ -38,6 +39,11 @@ namespace Managers
 
                 return levels[current];
             }
+        }
+
+        private void Awake()
+        {
+            Instance = this;
         }
 
         private void Start()
@@ -65,7 +71,7 @@ namespace Managers
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
             var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            LOG($"Creating {id} level.");
+            print($"Creating {id} level.");
 
 
             // Wait until dolly has moved about halfway
@@ -74,12 +80,12 @@ namespace Managers
             // Then unload the old level
             if (stack.Count > 0)
             {
-                LOG($"Unload {stack.Peek()}");
+                print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
 
             // And load in the new level
-            LOG($"Load {CurrentLevel.displayName}");
+            print($"Load {CurrentLevel.displayName}");
             CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
 
@@ -101,7 +107,7 @@ namespace Managers
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
             var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            LOG($"Creating {id} level.");
+            print($"Creating {id} level.");
 
             if (doTransition)
             {
@@ -129,19 +135,19 @@ namespace Managers
 
                 // Wait until dolly has moved about halfway
                 if (Application.isPlaying) yield return seq.WaitForCompletion();
-                LOG("We've reached deep space. Proceed with navigation.");
+                print("We've reached deep space. Proceed with navigation.");
             }
 
             // Then unload the old level
             if (stack.Count > 0)
             {
-                LOG($"Unload {stack.Peek()}");
+                print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
 
 
             // And load in the new level
-            LOG($"Load {CurrentLevel.displayName}");
+            print($"Load {CurrentLevel.displayName}");
             CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
 
@@ -171,7 +177,7 @@ namespace Managers
             }
             else
             {
-                LOG("Loaded level and snapped Player to spawn point.");
+                print("Loaded level and snapped Player to spawn point.");
                 player.transform.position = newPlayerPos;
             }
         }
