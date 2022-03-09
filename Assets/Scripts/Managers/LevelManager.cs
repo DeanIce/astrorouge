@@ -92,6 +92,11 @@ namespace Managers
             stack.Push(id);
         }
 
+        public void StartCoroutineLoadLevel()
+        {
+            StartCoroutine(LoadLevel());
+        }
+
 
         public IEnumerator LoadLevel()
         {
