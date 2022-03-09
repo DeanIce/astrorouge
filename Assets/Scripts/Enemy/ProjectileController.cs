@@ -28,7 +28,7 @@ public class ProjectileController : BasicEnemyAgent
         r123.MovePosition(r123.position + movementSpeed * Time.deltaTime * direction);
     }
 
-    public override void OnCollisionEnter(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.GetMask("Player"))
         {

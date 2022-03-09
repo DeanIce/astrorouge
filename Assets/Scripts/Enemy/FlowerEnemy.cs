@@ -1,13 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class FlowerEnemy : MeleeEnemy
+public class FlowerEnemy : BasicEnemyAgent
 {
     private Animator animator;
 
     public override void Start()
     {
-        despawnTime = 5;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         Dying = false;
