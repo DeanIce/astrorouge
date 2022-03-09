@@ -23,7 +23,7 @@ public class ProjectileFactory : MonoBehaviour
         }
     }
 
-    public GameObject CreateBasicProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan,  float damage, float health = 1)
+    public GameObject CreateBasicProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan, float damage, float health = 1)
     {
         GameObject newProjectile = Instantiate(basicProjectile);
         newProjectile.transform.parent = gameObject.transform;
@@ -37,6 +37,7 @@ public class ProjectileFactory : MonoBehaviour
         //AddSmite(newProjectile);
         //AddRadioactive(newProjectile);
         //AddSlow(newProjectile);
+        AddStun(newProjectile);
 
         return newProjectile;
     }
@@ -46,9 +47,9 @@ public class ProjectileFactory : MonoBehaviour
         GameObject newProjectile = Instantiate(beamProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<BeamProjectile>().InitializeValues(collidesWith, duration, damage);
-        newProjectile.transform.SetPositionAndRotation(position, 
+        newProjectile.transform.SetPositionAndRotation(position,
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
-        
+
         newProjectile.GetComponent<BeamProjectile>().ExtendBeam(stopsAt, range);
 
         return newProjectile;
@@ -103,5 +104,10 @@ public class ProjectileFactory : MonoBehaviour
     public void AddSlow(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SlowEffect());
+    }
+
+    public void AddStun(GameObject projectile)
+    {
+        projectile.GetComponent<IProjectile>().AttachEffect(new StunEffect());
     }
 }

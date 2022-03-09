@@ -8,13 +8,15 @@ public class StatusEffectManager : MonoBehaviour
     public List<int> burnTickTimes = new List<int>();
     public List<int> poisonTickTimes = new List<int>();
     public List<int> radTickTimes = new List<int>();
+    public List<int> slowTickTimes = new List<int>();
+    public List<int> stunTickTimes = new List<int>();
 
     public int burnDamage = 5;
     public int poisonDamage = 10;
     public int lightningDamage = 50;
     public int radDamage = 2;
     public float smiteDamage = float.MaxValue;
-    public bool slowed = false;
+
 
     void Start()
     {
@@ -99,28 +101,43 @@ public class StatusEffectManager : MonoBehaviour
         damageable.TakeDmg(smiteDamage);
     }
 
-    public void ApplySlow()
+    public void ApplySlow(int ticks)
     {
-        if (!slowed) {
-            slowed = true;
+        if (slowTickTimes.Count <= 0)
+        {
+            slowTickTimes.Add(ticks);
             StartCoroutine(Slow());
+        }
+        else
+        {
+            slowTickTimes.Add(ticks);
         }
     }
 
     IEnumerator Slow()
     {
+        float initSpeed = 1.0f;
+
         if(GetComponent<IEnemy>() != null)
         {
-            GetComponent<IEnemy>().ChangeSpeed(0.2f);
+            initSpeed = GetComponent<IEnemy>().getSpeed();
+            GetComponent<IEnemy>().setSpeed(initSpeed * 0.2f);
         }
 
-        yield return new WaitForSeconds(5.0f);
+        while (slowTickTimes.Count > 0)
+        {
+            for (int i = 0; i < slowTickTimes.Count; i++)
+            {
+                slowTickTimes[i]--;
+            }
+            slowTickTimes.RemoveAll(num => num == 0);
+            yield return new WaitForSeconds(1f);
+        }
 
         if (GetComponent<IEnemy>() != null)
         {
-            GetComponent<IEnemy>().ChangeSpeed(5.0f);
+            GetComponent<IEnemy>().setSpeed(initSpeed);
         }
-        slowed = false;
     }
 
     public void ApplyRadioactive(int ticks)
@@ -159,5 +176,44 @@ public class StatusEffectManager : MonoBehaviour
             radTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
         }    
+    }
+
+    public void ApplyStun(int ticks)
+    {
+        if (stunTickTimes.Count <= 0)
+        {
+            stunTickTimes.Add(ticks);
+            StartCoroutine(Stun());
+        }
+        else
+        {
+            stunTickTimes.Add(ticks);
+        }
+    }
+
+    IEnumerator Stun()
+    {
+        float initSpeed = 1.0f;
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            initSpeed = GetComponent<IEnemy>().getSpeed();
+            GetComponent<IEnemy>().setSpeed(0.0f);
+        }
+
+        while (stunTickTimes.Count > 0)
+        {
+            for (int i = 0; i < stunTickTimes.Count; i++)
+            {
+                stunTickTimes[i]--;
+            }
+            stunTickTimes.RemoveAll(num => num == 0);
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            GetComponent<IEnemy>().setSpeed(initSpeed);
+        }
     }
 }

@@ -132,10 +132,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
-    public float ChangeSpeed(float scalar)
+    public void setSpeed(float speed)
     {
-        movementSpeed *= scalar;
-        
+        movementSpeed = speed;
+    }
+    public float getSpeed()
+    {
         return movementSpeed;
     }
 
