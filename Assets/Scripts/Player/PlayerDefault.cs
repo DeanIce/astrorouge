@@ -16,12 +16,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
 
+    public bool IsSprinting { get => isSprinting; }
+    private bool isSprinting;
+
     private Animator animator;
     private Direction dir;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
-    private bool isSprinting;
     private InputAction movement, look;
     private Direction oldDir;
 

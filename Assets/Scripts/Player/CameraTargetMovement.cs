@@ -9,6 +9,8 @@ public class CameraTargetMovement : MonoBehaviour
     [SerializeField] [Range(181, 359)] private float minFollowTargetAngle = 340; // NOTE: actually -20, but we only see positive values
     [SerializeField] private float minCameraRadius = 1;
     [SerializeField] private float maxCameraRadius = 10;
+    [SerializeField] private float baseZDampening = 0.3f;
+    [SerializeField] private float sprintZDampening = 2f;
 
     // Inspector values
     [SerializeField] private PlayerDefault pd;
@@ -58,7 +60,10 @@ public class CameraTargetMovement : MonoBehaviour
 
         // Calculate and set follow radius
         float percent = ((xAngle < 180 ? xAngle + 360 : xAngle) - minFollowTargetAngle) / (maxFollowTargetAngle + 360 - minFollowTargetAngle);
-        vCamera.CameraDistance = percent * (maxCameraRadius - minCameraRadius) + minCameraRadius;
+        float radius = percent * (maxCameraRadius - minCameraRadius) + minCameraRadius;
+        vCamera.CameraDistance = radius;
+
+        vCamera.Damping.z = (pd.IsSprinting ? sprintZDampening : baseZDampening);
     }
 
     private void OnEnable()
