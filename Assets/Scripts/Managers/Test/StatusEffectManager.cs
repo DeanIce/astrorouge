@@ -14,6 +14,7 @@ public class StatusEffectManager : MonoBehaviour
     public int lightningDamage = 50;
     public int radDamage = 2;
     public float smiteDamage = float.MaxValue;
+    public bool slowed = false;
 
     void Start()
     {
@@ -100,13 +101,26 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplySlow()
     {
-        StartCoroutine(Slow());
+        if (!slowed) {
+            slowed = true;
+            StartCoroutine(Slow());
+        }
     }
 
     IEnumerator Slow()
     {
-        yield return new WaitForSeconds(0.1f);
-        //change the movespeed by saving and then decreasing before restoring it
+        if(GetComponent<IEnemy>() != null)
+        {
+            GetComponent<IEnemy>().ChangeSpeed(0.2f);
+        }
+
+        yield return new WaitForSeconds(5.0f);
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            GetComponent<IEnemy>().ChangeSpeed(5.0f);
+        }
+        slowed = false;
     }
 
     public void ApplyRadioactive(int ticks)

@@ -132,6 +132,13 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
+    public float ChangeSpeed(float scalar)
+    {
+        movementSpeed *= scalar;
+        
+        return movementSpeed;
+    }
+
     public virtual void Wander(Vector3 direction)
     {
         DoGravity();

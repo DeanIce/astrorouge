@@ -36,6 +36,7 @@ public class ProjectileFactory : MonoBehaviour
         //AddLightning(newProjectile);
         //AddSmite(newProjectile);
         //AddRadioactive(newProjectile);
+        //AddSlow(newProjectile);
 
         return newProjectile;
     }
@@ -97,5 +98,10 @@ public class ProjectileFactory : MonoBehaviour
     public void AddSmite(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SmiteEffect());
+    }
+
+    public void AddSlow(GameObject projectile)
+    {
+        projectile.GetComponent<IProjectile>().AttachEffect(new SlowEffect());
     }
 }
