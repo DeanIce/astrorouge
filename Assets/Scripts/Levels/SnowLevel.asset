@@ -14,11 +14,65 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clusterAssets: []
   environmentAssets:
+  - prefab: {fileID: 3962891249127740571, guid: bfd4cac26a7281d40b661725c06fa4a3, type: 3}
+    count: 3
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 2517722936070730425, guid: df836f8237e6208499ec0ef7821c9b0d, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 6104921163779775213, guid: e43a52badf04a564ab592e7c00060d36, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 2285172187365939775, guid: 1b98aad1796263e40893ec5f893a6541, type: 3}
+    count: 7
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 1319164486288929514, guid: d95fe86cf5e5999499d4ee63d924fe63, type: 3}
+    count: 7
+    scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 145908, guid: 46c53497e3001f54a99bbdccd3d1a96f, type: 3}
     count: 21
     scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 161528, guid: 8f3253cb70543aa46b0b8912fa09f8a3, type: 3}
+    count: 10
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 110038, guid: 068702363b44423449c7c1c794e4b5c6, type: 3}
+    count: 4
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 192656, guid: 706f228787b4cf5458cc0eccc5a8933c, type: 3}
+    count: 10
+    scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 164680, guid: ac37d177299599347819d045b97a5047, type: 3}
     count: 2
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 118358, guid: 4cd12378b9180634896e364a2ac12f95, type: 3}
+    count: 6
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 102990, guid: 76c555a8d57b63c479e8780df868ce30, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 118358, guid: 4cd12378b9180634896e364a2ac12f95, type: 3}
+    count: 8
+    scale: {x: 2, y: 2, z: 2}
+  - prefab: {fileID: 142174, guid: 9294f12d436cf5a4281abae31de41b76, type: 3}
+    count: 7
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 175030, guid: 1f9ce3a84faaa624492243994a459aba, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 191160, guid: 7880b77d6c347824c9f4ec0f5cac284a, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 129370, guid: c1c1c56cea7dc2a42bda98e57ed0a700, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 133318, guid: 5f426072c3298254381d5794d96f2239, type: 3}
+    count: 1
+    scale: {x: 2, y: 2, z: 2}
+  - prefab: {fileID: 165502, guid: 7f38756f10a71554eabea174461a6033, type: 3}
+    count: 3
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 139976, guid: 3960f855dd5ebfb40a819aceffbe0c4b, type: 3}
+    count: 5
     scale: {x: 1, y: 1, z: 1}
   enemyAssets:
   - prefab: {fileID: 6092937446732967473, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
