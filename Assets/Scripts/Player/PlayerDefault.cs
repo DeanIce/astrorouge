@@ -199,40 +199,40 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BasicAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
             PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
+            PlayerStats.Instance.GetRangeDamage()));
     }
 
     private void BeamAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange);
+            PlayerStats.Instance.rangeProjectileRange));
     }
 
     private void HitscanAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange);
+            PlayerStats.Instance.rangeProjectileRange));
     }
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
+            PlayerStats.Instance.GetRangeDamage()));
     }
 
     private Vector3 AttackVector()
@@ -241,6 +241,31 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
+    }
+
+    private GameObject HandleEffects(GameObject projectile)
+    {
+        float rand = Random.Range(0.0f, 1.0f);
+
+        if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.poisonChance) ProjectileFactory.Instance.AddPoison(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.lightningChance) ProjectileFactory.Instance.AddLightning(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.radioactiveChance) ProjectileFactory.Instance.AddRadioactive(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.smiteChance) ProjectileFactory.Instance.AddSmite(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.slowChance) ProjectileFactory.Instance.AddSlow(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.stunChance) ProjectileFactory.Instance.AddStun(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.martyrdomChance) ProjectileFactory.Instance.AddMartyrdom(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.igniteChance) ProjectileFactory.Instance.AddIgnite(projectile);
+
+        return projectile;
     }
 
     private void HandleMoveAnimation(Vector2 direction)

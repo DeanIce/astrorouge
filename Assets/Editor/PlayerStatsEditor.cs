@@ -162,7 +162,7 @@ public class PlayerStatsEditor : Editor
         smiteChance = serializedObject.FindProperty("smiteChance");
         slowChance = serializedObject.FindProperty("slowChance");
         stunChance = serializedObject.FindProperty("stunChance");
-        martyrdomChance = serializedObject.FindProperty("stunChance");
+        martyrdomChance = serializedObject.FindProperty("martyrdomChance");
         igniteChance = serializedObject.FindProperty("igniteChance");
 
         //
