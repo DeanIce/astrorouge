@@ -1,21 +1,12 @@
-using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 namespace Managers
 {
-    
     public class RunStats
     {
-        public int enemies_killed;
-        public float damage_dealt;
-        public float damage_taken;
-
-        public RunStats() {
-            enemies_killed = 0;
-            damage_dealt = 0;
-            damage_taken = 0;
-        }
-
+        public readonly List<string> itemsCollected = new();
+        public float damageDealt;
+        public float damageTaken;
+        public int enemiesKilled;
     }
 }

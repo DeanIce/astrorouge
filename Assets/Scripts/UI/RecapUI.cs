@@ -1,4 +1,5 @@
-﻿using Managers;
+﻿using System.Collections;
+using Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -29,17 +30,32 @@ namespace UI
             buttonMenu.clicked += DoMenu;
             buttonExit.clicked += DoExit;
             buttonRetry.clicked += DoRetry;
+            StartCoroutine(AddAllStats());
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                var el = statDoc.Instantiate();
-                el.Q<Label>("key").text = "Key";
-                el.Q<Label>("value").text = "Value";
-                scrollView.contentContainer.Add(el);
-            }
+            if (Input.GetKeyDown(KeyCode.K)) AddStat("key", "value");
+        }
+
+
+        private WaitForSeconds AddStat(string key, object value)
+        {
+            var el = statDoc.Instantiate();
+            el.Q<Label>("key").text = key;
+            el.Q<Label>("value").text = value.ToString();
+            scrollView.contentContainer.Add(el);
+            return new WaitForSeconds(1);
+        }
+
+
+        private IEnumerator AddAllStats()
+        {
+            var runStats = EventManager.Instance.runStats;
+            yield return AddStat("Damage Dealt", runStats.damageDealt);
+            yield return AddStat("Damage Taken", runStats.damageTaken);
+            yield return AddStat("Enemies Killed", runStats.enemiesKilled);
+            yield return AddStat("Items Collected", runStats.itemsCollected.Count);
         }
 
         private void DoMenu()
