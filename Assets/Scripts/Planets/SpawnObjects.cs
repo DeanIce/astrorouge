@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Planets;
-using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
@@ -140,6 +139,8 @@ public class SpawnObjects : MonoBehaviour
             placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
             placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
 
+            placeObject.tag = "enemy";
+
             // Set Parent
             // placeObject.transform.parent = origin;
 
@@ -195,6 +196,4 @@ public class SpawnObjects : MonoBehaviour
             return prefab.name;
         }
     }
-
-
 }
