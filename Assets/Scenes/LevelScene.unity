@@ -1081,6 +1081,7 @@ MonoBehaviour:
     seed: 342
   player: {fileID: 539473548}
   transitionDuration: 5
+  current: 0
 --- !u!4 &1447781040
 Transform:
   m_ObjectHideFlags: 0
@@ -1422,6 +1423,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3690277151325150947, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690277151325150947, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690277151325150947, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690277151325168121, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00012207031
+      objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498331, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -30,6 +30,9 @@ MonoBehaviour:
   - prefab: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
     count: 4
     scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 8674004264568269388, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
+    count: 3
+    scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 8}
   scale: {x: 12.221128, y: 33.089996}
   gravityHeight: 5
