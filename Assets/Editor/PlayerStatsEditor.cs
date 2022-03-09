@@ -42,6 +42,17 @@ public class PlayerStatsEditor : Editor
     SerializedProperty dashDistance;
     SerializedProperty dashRechargeRate;
 
+    // Bullet Effect Chances
+    SerializedProperty burnChance;
+    SerializedProperty poisonChance;
+    SerializedProperty lightningChance;
+    SerializedProperty radioactiveChance;
+    SerializedProperty smiteChance;
+    SerializedProperty slowChance;
+    SerializedProperty stunChance;
+    SerializedProperty martyrdomChance;
+    SerializedProperty igniteChance;
+
     //
     // BASE STATS
     //
@@ -82,15 +93,28 @@ public class PlayerStatsEditor : Editor
     SerializedProperty baseDashDistance;
     SerializedProperty baseDashRechargeRate;
 
+    // Base Bullet Effect Chance
+    SerializedProperty baseBurnChance;
+    SerializedProperty basePoisonChance;
+    SerializedProperty baseLightningChance;
+    SerializedProperty baseRadioactiveChance;
+    SerializedProperty baseSmiteChance;
+    SerializedProperty baseSlowChance;
+    SerializedProperty baseStunChance;
+    SerializedProperty baseMartyrdomChance;
+    SerializedProperty baseIgniteChance;
+
     private bool showCurrentMelee = false;
     private bool showCurrentRange = false;
     private bool showCurrentDefense = false;
     private bool showCurrentMovement = false;
+    private bool showCurrentEffects = false;
 
     private bool showBaseMelee = false;
     private bool showBaseRange = false;
     private bool showBaseDefense = false;
     private bool showBaseMovement = false;
+    private bool showBaseEffects = false;
 
     void OnEnable()
     {
@@ -129,6 +153,17 @@ public class PlayerStatsEditor : Editor
         dashCharges = serializedObject.FindProperty("dashCharges");
         dashDistance = serializedObject.FindProperty("dashDistance");
         dashRechargeRate = serializedObject.FindProperty("dashRechargeRate");
+
+        // Bullet Effect Chances
+        burnChance = serializedObject.FindProperty("burnChance");
+        poisonChance = serializedObject.FindProperty("poisonChance");
+        lightningChance = serializedObject.FindProperty("lightningChance");
+        radioactiveChance = serializedObject.FindProperty("radioactiveChance");
+        smiteChance = serializedObject.FindProperty("smiteChance");
+        slowChance = serializedObject.FindProperty("slowChance");
+        stunChance = serializedObject.FindProperty("stunChance");
+        martyrdomChance = serializedObject.FindProperty("stunChance");
+        igniteChance = serializedObject.FindProperty("igniteChance");
 
         //
         // BASE STATS
@@ -169,6 +204,17 @@ public class PlayerStatsEditor : Editor
         baseDashCharges = serializedObject.FindProperty("baseDashCharges");
         baseDashDistance = serializedObject.FindProperty("baseDashDistance");
         baseDashRechargeRate = serializedObject.FindProperty("baseDashRechargeRate");
+
+        // Base Bullet Effect Chance
+        baseBurnChance = serializedObject.FindProperty("baseBurnChance");
+        basePoisonChance = serializedObject.FindProperty("basePoisonChance");
+        baseLightningChance = serializedObject.FindProperty("baseLightningChance");
+        baseRadioactiveChance = serializedObject.FindProperty("baseRadioactiveChance");
+        baseSmiteChance = serializedObject.FindProperty("baseSmiteChance");
+        baseSlowChance = serializedObject.FindProperty("baseSlowChance");
+        baseStunChance = serializedObject.FindProperty("baseStunChance");
+        baseMartyrdomChance = serializedObject.FindProperty("baseMartyrdomChance");
+        baseIgniteChance = serializedObject.FindProperty("baseIgniteChance");
     }
 
     public override void OnInspectorGUI()
@@ -247,6 +293,28 @@ public class PlayerStatsEditor : Editor
             baseDashCharges,
             baseDashDistance,
             baseDashRechargeRate);
+
+        showCurrentEffects = CreateFoldout(showCurrentEffects, "Current Effects Stats",
+            burnChance,
+            poisonChance,
+            lightningChance,
+            radioactiveChance,
+            smiteChance,
+            slowChance,
+            stunChance,
+            martyrdomChance,
+            igniteChance);
+
+        showBaseEffects = CreateFoldout(showBaseEffects, "Base Effects Stats",
+            baseBurnChance,
+            basePoisonChance,
+            baseLightningChance,
+            baseRadioactiveChance,
+            baseSmiteChance,
+            baseSlowChance,
+            baseStunChance,
+            baseMartyrdomChance,
+            baseIgniteChance);
 
         serializedObject.ApplyModifiedProperties();
     }

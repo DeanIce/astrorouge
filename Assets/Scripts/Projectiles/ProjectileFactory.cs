@@ -45,7 +45,7 @@ public class ProjectileFactory : MonoBehaviour
         //AddSlow(newProjectile);
         //AddStun(newProjectile);
         //AddMartyrdom(newProjectile);
-        AddIgnite(newProjectile);
+        //AddIgnite(newProjectile);
 
         return newProjectile;
     }
@@ -92,32 +92,26 @@ public class ProjectileFactory : MonoBehaviour
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new BurnEffect());
     }
-
     public void AddPoison(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new PoisonEffect());
     }
-
     public void AddLightning(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new LightningEffect());
     }
-
     public void AddRadioactive(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new RadioactiveEffect());
     }
-
     public void AddSmite(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SmiteEffect());
     }
-
     public void AddSlow(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SlowEffect());
     }
-
     public void AddStun(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new StunEffect());
