@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clusterAssets: []
   environmentAssets: []
-  enemyAssets: []
-  numPlanets: {x: 2, y: 2}
-  scale: {x: 5, y: 12}
+  enemyAssets:
+  - prefab: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
+    count: 50
+    scale: {x: 1, y: 1, z: 1}
+  numPlanets: {x: 1, y: 1}
+  scale: {x: 5, y: 26.88367}
   gravityHeight: 5
   falloffHeight: 3
   planetPrefab: {fileID: 3675557906244615386, guid: 2bbb99912431e1c48ab94f82d138aca6, type: 3}
