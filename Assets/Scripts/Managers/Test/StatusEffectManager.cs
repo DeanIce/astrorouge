@@ -17,10 +17,18 @@ public class StatusEffectManager : MonoBehaviour
     public int radDamage = 2;
     public float smiteDamage = float.MaxValue;
 
+    public bool martyrdom = false;
+    public bool ignite = false;
+
 
     void Start()
     {
         damageable = GetComponent<IDamageable>();
+    }
+    public void DeathEffects()
+    {
+        StartCoroutine(Martyrdom());
+        StartCoroutine(Ignite());
     }
 
     public void ApplyBurn(int ticks)
@@ -215,5 +223,50 @@ public class StatusEffectManager : MonoBehaviour
         {
             GetComponent<IEnemy>().setSpeed(initSpeed);
         }
+    }
+    public void ApplyMartyrdom()
+    {
+        martyrdom = true;
+    }
+
+    IEnumerator Martyrdom()
+    {
+        if (martyrdom)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
+                {
+                    hitCollider.GetComponent<IEnemy>().TakeDmg(lightningDamage);
+                }
+            }
+        }
+
+        yield return null;
+    }
+
+    public void ApplyIgnite()
+    {
+        ignite = true;
+    }
+
+    IEnumerator Ignite()
+    {
+        if (ignite)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
+                {
+                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
+                }
+            }
+        }
+
+        yield return null;
     }
 }

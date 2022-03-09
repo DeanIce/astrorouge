@@ -336,12 +336,13 @@ MonoBehaviour:
   burnTickTimes: 
   poisonTickTimes: 
   radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
   burnDamage: 5
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 5
   smiteDamage: 3.4028235e+38
-  slowed: 0
 --- !u!1 &119590550
 GameObject:
   m_ObjectHideFlags: 3
@@ -562,12 +563,13 @@ MonoBehaviour:
   burnTickTimes: 
   poisonTickTimes: 
   radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
   burnDamage: 5
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 5
   smiteDamage: 3.4028235e+38
-  slowed: 0
 --- !u!1001 &199632276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3222,12 +3224,13 @@ MonoBehaviour:
   burnTickTimes: 
   poisonTickTimes: 
   radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
   burnDamage: 5
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 5
   smiteDamage: 3.4028235e+38
-  slowed: 0
 --- !u!1 &1470477856
 GameObject:
   m_ObjectHideFlags: 0
@@ -3733,12 +3736,13 @@ MonoBehaviour:
   burnTickTimes: 
   poisonTickTimes: 
   radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
   burnDamage: 5
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 5
   smiteDamage: 3.4028235e+38
-  slowed: 0
 --- !u!1001 &1623182830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4234,7 +4238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1296449001554218873, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
       propertyPath: movementSpeed
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
       propertyPath: m_Name
@@ -5102,12 +5106,13 @@ MonoBehaviour:
   burnTickTimes: 
   poisonTickTimes: 
   radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
   burnDamage: 5
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 5
   smiteDamage: 3.4028235e+38
-  slowed: 0
 --- !u!1001 &2025686723
 PrefabInstance:
   m_ObjectHideFlags: 0
