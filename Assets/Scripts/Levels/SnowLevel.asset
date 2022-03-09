@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0853faf9dcba423a80275a1a9cccecde, type: 3}
   m_Name: SnowLevel
   m_EditorClassIdentifier: 
-  enemies:
-  - prefab: {fileID: 0}
-    weight: 0
   clusterAssets: []
   environmentAssets:
   - prefab: {fileID: 145908, guid: 46c53497e3001f54a99bbdccd3d1a96f, type: 3}
     count: 21
     scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 164680, guid: ac37d177299599347819d045b97a5047, type: 3}
+    count: 2
+    scale: {x: 1, y: 1, z: 1}
+  enemyAssets:
+  - prefab: {fileID: 6092937446732967473, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
     count: 2
     scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 9}

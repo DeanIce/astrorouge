@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0853faf9dcba423a80275a1a9cccecde, type: 3}
   m_Name: FireLevel
   m_EditorClassIdentifier: 
-  enemies:
-  - prefab: {fileID: 0}
-    weight: 0
   clusterAssets: []
   environmentAssets: []
-  numPlanets: {x: 2, y: 2}
-  scale: {x: 5, y: 12}
+  enemyAssets:
+  - prefab: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
+    count: 50
+    scale: {x: 1, y: 1, z: 1}
+  numPlanets: {x: 1, y: 1}
+  scale: {x: 5, y: 26.88367}
   gravityHeight: 5
   falloffHeight: 3
-  planetPrefab: {fileID: 3675557906244615386, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}
+  planetPrefab: {fileID: 3675557906244615386, guid: 2bbb99912431e1c48ab94f82d138aca6, type: 3}
