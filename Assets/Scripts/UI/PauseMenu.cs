@@ -9,6 +9,9 @@ namespace UI
     {
         public AudioClip mainMenuMusic;
         public AudioClip buttonPressSoundEffect;
+        public AudioClip openMenuSoundEffect;
+        public AudioClip closeMenuSoundEffect;
+        public AudioClip buttonHoverSoundEffect;
 
         private Button continueButton;
         private Button mainMenuButton;
@@ -44,6 +47,9 @@ namespace UI
             settingsBackButton.clicked += BackButtonPressed;
             mainMenuButton.clicked += MainMenuButtonPressed;
 
+            continueButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            mainMenuButton.RegisterCallback<MouseEnterEvent>(PlaySound);
 
             AudioManager.Instance.PlayMusic(mainMenuMusic);
 
@@ -69,7 +75,7 @@ namespace UI
         {
             root.SetEnabled(true);
             pauseMenu.style.display = DisplayStyle.Flex;
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(openMenuSoundEffect);
         }
 
         private void PlayGame()
@@ -94,7 +100,7 @@ namespace UI
 
         private void ContinueButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlaySFX(closeMenuSoundEffect);
             EventManager.Instance.Play();
         }
 
@@ -108,6 +114,7 @@ namespace UI
 
         private void MainMenuButtonPressed()
         {
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             EventManager.Instance.Menu();
         }
 
@@ -117,6 +124,11 @@ namespace UI
             settingsMenu.style.display = DisplayStyle.None;
             pauseMenu.style.display = DisplayStyle.Flex;
             settingsOpen = false;
+        }
+
+        private void PlaySound(MouseEnterEvent ev)
+        {
+            AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
         }
     }
 }
