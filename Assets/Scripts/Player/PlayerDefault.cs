@@ -16,6 +16,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float sensitivity = 0.2f;
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
+    [SerializeField] private AudioClip attack1SoundEffect;
+    [SerializeField] private AudioClip attack2SoundEffect;
 
     private Animator animator;
     private Direction dir;
@@ -223,6 +225,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.4f);
     }
 
     private void BeamAttack(InputAction.CallbackContext obj)
@@ -234,6 +237,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange);
+        AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
     }
 
     private void HitscanAttack(InputAction.CallbackContext obj)
