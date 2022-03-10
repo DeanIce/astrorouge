@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuMusic: {fileID: 0}
-  buttonPressSoundEffect: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
+  buttonPressSoundEffect: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
+  openMenuSoundEffect: {fileID: 8300000, guid: 20186564b07abc34d93ec1393ee9d731, type: 3}
+  closeMenuSoundEffect: {fileID: 8300000, guid: 01a7988c09ea47f419c2bbedccbe7d22, type: 3}
 --- !u!114 &5955223653057071076
 MonoBehaviour:
   m_ObjectHideFlags: 0
