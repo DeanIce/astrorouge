@@ -6,6 +6,7 @@ public class EventDamage : MonoBehaviour
 {
     private GameObject body;
     private float attackRange;
+    private const float epsilon = 0.1f; //avoid range bugs with this script being on child object
     private BasicEnemyAgent enemy;
     [SerializeField] private int damage;
     [SerializeField] private int damage2;
@@ -21,7 +22,7 @@ public class EventDamage : MonoBehaviour
     {
         RaycastHit[] hits;
 
-        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange + epsilon, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
@@ -39,7 +40,7 @@ public class EventDamage : MonoBehaviour
     {
         RaycastHit[] hits;
 
-        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange + epsilon, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
