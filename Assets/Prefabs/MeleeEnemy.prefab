@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 6650649313407548613}
   - component: {fileID: 2453730767701220867}
   - component: {fileID: 4952917697488548838}
-  - component: {fileID: 6050417702353433300}
   m_Layer: 10
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -548,30 +547,6 @@ MonoBehaviour:
   poisonDamage: 10
   lightningDamage: 50
   radDamage: 2
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
---- !u!114 &6050417702353433300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296449001554218876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 5
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
