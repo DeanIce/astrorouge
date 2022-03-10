@@ -48,6 +48,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
 
         if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
+        //print($"Play: {sumForce} {Time.deltaTime} {sumForce * Time.deltaTime}");
 
 
         // print(sumForce);
@@ -228,8 +229,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
+        Vector3 attackVec = AttackVector();
+        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+
         _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
+            PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());

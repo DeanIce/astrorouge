@@ -733,7 +733,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9343185, y: 1}
+    m_SensorSize: {x: 2.3607037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1080,7 +1080,7 @@ MonoBehaviour:
     seed: 342
   player: {fileID: 539473548}
   transitionDuration: 5
-  current: 2
+  current: 1
 --- !u!4 &1447781040
 Transform:
   m_ObjectHideFlags: 0
@@ -1315,7 +1315,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9343185, y: 1}
+    m_SensorSize: {x: 2.3607037, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
