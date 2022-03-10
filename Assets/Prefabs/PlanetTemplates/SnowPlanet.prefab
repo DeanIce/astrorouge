@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: previewMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.ctime0
       value: 0
       objectReference: {fileID: 0}
@@ -25,27 +29,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key0.b
-      value: 0.4811321
+      value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key0.g
-      value: 0.015396258
+      value: 0.80046135
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key0.r
-      value: 0
+      value: 0.7956568
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key1.b
-      value: 0.9811321
+      value: 0.9150943
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key1.g
-      value: 0.02941639
+      value: 0.55074173
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key1.r
-      value: 0
+      value: 0.538697
       objectReference: {fileID: 0}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.key2.b
@@ -76,12 +80,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 50f5cc7adc16ca64b8363f6fac965afd, type: 2}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: shape.continentNoise.scale
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.m_NumColorKeys
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: shape.continentNoise.elevation
+      value: 4.08
       objectReference: {fileID: 0}
     - target: {fileID: 6949590311287083881, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023312049561, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: gravity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7912339023312049572, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_Name

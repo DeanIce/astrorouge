@@ -7,9 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: shape.ridgeNoise.elevation
+      value: 3.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: shape.continentNoise.elevation
+      value: 2.78
+      objectReference: {fileID: 0}
     - target: {fileID: 6949590311287083881, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912339023312049561, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: gravity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7912339023312049572, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: m_Name

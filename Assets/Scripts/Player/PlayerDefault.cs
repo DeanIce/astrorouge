@@ -8,12 +8,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Constants
     private const float groundDistance = 0.1f;
 
-    // for testing attack purposes
-    public MeshRenderer meleeMeshRenderer;
-
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float sensitivity = 0.2f;
+
+    // Inspector values
+    [SerializeField] public float sensitivity = 0.2f;
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
     [SerializeField] private AudioClip attack1SoundEffect;
@@ -24,13 +23,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isGrounded;
-    private bool isSprinting;
     private InputAction movement, look;
     private Direction oldDir;
 
     // References
     private Rigidbody rb;
     protected internal bool useGravity = true;
+
+    public bool IsSprinting { get; private set; }
 
     private void Start()
     {
@@ -55,10 +55,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
-        {
-            extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
-        }
+        if (isGrounded) extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
@@ -67,32 +64,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var displacement = Walk(movement.ReadValue<Vector2>());
         rb.MovePosition(transform.position + displacement);
 
-
-        //Rotates Follow Target
-        followTarget.transform.rotation *= Quaternion.AngleAxis(-look.ReadValue<Vector2>().x * sensitivity, Vector3.up);
-
-        followTarget.transform.rotation *=
-            Quaternion.AngleAxis(-look.ReadValue<Vector2>().y * sensitivity, Vector3.right);
-
-        var eAngles = followTarget.transform.localEulerAngles;
-        eAngles.z = 0;
-
-        var eAngleX = followTarget.transform.localEulerAngles.x;
-
-        if (eAngleX > 180 && eAngleX < 340)
-            eAngles.x = 340;
-        else if (eAngleX < 180 && eAngleX > 40) eAngles.x = 40;
-
-        followTarget.transform.localEulerAngles = eAngles;
-
         // Calculate lookAt vector then increment quaternion
         var lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
-
-        followTarget.transform.localEulerAngles = new Vector3(eAngles.x, 0, 0);
     }
 
     private void OnEnable()
@@ -129,8 +106,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var playerInputMap = InputManager.inputActions.Player;
         movement.Disable();
         look.Disable();
-        playerInputMap.Sprint.Disable();
+
+        playerInputMap.Jump.Disable();
         playerInputMap.Jump.performed -= Jump;
+
+        playerInputMap.Sprint.Disable();
+        playerInputMap.Sprint.started -= SprintToggle;
+        playerInputMap.Sprint.canceled -= SprintToggle;
 
         playerInputMap.PauseGame.Disable();
         playerInputMap.PauseGame.performed -= PauseGame;
@@ -164,7 +146,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleMoveAnimation(direction);
 
         var movement = direction.x * transform.right + direction.y * transform.forward;
-        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
     }
 
@@ -178,6 +160,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
+            rb.velocity = Vector3.zero; // Resets force applied to rb (So double jumps feel good)
             rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up,
                 ForceMode.Impulse);
         }
@@ -185,22 +168,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void SprintToggle(InputAction.CallbackContext obj)
     {
-        isSprinting = !isSprinting;
+        IsSprinting = !IsSprinting;
     }
-
 
     public void TakeDmg(float dmg)
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
+        EventManager.Instance.runStats.damageTaken += dmg;
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
-        if (PlayerStats.Instance.currentHealth <= 0f)
-        {
-            Die();
-        }
+        if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
     public void Die()
@@ -220,42 +200,46 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BasicAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
             PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
+            PlayerStats.Instance.GetRangeDamage()));
         AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.4f);
     }
 
     private void BeamAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange);
+            PlayerStats.Instance.rangeProjectileRange));
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
     }
 
     private void HitscanAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange);
+            PlayerStats.Instance.rangeProjectileRange));
     }
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        _ = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
+        var attackVec = AttackVector();
+        var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+
+        var projectile = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
+        HandleEffects(projectile);
     }
 
     private Vector3 AttackVector()
@@ -264,6 +248,31 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
+    }
+
+    private GameObject HandleEffects(GameObject projectile)
+    {
+        var rand = Random.Range(0.0f, 1.0f);
+
+        if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.poisonChance) ProjectileFactory.Instance.AddPoison(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.lightningChance) ProjectileFactory.Instance.AddLightning(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.radioactiveChance) ProjectileFactory.Instance.AddRadioactive(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.smiteChance) ProjectileFactory.Instance.AddSmite(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.slowChance) ProjectileFactory.Instance.AddSlow(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.stunChance) ProjectileFactory.Instance.AddStun(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.martyrdomChance) ProjectileFactory.Instance.AddMartyrdom(projectile);
+        rand = Random.Range(0.0f, 1.0f);
+        if (rand < PlayerStats.Instance.igniteChance) ProjectileFactory.Instance.AddIgnite(projectile);
+
+        return projectile;
     }
 
     private void HandleMoveAnimation(Vector2 direction)
@@ -349,7 +358,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
-        animator.SetBool("isRunning", isSprinting);
+        animator.SetBool("isRunning", IsSprinting);
     }
 
     private void HandleJumpAnimation()

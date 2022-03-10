@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c191437f17df4a45996321d24ccc1c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 9.81
+  gravity: 3
   outerRadius: 28.2
   outerFalloffRadius: 30.42
 --- !u!114 &6032951466801601469

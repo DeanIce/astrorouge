@@ -16,15 +16,16 @@ namespace Utilities
 
         [ConsoleMethod("level.restart", "reload the current level")]
         [Preserve]
-        public static string LevelRestart(string key)
+        public static string LevelRestart()
         {
-            LevelManager.Instance.LoadLevel();
+            EventManager.Instance.Play();
+            LevelManager.Instance.StartCoroutineLoadLevel();
             return "done";
         }
 
         [ConsoleMethod("level.list", "list levels in the game")]
         [Preserve]
-        public static string LevelList(string key)
+        public static string LevelList()
         {
             var result = string.Join("\n",
                 LevelManager.Instance.levels.Select((description, i) => $"{i}: {description.displayName}"));
@@ -32,48 +33,51 @@ namespace Utilities
             return result;
         }
 
-        /*[ConsoleMethod( "prefs.int", "Sets the value of an Integer PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static void PlayerPrefsSetInt( string key, int value )
+        [ConsoleMethod("level.load", "load level by index (see level.list)")]
+        [Preserve]
+        public static string LevelList(int level)
         {
-            PlayerPrefs.SetInt( key, value );
+            if (level >= LevelManager.Instance.levels.Count)
+                return $"Level index {level} out of bounds. See the `level.list` command.";
+
+
+            EventManager.Instance.Play();
+            LevelManager.Instance.current = level;
+            LevelManager.Instance.StartCoroutineLoadLevel();
+            return "done";
         }
 
-        [ConsoleMethod( "prefs.float", "Returns the value of a Float PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static string PlayerPrefsGetFloat( string key )
+        [ConsoleMethod("event", "trigger an event")]
+        [Preserve]
+        public static string Event(string ev)
         {
-            if( !PlayerPrefs.HasKey( key ) ) return "Key Not Found";
-            return PlayerPrefs.GetFloat( key ).ToString();
-        }
+            switch (ev)
+            {
+                case "pause":
+                    EventManager.Instance.Pause();
+                    break;
+                case "play":
+                    EventManager.Instance.Play();
+                    break;
+                case "menu":
+                    EventManager.Instance.Menu();
+                    break;
+                case "win":
+                    EventManager.Instance.Win();
+                    break;
+                case "recap":
+                    EventManager.Instance.Recap();
+                    break;
+                case "exit":
+                    EventManager.Instance.Exit();
+                    break;
 
-        [ConsoleMethod( "prefs.float", "Sets the value of a Float PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static void PlayerPrefsSetFloat( string key, float value )
-        {
-            PlayerPrefs.SetFloat( key, value );
-        }
+                default:
+                    return "event must be pause|play|menu|win|recap|exit";
+            }
 
-        [ConsoleMethod( "prefs.string", "Returns the value of a String PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static string PlayerPrefsGetString( string key )
-        {
-            if( !PlayerPrefs.HasKey( key ) ) return "Key Not Found";
-            return PlayerPrefs.GetString( key );
-        }
 
-        [ConsoleMethod( "prefs.string", "Sets the value of a String PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static void PlayerPrefsSetString( string key, string value )
-        {
-            PlayerPrefs.SetString( key, value );
+            return "done";
         }
-
-        [ConsoleMethod( "prefs.delete", "Deletes a PlayerPrefs field" ), UnityEngine.Scripting.Preserve]
-        public static void PlayerPrefsDelete( string key )
-        {
-            PlayerPrefs.DeleteKey( key );
-        }
-
-        [ConsoleMethod( "prefs.clear", "Deletes all PlayerPrefs fields" ), UnityEngine.Scripting.Preserve]
-        public static void PlayerPrefsClear()
-        {
-            PlayerPrefs.DeleteAll();
-        }*/
     }
 }
