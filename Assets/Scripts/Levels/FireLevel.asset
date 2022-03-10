@@ -13,13 +13,37 @@ MonoBehaviour:
   m_Name: FireLevel
   m_EditorClassIdentifier: 
   clusterAssets: []
-  environmentAssets: []
-  enemyAssets:
-  - prefab: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
-    count: 50
+  environmentAssets:
+  - prefab: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+    count: 10
+    scale: {x: 10, y: 10, z: 10}
+  - prefab: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+    count: 10
+    scale: {x: 10, y: 10, z: 10}
+  - prefab: {fileID: 168602, guid: 3e0f6b0ee51e6eb42a731a26210989b9, type: 3}
+    count: 10
+    scale: {x: 5, y: 5, z: 5}
+  - prefab: {fileID: 122892, guid: 20002ad77119e9849a8815f85c128ba3, type: 3}
+    count: 10
+    scale: {x: 2, y: 2, z: 2}
+  - prefab: {fileID: 190932, guid: 20e0bf298681fcd4693097c822277593, type: 3}
+    count: 10
+    scale: {x: 2, y: 2, z: 2}
+  - prefab: {fileID: 158038, guid: b9cff604e7a459c4581b58993fc28f1d, type: 3}
+    count: 25
     scale: {x: 1, y: 1, z: 1}
-  numPlanets: {x: 1, y: 1}
-  scale: {x: 5, y: 26.88367}
+  - prefab: {fileID: 121492, guid: 2dc72da8b5d1d5e42b5be6a6f0c2c4d4, type: 3}
+    count: 25
+    scale: {x: 1, y: 1, z: 1}
+  - prefab: {fileID: 1248725024203876, guid: 55c83fbc4be6adc40838f0f47a64bc97, type: 3}
+    count: 10
+    scale: {x: 1, y: 1, z: 1}
+  enemyAssets:
+  - prefab: {fileID: 8674004264568269388, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
+    count: 5
+    scale: {x: 1, y: 1, z: 1}
+  numPlanets: {x: 4, y: 7}
+  scale: {x: 20.492786, y: 38.93}
   gravityHeight: 5
   falloffHeight: 3
   planetPrefab: {fileID: 3675557906244615386, guid: 2bbb99912431e1c48ab94f82d138aca6, type: 3}

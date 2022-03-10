@@ -1,14 +1,17 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public event Action MoustacheEnable;
+
     public static PlayerStats Instance { get; private set; }
 
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
     public float meleeDamageMultiplier;
-    public float meleeCritChance;
+    [Range(0.0f, 1.0f)] public float meleeCritChance;
     public float meleeCritMultiplier;
     public float meleeKnockbackForce;
     public float meleeAttackRange;
@@ -28,7 +31,7 @@ public class PlayerStats : MonoBehaviour
     public float currentHealth;
     public float healthRegen;
     public int armor;
-    public float dodgeChance;
+    [Range(0.0f, 1.0f)] public float dodgeChance;
     public float invincibilityDuration; // How long (seconds) player is immune to damage after getting hit
 
     // Movement Stats
@@ -41,6 +44,17 @@ public class PlayerStats : MonoBehaviour
     public float dashDistance;
     public float dashRechargeRate;
 
+    // Bullet Effect Chances
+    [Range(0.0f, 1.0f)] public float burnChance;
+    [Range(0.0f, 1.0f)] public float poisonChance;
+    [Range(0.0f, 1.0f)] public float lightningChance;
+    [Range(0.0f, 1.0f)] public float radioactiveChance;
+    [Range(0.0f, 1.0f)] public float smiteChance;
+    [Range(0.0f, 1.0f)] public float slowChance;
+    [Range(0.0f, 1.0f)] public float stunChance;
+    [Range(0.0f, 1.0f)] public float martyrdomChance;
+    [Range(0.0f, 1.0f)] public float igniteChance;
+
     //
     // BASE STATS
     //
@@ -49,7 +63,7 @@ public class PlayerStats : MonoBehaviour
     public float baseMeleeAttackDelay;
     public int baseMeleeBaseDamage;
     public float baseMeleeDamageMultiplier;
-    public float baseMeleeCritChance;
+    [Range(0.0f, 1.0f)] public float baseMeleeCritChance;
     public float baseMeleeCritMultiplier;
     public float baseMeleeKnockbackForce;
     public float baseMeleeAttackRange;
@@ -68,7 +82,7 @@ public class PlayerStats : MonoBehaviour
     public int baseMaxHealth;
     public float baseHealthRegen;
     public int baseArmor;
-    public float baseDodgeChance;
+    [Range(0.0f, 1.0f)] public float baseDodgeChance;
     public float baseInvincibilityDuration;
 
     // Base Movement Stats
@@ -80,6 +94,17 @@ public class PlayerStats : MonoBehaviour
     public int baseDashCharges;
     public float baseDashDistance;
     public float baseDashRechargeRate;
+
+    // Base Bullet Effect Chance
+    [Range(0.0f, 1.0f)] public float baseBurnChance;
+    [Range(0.0f, 1.0f)] public float basePoisonChance;
+    [Range(0.0f, 1.0f)] public float baseLightningChance;
+    [Range(0.0f, 1.0f)] public float baseRadioactiveChance;
+    [Range(0.0f, 1.0f)] public float baseSmiteChance;
+    [Range(0.0f, 1.0f)] public float baseSlowChance;
+    [Range(0.0f, 1.0f)] public float baseStunChance;
+    [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
+    [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
     private void Awake()
     {
@@ -96,7 +121,7 @@ public class PlayerStats : MonoBehaviour
 
     public float GetRangeDamage()
     {
-        if (Random.value <= rangeCritChance)
+        if (UnityEngine.Random.value <= rangeCritChance)
             return rangeBaseDamage * rangeDamageMultiplier * rangeCritMultiplier;
         else
             return rangeBaseDamage * rangeDamageMultiplier;
@@ -139,5 +164,21 @@ public class PlayerStats : MonoBehaviour
         dashCharges = baseDashCharges;
         dashDistance = baseDashDistance;
         dashRechargeRate = baseDashRechargeRate;
+
+        // Bulllet Effect Stats
+        burnChance = baseBurnChance;
+        poisonChance = basePoisonChance;
+        lightningChance = baseLightningChance;
+        radioactiveChance = baseRadioactiveChance;
+        smiteChance = baseSmiteChance;
+        slowChance = baseSlowChance;
+        stunChance = baseStunChance;
+        martyrdomChance = baseMartyrdomChance;
+        igniteChance = baseIgniteChance;
+    }
+
+    protected internal void Moustache()
+    {
+        MoustacheEnable?.Invoke();
     }
 }
