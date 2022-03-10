@@ -8,6 +8,7 @@ namespace UI
     {
         public AudioClip mainMenuMusic;
         public AudioClip buttonPressSoundEffect;
+        public AudioClip buttonHoverSoundEffect;
         public float scrollSpeed = .5f;
 
         public float scrollAmount = 1000;
@@ -102,6 +103,11 @@ Todo: add assets here... names not links
             settingsBackButton.clicked += BackButtonPressed;
             aboutBackButton.clicked += BackButtonPressed;
 
+            quitButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            newGameButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            aboutButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+
             // muteValue = muteButton.value;
             // musicVolumeValue = musicSlider.value;
             // sfxVolumeValue = sfxSlider.value;
@@ -185,6 +191,10 @@ Todo: add assets here... names not links
             mainMenu.style.display = DisplayStyle.Flex;
             aboutMenu.style.display = DisplayStyle.None;
             scrolling = false;
+        }
+        private void PlaySound(MouseEnterEvent ev)
+        {
+            AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
         }
     }
 }
