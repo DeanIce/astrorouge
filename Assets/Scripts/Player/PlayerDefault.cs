@@ -264,7 +264,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
-        Vector3 screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 20f);
+        Vector3 screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
 
         Vector3 centerPos = Camera.main.ScreenToWorldPoint(screenAim);
         Vector3 spreadPos = Random.insideUnitCircle * bulletSpread;
