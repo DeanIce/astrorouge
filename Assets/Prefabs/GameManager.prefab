@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logEvents: 0
-  buttonClick: {fileID: 8300000, guid: ec9b5343b1dee6a4faf42373ee89828f, type: 3}
+  buttonClick: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
 --- !u!114 &6854432826354650640
 MonoBehaviour:
   m_ObjectHideFlags: 0
