@@ -16,9 +16,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
 
-    public bool IsSprinting { get => isSprinting; }
-    private bool isSprinting;
-
     private Animator animator;
     private Direction dir;
     private Transform groundCheck;
@@ -30,6 +27,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // References
     private Rigidbody rb;
     protected internal bool useGravity = true;
+
+    public bool IsSprinting { get; private set; }
 
     private void Start()
     {
@@ -145,7 +144,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleMoveAnimation(direction);
 
         var movement = direction.x * transform.right + direction.y * transform.forward;
-        return (isSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
     }
 
@@ -167,7 +166,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void SprintToggle(InputAction.CallbackContext obj)
     {
-        isSprinting = !isSprinting;
+        IsSprinting = !IsSprinting;
     }
 
     public void TakeDmg(float dmg)
@@ -228,8 +227,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        Vector3 attackVec = AttackVector();
-        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+        var attackVec = AttackVector();
+        var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
         var projectile = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
             PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
@@ -237,8 +236,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
         HandleEffects(projectile);
-        
-        
     }
 
     private Vector3 AttackVector()
@@ -251,7 +248,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private GameObject HandleEffects(GameObject projectile)
     {
-        float rand = Random.Range(0.0f, 1.0f);
+        var rand = Random.Range(0.0f, 1.0f);
 
         if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
         rand = Random.Range(0.0f, 1.0f);
@@ -357,7 +354,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             //See direction states of player: Debug.Log("Current State: " + dir);
         }
 
-        animator.SetBool("isRunning", isSprinting);
+        animator.SetBool("isRunning", IsSprinting);
     }
 
     private void HandleJumpAnimation()
