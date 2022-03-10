@@ -228,11 +228,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (transform.forward + 2 * transform.up),
+        Vector3 attackVec = AttackVector();
+        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+
+        var projectile = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+            PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage()));
+            PlayerStats.Instance.GetRangeDamage());
+        HandleEffects(projectile);
+        
+        
     }
 
     private Vector3 AttackVector()
