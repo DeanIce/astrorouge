@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 2796589538820076326}
   - component: {fileID: 6379848256606474720}
   - component: {fileID: 6797667224800674104}
+  - component: {fileID: 4970638346086393108}
   m_Layer: 10
   m_Name: FlowerEnemy
   m_TagString: Untagged
@@ -213,6 +214,30 @@ MonoBehaviour:
   detector: {fileID: 7744300686506975007}
   body: {fileID: 8081290201691871695}
   attackRange: 0.9
+--- !u!114 &4970638346086393108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7744300686550433951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burnTickTimes: 
+  poisonTickTimes: 
+  radTickTimes: 
+  slowTickTimes: 
+  stunTickTimes: 
+  burnDamage: 5
+  poisonDamage: 10
+  lightningDamage: 50
+  radDamage: 2
+  smiteDamage: 3.4028235e+38
+  martyrdom: 0
+  ignite: 0
 --- !u!1 &8624268331508745230
 GameObject:
   m_ObjectHideFlags: 0
