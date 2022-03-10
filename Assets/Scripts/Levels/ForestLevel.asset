@@ -85,7 +85,7 @@ MonoBehaviour:
     count: 3
     scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 8}
-  scale: {x: 12.221128, y: 33.089996}
+  scale: {x: 18.37062, y: 39.24062}
   gravityHeight: 5
   falloffHeight: 3
   planetPrefab: {fileID: 3675557906244615386, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}
