@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public event Action MoustacheEnable;
+
     public static PlayerStats Instance { get; private set; }
 
     // Melee Stats
@@ -118,7 +121,7 @@ public class PlayerStats : MonoBehaviour
 
     public float GetRangeDamage()
     {
-        if (Random.value <= rangeCritChance)
+        if (UnityEngine.Random.value <= rangeCritChance)
             return rangeBaseDamage * rangeDamageMultiplier * rangeCritMultiplier;
         else
             return rangeBaseDamage * rangeDamageMultiplier;
@@ -172,5 +175,10 @@ public class PlayerStats : MonoBehaviour
         stunChance = baseStunChance;
         martyrdomChance = baseMartyrdomChance;
         igniteChance = baseIgniteChance;
+    }
+
+    protected internal void Moustache()
+    {
+        MoustacheEnable?.Invoke();
     }
 }
