@@ -8,6 +8,8 @@ public class StatusEffectManager : MonoBehaviour
     public List<int> burnTickTimes = new List<int>();
     public List<int> poisonTickTimes = new List<int>();
     public List<int> radTickTimes = new List<int>();
+    public List<int> slowTickTimes = new List<int>();
+    public List<int> stunTickTimes = new List<int>();
 
     public int burnDamage = 5;
     public int poisonDamage = 10;
@@ -15,9 +17,18 @@ public class StatusEffectManager : MonoBehaviour
     public int radDamage = 2;
     public float smiteDamage = float.MaxValue;
 
+    public bool martyrdom = false;
+    public bool ignite = false;
+
+
     void Start()
     {
         damageable = GetComponent<IDamageable>();
+    }
+    public void DeathEffects()
+    {
+        StartCoroutine(Martyrdom());
+        StartCoroutine(Ignite());
     }
 
     public void ApplyBurn(int ticks)
@@ -98,15 +109,43 @@ public class StatusEffectManager : MonoBehaviour
         damageable.TakeDmg(smiteDamage);
     }
 
-    public void ApplySlow()
+    public void ApplySlow(int ticks)
     {
-        StartCoroutine(Slow());
+        if (slowTickTimes.Count <= 0)
+        {
+            slowTickTimes.Add(ticks);
+            StartCoroutine(Slow());
+        }
+        else
+        {
+            slowTickTimes.Add(ticks);
+        }
     }
 
     IEnumerator Slow()
     {
-        yield return new WaitForSeconds(0.1f);
-        //change the movespeed by saving and then decreasing before restoring it
+        float initSpeed = 1.0f;
+
+        if(GetComponent<IEnemy>() != null)
+        {
+            initSpeed = GetComponent<IEnemy>().getSpeed();
+            GetComponent<IEnemy>().setSpeed(initSpeed * 0.2f);
+        }
+
+        while (slowTickTimes.Count > 0)
+        {
+            for (int i = 0; i < slowTickTimes.Count; i++)
+            {
+                slowTickTimes[i]--;
+            }
+            slowTickTimes.RemoveAll(num => num == 0);
+            yield return new WaitForSeconds(1f);
+        }
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            GetComponent<IEnemy>().setSpeed(initSpeed);
+        }
     }
 
     public void ApplyRadioactive(int ticks)
@@ -145,5 +184,89 @@ public class StatusEffectManager : MonoBehaviour
             radTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
         }    
+    }
+
+    public void ApplyStun(int ticks)
+    {
+        if (stunTickTimes.Count <= 0)
+        {
+            stunTickTimes.Add(ticks);
+            StartCoroutine(Stun());
+        }
+        else
+        {
+            stunTickTimes.Add(ticks);
+        }
+    }
+
+    IEnumerator Stun()
+    {
+        float initSpeed = 1.0f;
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            initSpeed = GetComponent<IEnemy>().getSpeed();
+            GetComponent<IEnemy>().setSpeed(0.0f);
+        }
+
+        while (stunTickTimes.Count > 0)
+        {
+            for (int i = 0; i < stunTickTimes.Count; i++)
+            {
+                stunTickTimes[i]--;
+            }
+            stunTickTimes.RemoveAll(num => num == 0);
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        if (GetComponent<IEnemy>() != null)
+        {
+            GetComponent<IEnemy>().setSpeed(initSpeed);
+        }
+    }
+    public void ApplyMartyrdom()
+    {
+        martyrdom = true;
+    }
+
+    IEnumerator Martyrdom()
+    {
+        if (martyrdom)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
+                {
+                    hitCollider.GetComponent<IEnemy>().TakeDmg(lightningDamage);
+                }
+            }
+        }
+
+        yield return null;
+    }
+
+    public void ApplyIgnite()
+    {
+        ignite = true;
+    }
+
+    IEnumerator Ignite()
+    {
+        if (ignite)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
+                {
+                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
+                }
+            }
+        }
+
+        yield return null;
     }
 }

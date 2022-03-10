@@ -6,6 +6,6 @@ public class Item_NoFlashPhotography : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.stunChance += 0.05f;
     }
 }

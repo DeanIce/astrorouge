@@ -6,6 +6,6 @@ public class Item_IncendiaryBullets : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.burnChance += 0.05f;
     }
 }

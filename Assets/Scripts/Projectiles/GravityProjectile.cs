@@ -22,9 +22,9 @@ public class GravityProjectile : BaseProjectile
         }
 
         Vector3 sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
-        velocity += 0.01f * Time.deltaTime * sumForce;
-
+        velocity += 0.005f * Time.deltaTime * sumForce;
         rb.MovePosition(transform.position + Displacement(Time.deltaTime));
+
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0)
         {

@@ -6,6 +6,6 @@ public class Item_DeathcapsDance : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.poisonChance += 0.05f;
     }
 }

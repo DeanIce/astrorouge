@@ -6,6 +6,6 @@ public class Item_GasCan : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.igniteChance += 0.05f;
     }
 }
