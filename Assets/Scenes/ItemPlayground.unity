@@ -316,35 +316,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
---- !u!1 &117654027 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
-  m_PrefabInstance: {fileID: 117654026}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &117654028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117654027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 5
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
 --- !u!1001 &118263153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,35 +581,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
---- !u!1 &172061149 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
-  m_PrefabInstance: {fileID: 172061148}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &172061150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172061149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 5
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
 --- !u!1001 &199632276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3141,7 +3083,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4416962, y: 1}
+    m_SensorSize: {x: 1.7750907, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3892,35 +3834,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
---- !u!1 &1576740179 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
-  m_PrefabInstance: {fileID: 1576740178}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1576740180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576740179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 5
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
 --- !u!1001 &1623182830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4742,7 +4655,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4416962, y: 1}
+    m_SensorSize: {x: 1.7750907, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5329,35 +5242,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
---- !u!1 &2022961758 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1296449001554218876, guid: d269dc924fec2bd4aa87fbe0569fe3c6, type: 3}
-  m_PrefabInstance: {fileID: 2022961757}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2022961759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022961758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 5
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
 --- !u!1001 &2025686723
 PrefabInstance:
   m_ObjectHideFlags: 0
