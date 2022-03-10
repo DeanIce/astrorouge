@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extraJumpsLeft: 0
+  primaryAttackDelay: 0
+  secondaryAttackDelay: 0
   sensitivity: 0.2
   followTarget: {fileID: 1653012913}
   fireLocation: {fileID: 8717766603265617993}
@@ -311,21 +313,21 @@ MonoBehaviour:
   stunChance: 0
   martyrdomChance: 0
   igniteChance: 0
-  baseMeleeAttackDelay: 3
+  baseMeleeAttackDelay: 2
   baseMeleeBaseDamage: 1
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
   baseMeleeCritMultiplier: 2
   baseMeleeKnockbackForce: 5
   baseMeleeAttackRange: 1
-  baseRangeAttackDelay: 2
+  baseRangeAttackDelay: 0.2
   baseRangeBaseDamage: 1
   baseRangeDamageMultiplier: 1
   baseRangeCritChance: 0.1
   baseRangeCritMultiplier: 2
   baseRangeKnockbackForce: 2
   baseRangeProjectileRange: 20
-  baseRangeProjectileSpeed: 10
+  baseRangeProjectileSpeed: 25
   baseMaxHealth: 100
   baseHealthRegen: 0.1
   baseArmor: 1
