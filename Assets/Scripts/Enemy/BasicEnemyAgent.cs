@@ -100,6 +100,15 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
+    public void setSpeed(float speed)
+    {
+        movementSpeed = speed;
+    }
+    public float getSpeed()
+    {
+        return movementSpeed;
+    }
+
     public virtual void Wander(Vector3 direction)
     {
         DoGravity();
@@ -194,6 +203,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void Die()
     {
         iAmAlive = false;
+        GetComponent<StatusEffectManager>().DeathEffects();
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         StartCoroutine(DestroyLater());

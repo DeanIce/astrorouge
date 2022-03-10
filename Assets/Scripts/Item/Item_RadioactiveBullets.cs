@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_ReadioActiveBullets : AbstractItem
+public class Item_RadioactiveBullets : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.radioactiveChance += 0.05f;
     }
 }
