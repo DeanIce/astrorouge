@@ -7,7 +7,6 @@ namespace UI
 {
     public class PauseMenu : MonoBehaviour
     {
-        public AudioClip mainMenuMusic;
         public AudioClip buttonPressSoundEffect;
         public AudioClip openMenuSoundEffect;
         public AudioClip closeMenuSoundEffect;
@@ -50,8 +49,6 @@ namespace UI
             continueButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             mainMenuButton.RegisterCallback<MouseEnterEvent>(PlaySound);
-
-            AudioManager.Instance.PlayMusic(mainMenuMusic);
 
             PlayGame();
         }

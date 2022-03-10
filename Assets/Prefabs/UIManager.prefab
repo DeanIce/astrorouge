@@ -98,6 +98,7 @@ MonoBehaviour:
   buttonPressSoundEffect: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
   openMenuSoundEffect: {fileID: 8300000, guid: 20186564b07abc34d93ec1393ee9d731, type: 3}
   closeMenuSoundEffect: {fileID: 8300000, guid: 01a7988c09ea47f419c2bbedccbe7d22, type: 3}
+  buttonHoverSoundEffect: {fileID: 8300000, guid: bd2c6e01a1aec744b90f4f45fad87229, type: 3}
 --- !u!114 &5955223653057071076
 MonoBehaviour:
   m_ObjectHideFlags: 0
