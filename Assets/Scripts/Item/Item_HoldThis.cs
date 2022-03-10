@@ -6,6 +6,6 @@ public class Item_HoldThis : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.martyrdomChance += 0.05f;
     }
 }

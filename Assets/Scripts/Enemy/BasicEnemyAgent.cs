@@ -12,7 +12,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Public variables that the game manager or other objects may need
     public float health;
     public float movementSpeed;
-    public Collider playerCollider;
     [SerializeField] private GameObject detector;
     [SerializeField] private GameObject body;
     [SerializeField] private float attackRange;
@@ -23,24 +22,21 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private readonly int playerLayer = 9;
     private readonly Color red = new(1, 0, 0, 0.5f);
     private Quaternion deltaRotation;
-    protected float despawnTime = 1;
+    protected float despawnTime = 10;
     private Renderer detectorRenderer;
     private float distanceToGround;
     private Vector3 eulerAngleVelocity;
     private bool hunting;
 
     private bool iAmAlive = true;
-    private bool isGroundedVar = true;
 
     private int leftOrRight;
 
-    //Bounds b;
-    //Bounds playerBounds;
-    private Vector3 newDirection;
-    private Vector3 playerPosition;
     private int randomRotation;
 
     // Private enemy specific variables
+    private bool attacking = false;
+    public bool Attacking { get { return attacking; } set { attacking = value; } }
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
@@ -56,24 +52,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         rb = GetComponent<Rigidbody>();
         detectorRenderer = detector.GetComponent<Renderer>();
         Dying = false;
-        // b = new Bounds(rb.position, new Vector3(20, 5, 20));
-        // distanceToGround = b.extents.y;
-        //playerBounds = playerCollider.bounds;
-    }
-
-    private void Update()
-    {
-        // OLD MOVEMENT HERE
-        // Maybe just set b center pos instead
-        // Potential Bug here **
-        //b = new Bounds(rb.position, new Vector3(20, 5, 20));
-        //playerBounds = playerCollider.bounds;
-
-        // TEMP FOR TESTING DROPS
-        /*if (Input.GetKeyDown(KeyCode.L))
-        {
-            Die();
-        }*/
     }
 
     public virtual void FixedUpdate()
@@ -87,16 +65,6 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             detectorRenderer.material.SetColor("_BaseColor", green);
         else
             detectorRenderer.material.SetColor("_BaseColor", red);
-    }
-
-    // Swapping to collider based detection
-    // This is for attacking
-    public virtual void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == playerLayer)
-        {
-            // Attack
-        }
     }
 
     private void OnDrawGizmos()
@@ -132,6 +100,15 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
     }
 
+    public void setSpeed(float speed)
+    {
+        movementSpeed = speed;
+    }
+    public float getSpeed()
+    {
+        return movementSpeed;
+    }
+
     public virtual void Wander(Vector3 direction)
     {
         DoGravity();
@@ -149,35 +126,62 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     public virtual void Hunt(Collider target)
     {
+        RaycastHit[] hits;
+        
         DoGravity();
 
-        // NEW MOVEMENT HERE
-        targetRb = target.GetComponent<Rigidbody>();
-        rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
-        body.transform.RotateAround(transform.position, transform.up,
-            -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) /
-            10);
-
-        // Jumping
-        if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
-
-        // OLD MOVEMENT HERE
-        // NOTE: May need to add offset to playerBounds center, potential bug here ***
-        // Rotation referenced from unity documentation
-        /*playerPosition = new Vector3(playerBounds.center.x, transform.position.y, playerBounds.center.z);
-        Debug.Log("Hunting towards " + playerBounds.center.x + " " + playerBounds.center.z);
-        */
-        // Actual movement and rotation
-        /* transform.position = Vector3.MoveTowards(transform.position, playerPosition, movementSpeed * Time.deltaTime);
-        newDirection = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, movementSpeed * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);*/
-
-        // Detect if player is above enemy, if so, then we want to jump
-        /* if (playerBounds.center.y > transform.position.y && IsGrounded())
+        //attacking
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
         {
-            Debug.Log("Jump!");
-            // Jump();
-        }*/
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
+                    if (!attacking && Health > 0) StartCoroutine(Attack());
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if (!attacking)
+            {
+                // NEW MOVEMENT HERE
+                targetRb = target.GetComponent<Rigidbody>();
+                rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+                body.transform.RotateAround(transform.position, transform.up,
+                    -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) /
+                    10);
+
+                // Jumping - commented as only works in 2d but could bring back if desired?
+                //if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
+            }
+        }
+    }
+
+    public virtual IEnumerator Attack()
+    {
+        RaycastHit[] hits;
+        //rend.enabled = true;
+        attacking = true;
+        yield return new WaitForSeconds(1f);
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, playerLayer);
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
+                }
+            }
+        }
+        //rend.enabled = false;
+        attacking = false;
     }
 
     public void TakeDmg(float dmg)
@@ -199,6 +203,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void Die()
     {
         iAmAlive = false;
+        GetComponent<StatusEffectManager>().DeathEffects();
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         StartCoroutine(DestroyLater());

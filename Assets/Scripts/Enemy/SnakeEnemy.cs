@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SnakeEnemy : RangedEnemy
+public class SnakeEnemy : BasicEnemyAgent
 {
     [SerializeField] private GameObject mouth;
     [SerializeField] private float poisonChance = 0.5f;
@@ -53,7 +53,6 @@ public class SnakeEnemy : RangedEnemy
         if (!Dying)
         {
             Dying = true;
-            animator.SetBool("attack3", false);
             animator.SetBool("death", true);
             base.Die();
         }

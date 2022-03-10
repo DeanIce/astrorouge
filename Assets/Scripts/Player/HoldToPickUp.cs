@@ -8,26 +8,18 @@ using UnityEngine.UI;
 public class HoldToPickUp : MonoBehaviour
 {
     [SerializeField] private LayerMask layerMask;
-
     [SerializeField] private float pickupTime = 1f;
-
     [SerializeField] private float distance;
-
     [SerializeField] private RectTransform pickupImageRoot;
-
     [SerializeField] private Image pickupProgressImage;
-
     [SerializeField] private TextMeshProUGUI itemNameText;
 
     private float currentPickupTimerElapsed;
-
     private Inventory inventory;
-
     private bool isKeyDown;
-
     private AbstractItem itemBeingPickedUp;
-
     private InputAction pickup;
+
 
     private void Start()
     {
@@ -103,15 +95,12 @@ public class HoldToPickUp : MonoBehaviour
 
     private void SelectItemBeingPickedupFromRay()
     {
-        var start = transform.position;
-        var end = transform.forward * 30f;
-        // Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
-        // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
-        // Physics.Raycast(ray, out hitInfo, 25f, layerMask)
+        var start = Camera.main.transform.position;
+        var end = Camera.main.transform.forward * 15f + start;
         RaycastHit hitInfo;
 
         Debug.DrawLine(start, end, Color.red);
-        if (Physics.Raycast(start, transform.forward, out hitInfo, distance, layerMask))
+        if (Physics.Raycast(start, Camera.main.transform.forward, out hitInfo, distance, layerMask))
         {
             var hitItem = hitInfo.collider.GetComponent<AbstractItem>();
 

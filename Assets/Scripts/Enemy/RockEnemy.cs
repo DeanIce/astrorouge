@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class RockEnemy : MeleeEnemy
+public class RockEnemy : BasicEnemyAgent
 {
     private Animator animator;
     private int attack;
@@ -9,7 +9,6 @@ public class RockEnemy : MeleeEnemy
 
     public override void Start()
     {
-        despawnTime = 5;
         animator = GetComponentInChildren<Animator>();
         Dying = false;
         started = false;
@@ -98,11 +97,10 @@ public class RockEnemy : MeleeEnemy
     {
         if (!Dying)
         {
-            base.Die();
             Dying = true;
-            animator.SetBool("attack1A", false);
             animator.SetBool("death", true);
             // StartCoroutine(DieCo());
+            base.Die();
         }
     }
 
