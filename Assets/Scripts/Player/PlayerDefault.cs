@@ -263,15 +263,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
         _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
+            10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
             PlayerStats.Instance.GetRangeDamage()));
     }
 
     private Vector3 AttackVector()
     {
-        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
+        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); //TODO: Move cursor to be center of screen to avoid Magic number: 32
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
