@@ -426,6 +426,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4014463406395459266, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: openMenuSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 20186564b07abc34d93ec1393ee9d731, type: 3}
+    - target: {fileID: 4014463406395459266, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: closeMenuSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 01a7988c09ea47f419c2bbedccbe7d22, type: 3}
+    - target: {fileID: 4014463406395459266, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: buttonHoverSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: bd2c6e01a1aec744b90f4f45fad87229, type: 3}
+    - target: {fileID: 4014463406395459266, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: buttonPressSoundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df544cebdba399245853a916ec1a917d, type: 3}
 --- !u!1 &539473548 stripped
@@ -733,7 +749,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.9351852, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1081,6 +1097,7 @@ MonoBehaviour:
     seed: 342
   player: {fileID: 539473548}
   transitionDuration: 5
+  current: 0
 --- !u!4 &1447781040
 Transform:
   m_ObjectHideFlags: 0
@@ -1315,7 +1332,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.9351852, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
