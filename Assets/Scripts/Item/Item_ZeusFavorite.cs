@@ -6,6 +6,6 @@ public class Item_ZeusFavorite : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.lightningChance += 0.05f;
     }
 }
