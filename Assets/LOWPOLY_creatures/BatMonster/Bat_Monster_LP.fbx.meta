@@ -273,6 +273,12 @@ ModelImporter:
   - first:
       137: 13700000
     second: Plane.001
+  - first:
+      74: -8868846588127503228
+    second: BatArmature|attack
+  - first:
+      74: -991193960283048755
+    second: BatArmature|death (1)
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -332,7 +338,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.50765413
+      - time: 0.4843245
         functionName: DoDamage
         data: 
         objectReferenceParameter: {instanceID: 0}

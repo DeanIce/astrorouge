@@ -21,7 +21,7 @@ public class EventDamage : MonoBehaviour
     {
         RaycastHit[] hits;
 
-        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange + 0.1f, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
@@ -39,7 +39,7 @@ public class EventDamage : MonoBehaviour
     {
         RaycastHit[] hits;
 
-        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange + 0.1f, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault

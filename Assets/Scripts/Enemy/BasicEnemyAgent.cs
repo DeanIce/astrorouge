@@ -121,6 +121,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         
         DoGravity();
 
+        Debug.DrawRay(transform.position, body.transform.forward, green, 1f);
         //attacking
         hits = Physics.RaycastAll(transform.position, body.transform.forward, attackRange, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
