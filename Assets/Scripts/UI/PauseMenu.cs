@@ -114,6 +114,7 @@ namespace UI
 
         private void MainMenuButtonPressed()
         {
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
             EventManager.Instance.Menu();
         }
 
