@@ -381,7 +381,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   pickupTime: 1
-  distance: 5
+  distance: 15
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
