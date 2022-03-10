@@ -733,7 +733,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.3877952, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1153,6 +1153,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerDefault
       objectReference: {fileID: 0}
+    - target: {fileID: 2370587532675454182, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+      propertyPath: baseMeleeAttackDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370587532675454182, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+      propertyPath: baseRangeAttackDelay
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370587532675454182, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+      propertyPath: baseRangeProjectileSpeed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6133285360535605883, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
@@ -1315,7 +1327,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.3877952, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
