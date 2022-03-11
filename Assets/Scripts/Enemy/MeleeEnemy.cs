@@ -1,19 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Gravity;
 
 public class MeleeEnemy : BasicEnemyAgent
 {
     //[Deprecated]
-    
+
     //new public variables
     //public MeshRenderer rend;
 
     // Private enemy specific variables
-    private bool attacking = false;
+    private bool attacking;
 
-    public bool Attacking { get { return attacking; } set { attacking = value; } }
+    // public bool Attacking { get { return attacking; } set { attacking = value; } }
 
     public override void Hunt(Collider target)
     {
@@ -22,8 +20,9 @@ public class MeleeEnemy : BasicEnemyAgent
         DoGravity();
 
         //attacking
-        if (Physics.Raycast(transform.position, Body.transform.forward, AttackRange - 0.1f, LayerMask.GetMask("Player"))) 
-        //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
+        if (Physics.Raycast(transform.position, Body.transform.forward, AttackRange - 0.1f,
+                LayerMask.GetMask("Player")))
+            //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
         {
             //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
             if (!attacking && Health > 0) StartCoroutine(Attack());
@@ -44,14 +43,13 @@ public class MeleeEnemy : BasicEnemyAgent
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
+            foreach (var hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
-                }
             }
         }
+
         //rend.enabled = false;
         attacking = false;
     }

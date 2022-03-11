@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GD.MinMaxSlider;
 using Gravity;
 using Planets;
@@ -19,13 +20,22 @@ namespace Levels
         [MinMaxSlider(1, 10)] public Vector2Int numPlanets = new(3, 5);
         [MinMaxSlider(1, 50)] public Vector2 scale = new(5, 12);
 
-        public float gravityHeight;
-        public float falloffHeight;
+        public float gravityHeight = 3;
+        public float falloffHeight = 5;
+
+        public string bossSceneName;
+        public GameObject bossLevelEntrance;
 
         public GameObject planetPrefab;
 
 
         private bool isCreated;
+
+
+        private void OnValidate()
+        {
+            // todo
+        }
 
 
         /// <summary>
@@ -55,6 +65,9 @@ namespace Levels
 
             var points = ballDropper.DropBalls(radii);
             var playerPosition = Vector3.zero;
+
+            var bossLevelIndex = rng.Next(0, actualNumPlanets);
+
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
@@ -81,6 +94,9 @@ namespace Levels
                     rng
                 );
 
+                // Spawn the boss level entrance
+                if (i == bossLevelIndex) AddBossEntrance(planetGenerator, bossLevelEntrance, planet.transform, rng);
+
 
                 // The player should spawn at the lowest planet
                 if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 4f);
@@ -92,6 +108,29 @@ namespace Levels
 
             isCreated = true;
             return playerPosition;
+        }
+
+
+        private void AddBossEntrance(PlanetGenerator planetGenerator, GameObject objectToSpawn, Transform origin,
+            Random rng)
+        {
+            var spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
+                planetGenerator.scale, rng);
+            spawnLocation += origin.position;
+            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+
+
+            // Find the center of our origin
+            placeObject.transform.LookAt(origin.position);
+
+            // First orient stemming out from planet
+            // THEN randomly rotate on plane, NEED to do in this order
+            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+
+            // Set Parent
+            placeObject.transform.parent = origin;
+            placeObject.GetComponent<BossInstanceEnter>().bossSceneName = bossSceneName;
         }
 
         private float rngRange(Random rng, float start, float end)

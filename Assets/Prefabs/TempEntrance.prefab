@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57c02e59f3bf1048a4c97de1220733a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossSceneName: TestBossScene
+  bossSceneName: 
 --- !u!65 &-3287607478571806900
 BoxCollider:
   m_ObjectHideFlags: 0

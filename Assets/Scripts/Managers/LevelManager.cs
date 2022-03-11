@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Gravity;
 using Levels;
 using UnityEngine;
@@ -48,7 +50,8 @@ namespace Managers
 
         private void Start()
         {
-            current = EventManager.Instance.requestedScene;
+            if (EventManager.Instance)
+                current = EventManager.Instance.requestedScene;
             StartCoroutine(LoadLevel());
         }
 
@@ -66,12 +69,12 @@ namespace Managers
                 return;
             }
 
-            var id = CurrentLevel.displayName + stack.Count;
+            string id = CurrentLevel.displayName + stack.Count;
             rng = new Random(CurrentLevel.seed);
 
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
             print($"Creating {id} level.");
 
 
@@ -107,14 +110,14 @@ namespace Managers
                 cinemachineSmoothPath = transform.Find("DollyTrack1").gameObject.GetComponent<CinemachineSmoothPath>();
             }
 
-            var id = CurrentLevel.displayName + stack.Count;
+            string id = CurrentLevel.displayName + stack.Count;
             rng = new Random(CurrentLevel.seed);
 
 
             if (doTransition)
             {
                 // Move out to "deep space"
-                var currentPos = player.transform.position;
+                Vector3 currentPos = player.transform.position;
                 cinemachineSmoothPath.m_Waypoints = new CinemachineSmoothPath.Waypoint[2];
                 cinemachineSmoothPath.m_Waypoints[0].position = currentPos;
                 cinemachineSmoothPath.m_Waypoints[1].position = currentPos + player.transform.up * 100;
@@ -123,9 +126,9 @@ namespace Managers
                 player.GetComponent<PositionConstraint>().constraintActive = true;
                 player.GetComponent<PlayerDefault>().useGravity = false;
 
-                var seq = DOTween.Sequence();
+                Sequence seq = DOTween.Sequence();
                 seq.AppendInterval(2f);
-                var tween = DOTween.To(() => cinemachineDollyCart.m_Position,
+                TweenerCore<float, float, FloatOptions> tween = DOTween.To(() => cinemachineDollyCart.m_Position,
                     x => { cinemachineDollyCart.m_Position = x; },
                     1f, transitionDuration);
                 tween.SetEase(Ease.InCubic);
@@ -150,7 +153,7 @@ namespace Managers
 
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
             print($"Creating {id} level.");
 
 
@@ -164,8 +167,8 @@ namespace Managers
             if (doTransition)
             {
                 // Move back in to the new solar system
-                var currentPos = player.transform.position;
-                var upAxisAtDestination = GravityManager.GetGravity(newPlayerPos);
+                Vector3 currentPos = player.transform.position;
+                Vector3 upAxisAtDestination = GravityManager.GetGravity(newPlayerPos);
                 cinemachineSmoothPath.m_Waypoints = new CinemachineSmoothPath.Waypoint[3];
                 cinemachineSmoothPath.m_Waypoints[0].position = currentPos;
                 cinemachineSmoothPath.m_Waypoints[1].position = newPlayerPos + upAxisAtDestination * -3;
@@ -173,7 +176,7 @@ namespace Managers
 
                 cinemachineSmoothPath.InvalidateDistanceCache();
                 cinemachineDollyCart.m_Position = 0;
-                var backTween = DOTween.To(() => cinemachineDollyCart.m_Position,
+                TweenerCore<float, float, FloatOptions> backTween = DOTween.To(() => cinemachineDollyCart.m_Position,
                     x => { cinemachineDollyCart.m_Position = x; },
                     1f, transitionDuration).SetEase(Ease.InOutCubic);
 
@@ -193,7 +196,7 @@ namespace Managers
         private GameObject GetOrCreate(string gameObjectName)
         {
             // Find/create object
-            var child = transform.Find(gameObjectName);
+            Transform child = transform.Find(gameObjectName);
             if (!child)
             {
                 child = new GameObject(gameObjectName).transform;
@@ -210,11 +213,11 @@ namespace Managers
         public void UnloadLevel(string displayName)
         {
             if (displayName == null) return;
-            var t = transform.Find(displayName);
+            Transform t = transform.Find(displayName);
             if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
 
             // delete all enemies in the scene
-            foreach (var enemy in GameObject.FindGameObjectsWithTag("enemy"))
+            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("enemy"))
             {
                 Destroy(enemy);
             }
@@ -222,9 +225,9 @@ namespace Managers
 
         public void UnloadLevel()
         {
-            foreach (var levelName in stack)
+            foreach (string levelName in stack)
             {
-                var root = transform.Find(levelName)?.gameObject;
+                GameObject root = transform.Find(levelName)?.gameObject;
 
                 if (root) DestroyImmediate(root);
             }
