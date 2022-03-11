@@ -54,32 +54,32 @@ namespace Managers
         }
 
         // Will pull from list of ALL available drops, GetItemNum does the logic behind which item is dropped though
-        // BUG: UPPER BOUNDS NOT WORKING, ALWAYS SPAWNS LAST ITEM
         private GameObject GetSpawnItem()
         {
             // Which item we're going to spawn
-            var currentSelection = 0;
+            int currentSelection = 0;
 
             // The sum of weights up to index thus far
-            var currentWeightIndex = 0;
+            int currentWeightIndex = 0;
 
             // The weighted number selection
-            var selectedWeight = GetItemNum();
+            int selectedWeight = GetItemNum();
             LOG("Item # " + selectedWeight);
 
-            for (var i = 0; i < drops.Length; i++)
+            for (int i = 0; i < drops.Length; i++)
             {
-                var pair = drops[i];
+                DropAssetWeight pair = drops[i];
                 if (selectedWeight > currentWeightIndex)
                 {
                     currentSelection = i;
+                    print("Current Selection at " + i + "iteration is " + currentSelection);
                 }
                 else
                 {
                     break;
                 }
 
-                currentWeightIndex = pair.weight;
+                currentWeightIndex += pair.weight;
             }
 
             return drops[currentSelection].prefab;
