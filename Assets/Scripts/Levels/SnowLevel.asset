@@ -79,7 +79,7 @@ MonoBehaviour:
     count: 2
     scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 6737330966302589876, guid: bc079d52da8a5c14e83cc36db632a03c, type: 3}
-    count: 3
+    count: 5
     scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 9}
   scale: {x: 5, y: 12}
