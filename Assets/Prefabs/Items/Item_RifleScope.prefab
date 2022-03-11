@@ -57,6 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+--- !u!4 &4164378876314437815 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4162041519204196704, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
+  m_PrefabInstance: {fileID: 2342182640626135}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6613647429278394061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6611345242582634266, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
@@ -77,17 +82,12 @@ MonoBehaviour:
   itemName: Rifle Scope
   itemDescription: Increases projectile critical chance by 20%
   itemIcon: {fileID: 2800000, guid: 4c1bc916e14e9fa4ea9a033af47be662, type: 3}
---- !u!4 &7850852171947019153 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7853018017054761542, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
-  m_PrefabInstance: {fileID: 2342182640626135}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9184924083424695398
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7850852171947019153}
+    m_TransformParent: {fileID: 4164378876314437815}
     m_Modifications:
     - target: {fileID: 1133958919259812, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_Name
@@ -95,7 +95,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_LocalScale.x
@@ -111,7 +111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_LocalPosition.y
@@ -127,7 +127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4746521921036858, guid: 66aaf635dd03a144a8b631ddcb2a8731, type: 3}
       propertyPath: m_LocalRotation.y
