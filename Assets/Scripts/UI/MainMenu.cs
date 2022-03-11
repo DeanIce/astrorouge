@@ -50,6 +50,7 @@ Todo: add assets here... names not links
         private VisualElement aboutMenu;
 
         private Label creditsScroll;
+        private Button feedbackButton;
 
         private VisualElement mainMenu;
         // private Slider musicSlider;
@@ -73,7 +74,7 @@ Todo: add assets here... names not links
         // Start is called before the first frame update
         private void Start()
         {
-            var root = GetComponent<UIDocument>().rootVisualElement;
+            VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
             settingsMenu = root.Q<VisualElement>("SettingsMenu");
             mainMenu = root.Q<VisualElement>("MainMenu");
@@ -84,6 +85,8 @@ Todo: add assets here... names not links
             settingsButton = mainMenu.Q<Button>("settings-button");
             aboutButton = mainMenu.Q<Button>("about-button");
             quitButton = mainMenu.Q<Button>("quit-button");
+
+            feedbackButton = mainMenu.Q<Button>("feedback-button");
 
             //Settings buttons
             settingsBackButton = settingsMenu.Q<Button>("back-button");
@@ -107,6 +110,10 @@ Todo: add assets here... names not links
             newGameButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             aboutButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            feedbackButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+
+
+            feedbackButton.clicked += () => Application.OpenURL("https://forms.gle/M6GhsLW5vpnR3Vit6");
 
             // muteValue = muteButton.value;
             // musicVolumeValue = musicSlider.value;
@@ -138,11 +145,9 @@ Todo: add assets here... names not links
 
             // Cute hack to get scrolling credits
             // Todo: make credit scroll more resolution and aspect ratio independent
-            var val = creditsScroll.style.marginTop.value.value;
+            float val = creditsScroll.style.marginTop.value.value;
             if (scrolling && val > -scrollAmount)
-            {
                 creditsScroll.style.marginTop = new StyleLength(val - scrollSpeed);
-            }
             else if (scrolling && val <= -scrollAmount)
             {
                 BackButtonPressed();
@@ -193,6 +198,7 @@ Todo: add assets here... names not links
             aboutMenu.style.display = DisplayStyle.None;
             scrolling = false;
         }
+
         private void PlaySound(MouseEnterEvent ev)
         {
             AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
