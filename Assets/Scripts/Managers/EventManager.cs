@@ -16,11 +16,11 @@ namespace Managers
 
         public string scenePlay;
 
+        public readonly RunStats runStats = new();
+
         // public static EventManager instance { get; private set; }
 
         private Mode mode = Mode.Play;
-
-        public RunStats runStats = new();
 
 
         // Game State events
