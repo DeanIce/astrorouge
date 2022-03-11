@@ -48,6 +48,7 @@ namespace Managers
 
         private void Start()
         {
+            current = EventManager.Instance.requestedScene;
             StartCoroutine(LoadLevel());
         }
 

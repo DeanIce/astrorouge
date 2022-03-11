@@ -9,8 +9,11 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
+    [ExecuteInEditMode]
     public class EventManager : ManagerSingleton<EventManager>
     {
+        [HideInInspector] public int requestedScene;
+
         public string scenePlay;
 
         // public static EventManager instance { get; private set; }

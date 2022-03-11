@@ -228,9 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   extraJumpsLeft: 0
+  primaryAttackDelay: 0
+  secondaryAttackDelay: 0
   sensitivity: 0.2
   followTarget: {fileID: 1653012913}
   fireLocation: {fileID: 8717766603265617993}
+  attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
+  attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
+  spread: 1
 --- !u!54 &579053813939167214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -311,21 +316,21 @@ MonoBehaviour:
   stunChance: 0
   martyrdomChance: 0
   igniteChance: 0
-  baseMeleeAttackDelay: 3
+  baseMeleeAttackDelay: 1
   baseMeleeBaseDamage: 1
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
   baseMeleeCritMultiplier: 2
   baseMeleeKnockbackForce: 5
   baseMeleeAttackRange: 1
-  baseRangeAttackDelay: 2
+  baseRangeAttackDelay: 0.2
   baseRangeBaseDamage: 1
   baseRangeDamageMultiplier: 1
   baseRangeCritChance: 0.1
   baseRangeCritMultiplier: 2
   baseRangeKnockbackForce: 2
   baseRangeProjectileRange: 20
-  baseRangeProjectileSpeed: 10
+  baseRangeProjectileSpeed: 25
   baseMaxHealth: 100
   baseHealthRegen: 0.1
   baseArmor: 1
@@ -377,7 +382,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   pickupTime: 1
-  distance: 5
+  distance: 15
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
