@@ -9,9 +9,10 @@ public class BossInstanceEnter : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 9 is current player layer, update if change
-        if (other.gameObject.layer == 9)
+        print("Loading " + bossSceneName);
+        if (other.gameObject.GetComponent<PlayerDefault>())
         {
-            SceneManager.LoadScene(sceneName: bossSceneName);
+            SceneManager.LoadScene(bossSceneName);
         }
     }
 }

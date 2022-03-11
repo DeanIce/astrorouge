@@ -11,6 +11,8 @@ namespace Managers
     /// </summary>
     public class EventManager : ManagerSingleton<EventManager>
     {
+        public int requestedScene;
+
         public string scenePlay;
 
         // public static EventManager instance { get; private set; }
