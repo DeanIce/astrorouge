@@ -1,6 +1,5 @@
 using Gravity;
 using Managers;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,9 +10,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float primaryAttackDelay = 0;
-    private bool isPrimaryAttacking = false;
-    [SerializeField] private float secondaryAttackDelay = 0;
+    [SerializeField] private float primaryAttackDelay;
+    [SerializeField] private float secondaryAttackDelay;
 
     // Inspector values
     [SerializeField] public float sensitivity = 0.2f;
@@ -22,23 +20,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private AudioClip attack1SoundEffect;
     [SerializeField] private AudioClip attack2SoundEffect;
     [SerializeField] private float spread = 1.0f;
-
+    private readonly float decreasePerSecond = 60f;
+    private readonly float increasePerSecond = 60f;
+    private readonly float maxSpread = 30f;
+    private readonly float minSpread = 1f;
 
 
     private Animator animator;
+
+    private float crosshairSpread = 1f;
     private Direction dir;
     private Transform groundCheck;
     private LayerMask groundMask;
+    private bool isFiring;
     private bool isGrounded;
+    private bool isPrimaryAttacking;
     private InputAction movement, look;
     private Direction oldDir;
-
-    private float crosshairSpread = 1f;
-    private float minSpread = 1f;
-    private float maxSpread = 30f;
-    private float increasePerSecond = 60f;
-    private float decreasePerSecond = 60f;
-    private bool isFiring;
 
     // References
     private Rigidbody rb;
@@ -55,6 +53,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         extraJumpsLeft = PlayerStats.Instance.maxExtraJumps;
 
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void Update()
+    {
+        // Adjust delay timers
+        primaryAttackDelay = primaryAttackDelay < 0 ? primaryAttackDelay : primaryAttackDelay - Time.deltaTime;
+        secondaryAttackDelay = secondaryAttackDelay < 0 ? secondaryAttackDelay : secondaryAttackDelay - Time.deltaTime;
+
+        if (isPrimaryAttacking && primaryAttackDelay < 0)
+        {
+            BasicAttack();
+            primaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+        }
     }
 
     private void FixedUpdate()
@@ -85,30 +96,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
         if (IsSprinting)
-        {
             crosshairSpread += increasePerSecond * Time.deltaTime;
-        }
         else
-        {
             crosshairSpread -= decreasePerSecond * Time.deltaTime;
-
-        }
         crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
         gameObject.GetComponent<HudUI>().AdjustCrosshair(crosshairSpread);
-
-    }
-
-    public void Update()
-    {
-        // Adjust delay timers
-        primaryAttackDelay = (primaryAttackDelay < 0 ? primaryAttackDelay : primaryAttackDelay - Time.deltaTime);
-        secondaryAttackDelay = (secondaryAttackDelay < 0 ? secondaryAttackDelay : secondaryAttackDelay - Time.deltaTime);
-
-        if (isPrimaryAttacking && primaryAttackDelay < 0)
-        {
-            BasicAttack();
-            primaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
-        }
     }
 
     private void OnEnable()
@@ -216,7 +208,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
-        EventManager.Instance.runStats.damageTaken += dmg;
+        if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmg;
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
@@ -268,7 +260,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.5f, // TODO (Simon): Mess with value
+            0.2f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange));
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
@@ -285,8 +277,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        Vector3 attackVec = AttackVector();
-        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+        var attackVec = AttackVector();
+        var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
         _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
             10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
@@ -297,20 +289,20 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private Vector3 AttackVector()
     {
-        float bulletSpread = spread;
+        var bulletSpread = spread;
         if (IsSprinting)
             bulletSpread += 1.5f;
 
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
-        Vector3 screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
+        var screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
 
-        Vector3 centerPos = Camera.main.ScreenToWorldPoint(screenAim);
+        var centerPos = Camera.main.ScreenToWorldPoint(screenAim);
         Vector3 spreadPos = Random.insideUnitCircle * bulletSpread;
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(centerPos + spreadPos);
+        var screenPos = Camera.main.WorldToScreenPoint(centerPos + spreadPos);
         var ray2 = Camera.main.ScreenPointToRay(screenPos);
-        Debug.DrawRay(ray2.origin, ray2.direction * 50f, Color.green,1f);
+        Debug.DrawRay(ray2.origin, ray2.direction * 50f, Color.green, 1f);
         Debug.DrawRay(ray.origin, ray.direction * 50f, Color.red, 1f);
 
         return (ray2.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
