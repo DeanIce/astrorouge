@@ -43,8 +43,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291324034427129607}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.0021271706, y: 0.011651874, z: 0.016777754}
-  m_Size: 2.0953598
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
   m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
@@ -318,6 +318,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347449612997625949, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a2d4b4d34559ab4ea12ac61613920e1, type: 2}
     - target: {fileID: 6032951466801601469, guid: 10fa91ec3605a594ca5eefcaefd32284, type: 3}
       propertyPath: shader.gradient.ctime1
       value: 8867
