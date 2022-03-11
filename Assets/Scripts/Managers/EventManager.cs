@@ -16,7 +16,7 @@ namespace Managers
 
         public string scenePlay;
 
-        public readonly RunStats runStats = new();
+        public RunStats runStats = new();
 
         // public static EventManager instance { get; private set; }
 
@@ -47,7 +47,11 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
-            if (mode != Mode.Pause) SceneManager.LoadScene(scenePlay);
+            if (mode != Mode.Pause)
+            {
+                SceneManager.LoadScene(scenePlay);
+                runStats = new RunStats();
+            }
 
             mode = Mode.Play;
             Time.timeScale = 1;
