@@ -21,6 +21,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Swapping to collider and layer based detection
     private readonly int playerLayer = 9;
     private readonly Color red = new(1, 0, 0, 0.5f);
+
+    // Private enemy specific variables
     private Quaternion deltaRotation;
     protected float despawnTime = 10;
     private Renderer detectorRenderer;
@@ -33,13 +35,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private int leftOrRight;
 
     private int randomRotation;
-
-    // Private enemy specific variables
-    private bool attacking = false;
-    public bool Attacking { get { return attacking; } set { attacking = value; } }
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
+    public bool Attacking { get; set; }
+
     public float AttackRange => attackRange;
     public float Health => health;
     public bool Wandering { get; private set; }
@@ -104,6 +104,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         movementSpeed = speed;
     }
+
     public float getSpeed()
     {
         return movementSpeed;
@@ -127,7 +128,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public virtual void Hunt(Collider target)
     {
         RaycastHit[] hits;
-        
+
         DoGravity();
 
         //attacking
@@ -135,25 +136,27 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
+            foreach (var hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
                     //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
-                    if (!attacking && Health > 0) StartCoroutine(Attack());
+                    if (!Attacking && Health > 0) StartCoroutine(Attack());
                     break;
                 }
             }
         }
         else
         {
-            if (!attacking)
+            if (!Attacking)
             {
                 // NEW MOVEMENT HERE
                 targetRb = target.GetComponent<Rigidbody>();
-                rb.MovePosition(rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+                rb.MovePosition(
+                    rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
                 body.transform.RotateAround(transform.position, transform.up,
-                    -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward, transform.up) /
+                    -Vector3.SignedAngle(target.transform.position - transform.position, body.transform.forward,
+                        transform.up) /
                     10);
 
                 // Jumping - commented as only works in 2d but could bring back if desired?
@@ -162,32 +165,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         }
     }
 
-    public virtual IEnumerator Attack()
-    {
-        RaycastHit[] hits;
-        //rend.enabled = true;
-        attacking = true;
-        yield return new WaitForSeconds(1f);
-        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, playerLayer);
-        if (hits.Length != 0)
-        {
-            //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
-                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
-                }
-            }
-        }
-        //rend.enabled = false;
-        attacking = false;
-    }
-
     public void TakeDmg(float dmg)
     {
         if (!Dying)
         {
+            EventManager.Instance.runStats.damageDealt += dmg;
             // Temp, add damage negation and other maths here later.
             health -= dmg;
             gameObject.GetComponent<HealthBarUI>().SetHealth(health);
@@ -206,7 +188,29 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         GetComponent<StatusEffectManager>().DeathEffects();
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
+        EventManager.Instance.runStats.enemiesKilled++;
         StartCoroutine(DestroyLater());
+    }
+
+    public virtual IEnumerator Attack()
+    {
+        RaycastHit[] hits;
+        //rend.enabled = true;
+        Attacking = true;
+        yield return new WaitForSeconds(1f);
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, playerLayer);
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (var hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
+            }
+        }
+
+        //rend.enabled = false;
+        Attacking = false;
     }
 
     private IEnumerator DestroyLater()
