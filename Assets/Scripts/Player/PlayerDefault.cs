@@ -1,5 +1,6 @@
 using Gravity;
 using Managers;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,11 +11,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Dynamic Player Info
     [SerializeField] private int extraJumpsLeft;
+    [SerializeField] private float primaryAttackDelay = 0;
+    private bool isPrimaryAttacking = false;
+    [SerializeField] private float secondaryAttackDelay = 0;
 
     // Inspector values
     [SerializeField] public float sensitivity = 0.2f;
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
+    [SerializeField] private AudioClip attack1SoundEffect;
+    [SerializeField] private AudioClip attack2SoundEffect;
+    [SerializeField] private float spread = 1.0f;
+
+
 
     private Animator animator;
     private Direction dir;
@@ -23,6 +32,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private bool isGrounded;
     private InputAction movement, look;
     private Direction oldDir;
+
+    private float crosshairSpread = 1f;
+    private float minSpread = 1f;
+    private float maxSpread = 30f;
+    private float increasePerSecond = 60f;
+    private float decreasePerSecond = 60f;
+    private bool isFiring;
 
     // References
     private Rigidbody rb;
@@ -68,6 +84,31 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+        if (IsSprinting)
+        {
+            crosshairSpread += increasePerSecond * Time.deltaTime;
+        }
+        else
+        {
+            crosshairSpread -= decreasePerSecond * Time.deltaTime;
+
+        }
+        crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
+        gameObject.GetComponent<HudUI>().AdjustCrosshair(crosshairSpread);
+
+    }
+
+    public void Update()
+    {
+        // Adjust delay timers
+        primaryAttackDelay = (primaryAttackDelay < 0 ? primaryAttackDelay : primaryAttackDelay - Time.deltaTime);
+        secondaryAttackDelay = (secondaryAttackDelay < 0 ? secondaryAttackDelay : secondaryAttackDelay - Time.deltaTime);
+
+        if (isPrimaryAttacking && primaryAttackDelay < 0)
+        {
+            BasicAttack();
+            primaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+        }
     }
 
     private void OnEnable()
@@ -89,9 +130,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.performed += PauseGame;
         playerInputMap.PauseGame.Enable();
 
-        playerInputMap.PrimaryAttack.performed += BasicAttack;
+        playerInputMap.PrimaryAttack.started += PrimaryAttackToggle;
+        playerInputMap.PrimaryAttack.canceled += PrimaryAttackToggle;
         playerInputMap.PrimaryAttack.Enable();
-        playerInputMap.SecondaryAttack.performed += BeamAttack;
+        playerInputMap.SecondaryAttack.performed += SecondaryAttack;
         playerInputMap.SecondaryAttack.Enable();
         playerInputMap.UtilityAction.performed += HitscanAttack;
         playerInputMap.UtilityAction.Enable();
@@ -116,9 +158,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PauseGame.performed -= PauseGame;
 
         playerInputMap.PrimaryAttack.Disable();
-        playerInputMap.PrimaryAttack.performed -= BasicAttack;
+        playerInputMap.PrimaryAttack.started -= PrimaryAttackToggle;
+        playerInputMap.PrimaryAttack.canceled -= PrimaryAttackToggle;
         playerInputMap.SecondaryAttack.Disable();
-        playerInputMap.SecondaryAttack.performed -= BeamAttack;
+        playerInputMap.SecondaryAttack.performed -= SecondaryAttack;
         playerInputMap.UtilityAction.Disable();
         playerInputMap.UtilityAction.performed -= HitscanAttack;
         playerInputMap.SpecialAction.Disable();
@@ -196,16 +239,30 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         EventManager.Instance.Pause();
     }
 
-    private void BasicAttack(InputAction.CallbackContext obj)
+    private void PrimaryAttackToggle(InputAction.CallbackContext obj)
+    {
+        isPrimaryAttacking = !isPrimaryAttacking;
+    }
+
+    private void SecondaryAttack(InputAction.CallbackContext obj)
+    {
+        if (secondaryAttackDelay > 0) return;
+        secondaryAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+
+        BeamAttack();
+    }
+
+    private void BasicAttack()
     {
         _ = HandleEffects(ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
             PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage()));
+        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.4f);
     }
 
-    private void BeamAttack(InputAction.CallbackContext obj)
+    private void BeamAttack()
     {
         _ = HandleEffects(ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
             AttackVector(),
@@ -214,6 +271,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             0.5f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange));
+        AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
     }
 
     private void HitscanAttack(InputAction.CallbackContext obj)
@@ -227,18 +285,38 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
-        var attackVec = AttackVector();
-        var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+        Vector3 attackVec = AttackVector();
+        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
-        var projectile = ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            PlayerStats.Instance.rangeProjectileSpeed * (attackVec + liftVec).normalized,
+        _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+            10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage());
-        HandleEffects(projectile);
+            PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
+            PlayerStats.Instance.GetRangeDamage()));
     }
 
     private Vector3 AttackVector()
+    {
+        float bulletSpread = spread;
+        if (IsSprinting)
+            bulletSpread += 1.5f;
+
+        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
+        var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        Vector3 screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
+
+        Vector3 centerPos = Camera.main.ScreenToWorldPoint(screenAim);
+        Vector3 spreadPos = Random.insideUnitCircle * bulletSpread;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(centerPos + spreadPos);
+        var ray2 = Camera.main.ScreenPointToRay(screenPos);
+        Debug.DrawRay(ray2.origin, ray2.direction * 50f, Color.green,1f);
+        Debug.DrawRay(ray.origin, ray.direction * 50f, Color.red, 1f);
+
+        return (ray2.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
+    }
+
+    private Vector3 AttackVectorWithRecoil()
     {
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
         var ray = Camera.main.ScreenPointToRay(screenCenterPoint);

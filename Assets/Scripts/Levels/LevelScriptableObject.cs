@@ -83,7 +83,7 @@ namespace Levels
 
 
                 // The player should spawn at the lowest planet
-                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 1f);
+                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 4f);
 
                 // disable for now
                 planet.SetActive(false);
