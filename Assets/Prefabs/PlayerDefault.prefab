@@ -235,6 +235,7 @@ MonoBehaviour:
   fireLocation: {fileID: 8717766603265617993}
   attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
   attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
+  spread: 1
 --- !u!54 &579053813939167214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   stunChance: 0
   martyrdomChance: 0
   igniteChance: 0
-  baseMeleeAttackDelay: 2
+  baseMeleeAttackDelay: 1
   baseMeleeBaseDamage: 1
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
