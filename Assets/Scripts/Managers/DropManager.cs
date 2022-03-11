@@ -21,7 +21,7 @@ namespace Managers
         // This is what enemies will call when they die, all logic done here
         public void SpawnItem(Vector3 location, Quaternion rotation)
         {
-            var spawnItem = GetSpawnItem();
+            GameObject spawnItem = GetSpawnItem();
             LOG("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
             Instantiate(spawnItem, location, rotation);
         }
@@ -45,7 +45,7 @@ namespace Managers
         private int GetItemNum()
         {
             var totalWeight = 0;
-            foreach (var pair in drops)
+            foreach (DropAssetWeight pair in drops)
             {
                 totalWeight += pair.weight;
             }
@@ -57,27 +57,22 @@ namespace Managers
         private GameObject GetSpawnItem()
         {
             // Which item we're going to spawn
-            int currentSelection = 0;
+            var currentSelection = 0;
 
             // The sum of weights up to index thus far
-            int currentWeightIndex = 0;
+            var currentWeightIndex = 0;
 
             // The weighted number selection
             int selectedWeight = GetItemNum();
             LOG("Item # " + selectedWeight);
 
-            for (int i = 0; i < drops.Length; i++)
+            for (var i = 0; i < drops.Length; i++)
             {
                 DropAssetWeight pair = drops[i];
                 if (selectedWeight > currentWeightIndex)
-                {
                     currentSelection = i;
-                    print("Current Selection at " + i + "iteration is " + currentSelection);
-                }
                 else
-                {
                     break;
-                }
 
                 currentWeightIndex += pair.weight;
             }
