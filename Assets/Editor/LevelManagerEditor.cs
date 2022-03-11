@@ -19,9 +19,7 @@ public class LevelManagerEditor : Editor
         levelManager.current = EditorGUILayout.Popup(levelManager.current, options);
 
         // For loading between boss and levelscene
-        if (EventManager.Instance != null) {
-            EventManager.Instance.requestedScene = levelManager.current;
-        }
+        if (EventManager.Instance != null) EventManager.Instance.requestedScene = levelManager.current;
 
         if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
 
