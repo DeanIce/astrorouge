@@ -385,7 +385,6 @@ namespace Planets
         {
             GetObjects();
             lodGroup.enabled = true;
-            print(lodGroup.enabled);
 
             var lodTimer = Stopwatch.StartNew();
 
