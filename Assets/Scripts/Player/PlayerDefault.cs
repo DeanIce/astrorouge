@@ -251,7 +251,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage()));
-        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.4f);
+        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
     }
 
     private void BeamAttack()
@@ -263,7 +263,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             0.2f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange));
-        AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
+        AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
     }
 
     private void HitscanAttack(InputAction.CallbackContext obj)

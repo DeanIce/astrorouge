@@ -386,6 +386,7 @@ MonoBehaviour:
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
+  pickUpSoundEffect: {fileID: 8300000, guid: 7af46ff86ef64c845b82ad54ff910a7f, type: 3}
 --- !u!114 &5283267440717181788
 MonoBehaviour:
   m_ObjectHideFlags: 0

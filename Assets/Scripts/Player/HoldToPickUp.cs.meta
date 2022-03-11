@@ -3,7 +3,11 @@ guid: 35cd3eec66e77204a95f136cf45f5912
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - pickupImageRoot: {instanceID: 0}
+  - pickupProgressImage: {instanceID: 0}
+  - itemNameText: {instanceID: 0}
+  - pickUpSoundEffect: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
