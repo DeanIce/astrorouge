@@ -21,7 +21,7 @@ namespace Managers
         // This is what enemies will call when they die, all logic done here
         public void SpawnItem(Vector3 location, Quaternion rotation)
         {
-            var spawnItem = GetSpawnItem();
+            GameObject spawnItem = GetSpawnItem();
             LOG("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
             Instantiate(spawnItem, location, rotation);
         }
@@ -45,7 +45,7 @@ namespace Managers
         private int GetItemNum()
         {
             var totalWeight = 0;
-            foreach (var pair in drops)
+            foreach (DropAssetWeight pair in drops)
             {
                 totalWeight += pair.weight;
             }
@@ -63,22 +63,18 @@ namespace Managers
             var currentWeightIndex = 0;
 
             // The weighted number selection
-            var selectedWeight = GetItemNum();
+            int selectedWeight = GetItemNum();
             LOG("Item # " + selectedWeight);
 
             for (var i = 0; i < drops.Length; i++)
             {
-                var pair = drops[i];
+                DropAssetWeight pair = drops[i];
                 if (selectedWeight > currentWeightIndex)
-                {
                     currentSelection = i;
-                }
                 else
-                {
                     break;
-                }
 
-                currentWeightIndex = pair.weight;
+                currentWeightIndex += pair.weight;
             }
 
             return drops[currentSelection].prefab;

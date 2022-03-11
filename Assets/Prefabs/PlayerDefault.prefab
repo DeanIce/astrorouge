@@ -235,6 +235,7 @@ MonoBehaviour:
   fireLocation: {fileID: 8717766603265617993}
   attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
   attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
+  spread: 1
 --- !u!54 &579053813939167214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   stunChance: 0
   martyrdomChance: 0
   igniteChance: 0
-  baseMeleeAttackDelay: 2
+  baseMeleeAttackDelay: 1
   baseMeleeBaseDamage: 1
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
@@ -385,6 +386,7 @@ MonoBehaviour:
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
+  pickUpSoundEffect: {fileID: 8300000, guid: 7af46ff86ef64c845b82ad54ff910a7f, type: 3}
 --- !u!114 &5283267440717181788
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -85,4 +85,6 @@ MonoBehaviour:
   scale: {x: 5, y: 12}
   gravityHeight: 5
   falloffHeight: 3
+  bossSceneName: TestBossIce
+  bossLevelEntrance: {fileID: 112464668554566855, guid: d08d969392fb65242b66691318172db1, type: 3}
   planetPrefab: {fileID: 3675557906244615386, guid: b11f1a94416eb8e4c9acb9286ea96e92, type: 3}

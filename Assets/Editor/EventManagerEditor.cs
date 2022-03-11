@@ -7,10 +7,12 @@ public class EventManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        var eventManager = (EventManager) target;
+
+
         base.OnInspectorGUI();
         EditorGUILayout.LabelField("Trigger Events Manually:", EditorStyles.boldLabel);
 
-        var eventManager = (EventManager) target;
         if (GUILayout.Button("Win")) eventManager.Win();
 
         if (GUILayout.Button("Play")) eventManager.Play();

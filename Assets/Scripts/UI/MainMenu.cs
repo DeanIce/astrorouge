@@ -158,6 +158,7 @@ Todo: add assets here... names not links
         private void NewGameButtonPressed()
         {
             AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.FadeOut();
             EventManager.Instance.Play();
         }
 

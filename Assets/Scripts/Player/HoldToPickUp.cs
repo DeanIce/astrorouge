@@ -13,6 +13,7 @@ public class HoldToPickUp : MonoBehaviour
     [SerializeField] private RectTransform pickupImageRoot;
     [SerializeField] private Image pickupProgressImage;
     [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private AudioClip pickUpSoundEffect;
 
     private float currentPickupTimerElapsed;
     private Inventory inventory;
@@ -128,6 +129,7 @@ public class HoldToPickUp : MonoBehaviour
         inventory.AddItem(itemBeingPickedUp);
         itemBeingPickedUp.ApplyStats();
         EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
+        AudioManager.Instance.PlaySFX(pickUpSoundEffect, 0.2f);
         itemBeingPickedUp = null;
     }
 }

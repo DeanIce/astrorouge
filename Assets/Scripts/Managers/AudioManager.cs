@@ -102,7 +102,7 @@ namespace Managers
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = 1 - time / transisitonPeriod;
+                activeMusic.volume = activeMusic.volume - (time / transisitonPeriod) * activeMusic.volume;
                 newMusic.volume = time / transisitonPeriod;
                 yield return null;
             }
@@ -123,7 +123,7 @@ namespace Managers
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = 1 - time / transisitonPeriod;
+                activeMusic.volume = activeMusic.volume - (time / transisitonPeriod) * activeMusic.volume;
                 yield return null;
             }
 

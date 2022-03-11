@@ -9,15 +9,18 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
+    [ExecuteInEditMode]
     public class EventManager : ManagerSingleton<EventManager>
     {
+        [HideInInspector] public int requestedScene;
+
         public string scenePlay;
+
+        public RunStats runStats = new();
 
         // public static EventManager instance { get; private set; }
 
         private Mode mode = Mode.Play;
-
-        public RunStats runStats = new();
 
 
         // Game State events
@@ -44,7 +47,11 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
-            if (mode != Mode.Pause) SceneManager.LoadScene(scenePlay);
+            if (mode != Mode.Pause)
+            {
+                SceneManager.LoadScene(scenePlay);
+                runStats = new RunStats();
+            }
 
             mode = Mode.Play;
             Time.timeScale = 1;
