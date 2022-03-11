@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  movementSpeed: 0.8
+  movementSpeed: 1.2
   detector: {fileID: 7744300686506975007}
   body: {fileID: 611669422201212586}
   attackRange: 0.9

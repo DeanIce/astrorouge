@@ -66,23 +66,23 @@ MonoBehaviour:
     count: 5
     scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 113998, guid: 1fedb5571d445274782330b0eea48e80, type: 3}
-    count: 150
+    count: 100
     scale: {x: 1.5, y: 2, z: 1.5}
   - prefab: {fileID: 170592, guid: 078efdee227ce7b40b3a095532cd4e65, type: 3}
-    count: 175
+    count: 150
     scale: {x: 1.5, y: 2, z: 1.5}
   - prefab: {fileID: 185930, guid: cd2a633be52caff4ebfdacf2f48cc9be, type: 3}
-    count: 200
+    count: 150
     scale: {x: 1, y: 2, z: 1}
   - prefab: {fileID: 150190, guid: 8b9ee8d20c8c4c84f95499978c6e7d04, type: 3}
-    count: 165
+    count: 100
     scale: {x: 1, y: 2, z: 1}
   enemyAssets:
   - prefab: {fileID: 7744300686550433951, guid: 45358f54ca343d34eb9aa5bca1c85933, type: 3}
-    count: 8
+    count: 12
     scale: {x: 1, y: 1, z: 1}
   - prefab: {fileID: 8674004264568269388, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
-    count: 8
+    count: 10
     scale: {x: 1, y: 1, z: 1}
   numPlanets: {x: 4, y: 8}
   scale: {x: 18.37062, y: 39.24062}
