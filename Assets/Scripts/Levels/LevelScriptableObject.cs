@@ -48,7 +48,7 @@ namespace Levels
         /// <returns></returns>
         public Vector3 Create(GameObject root, Random rng)
         {
-            var actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            int actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
 
             var radii = new float[actualNumPlanets];
 
@@ -63,15 +63,15 @@ namespace Levels
 
             var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
 
-            var points = ballDropper.DropBalls(radii);
-            var playerPosition = Vector3.zero;
+            Vector3[] points = ballDropper.DropBalls(radii);
+            Vector3 playerPosition = Vector3.zero;
 
-            var bossLevelIndex = rng.Next(0, actualNumPlanets);
+            int bossLevelIndex = rng.Next(0, actualNumPlanets);
 
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
-                var planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
+                GameObject planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
                 planetGenerator.scale = radii[i] - gravityHeight;
@@ -82,7 +82,6 @@ namespace Levels
 
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
-                planetGenerator.SetLOD(1);
 
                 // Spawn objects
                 SpawnObjects.SpawnProps(
@@ -114,10 +113,10 @@ namespace Levels
         private void AddBossEntrance(PlanetGenerator planetGenerator, GameObject objectToSpawn, Transform origin,
             Random rng)
         {
-            var spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
+            Vector3 spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
                 planetGenerator.scale, rng);
             spawnLocation += origin.position;
-            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
 
             // Find the center of our origin
@@ -135,8 +134,8 @@ namespace Levels
 
         private float rngRange(Random rng, float start, float end)
         {
-            var sample = rng.NextDouble();
-            var scaled = sample * (end - start) + start;
+            double sample = rng.NextDouble();
+            double scaled = sample * (end - start) + start;
             var f = (float) scaled;
             return f;
         }
@@ -151,7 +150,7 @@ namespace Levels
 
             for (var i = 0; i < root.transform.childCount; i++)
             {
-                var child = root.transform.GetChild(i);
+                Transform child = root.transform.GetChild(i);
                 child.gameObject.SetActive(true);
             }
         }

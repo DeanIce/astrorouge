@@ -90,4 +90,4 @@ MonoBehaviour:
   falloffHeight: 3
   bossSceneName: TestBossForest
   bossLevelEntrance: {fileID: 112464668554566855, guid: d08d969392fb65242b66691318172db1, type: 3}
-  planetPrefab: {fileID: 3675557906244615386, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}
+  planetPrefab: {fileID: 1251312370072326731, guid: c7e6572ba78f9154daba4df8e1658094, type: 3}
