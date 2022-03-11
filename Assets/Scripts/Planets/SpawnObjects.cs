@@ -70,7 +70,7 @@ public class SpawnObjects : MonoBehaviour
         }
     }
 
-    private static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale, Random rng)
+    public static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale, Random rng)
     {
         var randIndex = rng.Next(0, vertices.Count);
         var newLoc = vertices[randIndex] * planetScale;
@@ -82,7 +82,7 @@ public class SpawnObjects : MonoBehaviour
         return newLoc;
     }
 
-    private static void SpawnObject(Transform origin, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
+    public static void SpawnObject(Transform origin, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
         List<Vector3> vertices, float planetScale, Random rng)
     {
         // We need this here so we can set rotation
