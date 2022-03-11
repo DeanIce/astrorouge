@@ -268,7 +268,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.5f, // TODO (Simon): Mess with value
+            0.2f, // TODO (Simon): Mess with value
             PlayerStats.Instance.GetRangeDamage(),
             PlayerStats.Instance.rangeProjectileRange));
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 1f);
