@@ -10,12 +10,25 @@ public class BossInstanceExit : MonoBehaviour
     public int levelNumber;
     private void OnTriggerEnter(Collider other)
     {
-        // 9 is current player layer, update if change
-        print("Loading " + levelSceneName);
-        if (other.gameObject.GetComponent<PlayerDefault>())
+        // CONVENTION, -1 INDICATES A WIN
+        if (levelNumber != -1)
         {
-            EventManager.Instance.requestedScene = levelNumber;
-            SceneManager.LoadScene(levelSceneName);
+            // 9 is current player layer, update if change
+            print("Loading " + levelSceneName);
+            if (other.gameObject.GetComponent<PlayerDefault>())
+            {
+                EventManager.Instance.requestedScene = levelNumber;
+                SceneManager.LoadScene(levelSceneName);
+            }
+        } 
+        else
+        {
+            // 9 is current player layer, update if change
+            print("Loading " + levelSceneName);
+            if (other.gameObject.GetComponent<PlayerDefault>())
+            {
+                EventManager.Instance.Win();
+            }
         }
     }
 
