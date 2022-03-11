@@ -1,62 +1,29 @@
+using Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 // don't allow merge yet
 public class HoldToPickUp : MonoBehaviour
 {
-
     [SerializeField] private LayerMask layerMask;
-
     [SerializeField] private float pickupTime = 1f;
-
     [SerializeField] private float distance;
-
     [SerializeField] private RectTransform pickupImageRoot;
-
     [SerializeField] private Image pickupProgressImage;
-
     [SerializeField] private TextMeshProUGUI itemNameText;
 
     private float currentPickupTimerElapsed;
-
     private Inventory inventory;
-
+    private bool isKeyDown;
     private AbstractItem itemBeingPickedUp;
-
     private InputAction pickup;
 
-    private bool isKeyDown;
 
     private void Start()
     {
         inventory = GetComponent<Inventory>();
-    }
-
-    private void OnEnable() {
-        var playerInputMap = InputManager.inputActions.Player;
-        pickup = playerInputMap.Pickup;
-        // playerInputMap.Pickup.started += PickupStarted;
-        playerInputMap.Pickup.performed += PickupPerformed;
-        pickup.Enable();
-    }
-
-    private void OnDisable() {
-        var playerInputMap = InputManager.inputActions.Player;
-        pickup = playerInputMap.Pickup;
-        // playerInputMap.Pickup.started -= PickupStarted;
-        playerInputMap.Pickup.performed -= PickupPerformed;
-        pickup.Disable();
-    }
-
-    // public void PickupStarted(InputAction.CallbackContext obj) {
-    //     isKeyDown = true;
-    //     print("key down");
-    // }
-
-    public void PickupPerformed(InputAction.CallbackContext obj) {
-        isKeyDown = !isKeyDown;
     }
 
     private void Update()
@@ -81,6 +48,34 @@ public class HoldToPickUp : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        var playerInputMap = InputManager.inputActions.Player;
+        pickup = playerInputMap.Pickup;
+        // playerInputMap.Pickup.started += PickupStarted;
+        playerInputMap.Pickup.performed += PickupPerformed;
+        pickup.Enable();
+    }
+
+    private void OnDisable()
+    {
+        var playerInputMap = InputManager.inputActions.Player;
+        pickup = playerInputMap.Pickup;
+        // playerInputMap.Pickup.started -= PickupStarted;
+        playerInputMap.Pickup.performed -= PickupPerformed;
+        pickup.Disable();
+    }
+
+    // public void PickupStarted(InputAction.CallbackContext obj) {
+    //     isKeyDown = true;
+    //     print("key down");
+    // }
+
+    public void PickupPerformed(InputAction.CallbackContext obj)
+    {
+        isKeyDown = !isKeyDown;
+    }
+
     private bool HasItemTargetted()
     {
         return itemBeingPickedUp != null;
@@ -100,15 +95,12 @@ public class HoldToPickUp : MonoBehaviour
 
     private void SelectItemBeingPickedupFromRay()
     {
-        var start = transform.position;
-        var end = transform.forward * 30f;
-        // Ray ray = camera.ViewportPointToRay(Vector3.one / 2f);
-        // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red);
-        // Physics.Raycast(ray, out hitInfo, 25f, layerMask)
+        var start = Camera.main.transform.position;
+        var end = Camera.main.transform.forward * 15f + start;
         RaycastHit hitInfo;
 
         Debug.DrawLine(start, end, Color.red);
-        if (Physics.Raycast(start, transform.forward, out hitInfo, distance, layerMask))
+        if (Physics.Raycast(start, Camera.main.transform.forward, out hitInfo, distance, layerMask))
         {
             var hitItem = hitInfo.collider.GetComponent<AbstractItem>();
 
@@ -135,6 +127,7 @@ public class HoldToPickUp : MonoBehaviour
         Destroy(itemBeingPickedUp.gameObject);
         inventory.AddItem(itemBeingPickedUp);
         itemBeingPickedUp.ApplyStats();
+        EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
         itemBeingPickedUp = null;
     }
 }

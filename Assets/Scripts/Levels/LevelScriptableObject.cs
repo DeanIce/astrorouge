@@ -1,9 +1,8 @@
 ﻿using System;
+using GD.MinMaxSlider;
 using Gravity;
 using Planets;
-using UnityEditor;
 using UnityEngine;
-using Utilities;
 using Random = System.Random;
 
 namespace Levels
@@ -13,7 +12,6 @@ namespace Levels
     {
         // Todo: boss levels
 
-        public EnemyWeight[] enemies;
         public SpawnObjects.AssetCount[] clusterAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] environmentAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] enemyAssets = Array.Empty<SpawnObjects.AssetCount>();
@@ -85,7 +83,7 @@ namespace Levels
 
 
                 // The player should spawn at the lowest planet
-                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 1f);
+                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 4f);
 
                 // disable for now
                 planet.SetActive(false);
@@ -125,17 +123,6 @@ namespace Levels
         {
             public GameObject prefab;
             public float weight;
-        }
-
-        [CustomEditor(typeof(LevelScriptableObject))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                base.OnInspectorGUI();
-
-                // EditorGUILayout.MinMaxSlider();
-            }
         }
     }
 }

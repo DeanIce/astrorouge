@@ -5,6 +5,8 @@ using Gravity;
 
 public class MeleeEnemy : BasicEnemyAgent
 {
+    //[Deprecated]
+    
     //new public variables
     //public MeshRenderer rend;
 

@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MainMenuTest.unity
     guid: ad1cbe0c253dc3a429e7b74f65798209
@@ -26,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelScene.unity
     guid: 9b540bd9712ab394b8d9239e0ee04fb0
+  - enabled: 1
+    path: Assets/Scenes/Feature Scenes/TestBossScene.unity
+    guid: 31d3276ab2e86da4993b6c6107284d88
   m_configObjects: {}

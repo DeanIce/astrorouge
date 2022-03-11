@@ -1,7 +1,6 @@
 ﻿using System;
 using Planets.Noise;
 using UnityEngine;
-using Utilities;
 
 namespace Planets
 {

@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +9,11 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
+    [ExecuteInEditMode]
     public class EventManager : ManagerSingleton<EventManager>
     {
+        [HideInInspector] public int requestedScene;
+
         public string scenePlay;
 
         // public static EventManager instance { get; private set; }
@@ -45,10 +47,7 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
-            if (mode != Mode.Pause)
-            {
-                SceneManager.LoadScene(scenePlay);
-            }
+            if (mode != Mode.Pause) SceneManager.LoadScene(scenePlay);
 
             mode = Mode.Play;
             Time.timeScale = 1;
@@ -112,43 +111,6 @@ namespace Managers
             Win,
             Recap,
             Loading
-        }
-
-
-        [CustomEditor(typeof(EventManager))]
-        public class EventManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                base.OnInspectorGUI();
-                EditorGUILayout.LabelField("Trigger Events Manually:", EditorStyles.boldLabel);
-
-                var eventManager = (EventManager) target;
-                if (GUILayout.Button("Win"))
-                {
-                    eventManager.Win();
-                }
-
-                if (GUILayout.Button("Play"))
-                {
-                    eventManager.Play();
-                }
-
-                if (GUILayout.Button("Pause"))
-                {
-                    eventManager.Pause();
-                }
-
-                if (GUILayout.Button("Menu"))
-                {
-                    eventManager.Menu();
-                }
-
-                if (GUILayout.Button("Recap"))
-                {
-                    eventManager.Recap();
-                }
-            }
         }
     }
 }

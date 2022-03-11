@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cinemachine;
 using DG.Tweening;
 using Gravity;
 using Levels;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using Random = System.Random;
 
 namespace Managers
 {
-    public class LevelManager : ManagerSingleton<LevelManager>
+    public class LevelManager : MonoBehaviour
     {
         public bool doTransition;
         public List<LevelDescription> levels = new();
@@ -22,15 +20,16 @@ namespace Managers
         public GameObject player;
 
         public float transitionDuration = 10f;
+        public int current;
 
         private readonly Stack<string> stack = new();
 
 
         private CinemachineDollyCart cinemachineDollyCart;
         private CinemachineSmoothPath cinemachineSmoothPath;
-        private int current;
 
         private Random rng;
+        public static LevelManager Instance { get; private set; }
 
         public LevelDescription CurrentLevel
         {
@@ -42,8 +41,14 @@ namespace Managers
             }
         }
 
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void Start()
         {
+            current = EventManager.Instance.requestedScene;
             StartCoroutine(LoadLevel());
         }
 
@@ -53,7 +58,7 @@ namespace Managers
         }
 
 
-        private void LoadLevelSync()
+        public void LoadLevelSync()
         {
             if (Application.isPlaying)
             {
@@ -67,7 +72,7 @@ namespace Managers
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
             var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            LOG($"Creating {id} level.");
+            print($"Creating {id} level.");
 
 
             // Wait until dolly has moved about halfway
@@ -76,20 +81,25 @@ namespace Managers
             // Then unload the old level
             if (stack.Count > 0)
             {
-                LOG($"Unload {stack.Peek()}");
+                print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
 
             // And load in the new level
-            LOG($"Load {CurrentLevel.displayName}");
+            print($"Load {CurrentLevel.displayName}");
             CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
 
             stack.Push(id);
         }
 
+        public void StartCoroutineLoadLevel()
+        {
+            StartCoroutine(LoadLevel());
+        }
 
-        private IEnumerator LoadLevel()
+
+        public IEnumerator LoadLevel()
         {
             if (cinemachineDollyCart == null)
             {
@@ -100,10 +110,6 @@ namespace Managers
             var id = CurrentLevel.displayName + stack.Count;
             rng = new Random(CurrentLevel.seed);
 
-            // Do the hard work
-            CurrentLevel.root = GetOrCreate(id);
-            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            LOG($"Creating {id} level.");
 
             if (doTransition)
             {
@@ -131,19 +137,25 @@ namespace Managers
 
                 // Wait until dolly has moved about halfway
                 if (Application.isPlaying) yield return seq.WaitForCompletion();
-                LOG("We've reached deep space. Proceed with navigation.");
+                print("We've reached deep space. Proceed with navigation.");
             }
+
 
             // Then unload the old level
             if (stack.Count > 0)
             {
-                LOG($"Unload {stack.Peek()}");
+                print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
 
+            // Do the hard work
+            CurrentLevel.root = GetOrCreate(id);
+            var newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            print($"Creating {id} level.");
+
 
             // And load in the new level
-            LOG($"Load {CurrentLevel.displayName}");
+            print($"Load {CurrentLevel.displayName}");
             CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
 
@@ -173,7 +185,7 @@ namespace Managers
             }
             else
             {
-                LOG("Loaded level and snapped Player to spawn point.");
+                print("Loaded level and snapped Player to spawn point.");
                 player.transform.position = newPlayerPos;
             }
         }
@@ -195,14 +207,20 @@ namespace Managers
             return child.gameObject;
         }
 
-        private void UnloadLevel(string displayName)
+        public void UnloadLevel(string displayName)
         {
             if (displayName == null) return;
             var t = transform.Find(displayName);
             if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
+
+            // delete all enemies in the scene
+            foreach (var enemy in GameObject.FindGameObjectsWithTag("enemy"))
+            {
+                Destroy(enemy);
+            }
         }
 
-        private void UnloadLevel()
+        public void UnloadLevel()
         {
             foreach (var levelName in stack)
             {
@@ -225,34 +243,6 @@ namespace Managers
             public override string ToString()
             {
                 return displayName;
-            }
-        }
-
-        [CustomEditor(typeof(LevelManager))]
-        public class LevelManagerEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                var levelManager = (LevelManager) target;
-                var currentLevel = levelManager.CurrentLevel;
-                var centered = GUI.skin.label;
-                centered.alignment = TextAnchor.MiddleCenter;
-
-                var options = levelManager.levels.Select((level, i) => $"{i}: {level.displayName}").ToArray();
-
-                EditorGUILayout.BeginHorizontal();
-                var selection = EditorGUILayout.Popup(levelManager.current, options);
-
-
-                if (selection != levelManager.current) levelManager.current = selection;
-
-                if (GUILayout.Button("Load Level")) levelManager.LoadLevelSync();
-
-                EditorGUILayout.EndHorizontal();
-
-                if (GUILayout.Button("Unload All")) levelManager.UnloadLevel();
-
-                base.OnInspectorGUI();
             }
         }
     }

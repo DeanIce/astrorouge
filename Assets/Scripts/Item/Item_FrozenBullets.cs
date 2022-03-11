@@ -6,6 +6,6 @@ public class Item_FrozenBullets : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.slowChance += 0.05f;
     }
 }
