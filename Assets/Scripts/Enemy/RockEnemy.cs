@@ -5,13 +5,14 @@ public class RockEnemy : BasicEnemyAgent
 {
     private Animator animator;
     private int attack;
-    private bool started;
+    private bool started, appear;
 
     public override void Start()
     {
         animator = GetComponentInChildren<Animator>();
         Dying = false;
         started = false;
+        appear = false;
         attack = 0;
         base.Start();
     }
@@ -37,7 +38,7 @@ public class RockEnemy : BasicEnemyAgent
     {
         if (!started && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            StartCoroutine(Appear(other));
+            if (!appear) StartCoroutine(Appear(other));
         }
         else
         {
@@ -107,6 +108,7 @@ public class RockEnemy : BasicEnemyAgent
 
     private IEnumerator Appear(Collider other)
     {
+        appear = true;
         animator.SetBool("rubbleToIdle", true);
         yield return new WaitForSecondsRealtime(5);
         started = true;

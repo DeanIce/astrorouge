@@ -7,6 +7,8 @@ public class EventDamage : MonoBehaviour
     private GameObject body;
     private float attackRange;
     private const float epsilon = 0.1f; //avoid range bugs with this script being on child object
+    private const float flowerEpsilon = 0.3f; //flower is stupid
+    private const float flowerHeight = 1f; //flower is stupid
     private BasicEnemyAgent enemy;
     [SerializeField] private int damage;
     [SerializeField] private int damage2;
@@ -49,6 +51,24 @@ public class EventDamage : MonoBehaviour
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage2);
+                }
+            }
+        }
+    }
+
+    public void DoDamageFlower()
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(transform.position + flowerHeight * transform.up, body.transform.forward, attackRange + flowerEpsilon, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage);
                 }
             }
         }
