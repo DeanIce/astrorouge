@@ -20,6 +20,10 @@ namespace Levels
         [MinMaxSlider(1, 10)] public Vector2Int numPlanets = new(3, 5);
         [MinMaxSlider(1, 50)] public Vector2 scale = new(5, 12);
 
+        [MinMaxSlider(1, 500)] public Vector2Int totalNumEnemies = new(20, 100);
+
+        [MinMaxSlider(50, 4000)] public Vector2Int totalNumProps = new(200, 400);
+
         public float gravityHeight = 3;
         public float falloffHeight = 5;
 
@@ -37,19 +41,13 @@ namespace Levels
             // todo
         }
 
-
-        /// <summary>
-        ///     Create the level's world meshes, determine asset placement, etc.
-        ///     Expensive process, should be invoked before the level is required.
-        ///     Todo: prime target for parallelization
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="rng"></param>
-        /// <returns></returns>
-        public Vector3 Create(GameObject root, Random rng)
+        private float SphereArea(float r)
         {
-            int actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            return 4 * Mathf.PI * r * r;
+        }
 
+        private (float[], float[]) getRadiiAndAreas(Random rng, int actualNumPlanets)
+        {
             var radii = new float[actualNumPlanets];
 
 
@@ -61,13 +59,65 @@ namespace Levels
             Array.Sort(radii);
             Array.Reverse(radii);
 
-            var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
+            var areas = new float[actualNumPlanets];
+            float areaSum = 0;
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                areas[i] = SphereArea(radii[i]);
+                areaSum += areas[i];
+            }
 
-            Vector3[] points = ballDropper.DropBalls(radii);
-            Vector3 playerPosition = Vector3.zero;
+            var areasRatio = new float[actualNumPlanets];
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                areasRatio[i] = areas[i] / areaSum;
+            }
 
+            return (radii, areasRatio);
+        }
+
+        private void WeightRatio(SpawnObjects.AssetCount[] assets)
+        {
+            float sum = 0;
+            foreach (SpawnObjects.AssetCount assetCount in assets)
+            {
+                sum += assetCount.ratio;
+            }
+
+            foreach (SpawnObjects.AssetCount assetCount in assets)
+            {
+                assetCount.weightedRatio = assetCount.ratio / sum;
+            }
+        }
+
+        /// <summary>
+        ///     Create the level's world meshes, determine asset placement, etc.
+        ///     Expensive process, should be invoked before the level is required.
+        ///     Todo: prime target for parallelization
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="rng"></param>
+        /// <returns></returns>
+        public Vector3 Create(GameObject root, Random rng)
+        {
+            SpawnObjects.numPropsSpawned = 0;
+            // Solve range constants
+            int actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            int actualNumEnemies = rng.Next(totalNumEnemies.x, totalNumEnemies.y);
+            int actualNumProps = rng.Next(totalNumProps.x, totalNumProps.y);
             int bossLevelIndex = rng.Next(0, actualNumPlanets);
+            // Determine planet radii and surface areas
+            (float[] radii, float[] areaRatios) = getRadiiAndAreas(rng, actualNumPlanets);
+            // Perform simulation
+            var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
+            Vector3[] points = ballDropper.DropBalls(radii);
 
+            WeightRatio(enemyAssets);
+            WeightRatio(environmentAssets);
+
+
+            // Create each planet
+            Vector3 playerPosition = Vector3.zero;
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
@@ -83,15 +133,22 @@ namespace Levels
                 // Generate LOD meshes
                 planetGenerator.HandleGameModeGeneration();
 
+                // Add enemies to the planet
+                var enemiesOnPlanet = (int) (actualNumEnemies * areaRatios[i]);
+                SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
+                // Add props to the planet
+                var propsOnPlanet = (int) (actualNumProps * areaRatios[i]);
+                SpawnObjects.AddProps(rng, planet, environmentAssets, propsOnPlanet);
+
                 // Spawn objects
-                SpawnObjects.SpawnProps(
-                    planet,
-                    planetGenerator,
-                    clusterAssets,
-                    environmentAssets,
-                    enemyAssets,
-                    rng
-                );
+                // SpawnObjects.SpawnProps(
+                //     planet,
+                //     planetGenerator,
+                //     clusterAssets,
+                //     environmentAssets,
+                //     enemyAssets,
+                //     rng
+                // );
 
                 // Spawn the boss level entrance
                 if (i == bossLevelIndex) AddBossEntrance(planetGenerator, bossLevelEntrance, planet.transform, rng);
@@ -103,6 +160,8 @@ namespace Levels
                 // disable for now
                 planet.SetActive(false);
             }
+
+            Debug.Log(SpawnObjects.numPropsSpawned);
 
 
             isCreated = true;
