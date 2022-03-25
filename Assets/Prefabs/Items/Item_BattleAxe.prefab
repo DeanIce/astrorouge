@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Battle Axe
-  itemDescription: Increases melee critical chance by 20%
+  itemDescription: Increases melee critical chance by 5%
   itemIcon: {fileID: 2800000, guid: 9d9b9145d465dc744a18338bb17ad302, type: 3}
 --- !u!4 &4758086314121520799 stripped
 Transform:

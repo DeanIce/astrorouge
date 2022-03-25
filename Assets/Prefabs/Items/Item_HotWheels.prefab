@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Hot Wheels
-  itemDescription: Increases sprint speed by 20%
+  itemDescription: Increases sprint speed by 5%
   itemIcon: {fileID: 2800000, guid: d60b7f57fb07c7247aca06e01c78ddbf, type: 3}
 --- !u!1001 &1071982409415970322
 PrefabInstance:
