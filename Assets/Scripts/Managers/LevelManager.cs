@@ -76,7 +76,7 @@ namespace Managers
 
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            Vector3 newPlayerPos =
+            Vector3 unused =
                 CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, Stopwatch.StartNew());
             print($"Creating {id} level.");
 
@@ -205,7 +205,7 @@ namespace Managers
 
         public static void LogTimer(Stopwatch sw, string text)
         {
-            print(text + " " + sw.ElapsedMilliseconds + " ms.");
+            // print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         private GameObject GetOrCreate(string gameObjectName)

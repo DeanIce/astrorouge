@@ -4,30 +4,27 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-public static class MeshBaker
+namespace Utilities
 {
-    public static void BakeAndSetColliders(PlanetGenerator[] pgs)
+    public static class MeshBaker
     {
-        Dictionary<int, Mesh> meshes = PlanetGenerator.meshesToBake;
-
-        // You cannot access GameObjects and Components from other threads directly.
-        // As such, you need to create a native array of instance IDs that BakeMesh will accept.
-        var meshIds = new NativeArray<int>(meshes.Count, Allocator.TempJob);
-
-        foreach (KeyValuePair<int, Mesh> pair in meshes)
+        public static void BakeAndSetColliders(PlanetGenerator[] pgs)
         {
-            meshIds[pair.Key] = pair.Value.GetInstanceID();
-        }
+            Dictionary<int, Mesh> meshes = PlanetGenerator.meshesToBake;
 
-        // This spreads the expensive operation over all cores.
-        var job = new BakeAllMeshes(meshIds);
-        // job.Schedule(meshIds.Length, 1);
+            // You cannot access GameObjects and Components from other threads directly.
+            // As such, you need to create a native array of instance IDs that BakeMesh will accept.
+            var meshIds = new NativeArray<int>(meshes.Count, Allocator.TempJob);
 
+            foreach (KeyValuePair<int, Mesh> pair in meshes)
+            {
+                meshIds[pair.Key] = pair.Value.GetInstanceID();
+            }
 
-        JobHelper.AddScheduledJob(job, job.Schedule(meshIds.Length, 1), jobExecutor =>
-        {
-            Debug.LogFormat("Job has completed in {0}s and {1} frames!", jobExecutor.Duration, jobExecutor.FramesTaken);
+            // This spreads the expensive operation over all cores.
+            var job = new BakeAllMeshes(meshIds);
 
+            job.Schedule(meshIds.Length, 1).Complete();
             // Result is available. LateUpdate() context.
             meshIds.Dispose();
 
@@ -36,28 +33,43 @@ public static class MeshBaker
             {
                 pgs[pair.Key].terrainMesh.GetComponent<MeshCollider>().sharedMesh = pair.Value;
             }
-        });
-        // return job.Schedule(meshIds.Length, 1);
+
+            // JobHelper.AddScheduledJob(job, job.Schedule(meshIds.Length, 1), jobExecutor =>
+            // {
+            //     Debug.LogFormat("Job has completed in {0}s and {1} frames!", jobExecutor.Duration,
+            //         jobExecutor.FramesTaken);
+            //
+            //     // Result is available. LateUpdate() context.
+            //     meshIds.Dispose();
+            //
+            //     // Now instantiate colliders on the main thread.
+            //     foreach (KeyValuePair<int, Mesh> pair in meshes)
+            //     {
+            //         Debug.Log($"{pair.Key}/{pgs.Length}");
+            //         pgs[pair.Key].terrainMesh.GetComponent<MeshCollider>().sharedMesh = pair.Value;
+            //     }
+            // });
+        }
     }
-}
 
 
-public struct BakeAllMeshes : IJobParallelFor, JobHelper.IJobDisposable
-{
-    private NativeArray<int> meshIds;
-
-    public BakeAllMeshes(NativeArray<int> meshIds)
+    public struct BakeAllMeshes : IJobParallelFor, JobHelper.IJobDisposable
     {
-        this.meshIds = meshIds;
-    }
+        private NativeArray<int> meshIds;
 
-    public void Execute(int index)
-    {
-        Physics.BakeMesh(meshIds[index], false);
-    }
+        public BakeAllMeshes(NativeArray<int> meshIds)
+        {
+            this.meshIds = meshIds;
+        }
 
-    public void OnDispose()
-    {
-        // meshIds.Dispose();
+        public void Execute(int index)
+        {
+            Physics.BakeMesh(meshIds[index], false);
+        }
+
+        public void OnDispose()
+        {
+            // meshIds.Dispose();
+        }
     }
 }

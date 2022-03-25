@@ -108,7 +108,7 @@ MonoBehaviour:
     scale: {x: 1, y: 1, z: 1}
     weightedRatio: 0.5064166
   numPlanets: {x: 6, y: 6}
-  scale: {x: 18.37062, y: 39.24062}
+  scale: {x: 18.37, y: 23.770838}
   totalNumEnemies: {x: 36, y: 76}
   totalNumProps: {x: 3584, y: 4000}
   gravityHeight: 5

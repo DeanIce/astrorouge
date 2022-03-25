@@ -6,7 +6,7 @@ using Gravity;
 using Managers;
 using Planets;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+using Utilities;
 using Random = System.Random;
 
 namespace Levels
@@ -101,6 +101,7 @@ namespace Levels
         /// </summary>
         /// <param name="root"></param>
         /// <param name="rng"></param>
+        /// <param name="timer"></param>
         /// <returns></returns>
         public Vector3 Create(GameObject root, Random rng, Stopwatch timer)
         {
@@ -135,6 +136,7 @@ namespace Levels
                 GameObject planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 pgs[i] = planet.GetComponent<PlanetGenerator>();
+                pgs[i].shape.seed = i;
                 pgs[i].scale = radii[i] - gravityHeight;
 
                 var sphereSource = planet.GetComponent<SphereSource>();
@@ -152,13 +154,10 @@ namespace Levels
                 planet.SetActive(false);
             }
 
-            // Generate LOD meshes
-            // MeshBaker.GenerateAllMeshes(pgs);
 
             LevelManager.LogTimer(timer, "Generate planet meshes");
 
 
-            Debug.Log(SpawnObjects.numPropsSpawned);
             MeshBaker.BakeAndSetColliders(pgs);
 
             LevelManager.LogTimer(timer, "Bake mesh colliders");
@@ -191,17 +190,20 @@ namespace Levels
         {
             Vector3 spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
                 planetGenerator.scale, rng);
-            spawnLocation += origin.position;
+            Vector3 position = origin.position;
+            spawnLocation += position;
             GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
 
             // Find the center of our origin
-            placeObject.transform.LookAt(origin.position);
+            placeObject.transform.LookAt(position);
 
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
-            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+            Quaternion rotation = placeObject.transform.rotation;
+            rotation *= Quaternion.Euler(-90, 0, 0);
+            rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+            placeObject.transform.rotation = rotation;
 
             // Set Parent
             placeObject.transform.parent = origin;
