@@ -102,15 +102,15 @@ MonoBehaviour:
   - prefab: {fileID: 7744300686550433951, guid: 45358f54ca343d34eb9aa5bca1c85933, type: 3}
     ratio: 0.5
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.33333334
+    weightedRatio: 0.4935834
   - prefab: {fileID: 8674004264568269388, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
-    ratio: 1
+    ratio: 0.513
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.6666667
-  numPlanets: {x: 4, y: 8}
+    weightedRatio: 0.5064166
+  numPlanets: {x: 1, y: 1}
   scale: {x: 18.37062, y: 39.24062}
   totalNumEnemies: {x: 60, y: 100}
-  totalNumProps: {x: 3584, y: 4000}
+  totalNumProps: {x: 762, y: 1178}
   gravityHeight: 5
   falloffHeight: 3
   bossSceneName: TestBossForest

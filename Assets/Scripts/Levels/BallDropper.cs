@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
+using Managers;
+using UnityEngine;
 
 namespace Levels
 {
     public class BallDropper : MonoBehaviour
     {
+        public int numSteps = 5000;
+
         /// <summary>
         /// </summary>
         /// <param name="radii">sorted biggest to smallest</param>
         /// <returns></returns>
-        public Vector3[] DropBalls(float[] radii)
+        public Vector3[] DropBalls(float[] radii, Stopwatch timer)
         {
-            var numSteps = 5000;
             var stepSize = .01f;
             var result = new Vector3[radii.Length];
 
-            var maxRadius = radii[0];
+            float maxRadius = radii[0];
             Physics.autoSimulation = false;
 
             var balls = new GameObject[radii.Length];
@@ -29,6 +32,8 @@ namespace Levels
                 balls[i] = newBall;
             }
 
+            LevelManager.LogTimer(timer, "Create balls");
+
             // Physics.autoSimulation = true;
 
             for (var i = 0; i < numSteps; i++)
@@ -36,8 +41,10 @@ namespace Levels
                 Physics.Simulate(stepSize);
             }
 
+            LevelManager.LogTimer(timer, "Step simulation");
 
-            var lowest = result[0];
+
+            Vector3 lowest = result[0];
             for (var i = 0; i < radii.Length; i++)
             {
                 result[i] = balls[i].transform.position * maxRadius * 2;
@@ -57,6 +64,7 @@ namespace Levels
 
 
             Physics.autoSimulation = true;
+            LevelManager.LogTimer(timer, "Scale results");
 
             return result;
         }

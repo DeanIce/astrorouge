@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cinemachine;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -74,7 +75,8 @@ namespace Managers
 
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
+            Vector3 newPlayerPos =
+                CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, Stopwatch.StartNew());
             print($"Creating {id} level.");
 
 
@@ -104,6 +106,7 @@ namespace Managers
 
         public IEnumerator LoadLevel()
         {
+            var timer = Stopwatch.StartNew();
             if (cinemachineDollyCart == null)
             {
                 cinemachineDollyCart = transform.Find("DollyCart1").gameObject.GetComponent<CinemachineDollyCart>();
@@ -147,20 +150,24 @@ namespace Managers
             // Then unload the old level
             if (stack.Count > 0)
             {
-                print($"Unload {stack.Peek()}");
+                // print($"Unload {stack.Peek()}");
                 UnloadLevel(stack.Peek());
             }
 
+            LogTimer(timer, "start hard work");
+
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng);
-            print($"Creating {id} level.");
+            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, timer);
+            // print($"Creating {id} level.");
+            LogTimer(timer, "finish Create()");
 
 
             // And load in the new level
-            print($"Load {CurrentLevel.displayName}");
+            // print($"Load {CurrentLevel.displayName}");
             CurrentLevel.root = GetOrCreate(id);
             CurrentLevel.levelScriptableObject.Load(CurrentLevel.root, rng);
+            LogTimer(timer, "finish Load()");
 
             stack.Push(id);
 
@@ -188,9 +195,16 @@ namespace Managers
             }
             else
             {
-                print("Loaded level and snapped Player to spawn point.");
+                // print("Loaded level and snapped Player to spawn point.");
                 player.transform.position = newPlayerPos;
             }
+
+            LogTimer(timer, "level loading");
+        }
+
+        public static void LogTimer(Stopwatch sw, string text)
+        {
+            print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         private GameObject GetOrCreate(string gameObjectName)
