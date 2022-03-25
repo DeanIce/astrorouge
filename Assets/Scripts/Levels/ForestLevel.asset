@@ -107,10 +107,10 @@ MonoBehaviour:
     ratio: 0.513
     scale: {x: 1, y: 1, z: 1}
     weightedRatio: 0.5064166
-  numPlanets: {x: 1, y: 1}
+  numPlanets: {x: 6, y: 6}
   scale: {x: 18.37062, y: 39.24062}
-  totalNumEnemies: {x: 60, y: 100}
-  totalNumProps: {x: 762, y: 1178}
+  totalNumEnemies: {x: 36, y: 76}
+  totalNumProps: {x: 3584, y: 4000}
   gravityHeight: 5
   falloffHeight: 3
   bossSceneName: TestBossForest

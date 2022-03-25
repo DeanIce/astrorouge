@@ -44,6 +44,7 @@ namespace Managers
             }
         }
 
+
         private void Awake()
         {
             Instance = this;

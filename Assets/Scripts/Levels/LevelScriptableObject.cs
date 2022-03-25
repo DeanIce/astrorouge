@@ -104,6 +104,7 @@ namespace Levels
         /// <returns></returns>
         public Vector3 Create(GameObject root, Random rng, Stopwatch timer)
         {
+            PlanetGenerator.spheres.Clear();
             SpawnObjects.numPropsSpawned = 0;
 
             // Solve range constants
@@ -124,10 +125,10 @@ namespace Levels
             WeightRatio(enemyAssets);
             WeightRatio(environmentAssets);
 
-
-            // Create each planet
             Vector3 playerPosition = Vector3.zero;
             var pgs = new PlanetGenerator[actualNumPlanets];
+
+            // Create each planet
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
@@ -151,11 +152,15 @@ namespace Levels
                 planet.SetActive(false);
             }
 
+            // Generate LOD meshes
+            // MeshBaker.GenerateAllMeshes(pgs);
+
             LevelManager.LogTimer(timer, "Generate planet meshes");
 
 
             Debug.Log(SpawnObjects.numPropsSpawned);
             MeshBaker.BakeAndSetColliders(pgs);
+
             LevelManager.LogTimer(timer, "Bake mesh colliders");
 
             for (var i = 0; i < actualNumPlanets; i++)
