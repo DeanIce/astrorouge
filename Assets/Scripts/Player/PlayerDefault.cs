@@ -276,6 +276,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
+        animator.SetTrigger("lobThrow");
         var attackVec = AttackVector();
         var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
