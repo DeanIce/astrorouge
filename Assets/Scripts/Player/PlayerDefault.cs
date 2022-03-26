@@ -29,14 +29,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Animator animator;
 
     private float crosshairSpread = 1f;
-    private Direction dir;
     private Transform groundCheck;
     private LayerMask groundMask;
     private bool isFiring;
     private bool isGrounded;
     private bool isPrimaryAttacking;
     private InputAction movement, look;
-    private Direction oldDir;
 
     // References
     private Rigidbody rb;
@@ -343,88 +341,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void HandleMoveAnimation(Vector2 direction)
     {
-        var threshold = 0.05f;
+        Vector2 moveDir = direction.normalized;
 
-        // bit representation is concatenation of booleans Forward?, Back?, Right?, Left?
-        dir = Direction.IDLE;
-        if (direction.y > threshold)
-            dir |= Direction.FORWARD;
-        else if (direction.y < -threshold) dir |= Direction.BACKWARD;
-
-        if (direction.x > threshold)
-            dir |= Direction.RIGHT;
-        else if (direction.x < -threshold) dir |= Direction.LEFT;
-
-        if (dir != oldDir)
-        {
-            switch (dir)
-            {
-                case Direction.FORWARD:
-                    animator.SetBool("isWalkingForward", true);
-                    break;
-                case Direction.FORWARDLEFT:
-                    animator.SetBool("isWalkingForwardLeft", true);
-                    break;
-                case Direction.FORWARDRIGHT:
-                    animator.SetBool("isWalkingForwardRight", true);
-                    break;
-                case Direction.LEFT:
-                    animator.SetBool("isWalkingLeft", true);
-                    break;
-                case Direction.RIGHT:
-                    animator.SetBool("isWalkingRight", true);
-                    break;
-                case Direction.BACKWARD:
-                    animator.SetBool("isWalkingBackward", true);
-                    break;
-                case Direction.BACKLEFT:
-                    animator.SetBool("isWalkingBackLeft", true);
-                    break;
-                case Direction.BACKRIGHT:
-                    animator.SetBool("isWalkingBackRight", true);
-                    break;
-                case Direction.IDLE:
-                    animator.SetBool("isIdle", true);
-                    break;
-            }
-
-            switch (oldDir)
-            {
-                case Direction.FORWARD:
-                    animator.SetBool("isWalkingForward", false);
-                    break;
-                case Direction.FORWARDLEFT:
-                    animator.SetBool("isWalkingForwardLeft", false);
-                    break;
-                case Direction.FORWARDRIGHT:
-                    animator.SetBool("isWalkingForwardRight", false);
-                    break;
-                case Direction.LEFT:
-                    animator.SetBool("isWalkingLeft", false);
-                    break;
-                case Direction.RIGHT:
-                    animator.SetBool("isWalkingRight", false);
-                    break;
-                case Direction.BACKWARD:
-                    animator.SetBool("isWalkingBackward", false);
-                    break;
-                case Direction.BACKLEFT:
-                    animator.SetBool("isWalkingBackLeft", false);
-                    break;
-                case Direction.BACKRIGHT:
-                    animator.SetBool("isWalkingBackRight", false);
-                    break;
-                case Direction.IDLE:
-                    animator.SetBool("isIdle", false);
-                    break;
-            }
-
-            oldDir = dir;
-
-            //See direction states of player: Debug.Log("Current State: " + dir);
-        }
-
-        animator.SetBool("isRunning", IsSprinting);
+        animator.SetFloat("horizontalMovement", moveDir.x, 0.1f, Time.deltaTime);
+        animator.SetFloat("verticalMovement", moveDir.y, 0.1f, Time.deltaTime);
+        animator.SetBool("isSprinting", IsSprinting);
     }
 
     private void HandleJumpAnimation()
@@ -435,22 +356,5 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void HandleDeathAnimation()
     {
         animator.SetBool("isAlive", false);
-    }
-
-    // Constants
-
-    // Animation Enumerator
-    // bit representation is Forward,Back,Right,Left
-    private enum Direction
-    {
-        IDLE = 0b0000,
-        FORWARD = 0b1000,
-        BACKWARD = 0b0100,
-        LEFT = 0b0001,
-        RIGHT = 0b0010,
-        FORWARDLEFT = 0b1001,
-        FORWARDRIGHT = 0b1010,
-        BACKLEFT = 0b0101,
-        BACKRIGHT = 0b0110
     }
 }
