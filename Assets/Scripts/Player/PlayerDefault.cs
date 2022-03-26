@@ -204,6 +204,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void TakeDmg(float dmg)
     {
+        animator.SetTrigger("takeDamage");
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;
         if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmg;
