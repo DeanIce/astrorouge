@@ -25,6 +25,8 @@ namespace Managers
         public float transitionDuration = 10f;
         public int current;
 
+        public GameObject loadingIndicator;
+
         private readonly Stack<string> stack = new();
 
 
@@ -54,7 +56,7 @@ namespace Managers
         {
             if (EventManager.Instance)
                 current = EventManager.Instance.requestedScene;
-            StartCoroutine(LoadLevel());
+            Coroutine b = StartCoroutine(LoadLevel());
         }
 
         private void Update()
@@ -107,6 +109,7 @@ namespace Managers
 
         public IEnumerator LoadLevel()
         {
+            loadingIndicator.SetActive(true);
             var timer = Stopwatch.StartNew();
             if (cinemachineDollyCart == null)
             {
@@ -201,11 +204,15 @@ namespace Managers
             }
 
             LogTimer(timer, "level loading");
+
+            // yield return new WaitForSeconds(.1f);
+
+            loadingIndicator.SetActive(false);
         }
 
         public static void LogTimer(Stopwatch sw, string text)
         {
-            print(text + " " + sw.ElapsedMilliseconds + " ms.");
+            //print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         private GameObject GetOrCreate(string gameObjectName)

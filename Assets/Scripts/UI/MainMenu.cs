@@ -53,11 +53,6 @@ Todo: add assets here... names not links
         private Button feedbackButton;
 
         private VisualElement mainMenu;
-        // private Slider musicSlider;
-        // private float musicVolumeValue;
-        // private Toggle muteButton;
-
-        // private bool muteValue;
 
         private Button newGameButton;
         private Button quitButton;
@@ -68,10 +63,7 @@ Todo: add assets here... names not links
         private Button settingsButton;
 
         private VisualElement settingsMenu;
-        // private Slider sfxSlider;
-        // private float sfxVolumeValue;
 
-        // Start is called before the first frame update
         private void Start()
         {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
@@ -90,11 +82,6 @@ Todo: add assets here... names not links
 
             //Settings buttons
             settingsBackButton = settingsMenu.Q<Button>("back-button");
-            // muteButton = settingsMenu.Q<Toggle>("mute-button");
-            // musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
-            // sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
-
-            //About buttons
             aboutBackButton = aboutMenu.Q<Button>("back-button");
             creditsScroll = aboutMenu.Q<Label>("credits-scroll");
             creditsScroll.text = creditsText;
@@ -115,9 +102,6 @@ Todo: add assets here... names not links
 
             feedbackButton.clicked += () => Application.OpenURL("https://forms.gle/M6GhsLW5vpnR3Vit6");
 
-            // muteValue = muteButton.value;
-            // musicVolumeValue = musicSlider.value;
-            // sfxVolumeValue = sfxSlider.value;
 
             AudioManager.Instance.PlayMusic(mainMenuMusic);
         }
@@ -125,24 +109,6 @@ Todo: add assets here... names not links
 
         private void Update()
         {
-            // if (muteValue != muteButton.value)
-            // {
-            //     muteValue = muteButton.value;
-            //     AudioManager.instance.ToggleMute();
-            // }
-            //
-            // if (musicVolumeValue != musicSlider.value)
-            // {
-            //     musicVolumeValue = musicSlider.value;
-            //     AudioManager.instance.SetMusicVolume(musicVolumeValue);
-            // }
-
-            // if (sfxVolumeValue != sfxSlider.value)
-            // {
-            //     sfxVolumeValue = sfxSlider.value;
-            //     AudioManager.instance.SetSFXVolume(sfxVolumeValue);
-            // }
-
             // Cute hack to get scrolling credits
             // Todo: make credit scroll more resolution and aspect ratio independent
             float val = creditsScroll.style.marginTop.value.value;

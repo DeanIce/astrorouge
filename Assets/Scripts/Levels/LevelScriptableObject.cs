@@ -25,7 +25,7 @@ namespace Levels
 
         [MinMaxSlider(1, 500)] public Vector2Int totalNumEnemies = new(20, 100);
 
-        [MinMaxSlider(50, 4000)] public Vector2Int totalNumProps = new(200, 400);
+        [MinMaxSlider(50, 10000)] public Vector2Int totalNumProps = new(200, 400);
 
         public float gravityHeight = 3;
         public float falloffHeight = 5;
@@ -154,20 +154,16 @@ namespace Levels
                 planet.SetActive(false);
             }
 
-
             LevelManager.LogTimer(timer, "Generate planet meshes");
 
-
+            // Bake mesh colliders in parallel (Burst compiled)
             MeshBaker.BakeAndSetColliders(pgs);
-
             LevelManager.LogTimer(timer, "Bake mesh colliders");
+
 
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 GameObject planet = pgs[i].gameObject;
-                // Add enemies to the planet
-                var enemiesOnPlanet = (int) (actualNumEnemies * areaRatios[i]);
-                SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
                 // Add props to the planet
                 var propsOnPlanet = (int) (actualNumProps * areaRatios[i]);
                 SpawnObjects.AddProps(rng, planet, environmentAssets, propsOnPlanet);
@@ -175,9 +171,21 @@ namespace Levels
 
                 // Spawn the boss level entrance
                 if (i == bossLevelIndex) AddBossEntrance(pgs[i], bossLevelEntrance, planet.transform, rng);
+
+                StaticBatchingUtility.Combine(planet);
             }
 
             LevelManager.LogTimer(timer, "Spawn items");
+
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                GameObject planet = pgs[i].gameObject;
+                // Add enemies to the planet
+                var enemiesOnPlanet = (int) (actualNumEnemies * areaRatios[i]);
+                SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
+            }
+
+            LevelManager.LogTimer(timer, "Spawn enemies");
 
 
             isCreated = true;

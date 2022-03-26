@@ -59,10 +59,10 @@ MonoBehaviour:
     ratio: 0
     scale: {x: 1, y: 1, z: 1}
     weightedRatio: 0
-  numPlanets: {x: 3, y: 5}
+  numPlanets: {x: 1, y: 2}
   scale: {x: 20.492786, y: 38.93}
-  totalNumEnemies: {x: 1, y: 10}
-  totalNumProps: {x: 50, y: 541}
+  totalNumEnemies: {x: 24, y: 127}
+  totalNumProps: {x: 50, y: 1109}
   gravityHeight: 5
   falloffHeight: 3
   bossSceneName: TestBossFire

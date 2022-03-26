@@ -24,18 +24,6 @@ public class SpawnObjects : MonoBehaviour
         planetGenerator = GetComponent<PlanetGenerator>();
     }
 
-    // Fix later
-    private void Update()
-    {
-        // // We need to wait for shader stuff to finish, once it does run our gen
-        // if (planetGenerator.terrainMeshFilter && planetGenerator.terrainMeshFilter.sharedMesh.vertices != null && !ran)
-        // {
-        //     SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets, new Random());
-        //     // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
-        //     // Flag so we dont run indefinitely
-        //     ran = true;
-        // }
-    }
 
     public static void SpawnEnemies(Random rng, GameObject planet, AssetCount[] enemies, int enemiesOnPlanet)
     {
@@ -65,39 +53,6 @@ public class SpawnObjects : MonoBehaviour
         }
     }
 
-    // public static void SpawnProps(GameObject gameObject, PlanetGenerator planetGenerator, AssetCount[] cAssets,
-    //     AssetCount[] eAssets, AssetCount[] enemies, Random rng)
-    // {
-    //     // Set our vertices guaranteed non null
-    //     List<Vector3> vertices = planetGenerator.spawnObjectVertices.ToList();
-    //
-    //     // Spawn all of our clusters
-    //     foreach (AssetCount pair in cAssets)
-    //     {
-    //         GameObject asset = pair.prefab;
-    //         var count = pair.count;
-    //         Vector3 scale = pair.scale;
-    //         SpawnCluster(gameObject.transform, asset, count, scale, vertices, rng);
-    //     }
-    //
-    //     // Spawn all of our random stuff
-    //     foreach (AssetCount pair in eAssets)
-    //     {
-    //         GameObject asset = pair.prefab;
-    //         var count = pair.count;
-    //         Vector3 scale = pair.scale;
-    //         SpawnObject(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
-    //     }
-    //
-    //     // Spawn all of our random stuff
-    //     foreach (AssetCount pair in enemies)
-    //     {
-    //         GameObject asset = pair.prefab;
-    //         var count = pair.count;
-    //         Vector3 scale = pair.scale;
-    //         SpawnEnemy(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
-    //     }
-    // }
 
     public static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale, Random rng)
     {
@@ -142,6 +97,7 @@ public class SpawnObjects : MonoBehaviour
             //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
             //Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
+
 
         // totalSpawned += numToSpawn;
     }
