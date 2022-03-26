@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Planets;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
@@ -53,6 +54,7 @@ namespace Utilities
     }
 
 
+    [BurstCompile]
     public struct BakeAllMeshes : IJobParallelFor, JobHelper.IJobDisposable
     {
         private NativeArray<int> meshIds;

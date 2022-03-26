@@ -205,7 +205,7 @@ namespace Managers
 
         public static void LogTimer(Stopwatch sw, string text)
         {
-            // print(text + " " + sw.ElapsedMilliseconds + " ms.");
+            print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
         private GameObject GetOrCreate(string gameObjectName)
