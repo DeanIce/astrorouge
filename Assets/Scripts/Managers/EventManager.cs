@@ -16,6 +16,9 @@ namespace Managers
         public string scenePlay;
 
 
+        public Action<int> loadLevel;
+
+
         private Mode mode = Mode.Play;
 
         public RunStats runStats = new();
@@ -29,12 +32,24 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit;
-
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
+
+        public void LoadLevel(int i)
+        {
+            SceneManager.LoadScene("LevelScene");
+            LevelSelect.Instance.requestedLevel = i;
+            // loadLevel?.Invoke(i);
+        }
+
+        public void LoadBoss(string bossSceneName)
+        {
+            loadBoss?.Invoke();
+            SceneManager.LoadScene(bossSceneName);
+        }
 
         public void Pause()
         {

@@ -103,7 +103,7 @@ namespace Levels
         /// <param name="rng"></param>
         /// <param name="timer"></param>
         /// <returns></returns>
-        public Vector3 Create(GameObject root, Random rng, Stopwatch timer)
+        public Vector3 Create(GameObject root, Random rng, BallDropper ballDropper, Stopwatch timer)
         {
             PlanetGenerator.spheres.Clear();
             SpawnObjects.numPropsSpawned = 0;
@@ -119,7 +119,6 @@ namespace Levels
             LevelManager.LogTimer(timer, "Solved range constants");
 
             // Perform simulation
-            var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
             Vector3[] points = ballDropper.DropBalls(radii, timer);
             LevelManager.LogTimer(timer, "Ball dropper done");
 
@@ -232,7 +231,7 @@ namespace Levels
         /// </summary>
         public void Load(GameObject root, Random rng)
         {
-            if (!isCreated) Create(root, rng, Stopwatch.StartNew());
+            // if (!isCreated) Create(root, rng, Stopwatch.StartNew());
 
             for (var i = 0; i < root.transform.childCount; i++)
             {

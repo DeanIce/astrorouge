@@ -22,5 +22,8 @@ public class EventManagerEditor : Editor
         if (GUILayout.Button("Menu")) eventManager.Menu();
 
         if (GUILayout.Button("Recap")) eventManager.Recap();
+
+        if (GUILayout.Button("Enter Boss Room")) eventManager.LoadBoss("TestBossFire");
+        if (GUILayout.Button("Leave Boss Room")) eventManager.LoadLevel(1);
     }
 }

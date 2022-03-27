@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Levels;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 namespace Managers
@@ -13,10 +15,16 @@ namespace Managers
         public List<LevelScriptableObject> levels = new();
 
         public GameObject player;
-        private readonly Stack<string> stack = new();
+        public BallDropper ballDropper;
+
+        private const string rootName = "LevelHolder";
+
+        private bool isHackDone;
+
+
         private Random rng;
 
-        public LevelScriptableObject CurrentLevel
+        private LevelScriptableObject CurrentLevel
         {
             get
             {
@@ -26,94 +34,95 @@ namespace Managers
             }
         }
 
-        private void Start()
+        private void Update()
         {
-            LoadLevel();
+            // Hack to avoid callback issues with physics collider trigger
+            if (!isHackDone)
+            {
+                isHackDone = true;
+                // We may need to find the player again for some reason
+                if (player == null) player = GameObject.Find("PlayerDefault");
+
+                StartCoroutine(LoadLevel());
+            }
         }
 
 
-        public void LoadLevel()
+        private void OnEnable()
+        {
+            EventManager.Instance.loadBoss += LoadBossEvent;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.loadBoss -= LoadBossEvent;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "LevelScene") isHackDone = false;
+        }
+
+
+        private void LoadBossEvent()
+        {
+            UnloadLevel();
+        }
+
+
+        private IEnumerator LoadLevel()
         {
             var timer = Stopwatch.StartNew();
 
             rng = new Random(0);
-            string id = "CurrentLevel.displayName" + stack.Count;
 
-
-            // Then unload the old level
-            if (stack.Count > 0)
-            {
-                // print($"Unload {stack.Peek()}");
-                UnloadLevel(stack.Peek());
-            }
 
             LOGTIMER(timer, "start hard work");
 
             // Do the hard work
-            GameObject root = GetOrCreate(id);
-            Vector3 newPlayerPos = CurrentLevel.Create(root, rng, timer);
+            GameObject root = GetOrCreate();
+            Vector3 newPlayerPos = CurrentLevel.Create(root, rng, ballDropper, timer);
             // print($"Creating {id} level.");
             LOGTIMER(timer, "finish Create()");
 
 
             // And load in the new level
             // print($"Load {CurrentLevel.displayName}");
-            root = GetOrCreate(id);
             CurrentLevel.Load(root, rng);
             LOGTIMER(timer, "finish Load()");
-
-            stack.Push(id);
 
 
             // print("Loaded level and snapped Player to spawn point.");
             player.transform.position = newPlayerPos;
-
+            print(root);
 
             LOGTIMER(timer, "level loading");
 
             // yield return new WaitForSeconds(.1f);
+            yield return default;
         }
 
-        public void UnloadLevel(string displayName)
-        {
-            if (displayName == null) return;
-            Transform t = transform.Find(displayName);
-            if (t != null && displayName.Length > 0) DestroyImmediate(t.gameObject);
-
-            // delete all enemies in the scene
-            foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("enemy"))
-            {
-                Destroy(enemy);
-            }
-        }
 
         public void UnloadLevel()
         {
-            foreach (string levelName in stack)
-            {
-                GameObject root = transform.Find(levelName)?.gameObject;
+            GameObject root = transform.Find(rootName)?.gameObject;
 
-                if (root) DestroyImmediate(root);
-            }
-
-            stack.Clear();
+            if (root) Destroy(root);
         }
 
-        private GameObject GetOrCreate(string gameObjectName)
+        private GameObject GetOrCreate()
         {
             // Find/create object
-            Transform child = transform.Find(gameObjectName);
-            if (!child)
-            {
-                child = new GameObject(gameObjectName).transform;
-                child.parent = transform;
-                child.localPosition = Vector3.zero;
-                child.localRotation = Quaternion.identity;
-                child.localScale = Vector3.one;
-                child.gameObject.layer = gameObject.layer;
-            }
+            Transform child = new GameObject(rootName).transform;
+            child.localPosition = Vector3.zero;
+            child.localRotation = Quaternion.identity;
+            child.localScale = Vector3.one;
+            var o = child.gameObject;
+            o.layer = gameObject.layer;
 
-            return child.gameObject;
+            return o;
         }
     }
 }

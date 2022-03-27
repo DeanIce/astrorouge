@@ -79,7 +79,7 @@ namespace Managers
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
             Vector3 unused =
-                CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, Stopwatch.StartNew());
+                CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, null, Stopwatch.StartNew());
             print($"Creating {id} level.");
 
 
@@ -162,7 +162,7 @@ namespace Managers
 
             // Do the hard work
             CurrentLevel.root = GetOrCreate(id);
-            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, timer);
+            Vector3 newPlayerPos = CurrentLevel.levelScriptableObject.Create(CurrentLevel.root, rng, null, timer);
             // print($"Creating {id} level.");
             LogTimer(timer, "finish Create()");
 
