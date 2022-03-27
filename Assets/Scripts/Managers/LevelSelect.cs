@@ -11,7 +11,7 @@ namespace Managers
     public class LevelSelect : ManagerSingleton<LevelSelect>
     {
         private const string rootName = "LevelHolder";
-        [Range(0, 2)] public int requestedLevel;
+        [HideInInspector] public int requestedLevel;
 
         public List<LevelScriptableObject> levels = new();
 
@@ -23,7 +23,7 @@ namespace Managers
 
         private Random rng;
 
-        private LevelScriptableObject CurrentLevel
+        public LevelScriptableObject CurrentLevel
         {
             get
             {
@@ -84,7 +84,6 @@ namespace Managers
 
             rng = new Random(0);
 
-            print("reeeeeee");
 
             LOGTIMER(timer, "start hard work");
 
