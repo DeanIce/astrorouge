@@ -60,7 +60,7 @@ namespace Managers
         public void PlayMusic(AudioClip musicClip)
         {
             // Determine which music track is active.
-            var activeMusic = currentMusicSource ? music1 : music2;
+            AudioSource activeMusic = currentMusicSource ? music1 : music2;
 
             activeMusic.clip = musicClip;
             activeMusic.volume = 1;
@@ -76,8 +76,8 @@ namespace Managers
         public void PlayMusicWithCrossfade(AudioClip musicClip, float transitionPeriod = 2.0f)
         {
             // Determine which music track is active.
-            var activeMusic = currentMusicSource ? music1 : music2;
-            var newMusic = !currentMusicSource ? music1 : music2;
+            AudioSource activeMusic = currentMusicSource ? music1 : music2;
+            AudioSource newMusic = !currentMusicSource ? music1 : music2;
 
             // Swap active music.
             currentMusicSource = !currentMusicSource;
@@ -102,7 +102,7 @@ namespace Managers
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = activeMusic.volume - (time / transisitonPeriod) * activeMusic.volume;
+                activeMusic.volume = activeMusic.volume - time / transisitonPeriod * activeMusic.volume;
                 newMusic.volume = time / transisitonPeriod;
                 yield return null;
             }
@@ -113,7 +113,7 @@ namespace Managers
         public void FadeOut(float transitionPeriod = 2.0f)
         {
             // Determine which music track is active.
-            var activeMusic = currentMusicSource ? music1 : music2;
+            AudioSource activeMusic = currentMusicSource ? music1 : music2;
             StartCoroutine(UpdateFadeOut(activeMusic, transitionPeriod));
         }
 
@@ -123,7 +123,7 @@ namespace Managers
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = activeMusic.volume - (time / transisitonPeriod) * activeMusic.volume;
+                activeMusic.volume = activeMusic.volume - time / transisitonPeriod * activeMusic.volume;
                 yield return null;
             }
 
@@ -132,7 +132,7 @@ namespace Managers
 
         public void FadeIn(AudioClip musicClip, float transitionPeriod = 2.0f)
         {
-            var newMusic = currentMusicSource ? music1 : music2;
+            AudioSource newMusic = currentMusicSource ? music1 : music2;
             newMusic.clip = musicClip;
             newMusic.Play();
             StartCoroutine(UpdateFadeIn(newMusic, transitionPeriod));
@@ -201,13 +201,9 @@ namespace Managers
         public void ToggleMute()
         {
             if (!isMuted)
-            {
                 music1.mute = music2.mute = sfx.mute = isMuted = true;
-            }
             else
-            {
                 music1.mute = music2.mute = sfx.mute = isMuted = false;
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace Managers
@@ -20,6 +21,7 @@ namespace Managers
         // private set => lazyInstance = value;
         private void Awake()
         {
+            // print(GetType().UnderlyingSystemType.Name + " awake");
             if (Instance != null && Instance != this)
                 Destroy(gameObject);
             else
@@ -38,6 +40,14 @@ namespace Managers
             Type type = GetType().UnderlyingSystemType;
             string className = type.Name;
             if (logEvents) print($"{className}: {message}");
+        }
+
+        protected void LOGTIMER(Stopwatch sw, object message)
+        {
+            Type type = GetType().UnderlyingSystemType;
+            string className = type.Name;
+            string m = message + " " + sw.ElapsedMilliseconds + " ms.";
+            if (logEvents) print($"{className}: {m}");
         }
     }
 }

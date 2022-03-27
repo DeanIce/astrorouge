@@ -508,7 +508,7 @@ MonoBehaviour:
     lod1: 100
     lod2: 50
     collider: 100
-  previewMode: 1
+  previewMode: 0
   shape:
     heightMapCompute: {fileID: 7200000, guid: f0e0eebaa6ec5434f91d34b454ce0007, type: 3}
     perturbVertices: 1
@@ -578,3 +578,6 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 9e0319a5dc87dbc47838023b21bfff25, type: 2}
+  terrainMesh: {fileID: 4795155531584681974}
+  heightMinMax: {x: 0.984394, y: 1.0825664}
+  key: 0

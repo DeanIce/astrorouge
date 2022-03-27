@@ -7,6 +7,7 @@ using Random = System.Random;
 
 public class SpawnObjects : MonoBehaviour
 {
+    public static int numPropsSpawned;
     public AssetCount[] clusterAssets;
 
     public AssetCount[] environmentAssets;
@@ -23,57 +24,40 @@ public class SpawnObjects : MonoBehaviour
         planetGenerator = GetComponent<PlanetGenerator>();
     }
 
-    // Fix later
-    private void Update()
-    {
-        // // We need to wait for shader stuff to finish, once it does run our gen
-        // if (planetGenerator.terrainMeshFilter && planetGenerator.terrainMeshFilter.sharedMesh.vertices != null && !ran)
-        // {
-        //     SpawnProps(gameObject, planetGenerator, clusterAssets, environmentAssets, new Random());
-        //     // for (var i = 0; i < environmentAssets.Length; i++) SpawnObject(environmentAssets[i], numOfAsset[i]);
-        //     // Flag so we dont run indefinitely
-        //     ran = true;
-        // }
-    }
 
-    public static void SpawnProps(GameObject gameObject, PlanetGenerator planetGenerator, AssetCount[] cAssets,
-        AssetCount[] eAssets, AssetCount[] enemies, Random rng)
+    public static void SpawnEnemies(Random rng, GameObject planet, AssetCount[] enemies, int enemiesOnPlanet)
     {
+        var planetGenerator = planet.GetComponent<PlanetGenerator>();
         // Set our vertices guaranteed non null
-        var vertices = planetGenerator.spawnObjectVertices.ToList();
+        List<Vector3> vertices = planetGenerator.spawnObjectVertices.ToList();
 
-        // Spawn all of our clusters
-        foreach (var pair in cAssets)
+        foreach (AssetCount assetCount in enemies)
         {
-            var asset = pair.prefab;
-            var count = pair.count;
-            var scale = pair.scale;
-            SpawnCluster(gameObject.transform, asset, count, scale, vertices, rng);
-        }
-
-        // Spawn all of our random stuff
-        foreach (var pair in eAssets)
-        {
-            var asset = pair.prefab;
-            var count = pair.count;
-            var scale = pair.scale;
-            SpawnObject(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
-        }
-
-        // Spawn all of our random stuff
-        foreach (var pair in enemies)
-        {
-            var asset = pair.prefab;
-            var count = pair.count;
-            var scale = pair.scale;
-            SpawnEnemy(gameObject.transform, asset, count, scale, vertices, planetGenerator.scale, rng);
+            var count = (int) (assetCount.weightedRatio * enemiesOnPlanet);
+            SpawnEnemy(planet.transform, assetCount.prefab, count, assetCount.scale,
+                vertices, planetGenerator.scale, rng);
         }
     }
+
+    public static void AddProps(Random rng, GameObject planet, AssetCount[] props, int propsOnPlanet)
+    {
+        var planetGenerator = planet.GetComponent<PlanetGenerator>();
+        // Set our vertices guaranteed non null
+        List<Vector3> vertices = planetGenerator.spawnObjectVertices.ToList();
+
+        foreach (AssetCount assetCount in props)
+        {
+            var count = (int) (assetCount.weightedRatio * propsOnPlanet);
+            SpawnObject(planet.transform, assetCount.prefab, count, assetCount.scale,
+                vertices, planetGenerator.scale, rng);
+        }
+    }
+
 
     public static Vector3 ObjectSpawnLocation(List<Vector3> vertices, float planetScale, Random rng)
     {
-        var randIndex = rng.Next(0, vertices.Count);
-        var newLoc = vertices[randIndex] * planetScale;
+        int randIndex = rng.Next(0, vertices.Count);
+        Vector3 newLoc = vertices[randIndex] * planetScale;
 
         // This prevents spawning 2 things at the same location in rare instances
         vertices.RemoveAt(randIndex);
@@ -90,9 +74,9 @@ public class SpawnObjects : MonoBehaviour
         {
             // FIX SCALE
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
-            var spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
+            Vector3 spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
             spawnLocation += origin.position;
-            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = scale;
@@ -107,11 +91,13 @@ public class SpawnObjects : MonoBehaviour
 
             // Set Parent
             placeObject.transform.parent = origin;
+            numPropsSpawned++;
 
             // Debug
             //Debug.Log("Just placed my " + i + "th " + objectToSpawn.name);
             //Debug.DrawRay(spawnLocation, transform.TransformDirection(spawnLocation));
         }
+
 
         // totalSpawned += numToSpawn;
     }
@@ -124,9 +110,9 @@ public class SpawnObjects : MonoBehaviour
         {
             // FIX SCALE
             // Referenced from https://answers.unity.com/questions/974149/creating-objects-which-facing-center-of-a-sphere.html
-            var spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
+            Vector3 spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
             spawnLocation += origin.position;
-            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = scale;
@@ -156,12 +142,12 @@ public class SpawnObjects : MonoBehaviour
         List<Vector3> vertices, Random rng)
     {
         // This is to prevent overflow (i.e. random index is the last element in the vertex list)
-        var initialSpawnIndex = rng.Next(vertices.Count - numToSpawn);
+        int initialSpawnIndex = rng.Next(vertices.Count - numToSpawn);
         for (var i = 0; i < numToSpawn; i++)
         {
             // We can +i here since we manually prevented overflow in our selection
             // NOTE: Vertices are contiguous in memory
-            var placeObject = Instantiate(objectToSpawn, vertices[initialSpawnIndex + i], Quaternion.identity);
+            GameObject placeObject = Instantiate(objectToSpawn, vertices[initialSpawnIndex + i], Quaternion.identity);
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = scale;
@@ -188,8 +174,10 @@ public class SpawnObjects : MonoBehaviour
     public class AssetCount
     {
         public GameObject prefab;
-        public int count;
+        [Range(0, 1)] public float ratio;
         public Vector3 scale = Vector3.one;
+
+        [HideInInspector] public float weightedRatio;
 
         public override string ToString()
         {

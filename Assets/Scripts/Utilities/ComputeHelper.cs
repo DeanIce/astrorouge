@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
@@ -23,10 +24,10 @@ public static class ComputeHelper
     public static void Run(ComputeShader cs, int numIterationsX, int numIterationsY = 1, int numIterationsZ = 1,
         int kernelIndex = 0)
     {
-        var threadGroupSizes = GetThreadGroupSizes(cs, kernelIndex);
-        var numGroupsX = Mathf.CeilToInt(numIterationsX / (float) threadGroupSizes.x);
-        var numGroupsY = Mathf.CeilToInt(numIterationsY / (float) threadGroupSizes.y);
-        var numGroupsZ = Mathf.CeilToInt(numIterationsZ / (float) threadGroupSizes.y);
+        Vector3Int threadGroupSizes = GetThreadGroupSizes(cs, kernelIndex);
+        int numGroupsX = Mathf.CeilToInt(numIterationsX / (float) threadGroupSizes.x);
+        int numGroupsY = Mathf.CeilToInt(numIterationsY / (float) threadGroupSizes.y);
+        int numGroupsZ = Mathf.CeilToInt(numIterationsZ / (float) threadGroupSizes.y);
         cs.Dispatch(kernelIndex, numGroupsX, numGroupsY, numGroupsZ);
     }
 
@@ -35,11 +36,11 @@ public static class ComputeHelper
     public static void SetParams(object settings, ComputeShader shader, string variableNamePrefix = "",
         string variableNameSuffix = "")
     {
-        var fields = settings.GetType().GetFields();
-        foreach (var field in fields)
+        FieldInfo[] fields = settings.GetType().GetFields();
+        foreach (FieldInfo field in fields)
         {
-            var fieldType = field.FieldType;
-            var shaderVariableName = variableNamePrefix + field.Name + variableNameSuffix;
+            Type fieldType = field.FieldType;
+            string shaderVariableName = variableNamePrefix + field.Name + variableNameSuffix;
 
             if (fieldType == typeof(Vector4) || fieldType == typeof(Vector3) || fieldType == typeof(Vector2))
                 shader.SetVector(shaderVariableName, (Vector4) field.GetValue(settings));
@@ -56,8 +57,8 @@ public static class ComputeHelper
 
     public static void CreateStructuredBuffer<T>(ref ComputeBuffer buffer, int count)
     {
-        var stride = Marshal.SizeOf(typeof(T));
-        var createNewBuffer =
+        int stride = Marshal.SizeOf(typeof(T));
+        bool createNewBuffer =
             buffer == null || !buffer.IsValid() || buffer.count != count || buffer.stride != stride;
         if (createNewBuffer)
         {
@@ -70,6 +71,18 @@ public static class ComputeHelper
     {
         CreateStructuredBuffer<T>(ref buffer, data.Length);
         buffer.SetData(data);
+    }
+
+
+    public static ComputeBuffer CreateBufferFromJob(Vector3[] vertices)
+    {
+        // return PlanetCache.RunOnUnityThread<ComputeBuffer>(() =>
+        // {
+        ComputeBuffer vertexBuffer = null;
+        CreateStructuredBuffer(ref vertexBuffer, vertices);
+        vertexBuffer.SetData(vertices);
+        return vertexBuffer;
+        // });
     }
 
     // Test
@@ -85,7 +98,7 @@ public static class ComputeHelper
     public static void CreateAndSetBuffer<T>(ref ComputeBuffer buffer, T[] data, ComputeShader cs, string nameID,
         int kernelIndex = 0)
     {
-        var stride = Marshal.SizeOf(typeof(T));
+        int stride = Marshal.SizeOf(typeof(T));
         CreateStructuredBuffer<T>(ref buffer, data.Length);
         buffer.SetData(data);
         cs.SetBuffer(kernelIndex, nameID, buffer);
@@ -142,7 +155,7 @@ public static class ComputeHelper
         isCompilingOrExitingEditMode |= EditorApplication.isCompiling;
         isCompilingOrExitingEditMode |= playModeState == PlayModeStateChange.ExitingEditMode;
 #endif
-        var canRun = !isCompilingOrExitingEditMode;
+        bool canRun = !isCompilingOrExitingEditMode;
         return canRun;
     }
 

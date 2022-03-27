@@ -30,13 +30,14 @@ namespace Planets
         private readonly FixedSizeList<Vector3> vertices;
         public readonly Vector3[] Vertices;
 
+
         public SphereMesh(int resolution)
         {
             Resolution = resolution;
             numDivisions = Mathf.Max(0, resolution);
             numVertsPerFace = ((numDivisions + 3) * (numDivisions + 3) - (numDivisions + 3)) / 2;
-            var numVerts = numVertsPerFace * 8 - (numDivisions + 2) * 12 + 6;
-            var numTrisPerFace = (numDivisions + 1) * (numDivisions + 1);
+            int numVerts = numVertsPerFace * 8 - (numDivisions + 2) * 12 + 6;
+            int numTrisPerFace = (numDivisions + 1) * (numDivisions + 1);
 
             vertices = new FixedSizeList<Vector3>(numVerts);
             triangles = new FixedSizeList<int>(numTrisPerFace * 8 * 3);
@@ -47,8 +48,8 @@ namespace Planets
             var edges = new Edge[12];
             for (var i = 0; i < vertexPairs.Length; i += 2)
             {
-                var startVertex = vertices.items[vertexPairs[i]];
-                var endVertex = vertices.items[vertexPairs[i + 1]];
+                Vector3 startVertex = vertices.items[vertexPairs[i]];
+                Vector3 endVertex = vertices.items[vertexPairs[i + 1]];
 
                 var edgeVertexIndices = new int[numDivisions + 2];
                 edgeVertexIndices[0] = vertexPairs[i];
@@ -56,21 +57,21 @@ namespace Planets
                 // Add vertices along edge
                 for (var divisionIndex = 0; divisionIndex < numDivisions; divisionIndex++)
                 {
-                    var t = (divisionIndex + 1f) / (numDivisions + 1f);
+                    float t = (divisionIndex + 1f) / (numDivisions + 1f);
                     edgeVertexIndices[divisionIndex + 1] = vertices.nextIndex;
                     vertices.Add(Vector3.Slerp(startVertex, endVertex, t));
                 }
 
                 edgeVertexIndices[numDivisions + 1] = vertexPairs[i + 1];
-                var edgeIndex = i / 2;
+                int edgeIndex = i / 2;
                 edges[edgeIndex] = new Edge(edgeVertexIndices);
             }
 
             // Create faces
             for (var i = 0; i < edgeTriplets.Length; i += 3)
             {
-                var faceIndex = i / 3;
-                var reverse = faceIndex >= 4;
+                int faceIndex = i / 3;
+                bool reverse = faceIndex >= 4;
                 CreateFace(edges[edgeTriplets[i]], edges[edgeTriplets[i + 1]], edges[edgeTriplets[i + 2]], reverse);
             }
 
@@ -80,7 +81,7 @@ namespace Planets
 
         private void CreateFace(Edge sideA, Edge sideB, Edge bottom, bool reverse)
         {
-            var numPointsInEdge = sideA.vertexIndices.Length;
+            int numPointsInEdge = sideA.vertexIndices.Length;
             var vertexMap = new FixedSizeList<int>(numVertsPerFace);
             vertexMap.Add(sideA.vertexIndices[0]); // top of triangle
 
@@ -90,12 +91,12 @@ namespace Planets
                 vertexMap.Add(sideA.vertexIndices[i]);
 
                 // Add vertices between sideA and sideB
-                var sideAVertex = vertices.items[sideA.vertexIndices[i]];
-                var sideBVertex = vertices.items[sideB.vertexIndices[i]];
-                var numInnerPoints = i - 1;
+                Vector3 sideAVertex = vertices.items[sideA.vertexIndices[i]];
+                Vector3 sideBVertex = vertices.items[sideB.vertexIndices[i]];
+                int numInnerPoints = i - 1;
                 for (var j = 0; j < numInnerPoints; j++)
                 {
-                    var t = (j + 1f) / (numInnerPoints + 1f);
+                    float t = (j + 1f) / (numInnerPoints + 1f);
                     vertexMap.Add(vertices.nextIndex);
                     vertices.Add(Vector3.Slerp(sideAVertex, sideBVertex, t));
                 }
@@ -105,18 +106,21 @@ namespace Planets
             }
 
             // Add bottom edge vertices
-            for (var i = 0; i < numPointsInEdge; i++) vertexMap.Add(bottom.vertexIndices[i]);
+            for (var i = 0; i < numPointsInEdge; i++)
+            {
+                vertexMap.Add(bottom.vertexIndices[i]);
+            }
 
             // Triangulate
-            var numRows = numDivisions + 1;
+            int numRows = numDivisions + 1;
             for (var row = 0; row < numRows; row++)
             {
                 // vertices down left edge follow quadratic sequence: 0, 1, 3, 6, 10, 15...
                 // the nth term can be calculated with: (n^2 - n)/2
-                var topVertex = ((row + 1) * (row + 1) - row - 1) / 2;
-                var bottomVertex = ((row + 2) * (row + 2) - row - 2) / 2;
+                int topVertex = ((row + 1) * (row + 1) - row - 1) / 2;
+                int bottomVertex = ((row + 2) * (row + 2) - row - 2) / 2;
 
-                var numTrianglesInRow = 1 + 2 * row;
+                int numTrianglesInRow = 1 + 2 * row;
                 for (var column = 0; column < numTrianglesInRow; column++)
                 {
                     int v0, v1, v2;
@@ -172,7 +176,10 @@ namespace Planets
 
         public void AddRange(IEnumerable<T> itemsToAdd)
         {
-            foreach (var item in itemsToAdd) Add(item);
+            foreach (T item in itemsToAdd)
+            {
+                Add(item);
+            }
         }
     }
 }
