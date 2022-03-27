@@ -17,11 +17,11 @@ MonoBehaviour:
   - prefab: {fileID: 3962891249127740571, guid: bfd4cac26a7281d40b661725c06fa4a3, type: 3}
     ratio: 0.597
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.16013947
   - prefab: {fileID: 2517722936070730425, guid: df836f8237e6208499ec0ef7821c9b0d, type: 3}
     ratio: 0.633
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.16979614
   - prefab: {fileID: 6104921163779775213, guid: e43a52badf04a564ab592e7c00060d36, type: 3}
     ratio: 0
     scale: {x: 1, y: 1, z: 1}
@@ -65,19 +65,19 @@ MonoBehaviour:
   - prefab: {fileID: 118358, guid: 4cd12378b9180634896e364a2ac12f95, type: 3}
     ratio: 1
     scale: {x: 2, y: 2, z: 2}
-    weightedRatio: 0
+    weightedRatio: 0.26824033
   - prefab: {fileID: 142174, guid: 9294f12d436cf5a4281abae31de41b76, type: 3}
     ratio: 0.427
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.11453862
   - prefab: {fileID: 175030, guid: 1f9ce3a84faaa624492243994a459aba, type: 3}
     ratio: 0.529
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.14189912
   - prefab: {fileID: 191160, guid: 7880b77d6c347824c9f4ec0f5cac284a, type: 3}
     ratio: 0.542
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.14538626
   - prefab: {fileID: 129370, guid: c1c1c56cea7dc2a42bda98e57ed0a700, type: 3}
     ratio: 0
     scale: {x: 1, y: 1, z: 1}
@@ -98,14 +98,14 @@ MonoBehaviour:
   - prefab: {fileID: 5720992601957050970, guid: e29cf55ae4df87f44b36328c07a0c9da, type: 3}
     ratio: 0.481
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
+    weightedRatio: 0.32478058
   - prefab: {fileID: 6737330966302589876, guid: bc079d52da8a5c14e83cc36db632a03c, type: 3}
     ratio: 1
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0
-  numPlanets: {x: 1, y: 2}
+    weightedRatio: 0.6752195
+  numPlanets: {x: 2, y: 3}
   scale: {x: 5, y: 12}
-  totalNumEnemies: {x: 20, y: 100}
+  totalNumEnemies: {x: 20, y: 38}
   totalNumProps: {x: 200, y: 400}
   gravityHeight: 5
   falloffHeight: 3

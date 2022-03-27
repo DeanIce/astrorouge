@@ -26,14 +26,14 @@ namespace Utilities
             var job = new BakeAllMeshes(meshIds);
 
             job.Schedule(meshIds.Length, 1).Complete();
-            // Result is available. LateUpdate() context.
-            meshIds.Dispose();
 
             // Now instantiate colliders on the main thread.
             foreach (KeyValuePair<int, Mesh> pair in meshes)
             {
                 pgs[pair.Key].terrainMesh.GetComponent<MeshCollider>().sharedMesh = pair.Value;
             }
+
+            meshIds.Dispose();
 
             // JobHelper.AddScheduledJob(job, job.Schedule(meshIds.Length, 1), jobExecutor =>
             // {
