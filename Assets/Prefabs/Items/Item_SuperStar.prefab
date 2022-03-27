@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Super Star
-  itemDescription: Increase invulnerability window after getting hit by 10%
+  itemDescription: Increase invulnerability window after getting hit by 5%
   itemIcon: {fileID: 2800000, guid: bd2a1a3da294ce34db9ff0288f761682, type: 3}
 --- !u!4 &5118294214976879843 stripped
 Transform:

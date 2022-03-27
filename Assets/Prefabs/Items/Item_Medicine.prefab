@@ -80,8 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Medicine
-  itemDescription: Increases max health by 40%, increases health regen by 20%, and
-    fully heals all missing health
+  itemDescription: Increases max health by 10%, increases health regen by 5%, and
+    heals
   itemIcon: {fileID: 2800000, guid: 70c90658ff622864994639a1dda65acb, type: 3}
 --- !u!1001 &3148870155237456674
 PrefabInstance:
