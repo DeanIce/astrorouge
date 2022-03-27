@@ -9,18 +9,23 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
-    [ExecuteInEditMode]
     public class EventManager : ManagerSingleton<EventManager>
     {
         [HideInInspector] public int requestedScene;
 
         public string scenePlay;
 
-        public RunStats runStats = new();
-
-        // public static EventManager instance { get; private set; }
 
         private Mode mode = Mode.Play;
+
+        public RunStats runStats = new();
+
+        //
+        // [RuntimeInitializeOnLoadMethod]
+        // private static void Init()
+        // {
+        //     print("should be calleda FIRST");
+        // }
 
 
         // Game State events
@@ -30,8 +35,6 @@ namespace Managers
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
-        // Player UI events (Todo: Dennis)
-        public event Action playerStatsChanged;
 
         public void Pause()
         {

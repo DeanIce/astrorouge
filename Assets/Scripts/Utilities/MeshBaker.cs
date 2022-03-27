@@ -34,22 +34,7 @@ namespace Utilities
             }
 
             meshIds.Dispose();
-
-            // JobHelper.AddScheduledJob(job, job.Schedule(meshIds.Length, 1), jobExecutor =>
-            // {
-            //     Debug.LogFormat("Job has completed in {0}s and {1} frames!", jobExecutor.Duration,
-            //         jobExecutor.FramesTaken);
-            //
-            //     // Result is available. LateUpdate() context.
-            //     meshIds.Dispose();
-            //
-            //     // Now instantiate colliders on the main thread.
-            //     foreach (KeyValuePair<int, Mesh> pair in meshes)
-            //     {
-            //         Debug.Log($"{pair.Key}/{pgs.Length}");
-            //         pgs[pair.Key].terrainMesh.GetComponent<MeshCollider>().sharedMesh = pair.Value;
-            //     }
-            // });
+            PlanetGenerator.meshesToBake.Clear();
         }
     }
 

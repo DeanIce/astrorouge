@@ -899,7 +899,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3445379, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1494,7 +1494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1447781039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,7 +1520,7 @@ MonoBehaviour:
     seed: 9
   player: {fileID: 539473548}
   transitionDuration: 5
-  current: 0
+  current: 1
   loadingIndicator: {fileID: 945922872}
 --- !u!4 &1447781040
 Transform:
@@ -1632,6 +1632,30 @@ PrefabInstance:
       objectReference: {fileID: 773071358}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+--- !u!1 &1542610187 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7689409263527498333, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+  m_PrefabInstance: {fileID: 7689409263916494935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1542610193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542610187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a15ab8a64c4158869cdde4aaef6ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logEvents: 0
+  requestedLevel: 1
+  levels:
+  - {fileID: 11400000, guid: 6ab9974211dca8c4f93bb1392b17cd04, type: 2}
+  - {fileID: 11400000, guid: 72b336be49e386f4b9d7926df09b49a8, type: 2}
+  - {fileID: 11400000, guid: 8228096c239e4a84e8e306f5b7285a25, type: 2}
+  player: {fileID: 539473548}
 --- !u!1001 &1552323435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1797,7 +1821,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3445379, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
