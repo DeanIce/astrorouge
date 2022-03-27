@@ -10,7 +10,7 @@ public class Wolf : BasicEnemyAgent
     public override void Start()
     {
         animator = GetComponentInChildren<Animator>();
-        animator.SetInteger("battle", 1);
+        animator.SetInteger("moving", 1);
         Dying = false;
         base.Start();
     }
@@ -31,11 +31,30 @@ public class Wolf : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
-        animator.SetInteger("moving", 3);
+        StartCoroutine(AttackAnim());
         yield return new WaitForSeconds(0.7f);
-        animator.SetInteger("moving", 0);
+        if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
+        else animator.SetInteger("moving", 1);
         //rend.enabled = false;
         Attacking = false;
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer)
+        {
+            StartCoroutine(BattleAnim(true));            
+        }
+        base.OnTriggerEnter(other);
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer)
+        {
+            StartCoroutine(BattleAnim(false));            
+        }
+        base.OnTriggerExit(other);
     }
 
     public override void Die()
@@ -43,8 +62,7 @@ public class Wolf : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            if (Random.value < 0.5) animator.SetInteger("moving", 13);
-            else animator.SetInteger("moving", 12);
+            animator.SetInteger("moving", 12);
             base.Die();
         }
     }
@@ -52,5 +70,28 @@ public class Wolf : BasicEnemyAgent
     public void SetAlpha(AlphaWolf boss)
     {
         alpha = boss;
+    }
+
+    private IEnumerator BattleAnim(bool start)
+    {
+        animator.SetInteger("moving", 0);
+        yield return new WaitForSeconds(0.05f);
+        if (start)
+        {
+            animator.SetInteger("battle", 1);
+            animator.SetInteger("moving", 2);
+        }
+        else
+        {
+            animator.SetInteger("battle", 0);
+            animator.SetInteger("moving", 1);
+        }
+    }
+
+    private IEnumerator AttackAnim()
+    {
+        animator.SetInteger("moving", 0);
+        yield return new WaitForSeconds(0.05f);
+        animator.SetInteger("moving", 3);
     }
 }
