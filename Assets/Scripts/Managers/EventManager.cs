@@ -68,6 +68,7 @@ namespace Managers
             if (mode != Mode.Pause)
             {
                 SceneManager.LoadScene(scenePlay);
+                LevelSelect.Instance.requestedLevel = 0;
                 runStats = new RunStats();
             }
 

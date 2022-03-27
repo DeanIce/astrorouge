@@ -10,6 +10,7 @@ namespace Managers
 {
     public class LevelSelect : ManagerSingleton<LevelSelect>
     {
+        private const string rootName = "LevelHolder";
         [Range(0, 2)] public int requestedLevel;
 
         public List<LevelScriptableObject> levels = new();
@@ -17,9 +18,7 @@ namespace Managers
         public GameObject player;
         public BallDropper ballDropper;
 
-        private const string rootName = "LevelHolder";
-
-        private bool isHackDone;
+        private bool isHackDone = true;
 
 
         private Random rng;
@@ -34,11 +33,17 @@ namespace Managers
             }
         }
 
+        private void Start()
+        {
+            if (SceneManager.GetActiveScene().name == "LevelScene") isHackDone = false;
+        }
+
         private void Update()
         {
             // Hack to avoid callback issues with physics collider trigger
             if (!isHackDone)
             {
+                print("why");
                 isHackDone = true;
                 // We may need to find the player again for some reason
                 if (player == null) player = GameObject.Find("PlayerDefault");
@@ -59,9 +64,10 @@ namespace Managers
             EventManager.Instance.loadBoss -= LoadBossEvent;
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
-        
+
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            print("hack " + scene.name);
             if (scene.name == "LevelScene") isHackDone = false;
         }
 
@@ -78,6 +84,7 @@ namespace Managers
 
             rng = new Random(0);
 
+            print("reeeeeee");
 
             LOGTIMER(timer, "start hard work");
 
@@ -119,7 +126,7 @@ namespace Managers
             child.localPosition = Vector3.zero;
             child.localRotation = Quaternion.identity;
             child.localScale = Vector3.one;
-            var o = child.gameObject;
+            GameObject o = child.gameObject;
             o.layer = gameObject.layer;
 
             return o;
