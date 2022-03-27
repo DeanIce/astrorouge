@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Rifle Scope
-  itemDescription: Increases projectile critical chance by 20%
+  itemDescription: Increases projectile critical chance by 5%
   itemIcon: {fileID: 2800000, guid: 4c1bc916e14e9fa4ea9a033af47be662, type: 3}
 --- !u!1001 &9184924083424695398
 PrefabInstance:

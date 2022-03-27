@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Light Armor
-  itemDescription: +40 Armor
+  itemDescription: +25 Armor
   itemIcon: {fileID: 2800000, guid: ded9cdf2b40b24a4db6786732a7c42b1, type: 3}
 --- !u!1001 &5498622385969169884
 PrefabInstance:

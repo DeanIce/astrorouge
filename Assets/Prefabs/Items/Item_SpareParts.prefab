@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Spare Parts
-  itemDescription: +30 Current Health
+  itemDescription: +10 Max Health and +30 Current Health
   itemIcon: {fileID: 2800000, guid: fc132bc90bb9964418be6249363ee8b9, type: 3}
 --- !u!4 &8259770263371190125 stripped
 Transform:

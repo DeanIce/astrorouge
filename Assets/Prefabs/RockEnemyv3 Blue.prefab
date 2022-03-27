@@ -63,5 +63,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockEnemyv3 Blue
       objectReference: {fileID: 0}
+    - target: {fileID: 8674004264568269431, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
+      propertyPath: movementSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9b76377ffc84fe4baf0724ea1686f2a, type: 3}
