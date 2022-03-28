@@ -15,15 +15,35 @@ public class Wolf : BasicEnemyAgent
         base.Start();
     }
 
+    public override void FixedUpdate()
+    {
+        GetComponent<Collider>().enabled = (alpha == null);
+        base.FixedUpdate();
+    }
+
+    public override void Wander(Vector3 direction)
+    {
+        DoGravity();
+
+        // This code is referenced from Unity documentation
+        rb.MovePosition(rb.position + direction * Time.deltaTime * movementSpeed);
+        if (!rotating)
+            StartCoroutine(Rotate());
+        else
+        {
+            deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
+            rb.MoveRotation(rb.rotation * deltaRotation);
+        }
+
+        base.Wander(direction);
+        //dont get too far away
+    }
+
     public override void Hunt(Collider target)
     {
         if (alpha == null)
         {
             base.Hunt(target);
-        }
-        else
-        {
-            alpha.Alert(target);
         }
     }
 

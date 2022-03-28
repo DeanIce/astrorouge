@@ -77,9 +77,4 @@ public class AlphaWolf : BasicEnemyAgent
         yield return new WaitForSeconds(0.05f);
         animator.SetInteger("moving", 3);
     }
-
-    public void Alert(Collider target)
-    {
-        Hunt(target);
-    }
 }
