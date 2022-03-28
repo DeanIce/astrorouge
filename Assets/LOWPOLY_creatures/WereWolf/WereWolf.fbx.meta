@@ -1,155 +1,449 @@
 fileFormatVersion: 2
 guid: 2434f98b1d07a1442bc209e65200aecd
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: arm.L
-    100002: arm.R
-    100004: Cube.001
-    100006: ear.L
-    100008: ear.L_end
-    100010: ear.R
-    100012: ear.R_end
-    100014: finger.L
-    100016: finger.L_end
-    100018: finger.R
-    100020: finger.R_end
-    100022: foot.L
-    100024: foot.L_end
-    100026: foot.R
-    100028: foot.R_end
-    100030: forearm.L
-    100032: forearm.R
-    100034: hand.L
-    100036: hand.R
-    100038: head
-    100040: hip.L
-    100042: hip.R
-    100044: hips
-    100046: IK_elbow.L
-    100048: IK_elbow.L_end
-    100050: IK_elbow.R
-    100052: IK_elbow.R_end
-    100054: IK_foot.L
-    100056: IK_foot.R
-    100058: IK_hand.L
-    100060: IK_hand.R
-    100062: IK_knee.L
-    100064: IK_knee.L_end
-    100066: IK_knee.R
-    100068: IK_knee.R_end
-    100070: jaw
-    100072: jaw_end
-    100074: leg_bot.L
-    100076: leg_bot.R
-    100078: leg_mid.L
-    100080: leg_mid.R
-    100082: leg_up.L
-    100084: leg_up.R
-    100086: lips
-    100088: lips_end
-    100090: neck
-    100092: Root_bone
-    100094: shoulder.L
-    100096: shoulder.R
-    100098: spine1
-    100100: spine2
-    100102: tail_end
-    100104: tail_end_end
-    100106: tail_mid
-    100108: tail_root
-    100110: thumb.L
-    100112: thumb.L_end
-    100114: thumb.R
-    100116: thumb.R_end
-    100118: //RootNode
-    100120: WerWolf_arma
-    100122: were_wolf
-    400000: arm.L
-    400002: arm.R
-    400004: Cube.001
-    400006: ear.L
-    400008: ear.L_end
-    400010: ear.R
-    400012: ear.R_end
-    400014: finger.L
-    400016: finger.L_end
-    400018: finger.R
-    400020: finger.R_end
-    400022: foot.L
-    400024: foot.L_end
-    400026: foot.R
-    400028: foot.R_end
-    400030: forearm.L
-    400032: forearm.R
-    400034: hand.L
-    400036: hand.R
-    400038: head
-    400040: hip.L
-    400042: hip.R
-    400044: hips
-    400046: IK_elbow.L
-    400048: IK_elbow.L_end
-    400050: IK_elbow.R
-    400052: IK_elbow.R_end
-    400054: IK_foot.L
-    400056: IK_foot.R
-    400058: IK_hand.L
-    400060: IK_hand.R
-    400062: IK_knee.L
-    400064: IK_knee.L_end
-    400066: IK_knee.R
-    400068: IK_knee.R_end
-    400070: jaw
-    400072: jaw_end
-    400074: leg_bot.L
-    400076: leg_bot.R
-    400078: leg_mid.L
-    400080: leg_mid.R
-    400082: leg_up.L
-    400084: leg_up.R
-    400086: lips
-    400088: lips_end
-    400090: neck
-    400092: Root_bone
-    400094: shoulder.L
-    400096: shoulder.R
-    400098: spine1
-    400100: spine2
-    400102: tail_end
-    400104: tail_end_end
-    400106: tail_mid
-    400108: tail_root
-    400110: thumb.L
-    400112: thumb.L_end
-    400114: thumb.R
-    400116: thumb.R_end
-    400118: //RootNode
-    400120: WerWolf_arma
-    400122: were_wolf
-    4300000: Cube.001
-    4300002: were_wolf
-    7400000: WerWolf_attack1
-    7400002: WerWolf_attack2
-    7400004: WerWolf_attack3
-    7400006: WerWolf_battle
-    7400008: WerWolf_bite
-    7400010: WerWolf_death1
-    7400012: WerWolf_death2
-    7400014: WerWolf_defence
-    7400016: WerWolf_galop
-    7400018: WerWolf_hit1
-    7400020: WerWolf_hit2
-    7400022: WerWolf_howl
-    7400024: WerWolf_idle
-    7400026: WerWolf_jump
-    7400028: WerWolf_ww_run
-    7400030: WerWolf_walk
-    7400032: WerWolf_defence_start
-    7400034: WerWolf_defence_end
-    9500000: //RootNode
-    13700000: Cube.001
-    13700002: were_wolf
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: arm.L
+  - first:
+      1: 100002
+    second: arm.R
+  - first:
+      1: 100004
+    second: Cube.001
+  - first:
+      1: 100006
+    second: ear.L
+  - first:
+      1: 100008
+    second: ear.L_end
+  - first:
+      1: 100010
+    second: ear.R
+  - first:
+      1: 100012
+    second: ear.R_end
+  - first:
+      1: 100014
+    second: finger.L
+  - first:
+      1: 100016
+    second: finger.L_end
+  - first:
+      1: 100018
+    second: finger.R
+  - first:
+      1: 100020
+    second: finger.R_end
+  - first:
+      1: 100022
+    second: foot.L
+  - first:
+      1: 100024
+    second: foot.L_end
+  - first:
+      1: 100026
+    second: foot.R
+  - first:
+      1: 100028
+    second: foot.R_end
+  - first:
+      1: 100030
+    second: forearm.L
+  - first:
+      1: 100032
+    second: forearm.R
+  - first:
+      1: 100034
+    second: hand.L
+  - first:
+      1: 100036
+    second: hand.R
+  - first:
+      1: 100038
+    second: head
+  - first:
+      1: 100040
+    second: hip.L
+  - first:
+      1: 100042
+    second: hip.R
+  - first:
+      1: 100044
+    second: hips
+  - first:
+      1: 100046
+    second: IK_elbow.L
+  - first:
+      1: 100048
+    second: IK_elbow.L_end
+  - first:
+      1: 100050
+    second: IK_elbow.R
+  - first:
+      1: 100052
+    second: IK_elbow.R_end
+  - first:
+      1: 100054
+    second: IK_foot.L
+  - first:
+      1: 100056
+    second: IK_foot.R
+  - first:
+      1: 100058
+    second: IK_hand.L
+  - first:
+      1: 100060
+    second: IK_hand.R
+  - first:
+      1: 100062
+    second: IK_knee.L
+  - first:
+      1: 100064
+    second: IK_knee.L_end
+  - first:
+      1: 100066
+    second: IK_knee.R
+  - first:
+      1: 100068
+    second: IK_knee.R_end
+  - first:
+      1: 100070
+    second: jaw
+  - first:
+      1: 100072
+    second: jaw_end
+  - first:
+      1: 100074
+    second: leg_bot.L
+  - first:
+      1: 100076
+    second: leg_bot.R
+  - first:
+      1: 100078
+    second: leg_mid.L
+  - first:
+      1: 100080
+    second: leg_mid.R
+  - first:
+      1: 100082
+    second: leg_up.L
+  - first:
+      1: 100084
+    second: leg_up.R
+  - first:
+      1: 100086
+    second: lips
+  - first:
+      1: 100088
+    second: lips_end
+  - first:
+      1: 100090
+    second: neck
+  - first:
+      1: 100092
+    second: Root_bone
+  - first:
+      1: 100094
+    second: shoulder.L
+  - first:
+      1: 100096
+    second: shoulder.R
+  - first:
+      1: 100098
+    second: spine1
+  - first:
+      1: 100100
+    second: spine2
+  - first:
+      1: 100102
+    second: tail_end
+  - first:
+      1: 100104
+    second: tail_end_end
+  - first:
+      1: 100106
+    second: tail_mid
+  - first:
+      1: 100108
+    second: tail_root
+  - first:
+      1: 100110
+    second: thumb.L
+  - first:
+      1: 100112
+    second: thumb.L_end
+  - first:
+      1: 100114
+    second: thumb.R
+  - first:
+      1: 100116
+    second: thumb.R_end
+  - first:
+      1: 100118
+    second: //RootNode
+  - first:
+      1: 100120
+    second: WerWolf_arma
+  - first:
+      1: 100122
+    second: were_wolf
+  - first:
+      4: 400000
+    second: arm.L
+  - first:
+      4: 400002
+    second: arm.R
+  - first:
+      4: 400004
+    second: Cube.001
+  - first:
+      4: 400006
+    second: ear.L
+  - first:
+      4: 400008
+    second: ear.L_end
+  - first:
+      4: 400010
+    second: ear.R
+  - first:
+      4: 400012
+    second: ear.R_end
+  - first:
+      4: 400014
+    second: finger.L
+  - first:
+      4: 400016
+    second: finger.L_end
+  - first:
+      4: 400018
+    second: finger.R
+  - first:
+      4: 400020
+    second: finger.R_end
+  - first:
+      4: 400022
+    second: foot.L
+  - first:
+      4: 400024
+    second: foot.L_end
+  - first:
+      4: 400026
+    second: foot.R
+  - first:
+      4: 400028
+    second: foot.R_end
+  - first:
+      4: 400030
+    second: forearm.L
+  - first:
+      4: 400032
+    second: forearm.R
+  - first:
+      4: 400034
+    second: hand.L
+  - first:
+      4: 400036
+    second: hand.R
+  - first:
+      4: 400038
+    second: head
+  - first:
+      4: 400040
+    second: hip.L
+  - first:
+      4: 400042
+    second: hip.R
+  - first:
+      4: 400044
+    second: hips
+  - first:
+      4: 400046
+    second: IK_elbow.L
+  - first:
+      4: 400048
+    second: IK_elbow.L_end
+  - first:
+      4: 400050
+    second: IK_elbow.R
+  - first:
+      4: 400052
+    second: IK_elbow.R_end
+  - first:
+      4: 400054
+    second: IK_foot.L
+  - first:
+      4: 400056
+    second: IK_foot.R
+  - first:
+      4: 400058
+    second: IK_hand.L
+  - first:
+      4: 400060
+    second: IK_hand.R
+  - first:
+      4: 400062
+    second: IK_knee.L
+  - first:
+      4: 400064
+    second: IK_knee.L_end
+  - first:
+      4: 400066
+    second: IK_knee.R
+  - first:
+      4: 400068
+    second: IK_knee.R_end
+  - first:
+      4: 400070
+    second: jaw
+  - first:
+      4: 400072
+    second: jaw_end
+  - first:
+      4: 400074
+    second: leg_bot.L
+  - first:
+      4: 400076
+    second: leg_bot.R
+  - first:
+      4: 400078
+    second: leg_mid.L
+  - first:
+      4: 400080
+    second: leg_mid.R
+  - first:
+      4: 400082
+    second: leg_up.L
+  - first:
+      4: 400084
+    second: leg_up.R
+  - first:
+      4: 400086
+    second: lips
+  - first:
+      4: 400088
+    second: lips_end
+  - first:
+      4: 400090
+    second: neck
+  - first:
+      4: 400092
+    second: Root_bone
+  - first:
+      4: 400094
+    second: shoulder.L
+  - first:
+      4: 400096
+    second: shoulder.R
+  - first:
+      4: 400098
+    second: spine1
+  - first:
+      4: 400100
+    second: spine2
+  - first:
+      4: 400102
+    second: tail_end
+  - first:
+      4: 400104
+    second: tail_end_end
+  - first:
+      4: 400106
+    second: tail_mid
+  - first:
+      4: 400108
+    second: tail_root
+  - first:
+      4: 400110
+    second: thumb.L
+  - first:
+      4: 400112
+    second: thumb.L_end
+  - first:
+      4: 400114
+    second: thumb.R
+  - first:
+      4: 400116
+    second: thumb.R_end
+  - first:
+      4: 400118
+    second: //RootNode
+  - first:
+      4: 400120
+    second: WerWolf_arma
+  - first:
+      4: 400122
+    second: were_wolf
+  - first:
+      43: 4300000
+    second: Cube.001
+  - first:
+      43: 4300002
+    second: were_wolf
+  - first:
+      74: 7400000
+    second: WerWolf_attack1
+  - first:
+      74: 7400002
+    second: WerWolf_attack2
+  - first:
+      74: 7400004
+    second: WerWolf_attack3
+  - first:
+      74: 7400006
+    second: WerWolf_battle
+  - first:
+      74: 7400008
+    second: WerWolf_bite
+  - first:
+      74: 7400010
+    second: WerWolf_death1
+  - first:
+      74: 7400012
+    second: WerWolf_death2
+  - first:
+      74: 7400014
+    second: WerWolf_defence
+  - first:
+      74: 7400016
+    second: WerWolf_galop
+  - first:
+      74: 7400018
+    second: WerWolf_hit1
+  - first:
+      74: 7400020
+    second: WerWolf_hit2
+  - first:
+      74: 7400022
+    second: WerWolf_howl
+  - first:
+      74: 7400024
+    second: WerWolf_idle
+  - first:
+      74: 7400026
+    second: WerWolf_jump
+  - first:
+      74: 7400028
+    second: WerWolf_ww_run
+  - first:
+      74: 7400030
+    second: WerWolf_walk
+  - first:
+      74: 7400032
+    second: WerWolf_defence_start
+  - first:
+      74: 7400034
+    second: WerWolf_defence_end
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Cube.001
+  - first:
+      137: 13700002
+    second: were_wolf
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -157,7 +451,7 @@ ModelImporter:
       name: WereWol
     second: {fileID: 2100000, guid: 5caedb2d92982ea489243a056d0cb187, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -166,6 +460,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -186,6 +481,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_attack1
       takeName: WerWolf_arma|ww_attack1
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -206,7 +502,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4970743
+        functionName: DoDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -336,6 +639,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_attack2
       takeName: WerWolf_arma|ww_attack2
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -356,7 +660,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.589602
+        functionName: DoDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -486,6 +797,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_attack3
       takeName: WerWolf_arma|ww_attack3
+      internalID: 0
       firstFrame: 0
       lastFrame: 35
       wrapMode: 0
@@ -506,7 +818,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.55106694
+        functionName: DoDamage2
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -636,6 +955,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_battle
       takeName: WerWolf_arma|ww_battle
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -786,6 +1106,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_bite
       takeName: WerWolf_arma|ww_bite
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -936,6 +1257,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_death1
       takeName: WerWolf_arma|ww_death1
+      internalID: 0
       firstFrame: 0
       lastFrame: 27
       wrapMode: 0
@@ -1086,6 +1408,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_death2
       takeName: WerWolf_arma|ww_death2
+      internalID: 0
       firstFrame: 0
       lastFrame: 50
       wrapMode: 0
@@ -1236,6 +1559,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_defence
       takeName: WerWolf_arma|ww_defence
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -1386,6 +1710,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_galop
       takeName: WerWolf_arma|ww_galop
+      internalID: 0
       firstFrame: 0
       lastFrame: 25
       wrapMode: 0
@@ -1536,6 +1861,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_hit1
       takeName: WerWolf_arma|ww_hit1
+      internalID: 0
       firstFrame: 0
       lastFrame: 15
       wrapMode: 0
@@ -1686,6 +2012,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_hit2
       takeName: WerWolf_arma|ww_hit2
+      internalID: 0
       firstFrame: 0
       lastFrame: 15
       wrapMode: 0
@@ -1836,6 +2163,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_howl
       takeName: WerWolf_arma|ww_howl
+      internalID: 0
       firstFrame: 0
       lastFrame: 70
       wrapMode: 0
@@ -1986,6 +2314,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_idle
       takeName: WerWolf_arma|ww_idle
+      internalID: 0
       firstFrame: 0
       lastFrame: 90
       wrapMode: 0
@@ -2136,6 +2465,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_jump
       takeName: WerWolf_arma|ww_jump
+      internalID: 0
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -2286,6 +2616,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_ww_run
       takeName: WerWolf_arma|ww_run
+      internalID: 0
       firstFrame: 0
       lastFrame: 24
       wrapMode: 0
@@ -2436,6 +2767,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_walk
       takeName: WerWolf_arma|ww_walk
+      internalID: 0
       firstFrame: 0
       lastFrame: 30
       wrapMode: 0
@@ -2586,6 +2918,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_defence_start
       takeName: WerWolf_arma|ww_defence
+      internalID: 0
       firstFrame: 0
       lastFrame: 15
       wrapMode: 0
@@ -2736,6 +3069,7 @@ ModelImporter:
     - serializedVersion: 16
       name: WerWolf_defence_end
       takeName: WerWolf_arma|ww_defence
+      internalID: 0
       firstFrame: 15
       lastFrame: 30
       wrapMode: 0
@@ -2890,25 +3224,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.9999999
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -2917,10 +3260,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -2930,13 +3273,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

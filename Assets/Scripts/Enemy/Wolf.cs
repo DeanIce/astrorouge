@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wolf : BasicEnemyAgent
 {
     [SerializeField] private AlphaWolf alpha;
-    private float maxDistance = 5f;
+    public float maxDistance = 5f;
     private bool attacked;
     private Animator animator;
 
@@ -28,7 +28,7 @@ public class Wolf : BasicEnemyAgent
     {
         DoGravity();
 
-        if (alpha != null && (Mathf.Abs(transform.position.x - alpha.transform.position.x) > maxDistance || Mathf.Abs(transform.position.y - alpha.transform.position.y) > maxDistance || Mathf.Abs(transform.position.z - alpha.transform.position.z) > maxDistance)) Hunt(alpha.GetComponent<Collider>());
+        if (alpha != null && Mathf.Abs((transform.position - alpha.transform.position).magnitude) > maxDistance) Hunt(alpha.GetComponent<Collider>());
         else base.Wander(direction);
     }
 
@@ -82,6 +82,10 @@ public class Wolf : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
+            if (alpha != null)
+            {
+                alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
+            }
             animator.SetInteger("moving", 12);
             base.Die();
         }
