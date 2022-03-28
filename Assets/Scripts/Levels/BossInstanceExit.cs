@@ -5,6 +5,12 @@ public class BossInstanceExit : MonoBehaviour
 {
     public string levelSceneName;
     public int levelNumber;
+    public AudioClip bossMusic;
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayMusicWithCrossfade(bossMusic);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
