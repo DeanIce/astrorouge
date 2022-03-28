@@ -32,7 +32,7 @@ public class Wolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.833f);
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);
         //rend.enabled = false;
