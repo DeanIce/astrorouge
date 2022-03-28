@@ -20,6 +20,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private AudioClip attack1SoundEffect;
     [SerializeField] private AudioClip attack2SoundEffect;
     [SerializeField] private float spread = 1.0f;
+
+    public HudUI hudUI;
     private readonly float decreasePerSecond = 60f;
     private readonly float increasePerSecond = 60f;
     private readonly float maxSpread = 30f;
@@ -41,6 +43,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     protected internal bool useGravity = true;
 
     public bool IsSprinting { get; private set; }
+
 
     private void Start()
     {
@@ -69,7 +72,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void FixedUpdate()
     {
         // Gravity
-        var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
+        Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
 
         if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
 
@@ -84,11 +87,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         animator.SetBool("isGrounded", isGrounded);
 
         // Calculate total displacement
-        var displacement = Walk(movement.ReadValue<Vector2>());
+        Vector3 displacement = Walk(movement.ReadValue<Vector2>());
         rb.MovePosition(transform.position + displacement);
 
         // Calculate lookAt vector then increment quaternion
-        var lookAt = Look(look.ReadValue<Vector2>());
+        Vector3 lookAt = Look(look.ReadValue<Vector2>());
 
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
@@ -98,12 +101,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else
             crosshairSpread -= decreasePerSecond * Time.deltaTime;
         crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
-        gameObject.GetComponent<HudUI>().AdjustCrosshair(crosshairSpread);
+        if (hudUI) hudUI.AdjustCrosshair(crosshairSpread);
     }
 
     private void OnEnable()
     {
-        var playerInputMap = InputManager.inputActions.Player;
+        PlayerInputActions.PlayerActions playerInputMap = InputManager.inputActions.Player;
 
         movement = playerInputMap.Movement;
         movement.Enable();
@@ -133,7 +136,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void OnDisable()
     {
-        var playerInputMap = InputManager.inputActions.Player;
+        PlayerInputActions.PlayerActions playerInputMap = InputManager.inputActions.Player;
         movement.Disable();
         look.Disable();
 
@@ -176,7 +179,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         HandleMoveAnimation(direction);
 
-        var movement = direction.x * transform.right + direction.y * transform.forward;
+        Vector3 movement = direction.x * transform.right + direction.y * transform.forward;
         return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
     }
@@ -211,7 +214,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
-        gameObject.GetComponent<HudUI>().SetHealth(PlayerStats.Instance.currentHealth);
+        if (hudUI) hudUI.SetHealth(PlayerStats.Instance.currentHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
@@ -277,8 +280,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void LobAttack(InputAction.CallbackContext obj)
     {
         animator.SetTrigger("lobThrow");
-        var attackVec = AttackVector();
-        var liftVec = transform.up - Vector3.Project(transform.up, attackVec);
+        Vector3 attackVec = AttackVector();
+        Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
         _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
             10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
@@ -289,19 +292,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private Vector3 AttackVector()
     {
-        var bulletSpread = spread;
+        float bulletSpread = spread;
         if (IsSprinting)
             bulletSpread += 1.5f;
 
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
-        var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         var screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
 
-        var centerPos = Camera.main.ScreenToWorldPoint(screenAim);
+        Vector3 centerPos = Camera.main.ScreenToWorldPoint(screenAim);
         Vector3 spreadPos = Random.insideUnitCircle * bulletSpread;
-        var screenPos = Camera.main.WorldToScreenPoint(centerPos + spreadPos);
-        var ray2 = Camera.main.ScreenPointToRay(screenPos);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(centerPos + spreadPos);
+        Ray ray2 = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray2.origin, ray2.direction * 50f, Color.green, 1f);
         Debug.DrawRay(ray.origin, ray.direction * 50f, Color.red, 1f);
 
@@ -311,14 +314,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Vector3 AttackVectorWithRecoil()
     {
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
-        var ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
 
     private GameObject HandleEffects(GameObject projectile)
     {
-        var rand = Random.Range(0.0f, 1.0f);
+        float rand = Random.Range(0.0f, 1.0f);
 
         if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
         rand = Random.Range(0.0f, 1.0f);

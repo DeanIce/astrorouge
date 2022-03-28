@@ -3,13 +3,18 @@ using UnityEngine.UIElements;
 
 public class InventoryUIController : MonoBehaviour
 {
-    public UIDocument inventoryHUD;
+    public VisualTreeAsset inventoryItem;
+
+    // public int row_max_box_count = 10;
     private readonly int box_height = 70;
-    private readonly int box_margin = 2;
-    private readonly int row_max_box_count = 10;
-    private int box_count;
-    private int box_width;
-    private VisualElement currentBox;
+
+    // private readonly int box_margin = 2;
+    // private int box_count;
+
+    private readonly int box_width = 70;
+    // private VisualElement currentBox;
+
+    private VisualElement inventoryContainer;
     private VisualElement root;
     private int root_height;
     private int root_width;
@@ -17,67 +22,66 @@ public class InventoryUIController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // set parameters
-        root_height = box_height + box_margin;
-        root_width = root_height * row_max_box_count;
-        box_width = box_height;
+        // // set parameters
+        // root_height = box_height + box_margin;
+        // root_width = root_height * row_max_box_count;
+        // box_width = box_height;
 
         // set roots
-        root = inventoryHUD.rootVisualElement;
-        root.style.width = root_width;
-        root.style.height = root_height;
-        MakeNewBox();
-        root.Add(currentBox);
+        root = GetComponent<UIDocument>().rootVisualElement;
+        inventoryContainer = root.Q<VisualElement>("inventory-container");
+
+
+        // inventoryContainer.style.width = root_width;
+        // inventoryContainer.style.height = root_height;
+        // MakeNewBox();
+        // inventoryContainer.Add(currentBox);
     }
 
-    private void MakeNewBox()
-    {
-        var box = new VisualElement();
-        // box.style.backgroundColor = Color.yellow;
-        box.style.flexDirection = FlexDirection.Row;
-        box.style.width = root_width;
-        box.style.height = root_height;
-        box_count++;
-        currentBox = box;
-    }
+    // private void MakeNewBox()
+    // {
+    //     var box = new VisualElement();
+    //     // box.style.backgroundColor = Color.yellow;
+    //     box.style.flexDirection = FlexDirection.Row;
+    //     box.style.width = root_width;
+    //     box.style.height = root_height;
+    //     box_count++;
+    //     currentBox = box;
+    // }
 
     private VisualElement MakeItemSlot(AbstractItem item, int number)
     {
-        var temp = new VisualElement();
-        temp.style.width = box_width;
-        temp.style.height = box_height;
-        temp.style.marginRight = box_margin;
-        temp.style.marginBottom = box_margin;
-        temp.style.backgroundColor = Color.gray;
-        temp.style.backgroundImage = new StyleBackground(item.itemIcon);
-        temp.style.position = Position.Relative;
+        VisualElement temp = inventoryItem.Instantiate().contentContainer;
+        temp.name = item.itemName;
 
-        var temp_label = new Label();
-        temp_label.style.position = Position.Absolute;
-        temp_label.style.right = 0;
-        temp_label.style.bottom = 0;
+        var temp_label = temp.Q<Label>("count");
+        // temp_label.style.position = Position.Absolute;
+        // temp_label.style.right = 0;
+        // temp_label.style.bottom = 0;
         temp_label.text = number.ToString();
         temp_label.name = item.itemName;
-        temp.Add(temp_label);
+
+        var icon = temp.Q<VisualElement>("icon");
+        icon.style.backgroundImage = new StyleBackground(item.itemIcon);
         return temp;
     }
 
     public void AddItem(AbstractItem item, int number)
     {
-        if (currentBox.childCount % 10 == 0 && currentBox.childCount != 0)
-        {
-            MakeNewBox();
-            root.Add(currentBox);
-            root.style.height = root_height * box_count;
-        }
+        // if (currentBox.childCount % 10 == 0 && currentBox.childCount != 0)
+        // {
+        //     MakeNewBox();
+        //     inventoryContainer.Add(currentBox);
+        //     inventoryContainer.style.height = root_height * box_count;
+        // }
 
-        var temp = MakeItemSlot(item, number);
-        currentBox.Add(temp);
+        VisualElement temp = MakeItemSlot(item, number);
+        inventoryContainer.Add(temp);
     }
 
     public void UpdateItem(AbstractItem item, int number)
     {
-        var boxLabel = root.Query<Label>(item.itemName).First();
+        Label boxLabel = inventoryContainer.Query<Label>(item.itemName).First();
         boxLabel.text = number.ToString();
     }
 }
