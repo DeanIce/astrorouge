@@ -174,9 +174,10 @@ namespace Managers
         /// <param name="volume"></param>
         public void SetMusicVolume(float volume)
         {
-            music1.volume = volume;
-            music2.volume = volume;
-            LOG(music1.volume + " " + music2.volume);
+            // Todo(Matt) : this is why we can't set audio right, these variables aren't assigned unless something is playing
+            if (music1) music1.volume = volume;
+            if (music2) music2.volume = volume;
+            // LOG(music1.volume + " " + music2.volume);
         }
 
         /// <summary>
@@ -185,7 +186,7 @@ namespace Managers
         /// <param name="volume"></param>
         public void SetSFXVolume(float volume)
         {
-            sfx.volume = volume;
+            if (sfx) sfx.volume = volume;
         }
 
         /// <summary>

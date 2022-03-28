@@ -70,7 +70,8 @@ namespace UI
 
         private void PauseGame()
         {
-            root.SetEnabled(true);
+            pauseMenu.SetEnabled(true);
+            // settingsMenu.SetEnabled(true);
             pauseMenu.style.display = DisplayStyle.Flex;
             AudioManager.Instance.PlaySFX(openMenuSoundEffect);
         }
@@ -79,19 +80,17 @@ namespace UI
         {
             pauseMenu.style.display = DisplayStyle.None;
             settingsMenu.style.display = DisplayStyle.None;
-            root.SetEnabled(false);
+            // root.SetEnabled(false);
+            pauseMenu.SetEnabled(false);
+            settingsMenu.SetEnabled(false);
         }
 
         private void GoBack(InputAction.CallbackContext obj)
         {
             if (settingsOpen)
-            {
                 BackButtonPressed();
-            }
             else
-            {
                 ContinueButtonPressed();
-            }
         }
 
 

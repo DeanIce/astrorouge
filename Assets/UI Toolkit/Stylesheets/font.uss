@@ -148,5 +148,13 @@
 }
 
 .noodle-pause-button:focus > Label {
-    color: rgb(255, 0, 0) !important;
+    color: rgb(255, 0, 0);
+}
+
+.inventory-icon:hover > .tooltip {
+    display: flex;
+}
+
+.tooltip {
+    display: none;
 }

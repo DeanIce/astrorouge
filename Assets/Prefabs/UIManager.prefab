@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4014463406395459265
 Transform:
   m_ObjectHideFlags: 0
@@ -195,6 +195,8 @@ GameObject:
   - component: {fileID: 3008076023962902297}
   - component: {fileID: 701718257226371612}
   - component: {fileID: 2425821241769339370}
+  - component: {fileID: 1272630956505383265}
+  - component: {fileID: 5849335948352391829}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -258,4 +260,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7258d64f0a1562041acb82d3794f3161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  level: 1
+--- !u!114 &1272630956505383265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543091563571336382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fb251f66ba60c47bce63e1f9a72c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPressSoundEffect: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
+  openMenuSoundEffect: {fileID: 8300000, guid: 20186564b07abc34d93ec1393ee9d731, type: 3}
+  closeMenuSoundEffect: {fileID: 8300000, guid: 01a7988c09ea47f419c2bbedccbe7d22, type: 3}
+  buttonHoverSoundEffect: {fileID: 8300000, guid: bd2c6e01a1aec744b90f4f45fad87229, type: 3}
+--- !u!114 &5849335948352391829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543091563571336382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f98c929de24bf5b0652422f70fae40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings:
+    displayMode: Fullscreen
+    fov: 60
+    resolution: TODO
+    screenShake: 1
+    volumeGame: 1
+    volumeMaster: 1
+    volumeMusic: 1
