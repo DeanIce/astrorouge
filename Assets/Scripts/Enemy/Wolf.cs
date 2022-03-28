@@ -5,7 +5,8 @@ using UnityEngine;
 public class Wolf : BasicEnemyAgent
 {
     [SerializeField] private AlphaWolf alpha;
-    private float maxDistance;
+    private float maxDistance = 5f;
+    private bool attacked;
     private Animator animator;
 
     public override void Start()
@@ -13,12 +14,13 @@ public class Wolf : BasicEnemyAgent
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         Dying = false;
+        attacked = false;
         base.Start();
     }
 
     public override void FixedUpdate()
     {
-        GetComponent<Collider>().enabled = (alpha == null);
+        Detector.GetComponent<Collider>().enabled = (alpha == null);
         base.FixedUpdate();
     }
 
@@ -48,6 +50,7 @@ public class Wolf : BasicEnemyAgent
         else animator.SetInteger("moving", 1);
         //rend.enabled = false;
         Attacking = false;
+        attacked = true;
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -57,6 +60,12 @@ public class Wolf : BasicEnemyAgent
             StartCoroutine(BattleAnim(true));            
         }
         base.OnTriggerEnter(other);
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        if (Wandering) base.OnTriggerEnter(other);
+        base.OnTriggerStay(other);
     }
 
     public override void OnTriggerExit(Collider other)
@@ -104,5 +113,14 @@ public class Wolf : BasicEnemyAgent
         animator.SetInteger("moving", 0);
         yield return new WaitForSeconds(0.05f);
         animator.SetInteger("moving", 3);
+    }
+
+    public void ReceiveOrder(Collider target)
+    {
+        while (!attacked)
+        {
+            Hunt(target);
+        }
+        attacked = false;
     }
 }
