@@ -13,10 +13,12 @@ namespace UI
         private Button buttonRetry;
         private Label quip;
         private ScrollView scrollView;
+        public AudioClip recapMusic;
 
         private void Start()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
+            AudioManager.Instance.PlayMusicWithCrossfade(recapMusic);
 
             quip = root.Q<Label>("TerminalContent");
             var (quote, _) = Quotes.Get();
