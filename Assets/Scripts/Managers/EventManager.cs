@@ -37,6 +37,13 @@ namespace Managers
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
+        public event Action<AbstractItem> itemAcquired;
+
+        public void ItemAcquired(AbstractItem item)
+        {
+            itemAcquired?.Invoke(item);
+        }
+
 
         public void LoadLevel(int i)
         {

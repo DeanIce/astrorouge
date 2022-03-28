@@ -51,7 +51,7 @@ public class HoldToPickUp : MonoBehaviour
 
     private void OnEnable()
     {
-        var playerInputMap = InputManager.inputActions.Player;
+        PlayerInputActions.PlayerActions playerInputMap = InputManager.inputActions.Player;
         pickup = playerInputMap.Pickup;
         // playerInputMap.Pickup.started += PickupStarted;
         playerInputMap.Pickup.performed += PickupPerformed;
@@ -60,7 +60,7 @@ public class HoldToPickUp : MonoBehaviour
 
     private void OnDisable()
     {
-        var playerInputMap = InputManager.inputActions.Player;
+        PlayerInputActions.PlayerActions playerInputMap = InputManager.inputActions.Player;
         pickup = playerInputMap.Pickup;
         // playerInputMap.Pickup.started -= PickupStarted;
         playerInputMap.Pickup.performed -= PickupPerformed;
@@ -90,14 +90,14 @@ public class HoldToPickUp : MonoBehaviour
 
     private void UpdatePickupProgressImage()
     {
-        var pct = currentPickupTimerElapsed / pickupTime;
+        float pct = currentPickupTimerElapsed / pickupTime;
         pickupProgressImage.fillAmount = pct;
     }
 
     private void SelectItemBeingPickedupFromRay()
     {
-        var start = Camera.main.transform.position;
-        var end = Camera.main.transform.forward * 15f + start;
+        Vector3 start = Camera.main.transform.position;
+        Vector3 end = Camera.main.transform.forward * 15f + start;
         RaycastHit hitInfo;
 
         Debug.DrawLine(start, end, Color.red);
@@ -130,6 +130,7 @@ public class HoldToPickUp : MonoBehaviour
         itemBeingPickedUp.ApplyStats();
         EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
         AudioManager.Instance.PlaySFX(pickUpSoundEffect, 0.2f);
+        EventManager.Instance.ItemAcquired(itemBeingPickedUp);
         itemBeingPickedUp = null;
     }
 }
