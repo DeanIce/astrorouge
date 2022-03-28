@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/font.uss?fileID=7433441132597879392&amp;guid=3497715282aa3064582d6e2a74bc706b&amp;type=3#font" />
+    <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_ListFrame03_DarkNavy.png?fileID=2800000&amp;guid=a1300a66813f4da459095bb593b794d3&amp;type=3#Frame_ListFrame03_DarkNavy&apos;); width: 457px; height: 95px; -unity-slice-left: 62; -unity-slice-right: 100; -unity-slice-top: 28; -unity-slice-bottom: 22; position: relative; flex-direction: row; padding-right: 14px; padding-left: 12px; padding-top: 7px; padding-bottom: 12px;">
+        <ui:VisualElement name="itemIcon" style="width: 95px;" />
+        <ui:VisualElement style="padding-left: 8px;">
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="itemName" class="oxanium" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px;" />
+            <ui:Label text="Label label label label label label label label label label label label label label label label label label" display-tooltip-when-elided="true" name="itemDescription" class="nexon" style="color: rgb(255, 255, 255); -unity-font-style: normal; white-space: normal;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

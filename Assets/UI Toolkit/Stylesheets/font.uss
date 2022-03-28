@@ -28,6 +28,16 @@
     -unity-font: resource('Oxanium-ExtraBold');
 }
 
+.nexon {
+    -unity-font-definition: none;
+    -unity-font: resource('NEXON Football Gothic L');
+}
+
+.oxanium {
+    -unity-font-definition: none;
+    -unity-font: resource('Oxanium-ExtraBold');
+}
+
 .noodle-stats-header {
     -unity-text-align: upper-left;
     -unity-font-style: bold;
