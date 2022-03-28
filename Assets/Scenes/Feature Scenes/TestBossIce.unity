@@ -2774,6 +2774,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelSceneName: LevelScene
   levelNumber: 2
+  bossMusic: {fileID: 8300000, guid: a5e781efd4f6e4309b0367131a10893d, type: 3}
 --- !u!1001 &715025977
 PrefabInstance:
   m_ObjectHideFlags: 0

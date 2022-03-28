@@ -111,6 +111,7 @@ MonoBehaviour:
   scale: {x: 11.240896, y: 40.62}
   totalNumEnemies: {x: 260, y: 300}
   totalNumProps: {x: 3584, y: 4000}
+  levelMusic: {fileID: 8300000, guid: 0d22c57f6667549d0bfd81a88382fbc8, type: 3}
   gravityHeight: 5
   falloffHeight: 3
   bossSceneName: TestBossForest

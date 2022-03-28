@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statDoc: {fileID: 9197481963319205126, guid: 8547654e8c65795449448cf02f86ed1f, type: 3}
+  recapMusic: {fileID: 8300000, guid: 5e7299579043c4cbda69e4187ef21afb, type: 3}
 --- !u!1 &2082259750
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ namespace Levels
 
         [MinMaxSlider(50, 10000)] public Vector2Int totalNumProps = new(200, 400);
 
+        public AudioClip levelMusic;
+
         public float gravityHeight = 3;
         public float falloffHeight = 5;
 
@@ -232,6 +234,10 @@ namespace Levels
         public void Load(GameObject root, Random rng)
         {
             // if (!isCreated) Create(root, rng, Stopwatch.StartNew());
+            if (levelMusic != null)
+            {
+                AudioManager.Instance.PlayMusicWithCrossfade(levelMusic);
+            }
 
             for (var i = 0; i < root.transform.childCount; i++)
             {
