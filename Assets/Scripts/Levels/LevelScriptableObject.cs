@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using GD.MinMaxSlider;
 using Gravity;
+using Managers;
 using Planets;
 using UnityEngine;
+using Utilities;
 using Random = System.Random;
 
 namespace Levels
@@ -19,6 +22,10 @@ namespace Levels
 
         [MinMaxSlider(1, 10)] public Vector2Int numPlanets = new(3, 5);
         [MinMaxSlider(1, 50)] public Vector2 scale = new(5, 12);
+
+        [MinMaxSlider(1, 500)] public Vector2Int totalNumEnemies = new(20, 100);
+
+        [MinMaxSlider(50, 10000)] public Vector2Int totalNumProps = new(200, 400);
 
         public float gravityHeight = 3;
         public float falloffHeight = 5;
@@ -37,19 +44,13 @@ namespace Levels
             // todo
         }
 
-
-        /// <summary>
-        ///     Create the level's world meshes, determine asset placement, etc.
-        ///     Expensive process, should be invoked before the level is required.
-        ///     Todo: prime target for parallelization
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="rng"></param>
-        /// <returns></returns>
-        public Vector3 Create(GameObject root, Random rng)
+        private float SphereArea(float r)
         {
-            var actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            return 4 * Mathf.PI * r * r;
+        }
 
+        private (float[], float[]) getRadiiAndAreas(Random rng, int actualNumPlanets)
+        {
             var radii = new float[actualNumPlanets];
 
 
@@ -61,41 +62,88 @@ namespace Levels
             Array.Sort(radii);
             Array.Reverse(radii);
 
-            var ballDropper = GameObject.Find("BallDropper").GetComponent<BallDropper>();
+            var areas = new float[actualNumPlanets];
+            float areaSum = 0;
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                areas[i] = SphereArea(radii[i]);
+                areaSum += areas[i];
+            }
 
-            var points = ballDropper.DropBalls(radii);
-            var playerPosition = Vector3.zero;
+            var areasRatio = new float[actualNumPlanets];
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                areasRatio[i] = areas[i] / areaSum;
+            }
 
-            var bossLevelIndex = rng.Next(0, actualNumPlanets);
+            return (radii, areasRatio);
+        }
 
+        private void WeightRatio(SpawnObjects.AssetCount[] assets)
+        {
+            float sum = 0;
+            foreach (SpawnObjects.AssetCount assetCount in assets)
+            {
+                sum += assetCount.ratio;
+            }
+
+            foreach (SpawnObjects.AssetCount assetCount in assets)
+            {
+                assetCount.weightedRatio = assetCount.ratio / sum;
+            }
+        }
+
+
+        /// <summary>
+        ///     Create the level's world meshes, determine asset placement, etc.
+        ///     Expensive process, should be invoked before the level is required.
+        ///     Todo: prime target for parallelization
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="rng"></param>
+        /// <param name="timer"></param>
+        /// <returns></returns>
+        public Vector3 Create(GameObject root, Random rng, BallDropper ballDropper, Stopwatch timer)
+        {
+            PlanetGenerator.spheres.Clear();
+            SpawnObjects.numPropsSpawned = 0;
+
+            // Solve range constants
+            int actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            int actualNumEnemies = rng.Next(totalNumEnemies.x, totalNumEnemies.y);
+            int actualNumProps = rng.Next(totalNumProps.x, totalNumProps.y);
+            int bossLevelIndex = rng.Next(0, actualNumPlanets);
+
+            // Determine planet radii and surface areas
+            (float[] radii, float[] areaRatios) = getRadiiAndAreas(rng, actualNumPlanets);
+            LevelManager.LogTimer(timer, "Solved range constants");
+
+            // Perform simulation
+            Vector3[] points = ballDropper.DropBalls(radii, timer);
+            LevelManager.LogTimer(timer, "Ball dropper done");
+
+            WeightRatio(enemyAssets);
+            WeightRatio(environmentAssets);
+
+            Vector3 playerPosition = Vector3.zero;
+            var pgs = new PlanetGenerator[actualNumPlanets];
+
+            // Create each planet
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 // Create planet
-                var planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
+                GameObject planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
-                var planetGenerator = planet.GetComponent<PlanetGenerator>();
-                planetGenerator.scale = radii[i] - gravityHeight;
+                pgs[i] = planet.GetComponent<PlanetGenerator>();
+                pgs[i].shape.seed = i;
+                pgs[i].scale = radii[i] - gravityHeight;
 
                 var sphereSource = planet.GetComponent<SphereSource>();
                 sphereSource.outerRadius = radii[i];
                 sphereSource.outerFalloffRadius = radii[i] + falloffHeight;
 
                 // Generate LOD meshes
-                planetGenerator.HandleGameModeGeneration();
-                planetGenerator.SetLOD(1);
-
-                // Spawn objects
-                SpawnObjects.SpawnProps(
-                    planet,
-                    planetGenerator,
-                    clusterAssets,
-                    environmentAssets,
-                    enemyAssets,
-                    rng
-                );
-
-                // Spawn the boss level entrance
-                if (i == bossLevelIndex) AddBossEntrance(planetGenerator, bossLevelEntrance, planet.transform, rng);
+                pgs[i].HandleGameModeGeneration(i);
 
 
                 // The player should spawn at the lowest planet
@@ -104,6 +152,39 @@ namespace Levels
                 // disable for now
                 planet.SetActive(false);
             }
+
+            LevelManager.LogTimer(timer, "Generate planet meshes");
+
+            // Bake mesh colliders in parallel (Burst compiled)
+            MeshBaker.BakeAndSetColliders(pgs);
+            LevelManager.LogTimer(timer, "Bake mesh colliders");
+
+
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                GameObject planet = pgs[i].gameObject;
+                // Add props to the planet
+                var propsOnPlanet = (int) (actualNumProps * areaRatios[i]);
+                SpawnObjects.AddProps(rng, planet, environmentAssets, propsOnPlanet);
+
+
+                // Spawn the boss level entrance
+                if (i == bossLevelIndex) AddBossEntrance(pgs[i], bossLevelEntrance, planet.transform, rng);
+
+                StaticBatchingUtility.Combine(planet);
+            }
+
+            LevelManager.LogTimer(timer, "Spawn items");
+
+            for (var i = 0; i < actualNumPlanets; i++)
+            {
+                GameObject planet = pgs[i].gameObject;
+                // Add enemies to the planet
+                var enemiesOnPlanet = (int) (actualNumEnemies * areaRatios[i]);
+                SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
+            }
+
+            LevelManager.LogTimer(timer, "Spawn enemies");
 
 
             isCreated = true;
@@ -114,19 +195,22 @@ namespace Levels
         private void AddBossEntrance(PlanetGenerator planetGenerator, GameObject objectToSpawn, Transform origin,
             Random rng)
         {
-            var spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
+            Vector3 spawnLocation = SpawnObjects.ObjectSpawnLocation(planetGenerator.spawnObjectVertices.ToList(),
                 planetGenerator.scale, rng);
-            spawnLocation += origin.position;
-            var placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            Vector3 position = origin.position;
+            spawnLocation += position;
+            GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
 
 
             // Find the center of our origin
-            placeObject.transform.LookAt(origin.position);
+            placeObject.transform.LookAt(position);
 
             // First orient stemming out from planet
             // THEN randomly rotate on plane, NEED to do in this order
-            placeObject.transform.rotation *= Quaternion.Euler(-90, 0, 0);
-            placeObject.transform.rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+            Quaternion rotation = placeObject.transform.rotation;
+            rotation *= Quaternion.Euler(-90, 0, 0);
+            rotation *= Quaternion.Euler(0, rng.Next(0, 180), 0);
+            placeObject.transform.rotation = rotation;
 
             // Set Parent
             placeObject.transform.parent = origin;
@@ -135,8 +219,8 @@ namespace Levels
 
         private float rngRange(Random rng, float start, float end)
         {
-            var sample = rng.NextDouble();
-            var scaled = sample * (end - start) + start;
+            double sample = rng.NextDouble();
+            double scaled = sample * (end - start) + start;
             var f = (float) scaled;
             return f;
         }
@@ -147,11 +231,11 @@ namespace Levels
         /// </summary>
         public void Load(GameObject root, Random rng)
         {
-            if (!isCreated) Create(root, rng);
+            // if (!isCreated) Create(root, rng, Stopwatch.StartNew());
 
             for (var i = 0; i < root.transform.childCount; i++)
             {
-                var child = root.transform.GetChild(i);
+                Transform child = root.transform.GetChild(i);
                 child.gameObject.SetActive(true);
             }
         }

@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Running Shoes
-  itemDescription: Increases Dash Distance by 10%
+  itemDescription: Increases Dash Distance by 5%
   itemIcon: {fileID: 2800000, guid: 66bd5daaf1e0d8b45855331f87f54acf, type: 3}
 --- !u!1001 &6215826021835218470
 PrefabInstance:

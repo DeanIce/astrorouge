@@ -7,6 +7,7 @@
             <ui:Button text="New Game" display-tooltip-when-elided="true" name="newgame-button" class="button" />
             <ui:Button text="Settings" display-tooltip-when-elided="true" name="settings-button" class="button" />
             <ui:Button text="Credits" display-tooltip-when-elided="true" name="about-button" class="button" />
+            <ui:Button text="Feedback" display-tooltip-when-elided="true" name="feedback-button" class="button" />
             <ui:Button text="Quit" display-tooltip-when-elided="true" name="quit-button" class="button" />
         </ui:VisualElement>
         <ui:Instance template="SettingsMenu" name="SettingsMenu" style="display: none;" />
@@ -14,6 +15,6 @@
             <ui:Label text="Placeholder text" display-tooltip-when-elided="true" name="credits-scroll" style="height: 161px; width: 142px; font-size: 20px; -unity-text-align: upper-center;" />
             <ui:Button text="Back" display-tooltip-when-elided="true" name="back-button" class="button" style="bottom: 40px; position: absolute; left: 40px;" />
         </ui:VisualElement>
-        <ui:VisualElement style="position: absolute; background-image: url(&apos;project://database/Assets/Sprites/DangerNoodlesLogoNoBackgroundWhiteText.png?fileID=2800000&amp;guid=9e9a8dbfacd25aa45a55beccfcbfb718&amp;type=3#DangerNoodlesLogoNoBackgroundWhiteText&apos;); right: 0; bottom: 0; width: 100px; height: 100px;" />
+        <ui:VisualElement text="Feedback" style="position: absolute; background-image: url(&apos;project://database/Assets/Sprites/DangerNoodlesLogoNoBackgroundWhiteText.png?fileID=2800000&amp;guid=9e9a8dbfacd25aa45a55beccfcbfb718&amp;type=3#DangerNoodlesLogoNoBackgroundWhiteText&apos;); right: 0; bottom: 0; width: 100px; height: 100px;" />
     </ui:VisualElement>
 </ui:UXML>

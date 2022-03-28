@@ -189,6 +189,9 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         EventManager.Instance.runStats.enemiesKilled++;
+        GetComponent<Collider>().enabled = false;
+        Body.GetComponent<Collider>().enabled = false;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         StartCoroutine(DestroyLater());
     }
 

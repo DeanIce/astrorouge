@@ -1,5 +1,5 @@
+using Managers;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BossInstanceEnter : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class BossInstanceEnter : MonoBehaviour
     {
         if (other.gameObject.GetComponent<PlayerDefault>() && !isLoading)
         {
-            SceneManager.LoadScene(bossSceneName);
+            EventManager.Instance.LoadBoss(bossSceneName);
             isLoading = true;
         }
     }

@@ -9,29 +9,47 @@ namespace Managers
     ///     Navigate to "Project Settings > Script Execution Order"
     ///     then add this script at -1 before the default time.
     /// </summary>
-    [ExecuteInEditMode]
     public class EventManager : ManagerSingleton<EventManager>
     {
         [HideInInspector] public int requestedScene;
 
         public string scenePlay;
 
-        public RunStats runStats = new();
 
-        // public static EventManager instance { get; private set; }
+        public Action<int> loadLevel;
+
 
         private Mode mode = Mode.Play;
 
+        public RunStats runStats = new();
+
+        //
+        // [RuntimeInitializeOnLoadMethod]
+        // private static void Init()
+        // {
+        //     print("should be calleda FIRST");
+        // }
+
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit;
-
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
-        // Player UI events (Todo: Dennis)
-        public event Action playerStatsChanged;
+
+        public void LoadLevel(int i)
+        {
+            SceneManager.LoadScene("LevelScene");
+            LevelSelect.Instance.requestedLevel = i;
+            // loadLevel?.Invoke(i);
+        }
+
+        public void LoadBoss(string bossSceneName)
+        {
+            loadBoss?.Invoke();
+            SceneManager.LoadScene(bossSceneName);
+        }
 
         public void Pause()
         {
@@ -50,6 +68,7 @@ namespace Managers
             if (mode != Mode.Pause)
             {
                 SceneManager.LoadScene(scenePlay);
+                LevelSelect.Instance.requestedLevel = 0;
                 runStats = new RunStats();
             }
 

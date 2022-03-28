@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Steroids
-  itemDescription: Decrease melee speed by 10%
+  itemDescription: Decrease melee speed by 5%
   itemIcon: {fileID: 2800000, guid: 60e3f3f983b945641b4ab47f794da60d, type: 3}
 --- !u!1001 &2684260779701959655
 PrefabInstance:

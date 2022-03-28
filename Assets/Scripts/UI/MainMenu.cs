@@ -50,13 +50,9 @@ Todo: add assets here... names not links
         private VisualElement aboutMenu;
 
         private Label creditsScroll;
+        private Button feedbackButton;
 
         private VisualElement mainMenu;
-        // private Slider musicSlider;
-        // private float musicVolumeValue;
-        // private Toggle muteButton;
-
-        // private bool muteValue;
 
         private Button newGameButton;
         private Button quitButton;
@@ -67,13 +63,10 @@ Todo: add assets here... names not links
         private Button settingsButton;
 
         private VisualElement settingsMenu;
-        // private Slider sfxSlider;
-        // private float sfxVolumeValue;
 
-        // Start is called before the first frame update
         private void Start()
         {
-            var root = GetComponent<UIDocument>().rootVisualElement;
+            VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
             settingsMenu = root.Q<VisualElement>("SettingsMenu");
             mainMenu = root.Q<VisualElement>("MainMenu");
@@ -85,13 +78,10 @@ Todo: add assets here... names not links
             aboutButton = mainMenu.Q<Button>("about-button");
             quitButton = mainMenu.Q<Button>("quit-button");
 
+            feedbackButton = mainMenu.Q<Button>("feedback-button");
+
             //Settings buttons
             settingsBackButton = settingsMenu.Q<Button>("back-button");
-            // muteButton = settingsMenu.Q<Toggle>("mute-button");
-            // musicSlider = settingsMenu.Q<Slider>("music-volume-slider");
-            // sfxSlider = settingsMenu.Q<Slider>("sfx-volume-slider");
-
-            //About buttons
             aboutBackButton = aboutMenu.Q<Button>("back-button");
             creditsScroll = aboutMenu.Q<Label>("credits-scroll");
             creditsScroll.text = creditsText;
@@ -107,10 +97,11 @@ Todo: add assets here... names not links
             newGameButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             aboutButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            feedbackButton.RegisterCallback<MouseEnterEvent>(PlaySound);
 
-            // muteValue = muteButton.value;
-            // musicVolumeValue = musicSlider.value;
-            // sfxVolumeValue = sfxSlider.value;
+
+            feedbackButton.clicked += () => Application.OpenURL("https://forms.gle/M6GhsLW5vpnR3Vit6");
+
 
             AudioManager.Instance.PlayMusic(mainMenuMusic);
         }
@@ -118,31 +109,11 @@ Todo: add assets here... names not links
 
         private void Update()
         {
-            // if (muteValue != muteButton.value)
-            // {
-            //     muteValue = muteButton.value;
-            //     AudioManager.instance.ToggleMute();
-            // }
-            //
-            // if (musicVolumeValue != musicSlider.value)
-            // {
-            //     musicVolumeValue = musicSlider.value;
-            //     AudioManager.instance.SetMusicVolume(musicVolumeValue);
-            // }
-
-            // if (sfxVolumeValue != sfxSlider.value)
-            // {
-            //     sfxVolumeValue = sfxSlider.value;
-            //     AudioManager.instance.SetSFXVolume(sfxVolumeValue);
-            // }
-
             // Cute hack to get scrolling credits
             // Todo: make credit scroll more resolution and aspect ratio independent
-            var val = creditsScroll.style.marginTop.value.value;
+            float val = creditsScroll.style.marginTop.value.value;
             if (scrolling && val > -scrollAmount)
-            {
                 creditsScroll.style.marginTop = new StyleLength(val - scrollSpeed);
-            }
             else if (scrolling && val <= -scrollAmount)
             {
                 BackButtonPressed();
@@ -193,6 +164,7 @@ Todo: add assets here... names not links
             aboutMenu.style.display = DisplayStyle.None;
             scrolling = false;
         }
+
         private void PlaySound(MouseEnterEvent ev)
         {
             AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
