@@ -5,6 +5,7 @@ using UnityEngine;
 public class Wolf : BasicEnemyAgent
 {
     [SerializeField] private AlphaWolf alpha;
+    private float maxDistance;
     private Animator animator;
 
     public override void Start()
@@ -25,18 +26,8 @@ public class Wolf : BasicEnemyAgent
     {
         DoGravity();
 
-        // This code is referenced from Unity documentation
-        rb.MovePosition(rb.position + direction * Time.deltaTime * movementSpeed);
-        if (!rotating)
-            StartCoroutine(Rotate());
-        else
-        {
-            deltaRotation = Quaternion.Euler(eulerAngleVelocity * Time.deltaTime);
-            rb.MoveRotation(rb.rotation * deltaRotation);
-        }
-
-        base.Wander(direction);
-        //dont get too far away
+        if (alpha != null && (Mathf.Abs(transform.position.x - alpha.transform.position.x) > maxDistance || Mathf.Abs(transform.position.y - alpha.transform.position.y) > maxDistance || Mathf.Abs(transform.position.z - alpha.transform.position.z) > maxDistance)) Hunt(alpha.GetComponent<Collider>());
+        else base.Wander(direction);
     }
 
     public override void Hunt(Collider target)
