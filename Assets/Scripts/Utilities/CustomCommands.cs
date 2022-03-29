@@ -19,7 +19,7 @@ namespace Utilities
         public static string LevelRestart()
         {
             EventManager.Instance.Play();
-            LevelManager.Instance.StartCoroutineLoadLevel();
+            // LevelManager.Instance.StartCoroutineLoadLevel();
             return "done";
         }
 
@@ -27,8 +27,8 @@ namespace Utilities
         [Preserve]
         public static string LevelList()
         {
-            var result = string.Join("\n",
-                LevelManager.Instance.levels.Select((description, i) => $"{i}: {description.displayName}"));
+            string result = string.Join("\n",
+                LevelSelect.Instance.levels.Select((description, i) => $"{i}: {description.name}"));
 
             return result;
         }
@@ -37,13 +37,13 @@ namespace Utilities
         [Preserve]
         public static string LevelList(int level)
         {
-            if (level >= LevelManager.Instance.levels.Count)
+            if (level >= LevelSelect.Instance.levels.Count)
                 return $"Level index {level} out of bounds. See the `level.list` command.";
 
 
             EventManager.Instance.Play();
-            LevelManager.Instance.current = level;
-            LevelManager.Instance.StartCoroutineLoadLevel();
+            // LevelManager.Instance.current = level;
+            // LevelManager.Instance.StartCoroutineLoadLevel();
             return "done";
         }
 

@@ -42,7 +42,7 @@ namespace Managers
             if (logEvents) print($"{className}: {message}");
         }
 
-        protected void LOGTIMER(Stopwatch sw, object message)
+        protected internal void LOGTIMER(Stopwatch sw, object message)
         {
             Type type = GetType().UnderlyingSystemType;
             string className = type.Name;

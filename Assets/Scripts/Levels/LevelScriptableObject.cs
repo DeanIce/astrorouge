@@ -14,8 +14,6 @@ namespace Levels
     [CreateAssetMenu(fileName = "Level", menuName = "BaseLevel", order = 0)]
     public class LevelScriptableObject : ScriptableObject
     {
-        // Todo: boss levels
-
         public SpawnObjects.AssetCount[] clusterAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] environmentAssets = Array.Empty<SpawnObjects.AssetCount>();
         public SpawnObjects.AssetCount[] enemyAssets = Array.Empty<SpawnObjects.AssetCount>();
@@ -99,7 +97,6 @@ namespace Levels
         /// <summary>
         ///     Create the level's world meshes, determine asset placement, etc.
         ///     Expensive process, should be invoked before the level is required.
-        ///     Todo: prime target for parallelization
         /// </summary>
         /// <param name="root"></param>
         /// <param name="rng"></param>
@@ -118,11 +115,11 @@ namespace Levels
 
             // Determine planet radii and surface areas
             (float[] radii, float[] areaRatios) = getRadiiAndAreas(rng, actualNumPlanets);
-            LevelManager.LogTimer(timer, "Solved range constants");
+            LevelSelect.Instance.LOGTIMER(timer, "Solved range constants");
 
             // Perform simulation
             Vector3[] points = ballDropper.DropBalls(radii, timer);
-            LevelManager.LogTimer(timer, "Ball dropper done");
+            LevelSelect.Instance.LOGTIMER(timer, "Ball dropper done");
 
             WeightRatio(enemyAssets);
             WeightRatio(environmentAssets);
@@ -155,11 +152,11 @@ namespace Levels
                 planet.SetActive(false);
             }
 
-            LevelManager.LogTimer(timer, "Generate planet meshes");
+            LevelSelect.Instance.LOGTIMER(timer, "Generate planet meshes");
 
             // Bake mesh colliders in parallel (Burst compiled)
             MeshBaker.BakeAndSetColliders(pgs);
-            LevelManager.LogTimer(timer, "Bake mesh colliders");
+            LevelSelect.Instance.LOGTIMER(timer, "Bake mesh colliders");
 
 
             for (var i = 0; i < actualNumPlanets; i++)
@@ -176,7 +173,7 @@ namespace Levels
                 StaticBatchingUtility.Combine(planet);
             }
 
-            LevelManager.LogTimer(timer, "Spawn items");
+            LevelSelect.Instance.LOGTIMER(timer, "Spawn items");
 
             for (var i = 0; i < actualNumPlanets; i++)
             {
@@ -186,7 +183,7 @@ namespace Levels
                 SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
             }
 
-            LevelManager.LogTimer(timer, "Spawn enemies");
+            LevelSelect.Instance.LOGTIMER(timer, "Spawn enemies");
 
 
             isCreated = true;
@@ -234,10 +231,7 @@ namespace Levels
         public void Load(GameObject root, Random rng)
         {
             // if (!isCreated) Create(root, rng, Stopwatch.StartNew());
-            if (levelMusic != null)
-            {
-                AudioManager.Instance.PlayMusicWithCrossfade(levelMusic);
-            }
+            if (levelMusic != null) AudioManager.Instance.PlayMusicWithCrossfade(levelMusic);
 
             for (var i = 0; i < root.transform.childCount; i++)
             {

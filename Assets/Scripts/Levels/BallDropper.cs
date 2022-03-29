@@ -32,7 +32,7 @@ namespace Levels
                 balls[i] = newBall;
             }
 
-            LevelManager.LogTimer(timer, "Create balls");
+            LevelSelect.Instance.LOGTIMER(timer, "Create balls");
 
             // Physics.autoSimulation = true;
 
@@ -41,7 +41,7 @@ namespace Levels
                 Physics.Simulate(stepSize);
             }
 
-            LevelManager.LogTimer(timer, "Step simulation");
+            LevelSelect.Instance.LOGTIMER(timer, "Step simulation");
 
 
             Vector3 lowest = result[0];
@@ -64,7 +64,7 @@ namespace Levels
 
 
             Physics.autoSimulation = true;
-            LevelManager.LogTimer(timer, "Scale results");
+            LevelSelect.Instance.LOGTIMER(timer, "Scale results");
 
             return result;
         }
