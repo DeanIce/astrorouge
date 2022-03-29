@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ namespace Managers
         [HideInInspector] public int requestedScene;
 
         public string scenePlay;
+
+        public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
 
         public Action<int> loadLevel;
@@ -32,30 +35,43 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss;
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
         public event Action<AbstractItem> itemAcquired;
 
+
+        public event Action<float> crosshairSpread;
+
+        public void CrosshairSpread(float a)
+        {
+            crosshairSpread?.Invoke(a);
+        }
+
         public void ItemAcquired(AbstractItem item)
         {
             itemAcquired?.Invoke(item);
         }
 
+        public void PlayerStatsUpdated()
+        {
+            playerStatsUpdated?.Invoke();
+        }
 
         public void LoadLevel(int i)
         {
             SceneManager.LoadScene("LevelScene");
             LevelSelect.Instance.requestedLevel = i;
-            // loadLevel?.Invoke(i);
+            PlayerStatsUpdated();
         }
 
         public void LoadBoss(string bossSceneName)
         {
-            loadBoss?.Invoke();
             SceneManager.LoadScene(bossSceneName);
+            loadBoss?.Invoke();
+            PlayerStatsUpdated();
         }
 
         public void Pause()
@@ -72,11 +88,12 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
+            // Below happens when we request play from the main menu,
+            // signifying the start of a new run with zeroed stats.
             if (mode != Mode.Pause)
             {
                 SceneManager.LoadScene(scenePlay);
-                LevelSelect.Instance.requestedLevel = 0;
-                runStats = new RunStats();
+                resetInternalState();
             }
 
             mode = Mode.Play;
@@ -85,6 +102,14 @@ namespace Managers
             playGame?.Invoke();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void resetInternalState()
+        {
+            LevelSelect.Instance.requestedLevel = 0;
+            runStats = new RunStats();
+            PlayerStats.Instance.SetDefaultValues();
+            inventory.Clear();
         }
 
         public void Menu()

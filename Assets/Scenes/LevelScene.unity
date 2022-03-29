@@ -1283,9 +1283,9 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 1673590894}
-    - target: {fileID: 2370587532675454182, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: baseRangeBaseDamage
-      value: 2
+    - target: {fileID: 1988730679219617357, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6133285360535605883, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform

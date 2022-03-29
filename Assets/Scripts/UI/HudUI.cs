@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,8 @@ namespace UI
     {
         public int level;
         private readonly float crosshairSize = 60;
+
+        private readonly float maxHealth = 100;
 
         private VisualElement crosshair;
 
@@ -18,8 +21,6 @@ namespace UI
         private VisualElement healthBar;
         private VisualElement healthBarCorner;
         private TextElement healthBarText;
-
-        private float maxHealth = 100;
 
         private void Start()
         {
@@ -34,13 +35,27 @@ namespace UI
             expBar = root.Q<VisualElement>("Exp_Bar_Fill");
             expLevelText = root.Q<TextElement>("LevelText");
 
-            maxHealth = PlayerStats.Instance.maxHealth;
-            SetHealth(maxHealth);
+            SetHealth(PlayerStats.Instance.currentHealth);
 
             LevelUp();
             SetExp(10, 100);
         }
 
+        private void OnEnable()
+        {
+            EventManager.Instance.playerStatsUpdated += UpdateBars;
+            EventManager.Instance.crosshairSpread += AdjustCrosshair;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.playerStatsUpdated -= UpdateBars;
+        }
+
+        private void UpdateBars()
+        {
+            SetHealth(PlayerStats.Instance.currentHealth);
+        }
 
         public void SetHealth(float hp)
         {

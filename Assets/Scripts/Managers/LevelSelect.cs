@@ -72,7 +72,7 @@ namespace Managers
 
         private void LoadBossEvent()
         {
-            UnloadLevel();
+            // UnloadLevel();
         }
 
 

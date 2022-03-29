@@ -18,16 +18,14 @@ public class BossInstanceExit : MonoBehaviour
         if (levelNumber != -1)
         {
             // 9 is current player layer, update if change
-            print("Loading " + levelSceneName);
+            // print("Loading " + levelSceneName);
             if (other.gameObject.GetComponent<PlayerDefault>()) EventManager.Instance.LoadLevel(levelNumber);
         }
         else
         {
             // 9 is current player layer, update if change
-            print("Loading " + levelSceneName);
+            // print("Loading " + levelSceneName);
             if (other.gameObject.GetComponent<PlayerDefault>()) EventManager.Instance.Win();
         }
     }
-
-
 }
