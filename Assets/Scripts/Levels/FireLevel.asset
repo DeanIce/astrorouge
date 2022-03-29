@@ -63,6 +63,7 @@ MonoBehaviour:
   scale: {x: 7.26, y: 12.305924}
   totalNumEnemies: {x: 4, y: 4}
   totalNumProps: {x: 50, y: 55}
+  levelMusic: {fileID: 8300000, guid: 301908ce092b54a1ab059af6f2e2a728, type: 3}
   gravityHeight: 5
   falloffHeight: 3
   bossSceneName: TestBossFire

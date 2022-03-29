@@ -98,12 +98,13 @@ namespace Managers
         private IEnumerator UpdateMusicWithCrossFade(AudioSource activeMusic, AudioSource newMusic,
             float transisitonPeriod)
         {
+            var oldVolume = activeMusic.volume;
             var time = 0.0f;
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = activeMusic.volume - time / transisitonPeriod * activeMusic.volume;
-                newMusic.volume = time / transisitonPeriod;
+                activeMusic.volume = oldVolume - ((time / transisitonPeriod) * oldVolume);
+                newMusic.volume = (time / transisitonPeriod) * oldVolume;
                 yield return null;
             }
 
@@ -119,11 +120,12 @@ namespace Managers
 
         private IEnumerator UpdateFadeOut(AudioSource activeMusic, float transisitonPeriod)
         {
+            var oldVolume = activeMusic.volume;
             var time = 0.0f;
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                activeMusic.volume = activeMusic.volume - time / transisitonPeriod * activeMusic.volume;
+                activeMusic.volume = oldVolume - ((time / transisitonPeriod) * oldVolume);
                 yield return null;
             }
 
@@ -140,11 +142,12 @@ namespace Managers
 
         private IEnumerator UpdateFadeIn(AudioSource newMusic, float transisitonPeriod)
         {
+            var oldVolume = currentMusicSource ? music1.volume : music2.volume;
             var time = 0.0f;
 
             for (time = 0.0f; time <= transisitonPeriod; time += Time.deltaTime)
             {
-                newMusic.volume = time / transisitonPeriod;
+                newMusic.volume = (time / transisitonPeriod) * oldVolume;
                 yield return null;
             }
         }
