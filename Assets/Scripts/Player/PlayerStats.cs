@@ -1,8 +1,9 @@
 using System;
+using Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : ManagerSingleton<PlayerStats>
 {
     // Melee Stats
     public float meleeAttackDelay;
@@ -103,18 +104,12 @@ public class PlayerStats : MonoBehaviour
     [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
     [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
-    public static PlayerStats Instance { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null && Instance != this)
-            Destroy(gameObject);
-        else
-        {
-            Instance = this;
-            SetDefaultValues();
-        }
+        SetDefaultValues();
     }
+
 
     public event Action MoustacheEnable;
 
@@ -125,7 +120,7 @@ public class PlayerStats : MonoBehaviour
         return rangeBaseDamage * rangeDamageMultiplier;
     }
 
-    private void SetDefaultValues()
+    public void SetDefaultValues()
     {
         meleeAttackDelay = baseMeleeAttackDelay;
         meleeBaseDamage = baseMeleeBaseDamage;

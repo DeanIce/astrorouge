@@ -213,7 +213,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
-        EventManager.Instance.PlayerStatsUpdated(PlayerStats.Instance);
+        EventManager.Instance.PlayerStatsUpdated();
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 

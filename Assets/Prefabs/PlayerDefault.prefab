@@ -177,7 +177,6 @@ GameObject:
   - component: {fileID: 579053813939167120}
   - component: {fileID: 579053813939167214}
   - component: {fileID: 5464077082696350833}
-  - component: {fileID: 2370587532675454182}
   - component: {fileID: 1018908818363566110}
   - component: {fileID: 5313944904042844001}
   - component: {fileID: 3798061513029287840}
@@ -233,7 +232,6 @@ MonoBehaviour:
   attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
   attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
   spread: 1
-  hudUI: {fileID: 0}
 --- !u!54 &579053813939167214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -264,93 +262,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2370587532675454182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 579053813939167122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2328b8e90ae63d4891df998ebafa546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeAttackDelay: 0
-  meleeBaseDamage: 0
-  meleeDamageMultiplier: 0
-  meleeCritChance: 0
-  meleeCritMultiplier: 0
-  meleeKnockbackForce: 0
-  meleeAttackRange: 0
-  rangeAttackDelay: 0
-  rangeBaseDamage: 0
-  rangeDamageMultiplier: 0
-  rangeCritChance: 0
-  rangeCritMultiplier: 0
-  rangeKnockbackForce: 0
-  rangeProjectileRange: 0
-  rangeProjectileSpeed: 0
-  maxHealth: 0
-  currentHealth: 0
-  healthRegen: 0
-  armor: 0
-  dodgeChance: 0
-  invincibilityDuration: 0
-  maxExtraJumps: 0
-  jumpForce: 0
-  extraJumpDampaner: 0
-  movementSpeed: 0
-  sprintMultiplier: 0
-  dashCharges: 0
-  dashDistance: 0
-  dashRechargeRate: 0
-  burnChance: 0
-  poisonChance: 0
-  lightningChance: 0
-  radioactiveChance: 0
-  smiteChance: 0
-  slowChance: 0
-  stunChance: 0
-  martyrdomChance: 0
-  igniteChance: 0
-  baseMeleeAttackDelay: 1
-  baseMeleeBaseDamage: 1
-  baseMeleeDamageMultiplier: 1
-  baseMeleeCritChance: 0.1
-  baseMeleeCritMultiplier: 2
-  baseMeleeKnockbackForce: 5
-  baseMeleeAttackRange: 1
-  baseRangeAttackDelay: 0.2
-  baseRangeBaseDamage: 1
-  baseRangeDamageMultiplier: 1
-  baseRangeCritChance: 0.1
-  baseRangeCritMultiplier: 2
-  baseRangeKnockbackForce: 2
-  baseRangeProjectileRange: 20
-  baseRangeProjectileSpeed: 25
-  baseMaxHealth: 100
-  baseHealthRegen: 0.1
-  baseArmor: 1
-  baseDodgeChance: 0
-  baseInvincibilityDuration: 1
-  baseMaxExtraJumps: 2
-  baseJumpForce: 16
-  baseExtraJumpDampaner: 0.8
-  baseMovementSpeed: 6
-  baseSprintMultiplier: 1.5
-  baseDashCharges: 0
-  baseDashDistance: 3
-  baseDashRechargeRate: 0.1
-  baseBurnChance: 0
-  basePoisonChance: 0
-  baseLightningChance: 0
-  baseRadioactiveChance: 0
-  baseSmiteChance: 0
-  baseSlowChance: 0
-  baseStunChance: 0
-  baseMartyrdomChance: 0
-  baseIgniteChance: 0
 --- !u!114 &1018908818363566110
 MonoBehaviour:
   m_ObjectHideFlags: 0

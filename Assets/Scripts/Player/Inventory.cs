@@ -20,12 +20,12 @@ namespace Player
 
         private void OnEnable()
         {
-            EventManager.Instance.loadBoss += LoadBossEvent;
+            // EventManager.Instance.loadBoss += LoadBossEvent;
         }
 
         private void OnDisable()
         {
-            EventManager.Instance.loadBoss -= LoadBossEvent;
+            // EventManager.Instance.loadBoss -= LoadBossEvent;
         }
 
 
@@ -61,11 +61,6 @@ namespace Player
                 AbstractItem item = tup.p;
                 uic.AddItem(item, tup.i);
             }
-        }
-
-        private void LoadBossEvent()
-        {
-            // RebuildInventory();
         }
     }
 }

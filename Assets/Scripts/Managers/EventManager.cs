@@ -15,6 +15,7 @@ namespace Managers
         [HideInInspector] public int requestedScene;
 
         public string scenePlay;
+
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
 
@@ -44,7 +45,7 @@ namespace Managers
         /// <summary>
         ///     Links between PlayerDefault and HudUI primarily
         /// </summary>
-        public event Action<PlayerStats> playerStatsUpdated;
+        public event Action playerStatsUpdated;
 
         public event Action<float> crosshairSpread;
 
@@ -58,22 +59,23 @@ namespace Managers
             itemAcquired?.Invoke(item);
         }
 
-        public void PlayerStatsUpdated(PlayerStats stats)
+        public void PlayerStatsUpdated()
         {
-            playerStatsUpdated?.Invoke(stats);
+            playerStatsUpdated?.Invoke();
         }
 
         public void LoadLevel(int i)
         {
             SceneManager.LoadScene("LevelScene");
             LevelSelect.Instance.requestedLevel = i;
-            // loadLevel?.Invoke(i);
+            PlayerStatsUpdated();
         }
 
         public void LoadBoss(string bossSceneName)
         {
             SceneManager.LoadScene(bossSceneName);
             loadBoss?.Invoke();
+            PlayerStatsUpdated();
         }
 
         public void Pause()
@@ -90,11 +92,14 @@ namespace Managers
         public void Play()
         {
             LOG("request play");
+            // Below happens when we request play from the main menu,
+            // signifying the start of a new run with zeroed stats.
             if (mode != Mode.Pause)
             {
                 SceneManager.LoadScene(scenePlay);
                 LevelSelect.Instance.requestedLevel = 0;
                 runStats = new RunStats();
+                PlayerStats.Instance.SetDefaultValues();
             }
 
             mode = Mode.Play;
