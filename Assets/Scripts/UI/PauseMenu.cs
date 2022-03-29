@@ -82,7 +82,6 @@ namespace UI
             settingsMenu.style.display = DisplayStyle.None;
             // root.SetEnabled(false);
             pauseMenu.SetEnabled(false);
-            settingsMenu.SetEnabled(false);
         }
 
         private void GoBack(InputAction.CallbackContext obj)

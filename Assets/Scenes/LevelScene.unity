@@ -1287,10 +1287,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: baseRangeBaseDamage
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6133285360535605883, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
@@ -1455,98 +1451,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1948214493 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7689409263527498333, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-  m_PrefabInstance: {fileID: 7689409263916494935}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1948214500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948214493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2328b8e90ae63d4891df998ebafa546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeAttackDelay: 0
-  meleeBaseDamage: 0
-  meleeDamageMultiplier: 0
-  meleeCritChance: 0
-  meleeCritMultiplier: 0
-  meleeKnockbackForce: 0
-  meleeAttackRange: 0
-  rangeAttackDelay: 0
-  rangeBaseDamage: 0
-  rangeDamageMultiplier: 0
-  rangeCritChance: 0
-  rangeCritMultiplier: 0
-  rangeKnockbackForce: 0
-  rangeProjectileRange: 0
-  rangeProjectileSpeed: 0
-  maxHealth: 0
-  currentHealth: 0
-  healthRegen: 0
-  armor: 0
-  dodgeChance: 0
-  invincibilityDuration: 0
-  maxExtraJumps: 0
-  jumpForce: 0
-  extraJumpDampaner: 0
-  movementSpeed: 0
-  sprintMultiplier: 0
-  dashCharges: 0
-  dashDistance: 0
-  dashRechargeRate: 0
-  burnChance: 0
-  poisonChance: 0
-  lightningChance: 0
-  radioactiveChance: 0
-  smiteChance: 0
-  slowChance: 0
-  stunChance: 0
-  martyrdomChance: 0
-  igniteChance: 0
-  baseMeleeAttackDelay: 1
-  baseMeleeBaseDamage: 1
-  baseMeleeDamageMultiplier: 1
-  baseMeleeCritChance: 0.1
-  baseMeleeCritMultiplier: 2
-  baseMeleeKnockbackForce: 5
-  baseMeleeAttackRange: 1
-  baseRangeAttackDelay: 0.2
-  baseRangeBaseDamage: 2
-  baseRangeDamageMultiplier: 1
-  baseRangeCritChance: 0.1
-  baseRangeCritMultiplier: 2
-  baseRangeKnockbackForce: 2
-  baseRangeProjectileRange: 20
-  baseRangeProjectileSpeed: 25
-  baseMaxHealth: 100
-  baseHealthRegen: 0.1
-  baseArmor: 1
-  baseDodgeChance: 0
-  baseInvincibilityDuration: 1
-  baseMaxExtraJumps: 2
-  baseJumpForce: 16
-  baseExtraJumpDampaner: 0.8
-  baseMovementSpeed: 6
-  baseSprintMultiplier: 1.5
-  baseDashCharges: 0
-  baseDashDistance: 3
-  baseDashRechargeRate: 0.1
-  baseBurnChance: 0
-  basePoisonChance: 0
-  baseLightningChance: 0
-  baseRadioactiveChance: 0
-  baseSmiteChance: 0
-  baseSlowChance: 0
-  baseStunChance: 0
-  baseMartyrdomChance: 0
-  baseIgniteChance: 0
 --- !u!1001 &1967523895
 PrefabInstance:
   m_ObjectHideFlags: 0

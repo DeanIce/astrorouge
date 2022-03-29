@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,6 +24,28 @@ namespace UI
             inventoryContainer = root.Q<VisualElement>("inventory-container");
             tooltip = root.Q<VisualElement>("tooltip");
             tooltip.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+            RebuildInventory();
+        }
+
+        private void OnEnable()
+        {
+            EventManager.Instance.itemAcquired += EventResponse;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.itemAcquired -= EventResponse;
+        }
+
+        public void RebuildInventory()
+        {
+            Dictionary<string, (AbstractItem, int)> inventory = EventManager.Instance.inventory;
+            foreach (KeyValuePair<string, (AbstractItem, int)> pair in inventory)
+            {
+                (AbstractItem p, int i) tup = pair.Value;
+                AbstractItem item = tup.p;
+                AddItem(item, tup.i);
+            }
         }
 
 
@@ -81,6 +105,29 @@ namespace UI
         {
             Label boxLabel = inventoryContainer.Query<Label>(item.itemName).First();
             boxLabel.text = number.ToString();
+        }
+
+        private void EventResponse(AbstractItem item)
+        {
+            Dictionary<string, (AbstractItem, int)> inventory = EventManager.Instance.inventory;
+
+            if (HasItem(item))
+            {
+                (AbstractItem p, int i) tup = inventory[item.itemName];
+                inventory[item.itemName] = (tup.p, tup.i + 1);
+                UpdateItem(item, inventory[item.itemName].Item2);
+            }
+            else
+            {
+                inventory.Add(item.itemName, (item, 1));
+                AddItem(item, 1);
+            }
+        }
+
+        public bool HasItem(AbstractItem item)
+        {
+            Dictionary<string, (AbstractItem, int)> inventory = EventManager.Instance.inventory;
+            return inventory.ContainsKey(item.itemName);
         }
     }
 }

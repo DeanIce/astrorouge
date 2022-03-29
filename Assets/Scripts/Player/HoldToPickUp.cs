@@ -128,7 +128,7 @@ namespace Player
         private void MoveItemToInventory()
         {
             Destroy(itemBeingPickedUp.gameObject);
-            inventory.AddItem(itemBeingPickedUp);
+
             itemBeingPickedUp.ApplyStats();
             EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
             AudioManager.Instance.PlaySFX(pickUpSoundEffect, 0.2f);

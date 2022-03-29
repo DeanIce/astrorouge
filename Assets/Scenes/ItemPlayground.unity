@@ -1164,17 +1164,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5924688668445925649, guid: 45da362e97f59a64597e82f546610b3c, type: 3}
   m_PrefabInstance: {fileID: 378206991}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &387554322 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8543091563571336382, guid: df544cebdba399245853a916ec1a917d, type: 3}
-  m_PrefabInstance: {fileID: 925377987}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &387554326 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2425821241769339370, guid: df544cebdba399245853a916ec1a917d, type: 3}
   m_PrefabInstance: {fileID: 925377987}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387554322}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7258d64f0a1562041acb82d3794f3161, type: 3}
@@ -3523,10 +3518,6 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1018908818363566110, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: inventoryUI
-      value: 
-      objectReference: {fileID: 387554322}
     - target: {fileID: 5313944904042844001, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: distance
       value: 15

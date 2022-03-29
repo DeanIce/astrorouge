@@ -35,17 +35,13 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss;
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
 
         public event Action<AbstractItem> itemAcquired;
 
-        /// <summary>
-        ///     Links between PlayerDefault and HudUI primarily
-        /// </summary>
-        public event Action playerStatsUpdated;
 
         public event Action<float> crosshairSpread;
 
@@ -97,9 +93,7 @@ namespace Managers
             if (mode != Mode.Pause)
             {
                 SceneManager.LoadScene(scenePlay);
-                LevelSelect.Instance.requestedLevel = 0;
-                runStats = new RunStats();
-                PlayerStats.Instance.SetDefaultValues();
+                resetInternalState();
             }
 
             mode = Mode.Play;
@@ -108,6 +102,14 @@ namespace Managers
             playGame?.Invoke();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void resetInternalState()
+        {
+            LevelSelect.Instance.requestedLevel = 0;
+            runStats = new RunStats();
+            PlayerStats.Instance.SetDefaultValues();
+            inventory.Clear();
         }
 
         public void Menu()
