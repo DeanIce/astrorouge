@@ -45,6 +45,14 @@ namespace UI
             VisualElement temp = MakeItemSlot(item, number);
             item.visualElement = temp;
             temp.RegisterCallback<MouseEnterEvent, AbstractItem>(MouseEntered, item);
+
+            if (root == null || inventoryContainer == null || tooltip == null)
+            {
+                root = GetComponent<UIDocument>().rootVisualElement;
+                inventoryContainer = root.Q<VisualElement>("inventory-container");
+                tooltip = root.Q<VisualElement>("tooltip");
+            }
+
             inventoryContainer.Add(temp);
         }
 

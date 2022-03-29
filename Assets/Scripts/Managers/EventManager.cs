@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,7 @@ namespace Managers
         [HideInInspector] public int requestedScene;
 
         public string scenePlay;
+        public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
 
         public Action<int> loadLevel;
@@ -54,8 +56,8 @@ namespace Managers
 
         public void LoadBoss(string bossSceneName)
         {
-            loadBoss?.Invoke();
             SceneManager.LoadScene(bossSceneName);
+            loadBoss?.Invoke();
         }
 
         public void Pause()
