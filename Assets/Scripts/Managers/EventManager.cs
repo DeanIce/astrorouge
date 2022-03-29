@@ -41,11 +41,27 @@ namespace Managers
 
         public event Action<AbstractItem> itemAcquired;
 
+        /// <summary>
+        ///     Links between PlayerDefault and HudUI primarily
+        /// </summary>
+        public event Action<PlayerStats> playerStatsUpdated;
+
+        public event Action<float> crosshairSpread;
+
+        public void CrosshairSpread(float a)
+        {
+            crosshairSpread?.Invoke(a);
+        }
+
         public void ItemAcquired(AbstractItem item)
         {
             itemAcquired?.Invoke(item);
         }
 
+        public void PlayerStatsUpdated(PlayerStats stats)
+        {
+            playerStatsUpdated?.Invoke(stats);
+        }
 
         public void LoadLevel(int i)
         {

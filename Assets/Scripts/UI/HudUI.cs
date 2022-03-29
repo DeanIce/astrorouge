@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -41,6 +42,21 @@ namespace UI
             SetExp(10, 100);
         }
 
+        private void OnEnable()
+        {
+            EventManager.Instance.playerStatsUpdated += UpdateBars;
+            EventManager.Instance.crosshairSpread += AdjustCrosshair;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.playerStatsUpdated -= UpdateBars;
+        }
+
+        private void UpdateBars(PlayerStats stats)
+        {
+            SetHealth(stats.currentHealth);
+        }
 
         public void SetHealth(float hp)
         {

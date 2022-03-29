@@ -1,6 +1,5 @@
 using Gravity;
 using Managers;
-using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +21,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private AudioClip attack2SoundEffect;
     [SerializeField] private float spread = 1.0f;
 
-    public HudUI hudUI;
     private readonly float decreasePerSecond = 60f;
     private readonly float increasePerSecond = 60f;
     private readonly float maxSpread = 30f;
@@ -102,7 +100,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         else
             crosshairSpread -= decreasePerSecond * Time.deltaTime;
         crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
-        if (hudUI) hudUI.AdjustCrosshair(crosshairSpread);
+        EventManager.Instance.CrosshairSpread(crosshairSpread);
     }
 
     private void OnEnable()
@@ -215,7 +213,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         //Doesn't actually matter once we implement game over
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
-        if (hudUI) hudUI.SetHealth(PlayerStats.Instance.currentHealth);
+        EventManager.Instance.PlayerStatsUpdated(PlayerStats.Instance);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
