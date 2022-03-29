@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class AbstractItem : MonoBehaviour
 {
     public string itemName;
     public string itemDescription;
     public Texture2D itemIcon;
+
+    public VisualElement visualElement;
 
     public override int GetHashCode()
     {

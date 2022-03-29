@@ -1,36 +1,40 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+namespace Player
 {
-    public GameObject inventoryUI;
-    private readonly Dictionary<string, (AbstractItem, int)> inventory = new();
-    private InventoryUIController uic;
-
-
-    private void Start()
+    public class Inventory : MonoBehaviour
     {
-        uic = inventoryUI.GetComponent<InventoryUIController>();
-    }
+        public GameObject inventoryUI;
+        private readonly Dictionary<string, (AbstractItem, int)> inventory = new();
+        private InventoryUIController uic;
 
 
-    public bool HasItem(AbstractItem item)
-    {
-        return inventory.ContainsKey(item.itemName);
-    }
-
-    public void AddItem(AbstractItem item)
-    {
-        if (HasItem(item))
+        private void Start()
         {
-            (AbstractItem p, int i) tup = inventory[item.itemName];
-            inventory[item.itemName] = (tup.p, tup.i + 1);
-            uic.UpdateItem(item, inventory[item.itemName].Item2);
+            uic = inventoryUI.GetComponent<InventoryUIController>();
         }
-        else
+
+
+        public bool HasItem(AbstractItem item)
         {
-            inventory.Add(item.itemName, (item, 1));
-            uic.AddItem(item, 1);
+            return inventory.ContainsKey(item.itemName);
+        }
+
+        public void AddItem(AbstractItem item)
+        {
+            if (HasItem(item))
+            {
+                (AbstractItem p, int i) tup = inventory[item.itemName];
+                inventory[item.itemName] = (tup.p, tup.i + 1);
+                uic.UpdateItem(item, inventory[item.itemName].Item2);
+            }
+            else
+            {
+                inventory.Add(item.itemName, (item, 1));
+                uic.AddItem(item, 1);
+            }
         }
     }
 }

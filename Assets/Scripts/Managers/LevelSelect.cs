@@ -43,7 +43,6 @@ namespace Managers
             // Hack to avoid callback issues with physics collider trigger
             if (!isHackDone)
             {
-                print("why");
                 isHackDone = true;
                 // We may need to find the player again for some reason
                 if (player == null) player = GameObject.Find("PlayerDefault");
@@ -67,7 +66,6 @@ namespace Managers
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            print("hack " + scene.name);
             if (scene.name == "LevelScene") isHackDone = false;
         }
 
@@ -102,7 +100,6 @@ namespace Managers
 
             // print("Loaded level and snapped Player to spawn point.");
             player.transform.position = newPlayerPos;
-            print(root);
 
             LOGTIMER(timer, "level loading");
 

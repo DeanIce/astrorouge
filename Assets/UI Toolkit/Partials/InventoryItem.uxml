@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/font.uss?fileID=7433441132597879392&amp;guid=3497715282aa3064582d6e2a74bc706b&amp;type=3#font" />
+    <ui:VisualElement tooltip="AAAA" class="inventory-icon" style="width: 70px; height: 70px; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_ItemFrame07_n.png?fileID=2800000&amp;guid=244c0c07a7d8eb84caddb6a08abff64b&amp;type=3#Frame_ItemFrame07_n&apos;); align-items: center;">
+        <ui:VisualElement name="icon" style="width: 50px; height: 50px; background-image: url(&apos;project://database/Assets/PolygonIcons/Icon_PNG/Bullseye.png?fileID=2800000&amp;guid=7ceb2be32bfca754f94c818795ff8928&amp;type=3#Bullseye&apos;); margin-top: 6px;" />
+        <ui:Label text="N" display-tooltip-when-elided="true" name="count" style="margin-left: 0; margin-right: 0; margin-top: -9px; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: upper-center; color: rgb(255, 255, 255); font-size: 11px;" />
+        <ui:VisualElement style="top: 0; left: 0; position: absolute; display: none;">
+            <ui:Label text="Label" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
