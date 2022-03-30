@@ -179,6 +179,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // I think this would require adding a parameter and passing the
             // critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
+            EventManager.Instance.EnemyDamaged();
 
             if (health <= 0f && iAmAlive) Die();
         }

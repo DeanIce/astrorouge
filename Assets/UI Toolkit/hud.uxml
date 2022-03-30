@@ -37,5 +37,5 @@
         <ui:Label text="Label" display-tooltip-when-elided="true" name="tooltip-name" class="oxanium" style="color: rgb(255, 255, 255); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 6px; -unity-text-align: upper-left; font-size: 24px;" />
         <ui:Label text="Description of item that can span multiple lines." display-tooltip-when-elided="true" name="tooltip-description" class="nexon" style="color: rgb(255, 255, 255); white-space: normal; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: upper-left; font-size: 16px;" />
     </ui:VisualElement>
-    <ui:Instance template="HitMarker" name="HitMarker" style="width: 100%; height: 100%; align-items: center; justify-content: center;" />
+    <ui:Instance template="HitMarker" name="HitMarker" style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;" />
 </ui:UXML>

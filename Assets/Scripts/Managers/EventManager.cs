@@ -35,7 +35,7 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated;
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated, enemyDamaged;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
@@ -58,6 +58,11 @@ namespace Managers
         public void PlayerStatsUpdated()
         {
             playerStatsUpdated?.Invoke();
+        }
+
+        public void EnemyDamaged()
+        {
+            enemyDamaged?.Invoke();
         }
 
         public void LoadLevel(int i)
