@@ -7,42 +7,42 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
-
-    // Dynamic Player Info
-    [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float primaryAttackDelay;
-    [SerializeField] private float secondaryAttackDelay;
-
-    // Inspector values
-    [SerializeField] public float sensitivity = 0.2f;
-    [SerializeField] private GameObject followTarget;
-    [SerializeField] private GameObject fireLocation;
-    [SerializeField] private AudioClip attack1SoundEffect;
-    [SerializeField] private AudioClip attack2SoundEffect;
-    [SerializeField] private float spread = 1.0f;
-
     private readonly float decreasePerSecond = 60f;
     private readonly float increasePerSecond = 60f;
     private readonly float maxSpread = 30f;
     private readonly float minSpread = 1f;
 
-
-    private Animator animator;
-
+    // Dynamic Player Info
     private float crosshairSpread = 1f;
-    private Transform groundCheck;
-    private LayerMask groundMask;
-    private bool isFiring;
+    private int extraJumpsLeft;
     private bool isGrounded;
     private bool isPrimaryAttacking;
-    private InputAction movement, look;
+    public bool IsSprinting { get; private set; }
+    public float PrimaryAttackDelay { get; private set; }
+    public float SecondaryAttackDelay { get; private set; }
 
-    // References
+    // Inspector set-able values
+    [SerializeField] private GameObject followTarget;
+    [SerializeField] private GameObject fireLocation;
+    [SerializeField] private AudioClip attack1SoundEffect;
+    [SerializeField] private AudioClip attack2SoundEffect;
+
+    // Modifiable values
+    [SerializeField] public float sensitivity = 0.2f;
+    [SerializeField] private float spread = 1.0f;
+
+    [SerializeField] private float primaryAttackProcChance = 1f;
+    [SerializeField] private float secondaryAttackProcChance = 2f;
+    [SerializeField] private float specialActionProcChance = 0.7f;
+    [SerializeField] private float meleeAttackProcChance = 2f;
+
+    // Misc values
+    private Animator animator;
+    private Transform groundCheck;
+    private LayerMask groundMask;
+    private InputAction movement, look;
     private Rigidbody rb;
     protected internal bool useGravity = true;
-
-    public bool IsSprinting { get; private set; }
-
 
     private void Start()
     {
@@ -58,13 +58,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void Update()
     {
         // Adjust delay timers
-        primaryAttackDelay = primaryAttackDelay < 0 ? primaryAttackDelay : primaryAttackDelay - Time.deltaTime;
-        secondaryAttackDelay = secondaryAttackDelay < 0 ? secondaryAttackDelay : secondaryAttackDelay - Time.deltaTime;
+        static float Decrement(float value) => value < 0 ? value : value - Time.deltaTime;
+        PrimaryAttackDelay = Decrement(PrimaryAttackDelay);
+        SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
 
-        if (isPrimaryAttacking && primaryAttackDelay < 0)
+        if (isPrimaryAttacking && PrimaryAttackDelay < 0)
         {
             BasicAttack();
-            primaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+            PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
         }
     }
 
@@ -127,7 +128,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PrimaryAttack.Enable();
         playerInputMap.SecondaryAttack.performed += SecondaryAttack;
         playerInputMap.SecondaryAttack.Enable();
-        playerInputMap.UtilityAction.performed += HitscanAttack;
+        //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
         playerInputMap.UtilityAction.Enable();
         playerInputMap.SpecialAction.performed += LobAttack;
         playerInputMap.SpecialAction.Enable();
@@ -155,7 +156,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.SecondaryAttack.Disable();
         playerInputMap.SecondaryAttack.performed -= SecondaryAttack;
         playerInputMap.UtilityAction.Disable();
-        playerInputMap.UtilityAction.performed -= HitscanAttack;
+        //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
         playerInputMap.SpecialAction.Disable();
         playerInputMap.SpecialAction.performed -= LobAttack;
     }
@@ -239,42 +240,48 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void SecondaryAttack(InputAction.CallbackContext obj)
     {
-        if (secondaryAttackDelay > 0) return;
-        secondaryAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+        if (SecondaryAttackDelay > 0) return;
+        SecondaryAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
         BeamAttack();
     }
 
     private void BasicAttack()
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
-            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage()));
+        _ = HandleEffects(
+            ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+                PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+                PlayerStats.Instance.GetRangeDamage()),
+            primaryAttackProcChance);
         AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
     }
 
     private void BeamAttack()
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
-            AttackVector(),
-            LayerMask.GetMask("Enemy", "Ground"),
-            LayerMask.GetMask("Ground"),
-            0.2f, // TODO (Simon): Mess with value
-            PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange));
+        _ = HandleEffects(
+            ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+                AttackVector(),
+                LayerMask.GetMask("Enemy", "Ground"),
+                LayerMask.GetMask("Ground"),
+                0.2f, // TODO (Simon): Mess with value
+                PlayerStats.Instance.GetRangeDamage(),
+                PlayerStats.Instance.rangeProjectileRange),
+            secondaryAttackProcChance);
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
     }
 
-    private void HitscanAttack(InputAction.CallbackContext obj)
+    /*private void HitscanAttack(InputAction.CallbackContext obj)
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
-            AttackVector(),
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange));
-    }
+        _ = HandleEffects(
+            ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+                AttackVector(),
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.GetRangeDamage(),
+                PlayerStats.Instance.rangeProjectileRange),
+            1f);
+    }*/
 
     private void LobAttack(InputAction.CallbackContext obj)
     {
@@ -282,11 +289,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 attackVec = AttackVector();
         Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
-        _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
-            PlayerStats.Instance.GetRangeDamage()));
+        _ = HandleEffects(
+            ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
+                10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
+                PlayerStats.Instance.GetRangeDamage()),
+            specialActionProcChance);
     }
 
     private Vector3 AttackVector()
@@ -318,27 +327,34 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
 
-    private GameObject HandleEffects(GameObject projectile)
+    /// <summary>
+    /// Applys status effects to provided projectile.
+    /// </summary>
+    /// <param name="projectile">The designated projectile.</param>
+    /// <param name="procChance">The probability boost to apply an effect. (actual chance) = (proc chance) * (effect chance)</param>
+    /// <returns></returns>
+    private GameObject HandleEffects(GameObject projectile, float procChance)
     {
-        float rand = Random.Range(0.0f, 1.0f);
+        float GetRandom() => procChance * Random.Range(0.0f, 1.0f);
 
-        if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.poisonChance) ProjectileFactory.Instance.AddPoison(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.lightningChance) ProjectileFactory.Instance.AddLightning(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.radioactiveChance) ProjectileFactory.Instance.AddRadioactive(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.smiteChance) ProjectileFactory.Instance.AddSmite(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.slowChance) ProjectileFactory.Instance.AddSlow(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.stunChance) ProjectileFactory.Instance.AddStun(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.martyrdomChance) ProjectileFactory.Instance.AddMartyrdom(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.igniteChance) ProjectileFactory.Instance.AddIgnite(projectile);
+        if (GetRandom() < PlayerStats.Instance.burnChance)
+            ProjectileFactory.Instance.AddBurn(projectile);
+        if (GetRandom() < PlayerStats.Instance.poisonChance)
+            ProjectileFactory.Instance.AddPoison(projectile);
+        if (GetRandom() < PlayerStats.Instance.lightningChance)
+            ProjectileFactory.Instance.AddLightning(projectile);
+        if (GetRandom() < PlayerStats.Instance.radioactiveChance)
+            ProjectileFactory.Instance.AddRadioactive(projectile);
+        if (GetRandom() < PlayerStats.Instance.smiteChance)
+            ProjectileFactory.Instance.AddSmite(projectile);
+        if (GetRandom() < PlayerStats.Instance.slowChance)
+            ProjectileFactory.Instance.AddSlow(projectile);
+        if (GetRandom() < PlayerStats.Instance.stunChance)
+            ProjectileFactory.Instance.AddStun(projectile);
+        if (GetRandom() < PlayerStats.Instance.martyrdomChance)
+            ProjectileFactory.Instance.AddMartyrdom(projectile);
+        if (GetRandom() < PlayerStats.Instance.igniteChance)
+            ProjectileFactory.Instance.AddIgnite(projectile);
 
         return projectile;
     }

@@ -21,7 +21,7 @@ public class ProjectileFactory : MonoBehaviour
     public GameObject CreateBasicProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith, float lifeSpan,
         float damage, float health = 1)
     {
-        var newProjectile = Instantiate(basicProjectile);
+        GameObject newProjectile = Instantiate(basicProjectile);
         newProjectile.transform.parent = gameObject.transform;
 
         newProjectile.transform.position = position;
@@ -31,29 +31,13 @@ public class ProjectileFactory : MonoBehaviour
 
         newProjectile.transform.rotation = Quaternion.LookRotation(velocity, newProjectile.transform.up);
 
-        // var rotation = newProjectile.transform.rotation *
-        //                Quaternion.FromToRotation(newProjectile.transform.right, velocity.normalized);
-
-        // newProjectile.transform.SetPositionAndRotation(position, rotation);
-
-        //testing -> add a method to check and add all determined effects
-        //AddPoison(newProjectile);
-        //AddBurn(newProjectile);
-        //AddLightning(newProjectile);
-        //AddSmite(newProjectile);
-        //AddRadioactive(newProjectile);
-        //AddSlow(newProjectile);
-        //AddStun(newProjectile);
-        //AddMartyrdom(newProjectile);
-        //AddIgnite(newProjectile);
-
         return newProjectile;
     }
 
     public GameObject CreateBeamProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith,
         LayerMask stopsAt, float duration, float damage, float range)
     {
-        var newProjectile = Instantiate(beamProjectile);
+        GameObject newProjectile = Instantiate(beamProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<BeamProjectile>().InitializeValues(collidesWith, duration, damage);
         newProjectile.transform.SetPositionAndRotation(position,
@@ -67,7 +51,7 @@ public class ProjectileFactory : MonoBehaviour
     public GameObject CreateHitscanProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith, float damage,
         float range)
     {
-        var newProjectile = Instantiate(hitscanProjectile);
+        GameObject newProjectile = Instantiate(hitscanProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<HitscanProjectile>().InitializeValues(collidesWith, damage, range);
         newProjectile.transform.SetPositionAndRotation(position,
@@ -79,7 +63,7 @@ public class ProjectileFactory : MonoBehaviour
     public GameObject CreateGravityProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith,
         float lifeSpan, float damage, float health = 1)
     {
-        var newProjectile = Instantiate(gravityProjectile);
+        GameObject newProjectile = Instantiate(gravityProjectile);
         newProjectile.transform.parent = gameObject.transform;
         newProjectile.GetComponent<GravityProjectile>()
             .InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
