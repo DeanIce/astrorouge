@@ -59,6 +59,7 @@ namespace UI
 
         public void SetHealth(float hp)
         {
+            hp = Mathf.Round(hp);
             healthBarText.text = hp + " / " + maxHealth;
             float percentRemaining = hp / maxHealth * 100;
             //Temporary Corner of HUD fix

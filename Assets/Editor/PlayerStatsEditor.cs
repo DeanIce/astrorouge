@@ -1,122 +1,124 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
 
 [CustomEditor(typeof(PlayerStats))]
 [CanEditMultipleObjects]
 public class PlayerStatsEditor : Editor
 {
-    // Melee Stats
-    SerializedProperty meleeAttackDelay;
-    SerializedProperty meleeBaseDamage;
-    SerializedProperty meleeDamageMultiplier;
-    SerializedProperty meleeCritChance;
-    SerializedProperty meleeCritMultiplier;
-    SerializedProperty meleeKnockbackForce;
-    SerializedProperty meleeAttackRange;
+    private SerializedProperty armor;
+    private SerializedProperty baseArmor;
 
-    // Range Stats
-    SerializedProperty rangeAttackDelay;
-    SerializedProperty rangeBaseDamage;
-    SerializedProperty rangeDamageMultiplier;
-    SerializedProperty rangeCritChance;
-    SerializedProperty rangeCritMultiplier;
-    SerializedProperty rangeKnockbackForce;
-    SerializedProperty rangeProjectileRange;
-    SerializedProperty rangeProjectileSpeed;
+    // Base Bullet Effect Chance
+    private SerializedProperty baseBurnChance;
+    private SerializedProperty baseDashCharges;
+    private SerializedProperty baseDashDistance;
+    private SerializedProperty baseDashRechargeRate;
+    private SerializedProperty baseDodgeChance;
+    private SerializedProperty baseExtraJumpDampaner;
+    private SerializedProperty baseHealthRegen;
+    private SerializedProperty baseIgniteChance;
+    private SerializedProperty baseInvincibilityDuration;
+    private SerializedProperty baseJumpForce;
+    private SerializedProperty baseLightningChance;
+    private SerializedProperty baseMartyrdomChance;
 
-    // Defense Stats
-    SerializedProperty maxHealth;
-    SerializedProperty currentHealth;
-    SerializedProperty healthRegen;
-    SerializedProperty armor;
-    SerializedProperty dodgeChance;
-    SerializedProperty invincibilityDuration;
+    // Base Movement Stats
+    private SerializedProperty baseMaxExtraJumps;
 
-    // Movement Stats
-    SerializedProperty maxExtraJumps;
-    SerializedProperty jumpForce;
-    SerializedProperty extraJumpDampaner;
-    SerializedProperty movementSpeed;
-    SerializedProperty sprintMultiplier;
-    SerializedProperty dashCharges;
-    SerializedProperty dashDistance;
-    SerializedProperty dashRechargeRate;
-
-    // Bullet Effect Chances
-    SerializedProperty burnChance;
-    SerializedProperty poisonChance;
-    SerializedProperty lightningChance;
-    SerializedProperty radioactiveChance;
-    SerializedProperty smiteChance;
-    SerializedProperty slowChance;
-    SerializedProperty stunChance;
-    SerializedProperty martyrdomChance;
-    SerializedProperty igniteChance;
+    // Base Defense Stats
+    private SerializedProperty baseMaxHealth;
 
     //
     // BASE STATS
     //
 
     // Base Melee Stats
-    SerializedProperty baseMeleeAttackDelay;
-    SerializedProperty baseMeleeBaseDamage;
-    SerializedProperty baseMeleeDamageMultiplier;
-    SerializedProperty baseMeleeCritChance;
-    SerializedProperty baseMeleeCritMultiplier;
-    SerializedProperty baseMeleeKnockbackForce;
-    SerializedProperty baseMeleeAttackRange;
+    private SerializedProperty baseMeleeAttackDelay;
+    private SerializedProperty baseMeleeAttackRange;
+    private SerializedProperty baseMeleeBaseDamage;
+    private SerializedProperty baseMeleeCritChance;
+    private SerializedProperty baseMeleeCritMultiplier;
+    private SerializedProperty baseMeleeDamageMultiplier;
+    private SerializedProperty baseMeleeKnockbackForce;
+    private SerializedProperty baseMovementSpeed;
+    private SerializedProperty basePoisonChance;
+    private SerializedProperty baseRadioactiveChance;
 
     // Base Range Stats
-    SerializedProperty baseRangeAttackDelay;
-    SerializedProperty baseRangeBaseDamage;
-    SerializedProperty baseRangeDamageMultiplier;
-    SerializedProperty baseRangeCritChance;
-    SerializedProperty baseRangeCritMultiplier;
-    SerializedProperty baseRangeKnockbackForce;
-    SerializedProperty baseRangeProjectileRange;
-    SerializedProperty baseRangeProjectileSpeed;
+    private SerializedProperty baseRangeAttackDelay;
+    private SerializedProperty baseRangeBaseDamage;
+    private SerializedProperty baseRangeCritChance;
+    private SerializedProperty baseRangeCritMultiplier;
+    private SerializedProperty baseRangeDamageMultiplier;
+    private SerializedProperty baseRangeKnockbackForce;
+    private SerializedProperty baseRangeProjectileRange;
+    private SerializedProperty baseRangeProjectileSpeed;
+    private SerializedProperty baseRegenDelay;
+    private SerializedProperty baseSlowChance;
+    private SerializedProperty baseSmiteChance;
+    private SerializedProperty baseSprintMultiplier;
+    private SerializedProperty baseStunChance;
 
-    // Base Defense Stats
-    SerializedProperty baseMaxHealth;
-    SerializedProperty baseHealthRegen;
-    SerializedProperty baseArmor;
-    SerializedProperty baseDodgeChance;
-    SerializedProperty baseInvincibilityDuration;
+    // Bullet Effect Chances
+    private SerializedProperty burnChance;
+    private SerializedProperty currentHealth;
+    private SerializedProperty dashCharges;
+    private SerializedProperty dashDistance;
+    private SerializedProperty dashRechargeRate;
+    private SerializedProperty dodgeChance;
+    private SerializedProperty extraJumpDampaner;
+    private SerializedProperty healthRegen;
+    private SerializedProperty igniteChance;
+    private SerializedProperty invincibilityDuration;
+    private SerializedProperty jumpForce;
+    private SerializedProperty lightningChance;
+    private SerializedProperty martyrdomChance;
 
-    // Base Movement Stats
-    SerializedProperty baseMaxExtraJumps;
-    SerializedProperty baseJumpForce;
-    SerializedProperty baseExtraJumpDampaner;
-    SerializedProperty baseMovementSpeed;
-    SerializedProperty baseSprintMultiplier;
-    SerializedProperty baseDashCharges;
-    SerializedProperty baseDashDistance;
-    SerializedProperty baseDashRechargeRate;
+    // Movement Stats
+    private SerializedProperty maxExtraJumps;
 
-    // Base Bullet Effect Chance
-    SerializedProperty baseBurnChance;
-    SerializedProperty basePoisonChance;
-    SerializedProperty baseLightningChance;
-    SerializedProperty baseRadioactiveChance;
-    SerializedProperty baseSmiteChance;
-    SerializedProperty baseSlowChance;
-    SerializedProperty baseStunChance;
-    SerializedProperty baseMartyrdomChance;
-    SerializedProperty baseIgniteChance;
+    // Defense Stats
+    private SerializedProperty maxHealth;
 
-    private bool showCurrentMelee = false;
-    private bool showCurrentRange = false;
-    private bool showCurrentDefense = false;
-    private bool showCurrentMovement = false;
-    private bool showCurrentEffects = false;
+    // Melee Stats
+    private SerializedProperty meleeAttackDelay;
+    private SerializedProperty meleeAttackRange;
+    private SerializedProperty meleeBaseDamage;
+    private SerializedProperty meleeCritChance;
+    private SerializedProperty meleeCritMultiplier;
+    private SerializedProperty meleeDamageMultiplier;
+    private SerializedProperty meleeKnockbackForce;
+    private SerializedProperty movementSpeed;
+    private SerializedProperty poisonChance;
+    private SerializedProperty radioactiveChance;
 
-    private bool showBaseMelee = false;
-    private bool showBaseRange = false;
-    private bool showBaseDefense = false;
-    private bool showBaseMovement = false;
-    private bool showBaseEffects = false;
+    // Range Stats
+    private SerializedProperty rangeAttackDelay;
+    private SerializedProperty rangeBaseDamage;
+    private SerializedProperty rangeCritChance;
+    private SerializedProperty rangeCritMultiplier;
+    private SerializedProperty rangeDamageMultiplier;
+    private SerializedProperty rangeKnockbackForce;
+    private SerializedProperty rangeProjectileRange;
+    private SerializedProperty rangeProjectileSpeed;
+    private SerializedProperty regenDelay;
+    private bool showBaseDefense;
+    private bool showBaseEffects;
 
-    void OnEnable()
+    private bool showBaseMelee;
+    private bool showBaseMovement;
+    private bool showBaseRange;
+    private bool showCurrentDefense;
+    private bool showCurrentEffects;
+
+    private bool showCurrentMelee;
+    private bool showCurrentMovement;
+    private bool showCurrentRange;
+    private SerializedProperty slowChance;
+    private SerializedProperty smiteChance;
+    private SerializedProperty sprintMultiplier;
+    private SerializedProperty stunChance;
+
+    private void OnEnable()
     {
         meleeAttackDelay = serializedObject.FindProperty("meleeAttackDelay");
         meleeBaseDamage = serializedObject.FindProperty("meleeBaseDamage");
@@ -140,6 +142,7 @@ public class PlayerStatsEditor : Editor
         maxHealth = serializedObject.FindProperty("maxHealth");
         currentHealth = serializedObject.FindProperty("currentHealth");
         healthRegen = serializedObject.FindProperty("healthRegen");
+        regenDelay = serializedObject.FindProperty("regenDelay");
         armor = serializedObject.FindProperty("armor");
         dodgeChance = serializedObject.FindProperty("dodgeChance");
         invincibilityDuration = serializedObject.FindProperty("invincibilityDuration");
@@ -191,6 +194,7 @@ public class PlayerStatsEditor : Editor
         // Base Defense Stats
         baseMaxHealth = serializedObject.FindProperty("baseMaxHealth");
         baseHealthRegen = serializedObject.FindProperty("baseHealthRegen");
+        baseRegenDelay = serializedObject.FindProperty("baseRegenDelay");
         baseArmor = serializedObject.FindProperty("baseArmor");
         baseDodgeChance = serializedObject.FindProperty("baseDodgeChance");
         baseInvincibilityDuration = serializedObject.FindProperty("baseInvincibilityDuration");
@@ -263,6 +267,7 @@ public class PlayerStatsEditor : Editor
             maxHealth,
             currentHealth,
             healthRegen,
+            regenDelay,
             armor,
             dodgeChance,
             invincibilityDuration);
@@ -270,6 +275,7 @@ public class PlayerStatsEditor : Editor
         showBaseDefense = CreateFoldout(showBaseDefense, "Base Defense Stats",
             baseMaxHealth,
             baseHealthRegen,
+            baseRegenDelay,
             baseArmor,
             baseDodgeChance,
             baseInvincibilityDuration);
@@ -284,7 +290,7 @@ public class PlayerStatsEditor : Editor
             dashDistance,
             dashRechargeRate);
 
-        showBaseMovement = CreateFoldout(showBaseMovement, "Base Movement Stats", 
+        showBaseMovement = CreateFoldout(showBaseMovement, "Base Movement Stats",
             baseMaxExtraJumps,
             baseJumpForce,
             baseExtraJumpDampaner,
@@ -325,12 +331,14 @@ public class PlayerStatsEditor : Editor
         if (result)
         {
             EditorGUI.indentLevel++;
-            foreach(SerializedProperty prop in properties)
+            foreach (SerializedProperty prop in properties)
             {
                 EditorGUILayout.PropertyField(prop);
             }
+
             EditorGUI.indentLevel--;
         }
+
         return result;
     }
 }

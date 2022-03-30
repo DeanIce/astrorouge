@@ -28,6 +28,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public int maxHealth;
     public float currentHealth;
     public float healthRegen;
+    public float regenDelay;
     public int armor;
     [Range(0.0f, 1.0f)] public float dodgeChance;
     public float invincibilityDuration; // How long (seconds) player is immune to damage after getting hit
@@ -79,6 +80,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     // Base Defense Stats
     public int baseMaxHealth;
     public float baseHealthRegen;
+    public float baseRegenDelay;
     public int baseArmor;
     [Range(0.0f, 1.0f)] public float baseDodgeChance;
     public float baseInvincibilityDuration;
@@ -144,6 +146,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         maxHealth = baseMaxHealth;
         currentHealth = maxHealth;
         healthRegen = baseHealthRegen;
+        regenDelay = baseRegenDelay;
         armor = baseArmor;
         dodgeChance = baseDodgeChance;
         invincibilityDuration = baseInvincibilityDuration;
