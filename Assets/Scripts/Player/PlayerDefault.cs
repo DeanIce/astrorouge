@@ -107,9 +107,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         // Health regen
         if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
-            PlayerStats.Instance.currentHealth < PlayerStats.Instance.maxHealth)
+            PlayerStats.Instance.IsAlive())
         {
-            // Todo: move regenDelay to playerstats
             PlayerStats.Instance.currentHealth += PlayerStats.Instance.healthRegen;
             Mathf.Clamp(PlayerStats.Instance.currentHealth, 0, PlayerStats.Instance.maxHealth);
             EventManager.Instance.PlayerStatsUpdated();

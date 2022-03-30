@@ -122,6 +122,11 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         return rangeBaseDamage * rangeDamageMultiplier;
     }
 
+    public bool IsAlive()
+    {
+        return currentHealth > 0 && currentHealth < maxHealth;
+    }
+
     public void SetDefaultValues()
     {
         meleeAttackDelay = baseMeleeAttackDelay;
