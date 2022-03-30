@@ -22,6 +22,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public bool IsSprinting { get; private set; }
     public float PrimaryAttackDelay { get; private set; }
     public float SecondaryAttackDelay { get; private set; }
+    public float SpecialActionDelay { get; private set; }
 
     // Inspector set-able references
     [SerializeField] private GameObject followTarget;
@@ -74,6 +75,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         static float Decrement(float value) => value < 0 ? value : value - Time.deltaTime;
         PrimaryAttackDelay = Decrement(PrimaryAttackDelay);
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
+        SpecialActionDelay = Decrement(SpecialActionDelay);
 
         if (isPrimaryAttacking && PrimaryAttackDelay < 0)
         {
@@ -142,7 +144,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.SecondaryAttack.Enable();
         //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
         playerInputMap.UtilityAction.Enable();
-        playerInputMap.SpecialAction.performed += LobAttack;
+        playerInputMap.SpecialAction.performed += SpecialAction;
         playerInputMap.SpecialAction.Enable();
     }
 
@@ -170,7 +172,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.UtilityAction.Disable();
         //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
         playerInputMap.SpecialAction.Disable();
-        playerInputMap.SpecialAction.performed -= LobAttack;
+        playerInputMap.SpecialAction.performed -= SpecialAction;
     }
 
 
@@ -258,6 +260,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         BeamAttack();
     }
 
+    private void SpecialAction(InputAction.CallbackContext obj)
+    {
+        if (SpecialActionDelay > 0) return;
+        SpecialActionDelay = specialActionCooldown;
+
+        LobAttack();
+    }
+
     private void BasicAttack()
     {
         _ = HandleEffects(
@@ -298,7 +308,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             1f);
     }*/
 
-    private void LobAttack(InputAction.CallbackContext obj)
+    private void LobAttack()
     {
         animator.SetTrigger("lobThrow");
         Vector3 attackVec = AttackVector();
