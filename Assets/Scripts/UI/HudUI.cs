@@ -55,6 +55,7 @@ namespace UI
         private void UpdateBars()
         {
             SetHealth(PlayerStats.Instance.currentHealth);
+            SetExp(PlayerStats.Instance.xp, 100);
         }
 
         public void SetHealth(float hp)
@@ -74,6 +75,7 @@ namespace UI
 
         public void SetExp(float exp, float maxExp)
         {
+            // Todo(Matt): more XP stuff
             if (exp >= maxExp)
             {
                 LevelUp();

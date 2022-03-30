@@ -1640,6 +1640,30 @@ PrefabInstance:
       propertyPath: scenePlay
       value: LevelScene
       objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.data[0]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.data[1]
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.data[2]
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.data[3]
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: XP_Levels.Array.data[4]
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498333, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_Name
       value: GameManager

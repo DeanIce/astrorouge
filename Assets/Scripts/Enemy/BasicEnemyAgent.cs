@@ -136,7 +136,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
@@ -178,6 +178,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
+
+            // Give XP for damaging the enemy
+            PlayerStats.Instance.xp += EventManager.Instance.xp.damageMultiplier;
+            EventManager.Instance.PlayerStatsUpdated();
+
             if (health <= 0f && iAmAlive) Die();
         }
     }
@@ -205,7 +210,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
@@ -226,7 +231,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public void DoGravity()
     {
         // Gravity
-        var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
+        Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
         rb.AddForce(sumForce * Time.deltaTime);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 

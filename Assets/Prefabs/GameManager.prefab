@@ -66,6 +66,7 @@ MonoBehaviour:
   logEvents: 0
   requestedScene: 0
   scenePlay: LevelScene
+  XP_Levels: 64000000c8000000fa00000090010000
 --- !u!114 &5915032664712744906
 MonoBehaviour:
   m_ObjectHideFlags: 0

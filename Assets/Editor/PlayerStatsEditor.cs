@@ -120,6 +120,7 @@ public class PlayerStatsEditor : Editor
 
     private void OnEnable()
     {
+        // Melee Stats
         meleeAttackDelay = serializedObject.FindProperty("meleeAttackDelay");
         meleeBaseDamage = serializedObject.FindProperty("meleeBaseDamage");
         meleeDamageMultiplier = serializedObject.FindProperty("meleeDamageMultiplier");
@@ -224,6 +225,7 @@ public class PlayerStatsEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
 
         showCurrentMelee = CreateFoldout(showCurrentMelee, "Current Melee Stats",
             meleeAttackDelay,

@@ -16,6 +16,7 @@ namespace Managers
 
         public string scenePlay;
 
+        public XP xp;
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
 

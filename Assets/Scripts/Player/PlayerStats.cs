@@ -5,6 +5,10 @@ using Random = UnityEngine.Random;
 
 public class PlayerStats : ManagerSingleton<PlayerStats>
 {
+    // Unexposed properties
+    public float xp;
+
+
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
