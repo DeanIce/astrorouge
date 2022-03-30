@@ -291,6 +291,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
                 LayerMask.GetMask("Enemy", "Ground"),
                 LayerMask.GetMask("Ground"),
                 secondaryAttackDuration,
+                secondaryAttackTickTime,
                 beamDamage,
                 PlayerStats.Instance.rangeProjectileRange),
             secondaryAttackProcChance / tickCount);

@@ -1,7 +1,12 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BeamProjectile : BaseProjectile
 {
+    private float tickTime;
+    private readonly Dictionary<GameObject, float> hitTimings = new();
+
     void FixedUpdate()
     {
         if (currHealth < 0.01f)
@@ -16,6 +21,11 @@ public class BeamProjectile : BaseProjectile
             Die();
             return;
         }
+
+        foreach(GameObject obj in hitTimings.Keys.ToList())
+        {
+            hitTimings[obj] += Time.fixedDeltaTime;
+        }
     }
 
     private void OnTriggerEnter(Collider other) => ResolveCollision(other);
@@ -26,7 +36,20 @@ public class BeamProjectile : BaseProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            CollisionResponse(other.gameObject);
+            GameObject root = other.transform.root.gameObject;
+            if (hitTimings.TryGetValue(root, out float timeSinceLastHit))
+            {
+                if (timeSinceLastHit >= tickTime)
+                {
+                    hitTimings[root] = 0;
+                    CollisionResponse(other.gameObject);
+                }
+            }
+            else
+            {
+                hitTimings.Add(root, 0);
+                CollisionResponse(other.gameObject);
+            }
             // Beam does NOT die after delivering damage
         }
     }
@@ -50,11 +73,13 @@ public class BeamProjectile : BaseProjectile
     /// </summary>
     /// <param name="collidesWith">A layermask of ALL the layers the projectile will collide with</param>
     /// <param name="duration">How long (in seconds) the beam will persist</param>
+    /// <param name="tickTime">How long (in seconds) between damage 'ticks' of the beam</param>
     /// <param name="damage">The damage the beam will do when it collides</param>
-    public void InitializeValues(LayerMask collidesWith, float duration, float damage)
+    public void InitializeValues(LayerMask collidesWith, float duration, float tickTime, float damage)
     {
         collisionLayer = collidesWith;
         timeLeft = duration;
+        this.tickTime = tickTime;
         currHealth = 1;
         this.damage = damage;
     }

@@ -35,11 +35,11 @@ public class ProjectileFactory : MonoBehaviour
     }
 
     public GameObject CreateBeamProjectile(Vector3 position, Vector3 direction, LayerMask collidesWith,
-        LayerMask stopsAt, float duration, float damage, float range)
+        LayerMask stopsAt, float duration, float tickTime, float damage, float range)
     {
         GameObject newProjectile = Instantiate(beamProjectile);
         newProjectile.transform.parent = gameObject.transform;
-        newProjectile.GetComponent<BeamProjectile>().InitializeValues(collidesWith, duration, damage);
+        newProjectile.GetComponent<BeamProjectile>().InitializeValues(collidesWith, duration, tickTime, damage);
         newProjectile.transform.SetPositionAndRotation(position,
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
 
