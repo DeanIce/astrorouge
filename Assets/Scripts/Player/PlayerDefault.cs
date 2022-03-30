@@ -306,20 +306,18 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         _ = HandleEffects(
             ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-                10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
+                10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
                 LayerMask.GetMask("Enemy", "Ground"),
-                PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
-                PlayerStats.Instance.GetRangeDamage()),
+                PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
+                PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult),
             specialActionProcChance);
     }
 
     private Vector3 AttackVector()
     {
-        float bulletSpread = spread;
-        if (IsSprinting)
-            bulletSpread += 1.5f;
-
-        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
+        float bulletSpread = IsSprinting ? spread + 1.5f : spread;
+        
+        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         var screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
