@@ -6,10 +6,8 @@ namespace UI
 {
     public class HudUI : MonoBehaviour
     {
-        public int level;
         private readonly float crosshairSize = 60;
 
-        private readonly float maxHealth = 100;
 
         private VisualElement crosshair;
 
@@ -37,8 +35,8 @@ namespace UI
 
             SetHealth(PlayerStats.Instance.currentHealth);
 
-            LevelUp();
-            SetExp(10, 100);
+            expLevelText.text = PlayerStats.Instance.xpLevel.ToString();
+            SetExp(PlayerStats.Instance.xp);
         }
 
         private void OnEnable()
@@ -54,12 +52,13 @@ namespace UI
 
         private void UpdateBars()
         {
+            SetExp(PlayerStats.Instance.xp);
             SetHealth(PlayerStats.Instance.currentHealth);
-            SetExp(PlayerStats.Instance.xp, 100);
         }
 
         public void SetHealth(float hp)
         {
+            int maxHealth = PlayerStats.Instance.maxHealth;
             hp = Mathf.Round(hp);
             healthBarText.text = hp + " / " + maxHealth;
             float percentRemaining = hp / maxHealth * 100;
@@ -73,22 +72,23 @@ namespace UI
             healthBar.style.width = new StyleLength(Length.Percent(percentRemaining - 3));
         }
 
-        public void SetExp(float exp, float maxExp)
+        public void SetExp(float exp)
         {
-            // Todo(Matt): more XP stuff
-            if (exp >= maxExp)
+            if (exp >= PlayerStats.Instance.xpPerLevel)
             {
                 LevelUp();
-                exp -= maxExp;
+                exp -= PlayerStats.Instance.xpPerLevel;
             }
 
-            expBar.style.width = new StyleLength(Length.Percent(exp / maxExp * 100));
+            expBar.style.width = new StyleLength(Length.Percent(exp / PlayerStats.Instance.xpPerLevel * 100));
+            PlayerStats.Instance.xp = exp;
         }
 
         public void LevelUp()
         {
-            level++;
-            expLevelText.text = level.ToString();
+            PlayerStats.Instance.xpLevel++;
+            expLevelText.text = PlayerStats.Instance.xpLevel.ToString();
+            PlayerStats.Instance.LevelUp();
         }
 
         public void AdjustCrosshair(float spread)

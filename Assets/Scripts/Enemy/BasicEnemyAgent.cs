@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Gravity;
 using Managers;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BasicEnemyAgent : MonoBehaviour, IEnemy
 {
@@ -38,6 +40,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
+
+    [NonSerialized] public float xpGift = 30;
     public bool Attacking { get; set; }
 
     public float AttackRange => attackRange;
@@ -179,16 +183,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
 
-            // Give XP for damaging the enemy
-            PlayerStats.Instance.xp += EventManager.Instance.xp.damageMultiplier;
-            EventManager.Instance.PlayerStatsUpdated();
-
             if (health <= 0f && iAmAlive) Die();
         }
     }
 
     public virtual void Die()
     {
+        // Give XP for killing the enemy
+        PlayerStats.Instance.xp += xpGift;
+        EventManager.Instance.PlayerStatsUpdated();
+
         iAmAlive = false;
         GetComponent<StatusEffectManager>().DeathEffects();
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);

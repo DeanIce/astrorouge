@@ -7,6 +7,8 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
 {
     // Unexposed properties
     public float xp;
+    public int xpLevel;
+    public float xpPerLevel = 100;
 
 
     // Melee Stats
@@ -133,6 +135,11 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
 
     public void SetDefaultValues()
     {
+        // Unexposed properties
+        xpLevel = 0;
+        xp = 0;
+
+        // Melee Stats
         meleeAttackDelay = baseMeleeAttackDelay;
         meleeBaseDamage = baseMeleeBaseDamage;
         meleeDamageMultiplier = baseMeleeDamageMultiplier;
@@ -185,5 +192,12 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     protected internal void Moustache()
     {
         MoustacheEnable?.Invoke();
+    }
+
+    public void LevelUp()
+    {
+        maxHealth = (int) (maxHealth * 1.2f);
+        meleeBaseDamage = (int) (meleeBaseDamage * 1.2f);
+        rangeBaseDamage = (int) (rangeBaseDamage * 1.2f);
     }
 }

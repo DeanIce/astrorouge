@@ -16,7 +16,6 @@ namespace Managers
 
         public string scenePlay;
 
-        public XP xp;
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
 
@@ -26,13 +25,6 @@ namespace Managers
         private Mode mode = Mode.Play;
 
         public RunStats runStats = new();
-
-        //
-        // [RuntimeInitializeOnLoadMethod]
-        // private static void Init()
-        // {
-        //     print("should be calleda FIRST");
-        // }
 
 
         // Game State events
