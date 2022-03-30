@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gravity;
 
 public class StatusEffectManager : MonoBehaviour
 {
     private IDamageable damageable;
-    public List<int> burnTickTimes = new List<int>();
-    public List<int> poisonTickTimes = new List<int>();
-    public List<int> radTickTimes = new List<int>();
-    public List<int> slowTickTimes = new List<int>();
-    public List<int> stunTickTimes = new List<int>();
+    private List<int> burnTickTimes = new List<int>();
+    private List<int> poisonTickTimes = new List<int>();
+    private List<int> radTickTimes = new List<int>();
+    private List<int> slowTickTimes = new List<int>();
+    private List<int> stunTickTimes = new List<int>();
+
+    [SerializeField] GameObject BurnVFX;
+    [SerializeField] GameObject PosionVFX;
+    [SerializeField] GameObject LightningVFX;
+    [SerializeField] GameObject RadiationVFX;
+    [SerializeField] GameObject SmiteVFX;
+    [SerializeField] GameObject MartydomVFX;
+    [SerializeField] GameObject IgniteVFX;
+    [SerializeField] GameObject StunVFX;
+    [SerializeField] GameObject SlowVFX;
 
     public int burnDamage = 5;
     public int poisonDamage = 10;
@@ -24,7 +35,35 @@ public class StatusEffectManager : MonoBehaviour
     void Start()
     {
         damageable = GetComponent<IDamageable>();
+
+        LightningVFX.GetComponent<ParticleSystem>().Stop(true);
+        SmiteVFX.GetComponent<ParticleSystem>().Stop(true);
+        MartydomVFX.GetComponent<ParticleSystem>().Stop(true);
+
+        BurnVFX.SetActive(false);
+        PosionVFX.SetActive(false);
+        RadiationVFX.SetActive(false);
+        IgniteVFX.SetActive(false);
+        StunVFX.SetActive(false);
+        SlowVFX.SetActive(false);
     }
+
+    private void FixedUpdate()
+    {
+        straightenEffects(SmiteVFX);
+        straightenEffects(SlowVFX);
+    }
+
+    private void straightenEffects(GameObject effect)
+    {
+        var sumForce = GravityManager.GetGravity(effect.transform.position, out var upAxis);
+        //effect.GetComponent<Rigidbody>().AddForce(sumForce * Time.deltaTime);
+        Debug.DrawLine(effect.transform.position, sumForce, Color.blue);
+
+        // Upright?
+        effect.GetComponent<Rigidbody>().MoveRotation(Quaternion.FromToRotation(effect.transform.up, upAxis) * effect.transform.rotation);
+    }
+
     public void DeathEffects()
     {
         StartCoroutine(Martyrdom());
@@ -47,6 +86,7 @@ public class StatusEffectManager : MonoBehaviour
 
     IEnumerator Burn()
     {
+        BurnVFX.SetActive(true);
         while(burnTickTimes.Count > 0)
         {
             for (int i = 0; i < burnTickTimes.Count; i++)
@@ -57,6 +97,7 @@ public class StatusEffectManager : MonoBehaviour
             burnTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
         }
+        BurnVFX.SetActive(false);
     }
     public void ApplyPoison(int ticks)
     {
@@ -74,6 +115,7 @@ public class StatusEffectManager : MonoBehaviour
 
     IEnumerator Poison()
     {
+        PosionVFX.SetActive(true);
         while (poisonTickTimes.Count > 0)
         {
             for (int i = 0; i < poisonTickTimes.Count; i++)
@@ -84,6 +126,7 @@ public class StatusEffectManager : MonoBehaviour
             poisonTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(1f);
         }
+        PosionVFX.SetActive(false);
     }
 
     public void ApplyLightning()
@@ -95,6 +138,7 @@ public class StatusEffectManager : MonoBehaviour
     IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
+        LightningVFX.GetComponent<ParticleSystem>().Play(true);
         damageable.TakeDmg(lightningDamage);
     }
 
@@ -106,6 +150,7 @@ public class StatusEffectManager : MonoBehaviour
     IEnumerator Smite()
     {
         yield return new WaitForSeconds(0.1f);
+        SmiteVFX.GetComponent<ParticleSystem>().Play(true);
         damageable.TakeDmg(smiteDamage);
     }
 
@@ -124,6 +169,7 @@ public class StatusEffectManager : MonoBehaviour
 
     IEnumerator Slow()
     {
+        SlowVFX.SetActive(true);
         float initSpeed = 1.0f;
 
         if(GetComponent<IEnemy>() != null)
@@ -146,6 +192,7 @@ public class StatusEffectManager : MonoBehaviour
         {
             GetComponent<IEnemy>().setSpeed(initSpeed);
         }
+        SlowVFX.SetActive(false);
     }
 
     public void ApplyRadioactive(int ticks)
@@ -164,6 +211,7 @@ public class StatusEffectManager : MonoBehaviour
 
     IEnumerator Radioactive()
     {
+        RadiationVFX.SetActive(true);
         while (radTickTimes.Count > 0)
         {
             for (int i = 0; i < radTickTimes.Count; i++)
@@ -183,7 +231,8 @@ public class StatusEffectManager : MonoBehaviour
 
             radTickTimes.RemoveAll(num => num == 0);
             yield return new WaitForSeconds(0.5f);
-        }    
+        }
+        RadiationVFX.SetActive(false);
     }
 
     public void ApplyStun(int ticks)
@@ -201,6 +250,7 @@ public class StatusEffectManager : MonoBehaviour
 
     IEnumerator Stun()
     {
+        StunVFX.SetActive(true);
         float initSpeed = 1.0f;
 
         if (GetComponent<IEnemy>() != null)
@@ -223,7 +273,9 @@ public class StatusEffectManager : MonoBehaviour
         {
             GetComponent<IEnemy>().setSpeed(initSpeed);
         }
+        StunVFX.SetActive(false);
     }
+
     public void ApplyMartyrdom()
     {
         martyrdom = true;
@@ -233,6 +285,7 @@ public class StatusEffectManager : MonoBehaviour
     {
         if (martyrdom)
         {
+            MartydomVFX.GetComponent<ParticleSystem>().Play(true);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
 
             foreach (Collider hitCollider in hitColliders)
@@ -265,8 +318,13 @@ public class StatusEffectManager : MonoBehaviour
                     hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
                 }
             }
+            IgniteVFX.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            IgniteVFX.SetActive(false);
         }
-
-        yield return null;
+        else
+        {
+            yield return null;
+        }
     }
 }
