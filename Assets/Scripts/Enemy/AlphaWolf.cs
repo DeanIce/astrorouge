@@ -8,6 +8,7 @@ public class AlphaWolf : BasicEnemyAgent
     [SerializeField] private float attackChance = 0.5f;
     private Animator animator;
     private int attack;
+    private bool condition;
     private const float viewAngle = 30f;
     private Rigidbody rb;
 
@@ -70,10 +71,13 @@ public class AlphaWolf : BasicEnemyAgent
         }
         else
         {
-            if (!Attacking && (Mathf.Abs((transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count && Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle))
+            if (wolves.Count > 0) condition = !Attacking && (Mathf.Abs((transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count && Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle);
+            else condition = !Attacking;
+
+            if (condition)
             {
                 // NEW MOVEMENT HERE
-                animator.SetInteger("moving", 0);
+                animator.SetInteger("moving", 2);
                 rb.MovePosition(
                     rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
                 Body.transform.RotateAround(transform.position, transform.up,
@@ -129,6 +133,10 @@ public class AlphaWolf : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
+            foreach (GameObject wolf in wolves)
+            {
+                wolf.GetComponent<Wolf>().SetAlpha(null);
+            }
             animator.SetInteger("moving", 12);
             base.Die();
         }
