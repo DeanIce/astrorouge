@@ -18,18 +18,8 @@ namespace Player
             RebuildInventory();
         }
 
-        private void OnEnable()
-        {
-            // EventManager.Instance.loadBoss += LoadBossEvent;
-        }
 
-        private void OnDisable()
-        {
-            // EventManager.Instance.loadBoss -= LoadBossEvent;
-        }
-
-
-        public bool HasItem(AbstractItem item)
+        private bool HasItem(AbstractItem item)
         {
             Dictionary<string, (AbstractItem, int)> inventory = EventManager.Instance.inventory;
             return inventory.ContainsKey(item.itemName);
