@@ -13,6 +13,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public float health;
     public float movementSpeed;
     [SerializeField] private GameObject detector;
+    public GameObject Detector => detector;
     [SerializeField] private GameObject body;
     [SerializeField] private float attackRange;
     private readonly Color green = new(0, 1, 0, 0.5f);
@@ -20,6 +21,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     // Swapping to collider and layer based detection
     private readonly int playerLayer = 9;
+    public int PlayerLayer => playerLayer;
     private readonly Color red = new(1, 0, 0, 0.5f);
 
     // Private enemy specific variables
@@ -85,7 +87,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     }
 
     // Lost Player
-    private void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == playerLayer)
         {

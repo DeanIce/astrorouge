@@ -50,7 +50,7 @@ public class RockEnemy : BasicEnemyAgent
     {
         if (started)
         {
-            base.OnTriggerEnter(other);
+            if (Wandering) base.OnTriggerEnter(other);
             base.OnTriggerStay(other);
         }
     }
