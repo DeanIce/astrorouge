@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 3108807673106792302}
   - component: {fileID: 3108807673106792297}
   - component: {fileID: 1819729513749010048}
-  - component: {fileID: 5661711855731581306}
+  - component: {fileID: 577058953480667370}
   m_Layer: 10
   m_Name: EntEnemy
   m_TagString: Untagged
@@ -221,7 +221,7 @@ MonoBehaviour:
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
---- !u!114 &5661711855731581306
+--- !u!114 &577058953480667370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,17 +230,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1244409235464968957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3746f92828565c24eb5afef90ba2456a, type: 3}
+  m_Script: {fileID: 11500000, guid: fe313b549fdca1244a49974a6bd451b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
   movementSpeed: 1
   detector: {fileID: 1244409235441321341}
-  body: {fileID: 0}
-  attackRange: 1.4
-  alpha: {fileID: 0}
-  maxDistance: 5
-  ordered: 0
+  body: {fileID: 437602323152729064}
+  attackRange: 2
 --- !u!1 &3108807673582647940
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,5 +329,10 @@ PrefabInstance:
 --- !u!4 &437602323152475700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 883385773537835205, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}
+  m_PrefabInstance: {fileID: 743311988355542769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &437602323152729064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 883385773538139417, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}
   m_PrefabInstance: {fileID: 743311988355542769}
   m_PrefabAsset: {fileID: 0}

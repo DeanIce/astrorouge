@@ -264,6 +264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14793b4b04d9a9444b56b1261cb1ce1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  movementSpeed: 2
+  detector: {fileID: 0}
+  body: {fileID: 0}
+  attackRange: 3
 --- !u!1001 &116817551958803546
 PrefabInstance:
   m_ObjectHideFlags: 0
