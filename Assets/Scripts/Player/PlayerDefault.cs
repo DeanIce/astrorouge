@@ -21,11 +21,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private AudioClip attack2SoundEffect;
     [SerializeField] private float spread = 1.0f;
 
+    public float regenDelay = 10;
+
     private readonly float decreasePerSecond = 60f;
     private readonly float increasePerSecond = 60f;
     private readonly float maxSpread = 30f;
     private readonly float minSpread = 1f;
-
 
     private Animator animator;
 
@@ -39,6 +40,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // References
     private Rigidbody rb;
+
+    private float timeOfLastDamage;
     protected internal bool useGravity = true;
 
     public bool IsSprinting { get; private set; }
@@ -101,6 +104,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             crosshairSpread -= decreasePerSecond * Time.deltaTime;
         crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
         EventManager.Instance.CrosshairSpread(crosshairSpread);
+
+        // Health regen
+        if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
+            PlayerStats.Instance.IsAlive())
+        {
+            PlayerStats.Instance.currentHealth += PlayerStats.Instance.healthRegen;
+            Mathf.Clamp(PlayerStats.Instance.currentHealth, 0, PlayerStats.Instance.maxHealth);
+            EventManager.Instance.PlayerStatsUpdated();
+        }
     }
 
     private void OnEnable()
@@ -206,6 +218,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void TakeDmg(float dmg)
     {
+        timeOfLastDamage = Time.time;
         animator.SetTrigger("takeDamage");
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;

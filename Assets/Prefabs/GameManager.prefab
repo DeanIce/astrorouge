@@ -66,6 +66,7 @@ MonoBehaviour:
   logEvents: 0
   requestedScene: 0
   scenePlay: LevelScene
+  XP_Levels: 64000000c8000000fa00000090010000
 --- !u!114 &5915032664712744906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +218,7 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   healthRegen: 0
+  regenDelay: 0
   armor: 0
   dodgeChance: 0
   invincibilityDuration: 0
@@ -254,6 +256,7 @@ MonoBehaviour:
   baseRangeProjectileSpeed: 25
   baseMaxHealth: 100
   baseHealthRegen: 0.1
+  baseRegenDelay: 10
   baseArmor: 1
   baseDodgeChance: 0
   baseInvincibilityDuration: 1
