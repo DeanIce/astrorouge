@@ -104,12 +104,10 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
     [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
-
     private void Start()
     {
         SetDefaultValues();
     }
-
 
     public event Action MoustacheEnable;
 
@@ -118,6 +116,19 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         if (Random.value <= rangeCritChance)
             return rangeBaseDamage * rangeDamageMultiplier * rangeCritMultiplier;
         return rangeBaseDamage * rangeDamageMultiplier;
+    }
+
+    public float GetRangeDPS()
+    {
+        // DPS = (bullets per second) * (average bullet damage)
+        // 1[second] = (bullets per second) * (attack delay)
+        // (average bullet damage) = critChance * critDamage + (1 - critChance) * regDamage
+
+        float bulletsPerSecond = 1f / rangeAttackDelay;
+        float bulletDamage = rangeBaseDamage * rangeDamageMultiplier;
+        float aveBulletDamage = (rangeCritChance * rangeCritMultiplier * bulletDamage) + ((1-rangeCritChance) * bulletDamage);
+
+        return bulletsPerSecond * aveBulletDamage;
     }
 
     public void SetDefaultValues()

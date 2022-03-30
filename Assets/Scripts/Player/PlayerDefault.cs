@@ -7,34 +7,47 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
-    private readonly float decreasePerSecond = 60f;
-    private readonly float increasePerSecond = 60f;
-    private readonly float maxSpread = 30f;
-    private readonly float minSpread = 1f;
+    private const float decreasePerSecond = 60f;
+    private const float increasePerSecond = 60f;
+    private const float maxSpread = 30f;
+    private const float minSpread = 1f;
 
     // Dynamic Player Info
     private float crosshairSpread = 1f;
     private int extraJumpsLeft;
     private bool isGrounded;
     private bool isPrimaryAttacking;
+
+    // Public Getters
     public bool IsSprinting { get; private set; }
     public float PrimaryAttackDelay { get; private set; }
     public float SecondaryAttackDelay { get; private set; }
 
-    // Inspector set-able values
+    // Inspector set-able references
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
     [SerializeField] private AudioClip attack1SoundEffect;
     [SerializeField] private AudioClip attack2SoundEffect;
 
-    // Modifiable values
+    // Inspector set-able values
     [SerializeField] public float sensitivity = 0.2f;
     [SerializeField] private float spread = 1.0f;
 
+    // Attack values
     [SerializeField] private float primaryAttackProcChance = 1f;
+
+    [SerializeField] private float secondaryAttackDuration = 0.2f;
+    [SerializeField] private float secondaryAttackTickTime = 0.02f;
+    [SerializeField] private float secondaryAttackDamageMult = 4f;
     [SerializeField] private float secondaryAttackProcChance = 2f;
+    [SerializeField] private float secondaryAttackCooldown = 5f;
+
+    [SerializeField] private float specialActionDamageMult = 24f;
     [SerializeField] private float specialActionProcChance = 0.7f;
+    [SerializeField] private float specialActionCooldown = 8f;
+
     [SerializeField] private float meleeAttackProcChance = 2f;
+
 
     // Misc values
     private Animator animator;
@@ -75,7 +88,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
 
         if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
-
 
         // print(sumForce);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
@@ -241,7 +253,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private void SecondaryAttack(InputAction.CallbackContext obj)
     {
         if (SecondaryAttackDelay > 0) return;
-        SecondaryAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+        SecondaryAttackDelay = secondaryAttackCooldown;
 
         BeamAttack();
     }
@@ -260,15 +272,18 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BeamAttack()
     {
+        float tickCount = secondaryAttackDuration / secondaryAttackTickTime;
+        float beamDamage = PlayerStats.Instance.GetRangeDPS() * secondaryAttackDamageMult / tickCount;
+
         _ = HandleEffects(
             ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
                 AttackVector(),
                 LayerMask.GetMask("Enemy", "Ground"),
                 LayerMask.GetMask("Ground"),
-                0.2f, // TODO (Simon): Mess with value
-                PlayerStats.Instance.GetRangeDamage(),
+                secondaryAttackDuration,
+                beamDamage,
                 PlayerStats.Instance.rangeProjectileRange),
-            secondaryAttackProcChance);
+            secondaryAttackProcChance / tickCount);
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
     }
 
