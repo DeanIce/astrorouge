@@ -8,6 +8,7 @@ public class AlphaWolf : BasicEnemyAgent
     [SerializeField] private float attackChance = 0.5f;
     private Animator animator;
     private int attack;
+    private const float viewAngle = 30f;
     private Rigidbody rb;
 
     public override void Start()
@@ -43,10 +44,14 @@ public class AlphaWolf : BasicEnemyAgent
 
         DoGravity();
 
+        print("Giving Orders");
+
         foreach (GameObject wolf in wolves)
         {
-            if (Random.value < attackChance) wolf.GetComponent<Wolf>().ReceiveOrder(target);
+            if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered == true) wolf.GetComponent<Wolf>().ReceiveOrder(target);
         }
+
+        print("Orders given");
 
         //attacking
         hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player"));
@@ -65,9 +70,10 @@ public class AlphaWolf : BasicEnemyAgent
         }
         else
         {
-            if (!Attacking && Mathf.Abs((transform.position - target.transform.position).magnitude) < AttackRange + wolves.Count)
+            if (!Attacking && (Mathf.Abs((transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count && Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle))
             {
                 // NEW MOVEMENT HERE
+                animator.SetInteger("moving", 0);
                 rb.MovePosition(
                     rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
                 Body.transform.RotateAround(transform.position, transform.up,
@@ -77,6 +83,10 @@ public class AlphaWolf : BasicEnemyAgent
 
                 // Jumping - commented as only works in 2d but could bring back if desired?
                 //if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
+            }
+            else
+            {
+                animator.SetInteger("moving", 0);
             }
         }
     }

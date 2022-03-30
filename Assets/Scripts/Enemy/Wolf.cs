@@ -7,14 +7,17 @@ public class Wolf : BasicEnemyAgent
     [SerializeField] private AlphaWolf alpha;
     public float maxDistance = 5f;
     private bool attacked;
+    public bool ordered;
     private Animator animator;
 
     public override void Start()
     {
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
+        if (alpha != null) alpha.AddWolf(gameObject);
         Dying = false;
         attacked = false;
+        ordered = false;
         base.Start();
     }
 
@@ -28,7 +31,7 @@ public class Wolf : BasicEnemyAgent
     {
         DoGravity();
 
-        if (alpha != null && Mathf.Abs((transform.position - alpha.transform.position).magnitude) > maxDistance) Hunt(alpha.GetComponent<Collider>());
+        if (alpha != null && Mathf.Abs((transform.position - alpha.transform.position).magnitude) > maxDistance) base.Wander(alpha.transform.position - Body.transform.position);
         else base.Wander(direction);
     }
 
@@ -94,6 +97,7 @@ public class Wolf : BasicEnemyAgent
     public void SetAlpha(AlphaWolf boss)
     {
         alpha = boss;
+        alpha.AddWolf(gameObject);
     }
 
     private IEnumerator BattleAnim(bool start)
@@ -121,10 +125,12 @@ public class Wolf : BasicEnemyAgent
 
     public void ReceiveOrder(Collider target)
     {
-        while (!attacked)
+        ordered = true;
+        base.Hunt(target);
+        if (attacked)
         {
-            Hunt(target);
+            ordered = false;
+            attacked = false;
         }
-        attacked = false;
     }
 }
