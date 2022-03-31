@@ -1,11 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="SimpleCrosshair" src="project://database/Assets/UI%20Toolkit/SimpleCrosshair.uxml?fileID=9197481963319205126&amp;guid=03450d6631ed4da44aaaf54fe677fced&amp;type=3#SimpleCrosshair" />
-    <ui:Template name="PauseMenu" src="project://database/Assets/UI%20Toolkit/PauseMenu.uxml?fileID=9197481963319205126&amp;guid=37d4e1d2bbfd35949b2bbb3bbac28cf9&amp;type=3#PauseMenu" />
     <ui:Template name="HitMarker" src="project://database/Assets/UI%20Toolkit/HitMarker.uxml?fileID=9197481963319205126&amp;guid=882550597a53b384d81869156069ce9a&amp;type=3#HitMarker" />
+    <ui:Template name="PauseMenu" src="project://database/Assets/UI%20Toolkit/PauseMenu.uxml?fileID=9197481963319205126&amp;guid=37d4e1d2bbfd35949b2bbb3bbac28cf9&amp;type=3#PauseMenu" />
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/font.uss?fileID=7433441132597879392&amp;guid=3497715282aa3064582d6e2a74bc706b&amp;type=3#font" />
     <ui:VisualElement name="Center" style="position: absolute; width: 100%; height: 100%; justify-content: center; align-items: center;">
         <ui:Instance template="SimpleCrosshair" name="SimpleCrosshair" style="position: relative; left: auto; top: auto;" />
     </ui:VisualElement>
+    <ui:Instance template="HitMarker" name="HitMarker" style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;" />
     <ui:Instance template="PauseMenu" name="PauseMenu" style="position: absolute; width: 100%; height: 100%; display: flex;" />
     <ui:VisualElement name="Screen" style="width: 100%; position: absolute; bottom: 0;">
         <ui:VisualElement name="Bottom" style="flex-direction: row; margin-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; padding-bottom: 0; padding-left: 0; position: absolute; bottom: 0; width: 100%; padding-right: 0; padding-top: 0; justify-content: space-between;">
@@ -37,5 +38,4 @@
         <ui:Label text="Label" display-tooltip-when-elided="true" name="tooltip-name" class="oxanium" style="color: rgb(255, 255, 255); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 6px; -unity-text-align: upper-left; font-size: 24px;" />
         <ui:Label text="Description of item that can span multiple lines." display-tooltip-when-elided="true" name="tooltip-description" class="nexon" style="color: rgb(255, 255, 255); white-space: normal; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-text-align: upper-left; font-size: 16px;" />
     </ui:VisualElement>
-    <ui:Instance template="HitMarker" name="HitMarker" style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;" />
 </ui:UXML>
