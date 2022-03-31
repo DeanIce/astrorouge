@@ -57,6 +57,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private LayerMask groundMask;
     private InputAction movement, look;
     private Rigidbody rb;
+
+    private float timeOfLastDamage;
     protected internal bool useGravity = true;
 
     private void Start()
@@ -83,6 +85,16 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         {
             ProjectileAttack();
             PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+        }
+        
+        // Health regen
+        if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
+            PlayerStats.Instance.IsAlive() &&
+            PlayerStats.Instance.currentHealth < PlayerStats.Instance.maxHealth)
+        {
+            PlayerStats.Instance.currentHealth += PlayerStats.Instance.healthRegen * Time.deltaTime;
+            Mathf.Clamp(PlayerStats.Instance.currentHealth, 0, PlayerStats.Instance.maxHealth);
+            EventManager.Instance.PlayerStatsUpdated();
         }
     }
 
@@ -227,6 +239,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void TakeDmg(float dmg)
     {
+        timeOfLastDamage = Time.time;
         animator.SetTrigger("takeDamage");
         // Temp, add damage negation and other maths here later.
         PlayerStats.Instance.currentHealth -= dmg;

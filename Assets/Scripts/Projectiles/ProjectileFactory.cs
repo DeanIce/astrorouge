@@ -90,37 +90,73 @@ public class ProjectileFactory : MonoBehaviour
     public void AddBurn(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new BurnEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateBurnTrail(true);
+        }
     }
     public void AddPoison(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new PoisonEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivatePoisonTrail(true);
+        }
     }
     public void AddLightning(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new LightningEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateLightningTrail(true);
+        }
     }
     public void AddRadioactive(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new RadioactiveEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateRadioactiveTrail(true);
+        }
     }
     public void AddSmite(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SmiteEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateSmiteTrail(true);
+        }
     }
     public void AddSlow(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new SlowEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateSlowTrail(true);
+        }
     }
     public void AddStun(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new StunEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateStunTrail(true);
+        }
     }
     public void AddMartyrdom(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new MartyrdomEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateMatyrdomTrail(true);
+        }
     }
     public void AddIgnite(GameObject projectile)
     {
         projectile.GetComponent<IProjectile>().AttachEffect(new IgniteEffect());
+        if (projectile.GetComponent<BasicProjectile>() != null)
+        {
+            projectile.GetComponent<BasicProjectile>().ActivateIgniteTrail(true);
+        }
     }
 }

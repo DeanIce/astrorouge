@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Gravity;
 using Managers;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BasicEnemyAgent : MonoBehaviour, IEnemy
 {
@@ -13,6 +15,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public float health;
     public float movementSpeed;
     [SerializeField] private GameObject detector;
+    public GameObject Detector => detector;
     [SerializeField] private GameObject body;
     [SerializeField] private float attackRange;
     private readonly Color green = new(0, 1, 0, 0.5f);
@@ -20,6 +23,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     // Swapping to collider and layer based detection
     private readonly int playerLayer = 9;
+    public int PlayerLayer => playerLayer;
     private readonly Color red = new(1, 0, 0, 0.5f);
 
     // Private enemy specific variables
@@ -38,6 +42,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
+
+    [NonSerialized] public float xpGift = 30;
     public bool Attacking { get; set; }
 
     public float AttackRange => attackRange;
@@ -85,7 +91,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     }
 
     // Lost Player
-    private void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == playerLayer)
         {
@@ -136,7 +142,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
@@ -178,12 +184,17 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
 
+
             if (health <= 0f && iAmAlive) Die();
         }
     }
 
     public virtual void Die()
     {
+        // Give XP for killing the enemy
+        PlayerStats.Instance.xp += xpGift;
+        EventManager.Instance.PlayerStatsUpdated();
+
         iAmAlive = false;
         GetComponent<StatusEffectManager>().DeathEffects();
         DropManager.Instance.SpawnItem(transform.position, transform.rotation);
@@ -205,7 +216,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
@@ -226,7 +237,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public void DoGravity()
     {
         // Gravity
-        var sumForce = GravityManager.GetGravity(transform.position, out var upAxis);
+        Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
         rb.AddForce(sumForce * Time.deltaTime);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
 
