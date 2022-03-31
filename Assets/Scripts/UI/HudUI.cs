@@ -10,6 +10,7 @@ namespace UI
         private readonly float crosshairSize = 60;
 
         private readonly float maxHealth = 100;
+        private readonly float hitmarkerScreenDuration = 0.2f;
 
         private VisualElement crosshair;
         private VisualElement hitmarker;
@@ -80,7 +81,7 @@ namespace UI
         private void DisplayHitmarker()
         {
             hitmarkerDisplayed = true;
-            hitmarkerTimer = 0.25f;
+            hitmarkerTimer = hitmarkerScreenDuration;
             hitmarker.style.display = DisplayStyle.Flex;
         }
 
