@@ -1228,10 +1228,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 579053813939167120, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: hudUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 579053813939167120, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: regenDelay
       value: 10
       objectReference: {fileID: 0}
@@ -1282,10 +1278,6 @@ PrefabInstance:
     - target: {fileID: 579053813939167122, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_Name
       value: PlayerDefault
-      objectReference: {fileID: 0}
-    - target: {fileID: 579053813939167214, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_Mass
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
@@ -1601,10 +1593,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: scenePlay
-      value: LevelScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: XP_Levels.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -1631,10 +1619,6 @@ PrefabInstance:
     - target: {fileID: 7689409263527498333, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8027408832269683781, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: baseMeleeAttackRange
-      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}

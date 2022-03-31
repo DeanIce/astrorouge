@@ -12,9 +12,6 @@ namespace Utilities
         public static void BakeAndSetColliders(PlanetGenerator[] pgs)
         {
             Dictionary<int, Mesh> meshes = PlanetGenerator.meshesToBake;
-
-            // You cannot access GameObjects and Components from other threads directly.
-            // As such, you need to create a native array of instance IDs that BakeMesh will accept.
             var meshIds = new NativeArray<int>(meshes.Count, Allocator.TempJob);
 
             foreach (KeyValuePair<int, Mesh> pair in meshes)
@@ -24,7 +21,6 @@ namespace Utilities
 
             // This spreads the expensive operation over all cores.
             var job = new BakeAllMeshes(meshIds);
-
             job.Schedule(meshIds.Length, 1).Complete();
 
             // Now instantiate colliders on the main thread.
@@ -40,7 +36,7 @@ namespace Utilities
 
 
     [BurstCompile]
-    public struct BakeAllMeshes : IJobParallelFor, JobHelper.IJobDisposable
+    public struct BakeAllMeshes : IJobParallelFor
     {
         private NativeArray<int> meshIds;
 
@@ -52,11 +48,6 @@ namespace Utilities
         public void Execute(int index)
         {
             Physics.BakeMesh(meshIds[index], false);
-        }
-
-        public void OnDispose()
-        {
-            // meshIds.Dispose();
         }
     }
 }

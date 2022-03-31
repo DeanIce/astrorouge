@@ -1,26 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Gravity;
+using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
 {
-    private IDamageable damageable;
-    private List<int> burnTickTimes = new List<int>();
-    private List<int> poisonTickTimes = new List<int>();
-    private List<int> radTickTimes = new List<int>();
-    private List<int> slowTickTimes = new List<int>();
-    private List<int> stunTickTimes = new List<int>();
-
-    [SerializeField] GameObject BurnVFX;
-    [SerializeField] GameObject PosionVFX;
-    [SerializeField] GameObject LightningVFX;
-    [SerializeField] GameObject RadiationVFX;
-    [SerializeField] GameObject SmiteVFX;
-    [SerializeField] GameObject MartydomVFX;
-    [SerializeField] GameObject IgniteVFX;
-    [SerializeField] GameObject StunVFX;
-    [SerializeField] GameObject SlowVFX;
+    public GameObject BurnVFX;
+    public GameObject PosionVFX;
+    public GameObject LightningVFX;
+    public GameObject RadiationVFX;
+    public GameObject SmiteVFX;
+    public GameObject MartydomVFX;
+    public GameObject IgniteVFX;
+    public GameObject StunVFX;
+    public GameObject SlowVFX;
 
     public int burnDamage = 5;
     public int poisonDamage = 10;
@@ -28,11 +21,17 @@ public class StatusEffectManager : MonoBehaviour
     public int radDamage = 2;
     public float smiteDamage = float.MaxValue;
 
-    public bool martyrdom = false;
-    public bool ignite = false;
+    public bool martyrdom;
+    public bool ignite;
+    private readonly List<int> burnTickTimes = new();
+    private readonly List<int> poisonTickTimes = new();
+    private readonly List<int> radTickTimes = new();
+    private readonly List<int> slowTickTimes = new();
+    private readonly List<int> stunTickTimes = new();
+    private IDamageable damageable;
 
 
-    void Start()
+    private void Start()
     {
         damageable = GetComponent<IDamageable>();
 
@@ -50,18 +49,19 @@ public class StatusEffectManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        straightenEffects(SmiteVFX);
-        straightenEffects(SlowVFX);
+        if (SmiteVFX) straightenEffects(SmiteVFX);
+        if (SmiteVFX) straightenEffects(SlowVFX);
     }
 
     private void straightenEffects(GameObject effect)
     {
-        var sumForce = GravityManager.GetGravity(effect.transform.position, out var upAxis);
+        Vector3 sumForce = GravityManager.GetGravity(effect.transform.position, out Vector3 upAxis);
         //effect.GetComponent<Rigidbody>().AddForce(sumForce * Time.deltaTime);
         Debug.DrawLine(effect.transform.position, sumForce, Color.blue);
 
         // Upright?
-        effect.GetComponent<Rigidbody>().MoveRotation(Quaternion.FromToRotation(effect.transform.up, upAxis) * effect.transform.rotation);
+        effect.GetComponent<Rigidbody>()
+            .MoveRotation(Quaternion.FromToRotation(effect.transform.up, upAxis) * effect.transform.rotation);
     }
 
     public void DeathEffects()
@@ -79,26 +79,30 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(Burn());
         }
         else
-        {
             burnTickTimes.Add(ticks);
+    }
+
+    private IEnumerator Burn()
+    {
+        if (BurnVFX)
+        {
+            BurnVFX.SetActive(true);
+            while (burnTickTimes.Count > 0)
+            {
+                for (var i = 0; i < burnTickTimes.Count; i++)
+                {
+                    burnTickTimes[i]--;
+                }
+
+                damageable.TakeDmg(burnDamage);
+                burnTickTimes.RemoveAll(num => num == 0);
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            BurnVFX.SetActive(false);
         }
     }
 
-    IEnumerator Burn()
-    {
-        BurnVFX.SetActive(true);
-        while(burnTickTimes.Count > 0)
-        {
-            for (int i = 0; i < burnTickTimes.Count; i++)
-            {
-                burnTickTimes[i]--;
-            }
-            damageable.TakeDmg(burnDamage);
-            burnTickTimes.RemoveAll(num => num == 0);
-            yield return new WaitForSeconds(0.5f);
-        }
-        BurnVFX.SetActive(false);
-    }
     public void ApplyPoison(int ticks)
     {
         //damage will be passed in later and into the coroutine
@@ -108,25 +112,28 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(Poison());
         }
         else
-        {
             poisonTickTimes.Add(ticks);
-        }
     }
 
-    IEnumerator Poison()
+    private IEnumerator Poison()
     {
-        PosionVFX.SetActive(true);
-        while (poisonTickTimes.Count > 0)
+        if (PosionVFX)
         {
-            for (int i = 0; i < poisonTickTimes.Count; i++)
+            PosionVFX.SetActive(true);
+            while (poisonTickTimes.Count > 0)
             {
-                poisonTickTimes[i]--;
+                for (var i = 0; i < poisonTickTimes.Count; i++)
+                {
+                    poisonTickTimes[i]--;
+                }
+
+                damageable.TakeDmg(poisonDamage);
+                poisonTickTimes.RemoveAll(num => num == 0);
+                yield return new WaitForSeconds(1f);
             }
-            damageable.TakeDmg(poisonDamage);
-            poisonTickTimes.RemoveAll(num => num == 0);
-            yield return new WaitForSeconds(1f);
+
+            PosionVFX.SetActive(false);
         }
-        PosionVFX.SetActive(false);
     }
 
     public void ApplyLightning()
@@ -135,7 +142,7 @@ public class StatusEffectManager : MonoBehaviour
         StartCoroutine(Lightning());
     }
 
-    IEnumerator Lightning()
+    private IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
         LightningVFX.GetComponent<ParticleSystem>().Play(true);
@@ -147,7 +154,7 @@ public class StatusEffectManager : MonoBehaviour
         StartCoroutine(Smite());
     }
 
-    IEnumerator Smite()
+    private IEnumerator Smite()
     {
         yield return new WaitForSeconds(0.1f);
         SmiteVFX.GetComponent<ParticleSystem>().Play(true);
@@ -162,37 +169,36 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(Slow());
         }
         else
-        {
             slowTickTimes.Add(ticks);
-        }
     }
 
-    IEnumerator Slow()
+    private IEnumerator Slow()
     {
-        SlowVFX.SetActive(true);
-        float initSpeed = 1.0f;
-
-        if(GetComponent<IEnemy>() != null)
+        if (SlowVFX)
         {
-            initSpeed = GetComponent<IEnemy>().getSpeed();
-            GetComponent<IEnemy>().setSpeed(initSpeed * 0.2f);
-        }
+            SlowVFX.SetActive(true);
+            var initSpeed = 1.0f;
 
-        while (slowTickTimes.Count > 0)
-        {
-            for (int i = 0; i < slowTickTimes.Count; i++)
+            if (GetComponent<IEnemy>() != null)
             {
-                slowTickTimes[i]--;
+                initSpeed = GetComponent<IEnemy>().getSpeed();
+                GetComponent<IEnemy>().setSpeed(initSpeed * 0.2f);
             }
-            slowTickTimes.RemoveAll(num => num == 0);
-            yield return new WaitForSeconds(1f);
-        }
 
-        if (GetComponent<IEnemy>() != null)
-        {
-            GetComponent<IEnemy>().setSpeed(initSpeed);
+            while (slowTickTimes.Count > 0)
+            {
+                for (var i = 0; i < slowTickTimes.Count; i++)
+                {
+                    slowTickTimes[i]--;
+                }
+
+                slowTickTimes.RemoveAll(num => num == 0);
+                yield return new WaitForSeconds(1f);
+            }
+
+            if (GetComponent<IEnemy>() != null) GetComponent<IEnemy>().setSpeed(initSpeed);
+            SlowVFX.SetActive(false);
         }
-        SlowVFX.SetActive(false);
     }
 
     public void ApplyRadioactive(int ticks)
@@ -204,35 +210,35 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(Radioactive());
         }
         else
-        {
             radTickTimes.Add(ticks);
-        }
     }
 
-    IEnumerator Radioactive()
+    private IEnumerator Radioactive()
     {
-        RadiationVFX.SetActive(true);
-        while (radTickTimes.Count > 0)
+        if (RadiationVFX)
         {
-            for (int i = 0; i < radTickTimes.Count; i++)
+            RadiationVFX.SetActive(true);
+            while (radTickTimes.Count > 0)
             {
-                radTickTimes[i]--;
-            }
-
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
-
-            foreach (Collider hitCollider in hitColliders)
-            {
-                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
+                for (var i = 0; i < radTickTimes.Count; i++)
                 {
-                    hitCollider.GetComponent<IEnemy>().TakeDmg(radDamage);
+                    radTickTimes[i]--;
                 }
+
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+
+                foreach (Collider hitCollider in hitColliders)
+                {
+                    if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
+                        hitCollider.GetComponent<IEnemy>().TakeDmg(radDamage);
+                }
+
+                radTickTimes.RemoveAll(num => num == 0);
+                yield return new WaitForSeconds(0.5f);
             }
 
-            radTickTimes.RemoveAll(num => num == 0);
-            yield return new WaitForSeconds(0.5f);
+            RadiationVFX.SetActive(false);
         }
-        RadiationVFX.SetActive(false);
     }
 
     public void ApplyStun(int ticks)
@@ -243,37 +249,36 @@ public class StatusEffectManager : MonoBehaviour
             StartCoroutine(Stun());
         }
         else
-        {
             stunTickTimes.Add(ticks);
-        }
     }
 
-    IEnumerator Stun()
+    private IEnumerator Stun()
     {
-        StunVFX.SetActive(true);
-        float initSpeed = 1.0f;
-
-        if (GetComponent<IEnemy>() != null)
+        if (StunVFX)
         {
-            initSpeed = GetComponent<IEnemy>().getSpeed();
-            GetComponent<IEnemy>().setSpeed(0.0f);
-        }
+            StunVFX.SetActive(true);
+            var initSpeed = 1.0f;
 
-        while (stunTickTimes.Count > 0)
-        {
-            for (int i = 0; i < stunTickTimes.Count; i++)
+            if (GetComponent<IEnemy>() != null)
             {
-                stunTickTimes[i]--;
+                initSpeed = GetComponent<IEnemy>().getSpeed();
+                GetComponent<IEnemy>().setSpeed(0.0f);
             }
-            stunTickTimes.RemoveAll(num => num == 0);
-            yield return new WaitForSeconds(1.0f);
-        }
 
-        if (GetComponent<IEnemy>() != null)
-        {
-            GetComponent<IEnemy>().setSpeed(initSpeed);
+            while (stunTickTimes.Count > 0)
+            {
+                for (var i = 0; i < stunTickTimes.Count; i++)
+                {
+                    stunTickTimes[i]--;
+                }
+
+                stunTickTimes.RemoveAll(num => num == 0);
+                yield return new WaitForSeconds(1.0f);
+            }
+
+            if (GetComponent<IEnemy>() != null) GetComponent<IEnemy>().setSpeed(initSpeed);
+            StunVFX.SetActive(false);
         }
-        StunVFX.SetActive(false);
     }
 
     public void ApplyMartyrdom()
@@ -281,19 +286,17 @@ public class StatusEffectManager : MonoBehaviour
         martyrdom = true;
     }
 
-    IEnumerator Martyrdom()
+    private IEnumerator Martyrdom()
     {
-        if (martyrdom)
+        if (martyrdom && MartydomVFX)
         {
             MartydomVFX.GetComponent<ParticleSystem>().Play(true);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
 
             foreach (Collider hitCollider in hitColliders)
             {
-                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
-                {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
                     hitCollider.GetComponent<IEnemy>().TakeDmg(lightningDamage);
-                }
             }
         }
 
@@ -305,26 +308,23 @@ public class StatusEffectManager : MonoBehaviour
         ignite = true;
     }
 
-    IEnumerator Ignite()
+    private IEnumerator Ignite()
     {
-        if (ignite)
+        if (ignite && IgniteVFX)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
 
             foreach (Collider hitCollider in hitColliders)
             {
-                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != this.GetComponent<Collider>())
-                {
+                if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
                     hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
-                }
             }
+
             IgniteVFX.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             IgniteVFX.SetActive(false);
         }
         else
-        {
             yield return null;
-        }
     }
 }

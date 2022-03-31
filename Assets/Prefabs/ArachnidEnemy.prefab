@@ -142,8 +142,8 @@ GameObject:
   - component: {fileID: 7964091094029442613}
   - component: {fileID: 6118018216836545441}
   - component: {fileID: 6118018216836545446}
-  - component: {fileID: 7386993439762354767}
   - component: {fileID: 5741961190754051855}
+  - component: {fileID: 5387121337457147419}
   m_Layer: 10
   m_Name: ArachnidEnemy
   m_TagString: Untagged
@@ -228,30 +228,6 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 65f7c2e69b69184429a972d133f0dcee, type: 3}
   m_SortingOrder: 0
---- !u!114 &7386993439762354767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7964091094029442610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  burnTickTimes: 
-  poisonTickTimes: 
-  radTickTimes: 
-  slowTickTimes: 
-  stunTickTimes: 
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
-  smiteDamage: 3.4028235e+38
-  martyrdom: 0
-  ignite: 0
 --- !u!114 &5741961190754051855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +246,34 @@ MonoBehaviour:
   body: {fileID: 687548623638848138}
   attackRange: 3
   mouth: {fileID: 687548623638874114}
+--- !u!114 &5387121337457147419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964091094029442610}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526e5b6cc306fee41b465b4a358fb416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BurnVFX: {fileID: 0}
+  PosionVFX: {fileID: 0}
+  LightningVFX: {fileID: 0}
+  RadiationVFX: {fileID: 0}
+  SmiteVFX: {fileID: 0}
+  MartydomVFX: {fileID: 0}
+  IgniteVFX: {fileID: 0}
+  StunVFX: {fileID: 0}
+  SlowVFX: {fileID: 0}
+  burnDamage: 5
+  poisonDamage: 10
+  lightningDamage: 50
+  radDamage: 2
+  smiteDamage: 3.4028235e+38
+  martyrdom: 0
+  ignite: 0
 --- !u!1001 &116817551958803546
 PrefabInstance:
   m_ObjectHideFlags: 0

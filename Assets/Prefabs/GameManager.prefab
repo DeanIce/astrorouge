@@ -257,7 +257,7 @@ MonoBehaviour:
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
   baseMaxHealth: 100
-  baseHealthRegen: 0.1
+  baseHealthRegen: 2
   baseRegenDelay: 10
   baseArmor: 1
   baseDodgeChance: 0

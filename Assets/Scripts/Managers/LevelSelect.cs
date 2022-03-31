@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Levels;
@@ -80,7 +81,9 @@ namespace Managers
         {
             var timer = Stopwatch.StartNew();
 
-            rng = new Random(0);
+            // rng = new Random(0);
+            int seed = DateTime.UtcNow.Millisecond;
+            rng = new Random(seed);
 
 
             LOGTIMER(timer, "start hard work");
