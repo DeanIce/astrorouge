@@ -89,7 +89,6 @@ public class Wolf : BasicEnemyAgent
             {
                 alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
             }
-            print("die");
             animator.SetInteger("moving", 12);
             base.Die();
         }
