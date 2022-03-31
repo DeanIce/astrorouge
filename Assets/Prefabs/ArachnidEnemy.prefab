@@ -266,9 +266,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   movementSpeed: 2
-  detector: {fileID: 0}
-  body: {fileID: 0}
+  detector: {fileID: 7964091094001697202}
+  body: {fileID: 687548623638848138}
   attackRange: 3
+  mouth: {fileID: 687548623638874114}
 --- !u!1001 &116817551958803546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -322,12 +323,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 582562102410241744, guid: 0d39c3c7b5663e0428e90a5a120a76eb, type: 3}
       propertyPath: m_Name
-      value: Arahnid
+      value: Arachnid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d39c3c7b5663e0428e90a5a120a76eb, type: 3}
 --- !u!4 &687548623638533826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 582562102410056344, guid: 0d39c3c7b5663e0428e90a5a120a76eb, type: 3}
+  m_PrefabInstance: {fileID: 116817551958803546}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &687548623638848138 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 582562102410241744, guid: 0d39c3c7b5663e0428e90a5a120a76eb, type: 3}
+  m_PrefabInstance: {fileID: 116817551958803546}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &687548623638874114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 582562102410267736, guid: 0d39c3c7b5663e0428e90a5a120a76eb, type: 3}
   m_PrefabInstance: {fileID: 116817551958803546}
   m_PrefabAsset: {fileID: 0}
