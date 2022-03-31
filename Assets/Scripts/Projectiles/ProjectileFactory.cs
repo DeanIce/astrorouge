@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class ProjectileFactory : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class ProjectileFactory : MonoBehaviour
     [SerializeField] private GameObject beamProjectile;
     [SerializeField] private GameObject gravityProjectile;
     [SerializeField] private GameObject hitscanProjectile;
+    [SerializeField] private GameObject instantaneousBoxProjectile;
     public static ProjectileFactory Instance { get; private set; }
 
     // Start is called before the first frame update
@@ -22,7 +24,7 @@ public class ProjectileFactory : MonoBehaviour
         float damage, float health = 1)
     {
         GameObject newProjectile = Instantiate(basicProjectile);
-        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.transform.parent = transform;
 
         newProjectile.transform.position = position;
 
@@ -38,7 +40,7 @@ public class ProjectileFactory : MonoBehaviour
         LayerMask stopsAt, float duration, float tickTime, float damage, float range)
     {
         GameObject newProjectile = Instantiate(beamProjectile);
-        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.transform.parent = transform;
         newProjectile.GetComponent<BeamProjectile>().InitializeValues(collidesWith, duration, tickTime, damage);
         newProjectile.transform.SetPositionAndRotation(position,
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
@@ -52,7 +54,7 @@ public class ProjectileFactory : MonoBehaviour
         float range)
     {
         GameObject newProjectile = Instantiate(hitscanProjectile);
-        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.transform.parent = transform;
         newProjectile.GetComponent<HitscanProjectile>().InitializeValues(collidesWith, damage, range);
         newProjectile.transform.SetPositionAndRotation(position,
             newProjectile.transform.rotation * Quaternion.FromToRotation(newProjectile.transform.forward, direction));
@@ -64,10 +66,23 @@ public class ProjectileFactory : MonoBehaviour
         float lifeSpan, float damage, float health = 1)
     {
         GameObject newProjectile = Instantiate(gravityProjectile);
-        newProjectile.transform.parent = gameObject.transform;
+        newProjectile.transform.parent = transform;
         newProjectile.GetComponent<GravityProjectile>()
             .InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
         newProjectile.transform.position = position;
+
+        return newProjectile;
+    }
+
+    public GameObject CreateInstantaneousProjectile(Vector3 position, Quaternion orientation, float depth, LayerMask collidesWith,
+        float damage)
+    {
+        GameObject newProjectile = Instantiate(instantaneousBoxProjectile);
+        newProjectile.transform.parent = transform;
+        newProjectile.GetComponent<InstantaneousProjectile>()
+            .InitializeValues(collidesWith, damage);
+        newProjectile.transform.SetPositionAndRotation(position, orientation);
+        newProjectile.transform.localScale = new(1, 1, depth);
 
         return newProjectile;
     }

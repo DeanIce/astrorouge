@@ -22,6 +22,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public bool IsSprinting { get; private set; }
     public float PrimaryAttackDelay { get; private set; }
     public float SecondaryAttackDelay { get; private set; }
+    public float MeleeAttackDelay { get; private set; }
     public float SpecialActionDelay { get; private set; }
 
     // Inspector set-able references
@@ -75,11 +76,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         static float Decrement(float value) => value < 0 ? value : value - Time.deltaTime;
         PrimaryAttackDelay = Decrement(PrimaryAttackDelay);
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
+        MeleeAttackDelay = Decrement(MeleeAttackDelay);
         SpecialActionDelay = Decrement(SpecialActionDelay);
 
         if (isPrimaryAttacking && PrimaryAttackDelay < 0)
         {
-            BasicAttack();
+            ProjectileAttack();
             PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
         }
     }
@@ -142,6 +144,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PrimaryAttack.Enable();
         playerInputMap.SecondaryAttack.performed += SecondaryAttack;
         playerInputMap.SecondaryAttack.Enable();
+        playerInputMap.MeleeAttack.performed += MeleeAttack;
+        playerInputMap.MeleeAttack.Enable();
         //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
         playerInputMap.UtilityAction.Enable();
         playerInputMap.SpecialAction.performed += SpecialAction;
@@ -169,6 +173,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PrimaryAttack.canceled -= PrimaryAttackToggle;
         playerInputMap.SecondaryAttack.Disable();
         playerInputMap.SecondaryAttack.performed -= SecondaryAttack;
+        playerInputMap.MeleeAttack.Disable();
+        playerInputMap.MeleeAttack.performed -= MeleeAttack;
         playerInputMap.UtilityAction.Disable();
         //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
         playerInputMap.SpecialAction.Disable();
@@ -260,6 +266,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         BeamAttack();
     }
 
+    private void MeleeAttack(InputAction.CallbackContext obj)
+    {
+        if (MeleeAttackDelay > 0) return;
+        MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+
+        InstantaneousAttack();
+    }
+
     private void SpecialAction(InputAction.CallbackContext obj)
     {
         if (SpecialActionDelay > 0) return;
@@ -268,15 +282,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         LobAttack();
     }
 
-    private void BasicAttack()
+    private void ProjectileAttack()
     {
-        _ = HandleEffects(
-            ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
-                PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
-                LayerMask.GetMask("Enemy", "Ground"),
-                PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-                PlayerStats.Instance.GetRangeDamage()),
-            primaryAttackProcChance);
+        GameObject projectile = ProjectileFactory.Instance.CreateBasicProjectile(
+            fireLocation.transform.position,
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
+            PlayerStats.Instance.GetRangeDamage());
+        HandleEffects(projectile, primaryAttackProcChance);
         AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
     }
 
@@ -285,16 +299,16 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         float tickCount = secondaryAttackDuration / secondaryAttackTickTime;
         float beamDamage = PlayerStats.Instance.GetRangeDPS() * secondaryAttackDamageMult / tickCount;
 
-        _ = HandleEffects(
-            ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
-                AttackVector(),
-                LayerMask.GetMask("Enemy", "Ground"),
-                LayerMask.GetMask("Ground"),
-                secondaryAttackDuration,
-                secondaryAttackTickTime,
-                beamDamage,
-                PlayerStats.Instance.rangeProjectileRange),
-            secondaryAttackProcChance / tickCount);
+        GameObject projectile = ProjectileFactory.Instance.CreateBeamProjectile(
+            fireLocation.transform.position,
+            AttackVector(),
+            LayerMask.GetMask("Enemy", "Ground"),
+            LayerMask.GetMask("Ground"),
+            secondaryAttackDuration,
+            secondaryAttackTickTime,
+            beamDamage,
+            PlayerStats.Instance.rangeProjectileRange);
+        HandleEffects(projectile, secondaryAttackProcChance / tickCount);
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
     }
 
@@ -315,13 +329,24 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 attackVec = AttackVector();
         Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
-        _ = HandleEffects(
-            ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-                10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
-                LayerMask.GetMask("Enemy", "Ground"),
-                PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
-                PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult),
-            specialActionProcChance);
+        GameObject projectile = ProjectileFactory.Instance.CreateGravityProjectile(
+            transform.position + transform.forward,
+            10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
+            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult);
+        HandleEffects(projectile, specialActionProcChance);
+    }
+
+    private void InstantaneousAttack()
+    {
+        GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
+            transform.position + transform.forward,
+            transform.rotation,
+            PlayerStats.Instance.meleeAttackRange,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.GetMeleeDamage());
+        HandleEffects(projectile, meleeAttackProcChance);
     }
 
     private Vector3 AttackVector()
@@ -356,8 +381,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     /// </summary>
     /// <param name="projectile">The designated projectile.</param>
     /// <param name="procChance">The probability boost to apply an effect. (actual chance) = (proc chance) * (effect chance)</param>
-    /// <returns></returns>
-    private GameObject HandleEffects(GameObject projectile, float procChance)
+    private void HandleEffects(GameObject projectile, float procChance)
     {
         float GetRandom() => procChance * Random.Range(0.0f, 1.0f);
 
@@ -379,8 +403,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             ProjectileFactory.Instance.AddMartyrdom(projectile);
         if (GetRandom() < PlayerStats.Instance.igniteChance)
             ProjectileFactory.Instance.AddIgnite(projectile);
-
-        return projectile;
     }
 
     private void HandleMoveAnimation(Vector2 direction)

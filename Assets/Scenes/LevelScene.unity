@@ -692,7 +692,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.3371868, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1227,10 +1227,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 579053813939167120, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: hudUI
-      value: 
-      objectReference: {fileID: 1673590896}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1279,18 +1275,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerDefault
       objectReference: {fileID: 0}
-    - target: {fileID: 1018908818363566110, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: inventoryUI
-      value: 
-      objectReference: {fileID: 1673590894}
-    - target: {fileID: 1988730679219617357, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6133285360535605883, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: m_Sources.Array.data[0].sourceTransform
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
 --- !u!4 &1653012914 stripped
@@ -1298,22 +1282,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1653012914, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
   m_PrefabInstance: {fileID: 1527936625}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1673590894 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8543091563571336382, guid: df544cebdba399245853a916ec1a917d, type: 3}
-  m_PrefabInstance: {fileID: 335080205}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1673590896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2425821241769339370, guid: df544cebdba399245853a916ec1a917d, type: 3}
-  m_PrefabInstance: {fileID: 335080205}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673590894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7258d64f0a1562041acb82d3794f3161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1795319081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,7 +1376,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.3371868, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1576,18 +1544,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 539473548}
-    - target: {fileID: 1187498790012229965, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: logEvents
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4002566892853554140, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 539473548}
-    - target: {fileID: 4002566892853554140, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: logEvents
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498331, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1632,13 +1588,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7689409263527498332, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
-      propertyPath: scenePlay
-      value: LevelScene
-      objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498333, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027408832269683781, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: baseMeleeAttackRange
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}

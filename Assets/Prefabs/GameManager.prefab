@@ -238,7 +238,7 @@ MonoBehaviour:
   martyrdomChance: 0
   igniteChance: 0
   baseMeleeAttackDelay: 1
-  baseMeleeBaseDamage: 1
+  baseMeleeBaseDamage: 10
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
   baseMeleeCritMultiplier: 2

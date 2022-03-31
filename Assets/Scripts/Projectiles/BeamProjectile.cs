@@ -7,7 +7,7 @@ public class BeamProjectile : BaseProjectile
     private float tickTime;
     private readonly Dictionary<GameObject, float> hitTimings = new();
 
-    void FixedUpdate()
+    private void Update()
     {
         if (currHealth < 0.01f)
         {
@@ -24,7 +24,7 @@ public class BeamProjectile : BaseProjectile
 
         foreach(GameObject obj in hitTimings.Keys.ToList())
         {
-            hitTimings[obj] += Time.fixedDeltaTime;
+            hitTimings[obj] += Time.deltaTime;
         }
     }
 

@@ -179,7 +179,6 @@ GameObject:
   - component: {fileID: 5464077082696350833}
   - component: {fileID: 5313944904042844001}
   - component: {fileID: 3798061513029287840}
-  - component: {fileID: 6133285360535605883}
   - component: {fileID: 4042041068901040503}
   m_Layer: 9
   m_Name: PlayerDefault
@@ -222,15 +221,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6974edc6c012d4b9b0bb91f8065eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extraJumpsLeft: 0
-  primaryAttackDelay: 0
-  secondaryAttackDelay: 0
-  sensitivity: 0.2
   followTarget: {fileID: 1653012913}
   fireLocation: {fileID: 8717766603265617993}
   attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
   attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
+  sensitivity: 0.2
   spread: 1
+  primaryAttackProcChance: 1
+  secondaryAttackDuration: 0.2
+  secondaryAttackTickTime: 0.02
+  secondaryAttackDamageMult: 4
+  secondaryAttackProcChance: 2
+  secondaryAttackCooldown: 5
+  specialActionDamageMult: 24
+  specialActionProcChance: 0.7
+  specialActionCooldown: 8
+  meleeAttackProcChance: 2
 --- !u!54 &579053813939167214
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -306,25 +312,6 @@ MonoBehaviour:
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
---- !u!1818360608 &6133285360535605883
-PositionConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 579053813939167122}
-  m_Enabled: 1
-  m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_IsContraintActive: 0
-  m_IsLocked: 1
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
 --- !u!114 &4042041068901040503
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -118,6 +118,13 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         return rangeBaseDamage * rangeDamageMultiplier;
     }
 
+    public float GetMeleeDamage()
+    {
+        if (Random.value <= meleeCritChance)
+            return meleeBaseDamage * meleeDamageMultiplier * meleeCritMultiplier;
+        return meleeBaseDamage * meleeDamageMultiplier;
+    }
+
     public float GetRangeDPS()
     {
         // DPS = (bullets per second) * (average bullet damage)
