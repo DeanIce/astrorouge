@@ -80,9 +80,16 @@ public class MidEnt : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            if (Random.value < 0.5) animator.SetInteger("moving", 13);
-            else animator.SetInteger("moving", 14);
+            if (Random.value < 0.5) StartCoroutine(DeathAnim(13));
+            else StartCoroutine(DeathAnim(14));
             base.Die();
         }
+    }
+
+    private IEnumerator DeathAnim(int anim)
+    {
+        animator.SetInteger("moving", anim);
+        yield return new WaitForSeconds(0.05f);
+        animator.SetInteger("moving", 0);
     }
 }

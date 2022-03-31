@@ -81,7 +81,7 @@ public class Wolf : BasicEnemyAgent
             {
                 alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
             }
-            animator.SetInteger("moving", 12);
+            StartCoroutine(DeathAnim(12));
             base.Die();
         }
     }
@@ -89,9 +89,16 @@ public class Wolf : BasicEnemyAgent
     public void SetAlpha(AlphaWolf boss)
     {
         alpha = boss;
-        alpha.AddWolf(gameObject);
+        if (alpha != null) alpha.AddWolf(gameObject);
     }
 
+    private IEnumerator DeathAnim(int anim)
+    {
+        animator.SetInteger("moving", anim);
+        yield return new WaitForSeconds(0.05f);
+        animator.SetInteger("moving", 0);
+    }
+    
     private IEnumerator BattleAnim(bool start)
     {
         animator.SetInteger("moving", 0);

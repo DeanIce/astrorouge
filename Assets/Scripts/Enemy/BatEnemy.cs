@@ -29,8 +29,15 @@ public class BatEnemy : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            animator.SetInteger("moving", 14);
+            StartCoroutine(DeathAnim(14));
             base.Die();
         }
+    }
+
+    private IEnumerator DeathAnim(int anim)
+    {
+        animator.SetInteger("moving", anim);
+        yield return new WaitForSeconds(0.05f);
+        animator.SetInteger("moving", 0);
     }
 }
