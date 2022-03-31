@@ -30,6 +30,8 @@ namespace UI
         private void OnEnable()
         {
             EventManager.Instance.itemAcquired += EventResponse;
+            EventManager.Instance.playGame +=
+                () => tooltip.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
         }
 
         private void OnDisable()
