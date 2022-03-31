@@ -120,6 +120,10 @@ public class AlphaWolf : BasicEnemyAgent
         if (other.gameObject.layer == PlayerLayer)
         {
             StartCoroutine(BattleAnim(false));
+            foreach (GameObject wolf in wolves)
+            {
+                wolf.GetComponent<Wolf>().OnTriggerExit(other);
+            }
         }
         base.OnTriggerExit(other);
     }
