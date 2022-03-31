@@ -26,13 +26,6 @@ namespace Managers
 
         public RunStats runStats = new();
 
-        //
-        // [RuntimeInitializeOnLoadMethod]
-        // private static void Init()
-        // {
-        //     print("should be calleda FIRST");
-        // }
-
 
         // Game State events
         public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated, enemyDamaged;

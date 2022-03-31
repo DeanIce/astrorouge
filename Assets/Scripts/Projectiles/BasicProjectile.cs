@@ -4,6 +4,16 @@ public class BasicProjectile : BaseProjectile
 {
     public GameObject bulletHolePrefab;
 
+    [SerializeField] private GameObject BurnTrail;
+    [SerializeField] private GameObject PoisonTrail;
+    [SerializeField] private GameObject LightningTrail;
+    [SerializeField] private GameObject SmiteTrail;
+    [SerializeField] private GameObject StunTrail;
+    [SerializeField] private GameObject SlowTrail;
+    [SerializeField] private GameObject IgniteTrail;
+    [SerializeField] private GameObject MartyrdomTrail;
+    [SerializeField] private GameObject RadioActiveTrail;
+
     // Set at initialization
     private Rigidbody rb;
 
@@ -11,10 +21,24 @@ public class BasicProjectile : BaseProjectile
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        BurnTrail.SetActive(false);
+        PoisonTrail.SetActive(false);
+        LightningTrail.SetActive(false);
+        StunTrail.SetActive(false);
+        SmiteTrail.SetActive(false);
+        SlowTrail.SetActive(false);
+        IgniteTrail.SetActive(false);
+        MartyrdomTrail.SetActive(false);
+        RadioActiveTrail.SetActive(false);
     }
 
-    // Update is called once per frame
     private void FixedUpdate()
+    {
+        rb.MovePosition(transform.position + Displacement(Time.fixedDeltaTime));
+    }
+
+    private void Update()
     {
         if (currHealth < 0.01f)
         {
@@ -22,7 +46,6 @@ public class BasicProjectile : BaseProjectile
             return;
         }
 
-        rb.MovePosition(transform.position + Displacement(Time.deltaTime));
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0) Die();
     }
@@ -61,5 +84,50 @@ public class BasicProjectile : BaseProjectile
     public override void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void ActivateBurnTrail(bool active)
+    {
+        BurnTrail.SetActive(active);
+    }
+
+    public void ActivatePoisonTrail(bool active)
+    {
+        PoisonTrail.SetActive(active);
+    }
+
+    public void ActivateLightningTrail(bool active)
+    {
+        LightningTrail.SetActive(active);
+    }
+
+    public void ActivateStunTrail(bool active)
+    {
+        StunTrail.SetActive(active);
+    }
+
+    public void ActivateSlowTrail(bool active)
+    {
+        SlowTrail.SetActive(active);
+    }
+
+    public void ActivateSmiteTrail(bool active)
+    {
+        SmiteTrail.SetActive(active);
+    }
+
+    public void ActivateIgniteTrail(bool active)
+    {
+        IgniteTrail.SetActive(active);
+    }
+
+    public void ActivateMatyrdomTrail(bool active)
+    {
+        MartyrdomTrail.SetActive(active);
+    }
+
+    public void ActivateRadioactiveTrail(bool active)
+    {
+        RadioActiveTrail.SetActive(active);
     }
 }

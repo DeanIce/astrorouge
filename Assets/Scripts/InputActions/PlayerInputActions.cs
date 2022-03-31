@@ -91,6 +91,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Melee Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4f9c684-e71e-44ee-9b3f-cba2932369fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Utility Action"",
                     ""type"": ""Button"",
                     ""id"": ""11f2d532-bdcb-42c8-9c1d-d4d45c0e18ec"",
@@ -382,6 +391,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ef8203d-7bdb-4912-939c-d69bdcf0e173"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -553,6 +573,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_PauseGame = m_Player.FindAction("PauseGame", throwIfNotFound: true);
         m_Player_PrimaryAttack = m_Player.FindAction("Primary Attack", throwIfNotFound: true);
         m_Player_SecondaryAttack = m_Player.FindAction("Secondary Attack", throwIfNotFound: true);
+        m_Player_MeleeAttack = m_Player.FindAction("Melee Attack", throwIfNotFound: true);
         m_Player_UtilityAction = m_Player.FindAction("Utility Action", throwIfNotFound: true);
         m_Player_SpecialAction = m_Player.FindAction("Special Action", throwIfNotFound: true);
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
@@ -627,6 +648,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PauseGame;
     private readonly InputAction m_Player_PrimaryAttack;
     private readonly InputAction m_Player_SecondaryAttack;
+    private readonly InputAction m_Player_MeleeAttack;
     private readonly InputAction m_Player_UtilityAction;
     private readonly InputAction m_Player_SpecialAction;
     private readonly InputAction m_Player_Pickup;
@@ -641,6 +663,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @PauseGame => m_Wrapper.m_Player_PauseGame;
         public InputAction @PrimaryAttack => m_Wrapper.m_Player_PrimaryAttack;
         public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
+        public InputAction @MeleeAttack => m_Wrapper.m_Player_MeleeAttack;
         public InputAction @UtilityAction => m_Wrapper.m_Player_UtilityAction;
         public InputAction @SpecialAction => m_Wrapper.m_Player_SpecialAction;
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
@@ -674,6 +697,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SecondaryAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
                 @SecondaryAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
                 @SecondaryAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
+                @MeleeAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMeleeAttack;
                 @UtilityAction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtilityAction;
                 @UtilityAction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtilityAction;
                 @UtilityAction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUtilityAction;
@@ -708,6 +734,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SecondaryAttack.started += instance.OnSecondaryAttack;
                 @SecondaryAttack.performed += instance.OnSecondaryAttack;
                 @SecondaryAttack.canceled += instance.OnSecondaryAttack;
+                @MeleeAttack.started += instance.OnMeleeAttack;
+                @MeleeAttack.performed += instance.OnMeleeAttack;
+                @MeleeAttack.canceled += instance.OnMeleeAttack;
                 @UtilityAction.started += instance.OnUtilityAction;
                 @UtilityAction.performed += instance.OnUtilityAction;
                 @UtilityAction.canceled += instance.OnUtilityAction;
@@ -779,6 +808,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnPauseGame(InputAction.CallbackContext context);
         void OnPrimaryAttack(InputAction.CallbackContext context);
         void OnSecondaryAttack(InputAction.CallbackContext context);
+        void OnMeleeAttack(InputAction.CallbackContext context);
         void OnUtilityAction(InputAction.CallbackContext context);
         void OnSpecialAction(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);

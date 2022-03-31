@@ -199,6 +199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logEvents: 1
+  xp: 0
+  xpLevel: 0
+  xpPerLevel: 100
   meleeAttackDelay: 0
   meleeBaseDamage: 0
   meleeDamageMultiplier: 0
@@ -217,6 +220,7 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   healthRegen: 0
+  regenDelay: 0
   armor: 0
   dodgeChance: 0
   invincibilityDuration: 0
@@ -238,12 +242,12 @@ MonoBehaviour:
   martyrdomChance: 0
   igniteChance: 0
   baseMeleeAttackDelay: 1
-  baseMeleeBaseDamage: 1
+  baseMeleeBaseDamage: 10
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
   baseMeleeCritMultiplier: 2
   baseMeleeKnockbackForce: 5
-  baseMeleeAttackRange: 1
+  baseMeleeAttackRange: 1.5
   baseRangeAttackDelay: 0.2
   baseRangeBaseDamage: 2
   baseRangeDamageMultiplier: 1
@@ -254,6 +258,7 @@ MonoBehaviour:
   baseRangeProjectileSpeed: 25
   baseMaxHealth: 100
   baseHealthRegen: 0.1
+  baseRegenDelay: 10
   baseArmor: 1
   baseDodgeChance: 0
   baseInvincibilityDuration: 1

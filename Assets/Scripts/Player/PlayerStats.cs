@@ -5,6 +5,12 @@ using Random = UnityEngine.Random;
 
 public class PlayerStats : ManagerSingleton<PlayerStats>
 {
+    // Unexposed properties
+    public float xp;
+    public int xpLevel;
+    public float xpPerLevel = 100;
+
+
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
@@ -28,6 +34,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public int maxHealth;
     public float currentHealth;
     public float healthRegen;
+    public float regenDelay;
     public int armor;
     [Range(0.0f, 1.0f)] public float dodgeChance;
     public float invincibilityDuration; // How long (seconds) player is immune to damage after getting hit
@@ -79,6 +86,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     // Base Defense Stats
     public int baseMaxHealth;
     public float baseHealthRegen;
+    public float baseRegenDelay;
     public int baseArmor;
     [Range(0.0f, 1.0f)] public float baseDodgeChance;
     public float baseInvincibilityDuration;
@@ -104,12 +112,10 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
     [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
-
     private void Start()
     {
         SetDefaultValues();
     }
-
 
     public event Action MoustacheEnable;
 
@@ -120,8 +126,35 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         return rangeBaseDamage * rangeDamageMultiplier;
     }
 
+    public float GetMeleeDamage()
+    {
+        if (Random.value <= meleeCritChance)
+            return meleeBaseDamage * meleeDamageMultiplier * meleeCritMultiplier;
+        return meleeBaseDamage * meleeDamageMultiplier;
+    }
+
+    public float GetRangeDPS()
+    {
+        // DPS = (bullets per second) * (average bullet damage)
+        // 1[second] = (bullets per second) * (attack delay)
+        // (average bullet damage) = critChance * critDamage + (1 - critChance) * regDamage
+
+        float bulletsPerSecond = 1f / rangeAttackDelay;
+        float bulletDamage = rangeBaseDamage * rangeDamageMultiplier;
+        float aveBulletDamage = (rangeCritChance * rangeCritMultiplier * bulletDamage) + ((1-rangeCritChance) * bulletDamage);
+
+        return bulletsPerSecond * aveBulletDamage;
+    }
+
+    public bool IsAlive() => currentHealth > 0;
+
     public void SetDefaultValues()
     {
+        // Unexposed properties
+        xpLevel = 0;
+        xp = 0;
+
+        // Melee Stats
         meleeAttackDelay = baseMeleeAttackDelay;
         meleeBaseDamage = baseMeleeBaseDamage;
         meleeDamageMultiplier = baseMeleeDamageMultiplier;
@@ -144,6 +177,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         maxHealth = baseMaxHealth;
         currentHealth = maxHealth;
         healthRegen = baseHealthRegen;
+        regenDelay = baseRegenDelay;
         armor = baseArmor;
         dodgeChance = baseDodgeChance;
         invincibilityDuration = baseInvincibilityDuration;
@@ -173,5 +207,12 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     protected internal void Moustache()
     {
         MoustacheEnable?.Invoke();
+    }
+
+    public void LevelUp()
+    {
+        maxHealth = (int) (maxHealth * 1.2f);
+        meleeBaseDamage = (int) (meleeBaseDamage * 1.2f);
+        rangeBaseDamage = (int) (rangeBaseDamage * 1.2f);
     }
 }
