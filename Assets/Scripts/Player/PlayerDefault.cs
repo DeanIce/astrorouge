@@ -284,6 +284,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (MeleeAttackDelay > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
+        print("Melee Attack Initialized"); //TODO (Simon): Remove when melee animation is added
         InstantaneousAttack();
     }
 
