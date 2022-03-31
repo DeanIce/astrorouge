@@ -35,6 +35,27 @@ public class MidEnt : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
+        StartCoroutine(BattleAnim());
+        if (attack == 2) yield return new WaitForSeconds(2.708f);
+        else if (summon) yield return new WaitForSeconds(1.667f);
+        else yield return new WaitForSeconds(0.833f);
+        if (summon)
+        {
+            GameObject enemy = Instantiate(flower);
+            enemy.transform.position = transform.position + 2*Body.transform.forward;
+        }
+        animator.SetInteger("moving", 2);
+        //rend.enabled = false;
+        Attacking = false;
+        if (!summon) attack += 1;
+        if (attack > 2) attack = 0;
+        summon = false;
+    }
+
+    private IEnumerator BattleAnim()
+    {
+        animator.SetInteger("moving", 0);
+        yield return new WaitForSeconds(0.05f);
         if (attack == 0)
         {
             if (Random.value < summonChance)
@@ -52,20 +73,6 @@ public class MidEnt : BasicEnemyAgent
         {
             animator.SetInteger("moving", 6);
         }
-        if (attack == 2) yield return new WaitForSeconds(2.708f);
-        else if (summon) yield return new WaitForSeconds(1.667f);
-        else yield return new WaitForSeconds(0.833f);
-        if (summon)
-        {
-            GameObject enemy = Instantiate(flower);
-            enemy.transform.position = transform.position;
-        }
-        animator.SetInteger("moving", 2);
-        //rend.enabled = false;
-        Attacking = false;
-        if (!summon) attack += 1;
-        if (attack > 2) attack = 0;
-        summon = false;
     }
 
     public override void Die()
