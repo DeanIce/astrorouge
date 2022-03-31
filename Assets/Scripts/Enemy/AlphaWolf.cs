@@ -45,14 +45,10 @@ public class AlphaWolf : BasicEnemyAgent
 
         DoGravity();
 
-        print("Giving Orders");
-
         foreach (GameObject wolf in wolves)
         {
             if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered == true) wolf.GetComponent<Wolf>().ReceiveOrder(target);
         }
-
-        print("Orders given");
 
         //attacking
         hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player"));
@@ -137,7 +133,8 @@ public class AlphaWolf : BasicEnemyAgent
             {
                 wolf.GetComponent<Wolf>().SetAlpha(null);
             }
-            animator.SetInteger("moving", 12);
+            if (Random.value < 0.5) animator.SetInteger("moving", 13);
+            else animator.SetInteger("moving", 12);
             base.Die();
         }
     }
