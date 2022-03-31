@@ -146,7 +146,7 @@ public class AlphaWolf : BasicEnemyAgent
     private IEnumerator DeathAnim(int anim)
     {
         animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
 
