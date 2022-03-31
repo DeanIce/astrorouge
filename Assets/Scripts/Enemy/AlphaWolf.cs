@@ -45,14 +45,10 @@ public class AlphaWolf : BasicEnemyAgent
 
         DoGravity();
 
-        print("Giving Orders");
-
         foreach (GameObject wolf in wolves)
         {
             if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered == true) wolf.GetComponent<Wolf>().ReceiveOrder(target);
         }
-
-        print("Orders given");
 
         //attacking
         hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player"));
@@ -124,6 +120,10 @@ public class AlphaWolf : BasicEnemyAgent
         if (other.gameObject.layer == PlayerLayer)
         {
             StartCoroutine(BattleAnim(false));
+            foreach (GameObject wolf in wolves)
+            {
+                wolf.GetComponent<Wolf>().OnTriggerExit(other);
+            }
         }
         base.OnTriggerExit(other);
     }

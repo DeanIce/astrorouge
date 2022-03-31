@@ -35,14 +35,6 @@ public class Wolf : BasicEnemyAgent
         else base.Wander(direction);
     }
 
-    public override void Hunt(Collider target)
-    {
-        if (alpha == null)
-        {
-            base.Hunt(target);
-        }
-    }
-
     public override IEnumerator Attack()
     {
         //rend.enabled = true;
@@ -125,12 +117,14 @@ public class Wolf : BasicEnemyAgent
 
     public void ReceiveOrder(Collider target)
     {
+        if (!ordered) OnTriggerEnter(target);
         ordered = true;
-        base.Hunt(target);
+        Hunt(target);
         if (attacked)
         {
             ordered = false;
             attacked = false;
+            OnTriggerExit(target);
         }
     }
 }
