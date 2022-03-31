@@ -112,12 +112,10 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
     [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
-
     private void Start()
     {
         SetDefaultValues();
     }
-
 
     public event Action MoustacheEnable;
 
@@ -128,10 +126,27 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         return rangeBaseDamage * rangeDamageMultiplier;
     }
 
-    public bool IsAlive()
+    public float GetMeleeDamage()
     {
-        return currentHealth > 0 && currentHealth < maxHealth;
+        if (Random.value <= meleeCritChance)
+            return meleeBaseDamage * meleeDamageMultiplier * meleeCritMultiplier;
+        return meleeBaseDamage * meleeDamageMultiplier;
     }
+
+    public float GetRangeDPS()
+    {
+        // DPS = (bullets per second) * (average bullet damage)
+        // 1[second] = (bullets per second) * (attack delay)
+        // (average bullet damage) = critChance * critDamage + (1 - critChance) * regDamage
+
+        float bulletsPerSecond = 1f / rangeAttackDelay;
+        float bulletDamage = rangeBaseDamage * rangeDamageMultiplier;
+        float aveBulletDamage = (rangeCritChance * rangeCritMultiplier * bulletDamage) + ((1-rangeCritChance) * bulletDamage);
+
+        return bulletsPerSecond * aveBulletDamage;
+    }
+
+    public bool IsAlive() => currentHealth > 0;
 
     public void SetDefaultValues()
     {

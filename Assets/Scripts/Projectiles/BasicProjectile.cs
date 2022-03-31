@@ -33,8 +33,12 @@ public class BasicProjectile : BaseProjectile
         RadioActiveTrail.SetActive(false);
     }
 
-    // Update is called once per frame
     private void FixedUpdate()
+    {
+        rb.MovePosition(transform.position + Displacement(Time.fixedDeltaTime));
+    }
+
+    private void Update()
     {
         if (currHealth < 0.01f)
         {
@@ -42,7 +46,6 @@ public class BasicProjectile : BaseProjectile
             return;
         }
 
-        rb.MovePosition(transform.position + Displacement(Time.deltaTime));
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0) Die();
     }

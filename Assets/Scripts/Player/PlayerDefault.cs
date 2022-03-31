@@ -7,45 +7,59 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
+    private const float decreasePerSecond = 60f;
+    private const float increasePerSecond = 60f;
+    private const float maxSpread = 30f;
+    private const float minSpread = 1f;
 
     // Dynamic Player Info
-    [SerializeField] private int extraJumpsLeft;
-    [SerializeField] private float primaryAttackDelay;
-    [SerializeField] private float secondaryAttackDelay;
+    private float crosshairSpread = 1f;
+    private int extraJumpsLeft;
+    private bool isGrounded;
+    private bool isPrimaryAttacking;
 
-    // Inspector values
-    [SerializeField] public float sensitivity = 0.2f;
+    // Public Getters
+    public bool IsSprinting { get; private set; }
+    public float PrimaryAttackDelay { get; private set; }
+    public float SecondaryAttackDelay { get; private set; }
+    public float MeleeAttackDelay { get; private set; }
+    public float SpecialActionDelay { get; private set; }
+
+    // Inspector set-able references
     [SerializeField] private GameObject followTarget;
     [SerializeField] private GameObject fireLocation;
     [SerializeField] private AudioClip attack1SoundEffect;
     [SerializeField] private AudioClip attack2SoundEffect;
+
+    // Inspector set-able values
+    [SerializeField] public float sensitivity = 0.2f;
     [SerializeField] private float spread = 1.0f;
 
-    public float regenDelay = 10;
+    // Attack values
+    [SerializeField] private float primaryAttackProcChance = 1f;
 
-    private readonly float decreasePerSecond = 60f;
-    private readonly float increasePerSecond = 60f;
-    private readonly float maxSpread = 30f;
-    private readonly float minSpread = 1f;
+    [SerializeField] private float secondaryAttackDuration = 0.2f;
+    [SerializeField] private float secondaryAttackTickTime = 0.02f;
+    [SerializeField] private float secondaryAttackDamageMult = 4f;
+    [SerializeField] private float secondaryAttackProcChance = 2f;
+    [SerializeField] private float secondaryAttackCooldown = 5f;
 
+    [SerializeField] private float specialActionDamageMult = 24f;
+    [SerializeField] private float specialActionProcChance = 0.7f;
+    [SerializeField] private float specialActionCooldown = 8f;
+
+    [SerializeField] private float meleeAttackProcChance = 2f;
+
+
+    // Misc values
     private Animator animator;
-
-    private float crosshairSpread = 1f;
     private Transform groundCheck;
     private LayerMask groundMask;
-    private bool isFiring;
-    private bool isGrounded;
-    private bool isPrimaryAttacking;
     private InputAction movement, look;
-
-    // References
     private Rigidbody rb;
 
     private float timeOfLastDamage;
     protected internal bool useGravity = true;
-
-    public bool IsSprinting { get; private set; }
-
 
     private void Start()
     {
@@ -61,13 +75,26 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void Update()
     {
         // Adjust delay timers
-        primaryAttackDelay = primaryAttackDelay < 0 ? primaryAttackDelay : primaryAttackDelay - Time.deltaTime;
-        secondaryAttackDelay = secondaryAttackDelay < 0 ? secondaryAttackDelay : secondaryAttackDelay - Time.deltaTime;
+        static float Decrement(float value) => value < 0 ? value : value - Time.deltaTime;
+        PrimaryAttackDelay = Decrement(PrimaryAttackDelay);
+        SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
+        MeleeAttackDelay = Decrement(MeleeAttackDelay);
+        SpecialActionDelay = Decrement(SpecialActionDelay);
 
-        if (isPrimaryAttacking && primaryAttackDelay < 0)
+        if (isPrimaryAttacking && PrimaryAttackDelay < 0)
         {
-            BasicAttack();
-            primaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+            ProjectileAttack();
+            PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+        }
+        
+        // Health regen
+        if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
+            PlayerStats.Instance.IsAlive() &&
+            PlayerStats.Instance.currentHealth < PlayerStats.Instance.maxHealth)
+        {
+            PlayerStats.Instance.currentHealth += PlayerStats.Instance.healthRegen * Time.deltaTime;
+            Mathf.Clamp(PlayerStats.Instance.currentHealth, 0, PlayerStats.Instance.maxHealth);
+            EventManager.Instance.PlayerStatsUpdated();
         }
     }
 
@@ -77,7 +104,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
 
         if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
-
 
         // print(sumForce);
         Debug.DrawLine(transform.position, sumForce, Color.blue);
@@ -104,15 +130,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             crosshairSpread -= decreasePerSecond * Time.deltaTime;
         crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
         EventManager.Instance.CrosshairSpread(crosshairSpread);
-
-        // Health regen
-        if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
-            PlayerStats.Instance.IsAlive())
-        {
-            PlayerStats.Instance.currentHealth += PlayerStats.Instance.healthRegen;
-            Mathf.Clamp(PlayerStats.Instance.currentHealth, 0, PlayerStats.Instance.maxHealth);
-            EventManager.Instance.PlayerStatsUpdated();
-        }
     }
 
     private void OnEnable()
@@ -139,9 +156,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PrimaryAttack.Enable();
         playerInputMap.SecondaryAttack.performed += SecondaryAttack;
         playerInputMap.SecondaryAttack.Enable();
-        playerInputMap.UtilityAction.performed += HitscanAttack;
+        playerInputMap.MeleeAttack.performed += MeleeAttack;
+        playerInputMap.MeleeAttack.Enable();
+        //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
         playerInputMap.UtilityAction.Enable();
-        playerInputMap.SpecialAction.performed += LobAttack;
+        playerInputMap.SpecialAction.performed += SpecialAction;
         playerInputMap.SpecialAction.Enable();
     }
 
@@ -166,10 +185,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.PrimaryAttack.canceled -= PrimaryAttackToggle;
         playerInputMap.SecondaryAttack.Disable();
         playerInputMap.SecondaryAttack.performed -= SecondaryAttack;
+        playerInputMap.MeleeAttack.Disable();
+        playerInputMap.MeleeAttack.performed -= MeleeAttack;
         playerInputMap.UtilityAction.Disable();
-        playerInputMap.UtilityAction.performed -= HitscanAttack;
+        //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
         playerInputMap.SpecialAction.Disable();
-        playerInputMap.SpecialAction.performed -= LobAttack;
+        playerInputMap.SpecialAction.performed -= SpecialAction;
     }
 
 
@@ -252,63 +273,101 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void SecondaryAttack(InputAction.CallbackContext obj)
     {
-        if (secondaryAttackDelay > 0) return;
-        secondaryAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+        if (SecondaryAttackDelay > 0) return;
+        SecondaryAttackDelay = secondaryAttackCooldown;
 
         BeamAttack();
     }
 
-    private void BasicAttack()
+    private void MeleeAttack(InputAction.CallbackContext obj)
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateBasicProjectile(fireLocation.transform.position,
+        if (MeleeAttackDelay > 0) return;
+        MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+
+        print("Melee Attack Initialized"); //TODO (Simon): Remove when melee animation is added
+        InstantaneousAttack();
+    }
+
+    private void SpecialAction(InputAction.CallbackContext obj)
+    {
+        if (SpecialActionDelay > 0) return;
+        SpecialActionDelay = specialActionCooldown;
+
+        LobAttack();
+    }
+
+    private void ProjectileAttack()
+    {
+        GameObject projectile = ProjectileFactory.Instance.CreateBasicProjectile(
+            fireLocation.transform.position,
             PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
-            PlayerStats.Instance.GetRangeDamage()));
+            PlayerStats.Instance.GetRangeDamage());
+        HandleEffects(projectile, primaryAttackProcChance);
         AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
     }
 
     private void BeamAttack()
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateBeamProjectile(fireLocation.transform.position,
+        float tickCount = secondaryAttackDuration / secondaryAttackTickTime;
+        float beamDamage = PlayerStats.Instance.GetRangeDPS() * secondaryAttackDamageMult / tickCount;
+
+        GameObject projectile = ProjectileFactory.Instance.CreateBeamProjectile(
+            fireLocation.transform.position,
             AttackVector(),
             LayerMask.GetMask("Enemy", "Ground"),
             LayerMask.GetMask("Ground"),
-            0.2f, // TODO (Simon): Mess with value
-            PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange));
+            secondaryAttackDuration,
+            secondaryAttackTickTime,
+            beamDamage,
+            PlayerStats.Instance.rangeProjectileRange);
+        HandleEffects(projectile, secondaryAttackProcChance / tickCount);
         AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
     }
 
-    private void HitscanAttack(InputAction.CallbackContext obj)
+    /*private void HitscanAttack(InputAction.CallbackContext obj)
     {
-        _ = HandleEffects(ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
-            AttackVector(),
-            LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.GetRangeDamage(),
-            PlayerStats.Instance.rangeProjectileRange));
-    }
+        _ = HandleEffects(
+            ProjectileFactory.Instance.CreateHitscanProjectile(fireLocation.transform.position,
+                AttackVector(),
+                LayerMask.GetMask("Enemy", "Ground"),
+                PlayerStats.Instance.GetRangeDamage(),
+                PlayerStats.Instance.rangeProjectileRange),
+            1f);
+    }*/
 
-    private void LobAttack(InputAction.CallbackContext obj)
+    private void LobAttack()
     {
         animator.SetTrigger("lobThrow");
         Vector3 attackVec = AttackVector();
         Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
-        _ = HandleEffects(ProjectileFactory.Instance.CreateGravityProjectile(transform.position + transform.forward,
-            10 * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
+        GameObject projectile = ProjectileFactory.Instance.CreateGravityProjectile(
+            transform.position + transform.forward,
+            10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
-            PlayerStats.Instance.rangeProjectileRange / 10, //TODO (Simon): Fix magic number 10
-            PlayerStats.Instance.GetRangeDamage()));
+            PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
+            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult);
+        HandleEffects(projectile, specialActionProcChance);
+    }
+
+    private void InstantaneousAttack()
+    {
+        GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
+            transform.position + transform.forward,
+            transform.rotation,
+            PlayerStats.Instance.meleeAttackRange,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.GetMeleeDamage());
+        HandleEffects(projectile, meleeAttackProcChance);
     }
 
     private Vector3 AttackVector()
     {
-        float bulletSpread = spread;
-        if (IsSprinting)
-            bulletSpread += 1.5f;
-
-        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f + 32); // Magic number: 32
+        float bulletSpread = IsSprinting ? spread + 1.5f : spread;
+        
+        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
         var screenAim = new Vector3(screenCenterPoint.x, screenCenterPoint.y, 30f);
@@ -331,29 +390,33 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         return (ray.GetPoint(PlayerStats.Instance.rangeProjectileRange) - fireLocation.transform.position).normalized;
     }
 
-    private GameObject HandleEffects(GameObject projectile)
+    /// <summary>
+    /// Applys status effects to provided projectile.
+    /// </summary>
+    /// <param name="projectile">The designated projectile.</param>
+    /// <param name="procChance">The probability boost to apply an effect. (actual chance) = (proc chance) * (effect chance)</param>
+    private void HandleEffects(GameObject projectile, float procChance)
     {
-        float rand = Random.Range(0.0f, 1.0f);
+        float GetRandom() => procChance * Random.Range(0.0f, 1.0f);
 
-        if (rand < PlayerStats.Instance.burnChance) ProjectileFactory.Instance.AddBurn(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.poisonChance) ProjectileFactory.Instance.AddPoison(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.lightningChance) ProjectileFactory.Instance.AddLightning(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.radioactiveChance) ProjectileFactory.Instance.AddRadioactive(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.smiteChance) ProjectileFactory.Instance.AddSmite(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.slowChance) ProjectileFactory.Instance.AddSlow(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.stunChance) ProjectileFactory.Instance.AddStun(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.martyrdomChance) ProjectileFactory.Instance.AddMartyrdom(projectile);
-        rand = Random.Range(0.0f, 1.0f);
-        if (rand < PlayerStats.Instance.igniteChance) ProjectileFactory.Instance.AddIgnite(projectile);
-
-        return projectile;
+        if (GetRandom() < PlayerStats.Instance.burnChance)
+            ProjectileFactory.Instance.AddBurn(projectile);
+        if (GetRandom() < PlayerStats.Instance.poisonChance)
+            ProjectileFactory.Instance.AddPoison(projectile);
+        if (GetRandom() < PlayerStats.Instance.lightningChance)
+            ProjectileFactory.Instance.AddLightning(projectile);
+        if (GetRandom() < PlayerStats.Instance.radioactiveChance)
+            ProjectileFactory.Instance.AddRadioactive(projectile);
+        if (GetRandom() < PlayerStats.Instance.smiteChance)
+            ProjectileFactory.Instance.AddSmite(projectile);
+        if (GetRandom() < PlayerStats.Instance.slowChance)
+            ProjectileFactory.Instance.AddSlow(projectile);
+        if (GetRandom() < PlayerStats.Instance.stunChance)
+            ProjectileFactory.Instance.AddStun(projectile);
+        if (GetRandom() < PlayerStats.Instance.martyrdomChance)
+            ProjectileFactory.Instance.AddMartyrdom(projectile);
+        if (GetRandom() < PlayerStats.Instance.igniteChance)
+            ProjectileFactory.Instance.AddIgnite(projectile);
     }
 
     private void HandleMoveAnimation(Vector2 direction)

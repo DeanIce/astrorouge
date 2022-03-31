@@ -66,7 +66,6 @@ MonoBehaviour:
   logEvents: 0
   requestedScene: 0
   scenePlay: LevelScene
-  XP_Levels: 64000000c8000000fa00000090010000
 --- !u!114 &5915032664712744906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logEvents: 1
+  xp: 0
+  xpLevel: 0
+  xpPerLevel: 100
   meleeAttackDelay: 0
   meleeBaseDamage: 0
   meleeDamageMultiplier: 0
@@ -240,12 +242,12 @@ MonoBehaviour:
   martyrdomChance: 0
   igniteChance: 0
   baseMeleeAttackDelay: 1
-  baseMeleeBaseDamage: 1
+  baseMeleeBaseDamage: 10
   baseMeleeDamageMultiplier: 1
   baseMeleeCritChance: 0.1
   baseMeleeCritMultiplier: 2
   baseMeleeKnockbackForce: 5
-  baseMeleeAttackRange: 1
+  baseMeleeAttackRange: 1.5
   baseRangeAttackDelay: 0.2
   baseRangeBaseDamage: 2
   baseRangeDamageMultiplier: 1

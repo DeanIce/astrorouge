@@ -69,6 +69,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Melee Attack",
+                    "type": "Button",
+                    "id": "a4f9c684-e71e-44ee-9b3f-cba2932369fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Utility Action",
                     "type": "Button",
                     "id": "11f2d532-bdcb-42c8-9c1d-d4d45c0e18ec",
@@ -358,6 +367,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ef8203d-7bdb-4912-939c-d69bdcf0e173",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Melee Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
