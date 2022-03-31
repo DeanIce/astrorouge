@@ -378,6 +378,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1025393545913161321, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: maximumOpacity
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4014463405380241722, guid: df544cebdba399245853a916ec1a917d, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -692,7 +696,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3551769, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1408,7 +1412,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3551769, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
