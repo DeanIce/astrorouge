@@ -8,16 +8,17 @@ namespace UI
     public class FlashScreenUI : MonoBehaviour
     {
         public float lifetime = 0.75f;
-        public float maximumOpacity = 50f;
+        public float maximumOpacity = 0.5f;
+
+        private float currentOpacity;
         private float timer;
-        private bool isDisplayed;
         private VisualElement flashScreen;
 
         private void Start()
         {
             flashScreen = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("FlashImage");
             timer = 0;
-            isDisplayed = false;
+            currentOpacity = 0;
         }
 
         private void OnEnable()
@@ -32,19 +33,22 @@ namespace UI
 
         private void Update()
         {
-            if (isDisplayed)
+            if (timer > 0)
             {
                 timer -= Time.deltaTime;
-                if (timer <= 0)
-                {
+                if (timer <= 0) timer = 0;
 
-                }
+                float displayOpacity = currentOpacity * (timer / lifetime);
+                Debug.Log(displayOpacity);
+                flashScreen.style.opacity = displayOpacity;
             }
         }
 
-        private void EventResponse()
+        private void EventResponse(float percentHealth)
         {
-            flashScreen.style.opacity = new StyleFloat();
+            currentOpacity = percentHealth * maximumOpacity;
+            timer = lifetime;
         }
+
     }
 }

@@ -35,7 +35,7 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated, enemyDamaged, playerDamaged;
+        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated, enemyDamaged;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
@@ -43,7 +43,7 @@ namespace Managers
         public event Action<AbstractItem> itemAcquired;
 
 
-        public event Action<float> crosshairSpread;
+        public event Action<float> crosshairSpread, playerDamaged;
 
         public void CrosshairSpread(float a)
         {
@@ -65,9 +65,9 @@ namespace Managers
             enemyDamaged?.Invoke();
         }
 
-        public void PlayerDamaged()
+        public void PlayerDamaged(float percent)
         {
-            playerDamaged?.Invoke();
+            playerDamaged?.Invoke(percent);
         }
 
         public void LoadLevel(int i)

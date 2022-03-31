@@ -214,6 +214,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         EventManager.Instance.PlayerStatsUpdated();
+        EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth)/ PlayerStats.Instance.maxHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
