@@ -15,7 +15,8 @@ public class DamagePopupUI : MonoBehaviour
     
     // create a Damage Popup
     public static DamagePopupUI Create(Transform enemyTransform, Quaternion rotation, int damageAmount, bool isCriticalHit) {
-        GameObject damagePopupInstance = Instantiate(DamagePopupPF, enemyTransform.position, rotation);
+        Vector3 randOffset = new Vector3(Random.Range(-.75f, .75f), Random.Range(-.75f, .75f), Random.Range(-.75f, .75f));
+        GameObject damagePopupInstance = Instantiate(DamagePopupPF, enemyTransform.position + randOffset, rotation);
 
         DamagePopupUI damagePopupUI = damagePopupInstance.GetComponent<DamagePopupUI>();
         damagePopupUI.Setup(damageAmount, isCriticalHit);
@@ -24,7 +25,6 @@ public class DamagePopupUI : MonoBehaviour
 
         return damagePopupUI;
     }
-
     private TextMeshPro textMesh;
     private float disappearTimer;
     private Color textColor;
@@ -42,10 +42,10 @@ public class DamagePopupUI : MonoBehaviour
         
         if (isCriticalHit) {
             textMesh.color = Color.red;
-            textMesh.fontSize = 25;
+            textMesh.fontSize = 16;
         } else {
             textMesh.color = Color.white;
-            textMesh.fontSize = 10;
+            textMesh.fontSize = 6;
         }
 
         textColor = textMesh.color;

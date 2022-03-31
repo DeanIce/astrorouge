@@ -133,6 +133,8 @@ namespace Player
             EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
             AudioManager.Instance.PlaySFX(pickUpSoundEffect, 0.2f);
             EventManager.Instance.ItemAcquired(itemBeingPickedUp);
+            // Needed to update health bar when health buff items are picked up
+            EventManager.Instance.PlayerStatsUpdated();
             itemBeingPickedUp = null;
         }
     }

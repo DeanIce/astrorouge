@@ -9,9 +9,16 @@ namespace UI
         private readonly float crosshairSize = 60;
 
 
+        private readonly float hitmarkerScreenDuration = 0.2f;
+
+
         private VisualElement crosshair;
+        private VisualElement hitmarker;
 
         private VisualElement expBar;
+
+        private float hitmarkerTimer;
+        private bool hitmarkerDisplayed = false;
 
         private TextElement expLevelText;
 
@@ -28,12 +35,14 @@ namespace UI
             healthBarCorner = root.Q<VisualElement>("Health_Bar_Fill_Corner");
 
             crosshair = root.Q<VisualElement>("Crosshair");
+            hitmarker = root.Q<VisualElement>("Hitmarker");
 
 
             expBar = root.Q<VisualElement>("Exp_Bar_Fill");
             expLevelText = root.Q<TextElement>("LevelText");
 
             SetHealth(PlayerStats.Instance.currentHealth);
+            hitmarker.style.display = DisplayStyle.None;
 
             expLevelText.text = PlayerStats.Instance.xpLevel.ToString();
             SetExp(PlayerStats.Instance.xp);
@@ -43,17 +52,45 @@ namespace UI
         {
             EventManager.Instance.playerStatsUpdated += UpdateBars;
             EventManager.Instance.crosshairSpread += AdjustCrosshair;
+            EventManager.Instance.enemyDamaged += DisplayHitmarker;
         }
 
         private void OnDisable()
         {
             EventManager.Instance.playerStatsUpdated -= UpdateBars;
+            EventManager.Instance.crosshairSpread -= AdjustCrosshair;
         }
 
         private void UpdateBars()
         {
             SetExp(PlayerStats.Instance.xp);
             SetHealth(PlayerStats.Instance.currentHealth);
+        }
+
+        private void Update()
+        {
+            if (hitmarkerDisplayed)
+            {
+                hitmarkerTimer -= Time.deltaTime;
+                if(hitmarkerTimer <= 0)
+                {
+                    HideHitmarker();
+                }
+            }
+        }
+
+        private void DisplayHitmarker()
+        {
+            hitmarkerDisplayed = true;
+            hitmarkerTimer = hitmarkerScreenDuration;
+            hitmarker.style.display = DisplayStyle.Flex;
+        }
+
+        private void HideHitmarker()
+        {
+            hitmarkerDisplayed = false;
+            hitmarkerTimer = 0;
+            hitmarker.style.display = DisplayStyle.None;
         }
 
         public void SetHealth(float hp)
