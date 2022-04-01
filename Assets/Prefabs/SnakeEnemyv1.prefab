@@ -219,6 +219,7 @@ MonoBehaviour:
   attackRange: 10
   mouth: {fileID: 2025109476969112673}
   poisonChance: 0.5
+  projSpeed: 2
 --- !u!114 &1890924933
 MonoBehaviour:
   m_ObjectHideFlags: 0

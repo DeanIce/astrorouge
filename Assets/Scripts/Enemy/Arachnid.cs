@@ -6,6 +6,7 @@ public class Arachnid : BasicEnemyAgent
 {
     private Animator animator;
     private ProjectileFactory factory;
+    [SerializeField] private float projSpeed;
     [SerializeField] private GameObject mouth;
 
     public override void Start()
@@ -35,7 +36,7 @@ public class Arachnid : BasicEnemyAgent
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
                     projectile = factory.CreateBasicProjectile(mouth.transform.position,
-                        hit.collider.gameObject.transform.position - mouth.transform.position,
+                        projSpeed*(hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
                         LayerMask.GetMask("Player", "Ground"), 5, 5);
                 }
             }
