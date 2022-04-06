@@ -480,11 +480,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8160020369618523175}
+    m_TransformParent: {fileID: 8160020369618523161}
     m_Modifications:
     - target: {fileID: 7116534105770220854, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7116534105770220854, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -496,7 +496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8224887874923419944, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_RootOrder
-      value: 46
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8224887874923419944, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalScale.x
@@ -524,11 +524,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8224887874923419944, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8224887874923419944, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8224887874923419944, guid: 1300a19431899c646a218c83cd18595e, type: 3}
       propertyPath: m_LocalRotation.y
@@ -686,11 +686,6 @@ Transform:
 --- !u!4 &8160020369618523161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400114, guid: d2bd0cb3902bea546838641220b75779, type: 3}
-  m_PrefabInstance: {fileID: 8160020369618915051}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8160020369618523175 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400076, guid: d2bd0cb3902bea546838641220b75779, type: 3}
   m_PrefabInstance: {fileID: 8160020369618915051}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8160020369618523197 stripped
