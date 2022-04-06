@@ -1629,22 +1629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1653647653}
   lines:
-  - 'PA: Welcome soldier #1337 to routine training.'
-  - 'You: ...'
-  - 'PA: I am KORE-TANA, this ship''s personal AI assistant, you may address me as
-    KT.'
-  - 'You: That name sounds oddly familiar... You wouldn''t happen to be familiar
-    with Ha-'
-  - 'KT: -It has been 833 days since your last training session, assuming complete
-    degradation of skills...'
-  - 'KT: Basic training determined to be the best course of action.'
-  - 'KT: If you wish to skip basic training, please hold P.'
-  - 'You: ...'
-  - 'KT: If you change your mind, you can hold P at anytime to skip training. I will
-    only find you slightly rude.'
-  - 'KT: Please proceed forward to the Science Lab using WASD to move, LCTRL to sprint,
-    and Mouse to look.'
-  textSpeed: 0.02
+  - Test
+  textSpeed: 0
 --- !u!1001 &293746611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3682,22 +3668,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1418115064}
   lines:
-  - 'KT: Welcome to the Science Lab, here you will learn how to fight and use items
-    on the battlefield.'
-  - 'KT: Your suit is equipped with 3 means of attack: Missle, Laser, and Grenade.'
-  - 'KT: Left-click to use your missle attack, a moderately fast moving projectile
-    with a low amount of sustained damage.'
-  - 'KT: Right-click to use your laser attack, a hitscan projectile with a high amount
-    of burst of damage.'
-  - 'KT: Q to throw a grenade, a slow moving hard to aim lob projectile with a high
-    amount of burst damage.'
-  - 'KT: Use these to kill the enemies before you now. Once dead, they will drop
-    a wide variety of items you can use to augment your suit.'
-  - 'KT: Hold E while hovering over said items to equip them. Item upgrades include
-    things such as: Speed, Damage, Elemental Affects, and Facial Hair.'
-  - 'You: Facial Hair??'
-  - 'KT: ...'
-  textSpeed: 0.02
+  - Test
+  textSpeed: 0
 --- !u!114 &578139773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3951,21 +3923,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 954189805}
   lines:
-  - 'KT: Welcome to the Cargo Bay, here you will learn about interplanetary travel.'
-  - 'KT: On the battlefield, you may encounter numerous planets in a cluster.'
-  - 'KT: Your suit is equipped with a gravity assist that will allow you to stick
-    to any planet in such cluster.'
-  - 'KT: Some planets will be close enough that you may turn off your gravity assist
-    to travel between them.'
-  - 'KT: In order to move between such planets, simply tap Space multiple times to
-    jump while aiming yourself at the planet of your choosing.'
-  - 'KT: Please be aware that some planets will be too far apart to do this.'
-  - 'KT: In such cases you may find naturally occuring features that will allow interplanetary
-    travel, such as geysers.'
-  - 'You: That sounds complicated...'
-  - 'KT: It was a lot of math. Use the cargo in front of you to practice switching
-    between planets now.'
-  textSpeed: 0.05
+  - Test
+  textSpeed: 0
 --- !u!114 &624269827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4032,7 +3991,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641864346}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 4.951, y: -46.867, z: 59.33054}
+  m_LocalPosition: {x: 4.951, y: -46.711998, z: 59.330574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8402,11 +8361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.636
+      value: -0.481
       objectReference: {fileID: 0}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.154
+      value: 10.868
       objectReference: {fileID: 0}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12552,7 +12511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104217758}
   m_LocalRotation: {x: 0.10167694, y: -0.06588252, z: 0.006748602, w: 0.9926106}
-  m_LocalPosition: {x: 4.951, y: -46.867, z: 59.33054}
+  m_LocalPosition: {x: 4.951, y: -46.711998, z: 59.330574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12589,7 +12548,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
