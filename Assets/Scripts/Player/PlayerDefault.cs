@@ -17,6 +17,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private int extraJumpsLeft;
     private bool isGrounded;
     private bool isPrimaryAttacking;
+    private bool jump;
+    private Vector3 jumpForceVal;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
@@ -113,6 +115,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         // By far the easiest solution for monitoring 'grounded-ness' for animation tree.
         animator.SetBool("isGrounded", isGrounded);
+
+        // Apply jump force
+        if (jump)
+        {
+            jump = false;
+            rb.AddForce(jumpForceVal, ForceMode.Impulse);
+        }
 
         // Calculate total displacement
         Vector3 displacement = Walk(movement.ReadValue<Vector2>());
@@ -220,15 +229,16 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         if (isGrounded)
         {
-            rb.AddForce(PlayerStats.Instance.jumpForce * transform.up, ForceMode.Impulse);
+            jump = true;
+            jumpForceVal = PlayerStats.Instance.jumpForce * transform.up;
             HandleJumpAnimation();
         }
         else if (extraJumpsLeft > 0)
         {
             extraJumpsLeft--;
             rb.velocity = Vector3.zero; // Resets force applied to rb (So double jumps feel good)
-            rb.AddForce(PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up,
-                ForceMode.Impulse);
+            jump = true;
+            jumpForceVal = PlayerStats.Instance.extraJumpDampaner * PlayerStats.Instance.jumpForce * transform.up;
         }
     }
 
