@@ -519,12 +519,12 @@ MonoBehaviour:
     oceanDepthMultiplier: 7.67
     oceanFloorDepth: 0.18
     oceanFloorSmoothing: 0.79
-    mountainBlend: 1.16
+    mountainBlend: 0.5
     continentNoise:
       numLayers: 6
       lacunarity: 2
       persistence: 0.5
-      scale: 1
+      scale: 0.95
       elevation: 2.78
       verticalShift: 0
       offset: {x: 0, y: 0, z: 0}
@@ -542,26 +542,26 @@ MonoBehaviour:
       persistence: 0.5
       scale: -2.05
       power: 2.18
-      elevation: 3.57
+      elevation: 7.83
       gain: 0.8
       verticalShift: 0.09
       peakSmoothing: 1
   shader:
     gradient:
       serializedVersion: 2
-      key0: {r: 0.3962264, g: 0.108510144, b: 0, a: 1}
+      key0: {r: 0.3207547, g: 0.09001565, b: 0.0015129976, a: 1}
       key1: {r: 0.94509804, g: 0.25739455, b: 0, a: 1}
-      key2: {r: 0.9433962, g: 0.8368837, b: 0, a: 1}
+      key2: {r: 0.1792453, g: 0.09818272, b: 0.022828411, a: 1}
       key3: {r: 0.9433962, g: 0.8368837, b: 0, a: 0}
-      key4: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+      key4: {r: 0.9433962, g: 0.8368837, b: 0, a: 0}
       key5: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
       key6: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 386
-      ctime1: 19661
-      ctime2: 46067
-      ctime3: 58596
-      ctime4: 51657
+      ctime1: 20432
+      ctime2: 44911
+      ctime3: 46067
+      ctime4: 46067
       ctime5: 65150
       ctime6: 65150
       ctime7: 0
@@ -579,5 +579,5 @@ MonoBehaviour:
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 9e0319a5dc87dbc47838023b21bfff25, type: 2}
   terrainMesh: {fileID: 4795155531584681974}
-  heightMinMax: {x: 0.984394, y: 1.0825664}
+  heightMinMax: {x: 0.984394, y: 1.143624}
   key: 0

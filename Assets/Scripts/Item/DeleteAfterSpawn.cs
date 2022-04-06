@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DeleteAfterSpawn : MonoBehaviour
 {
     private void Start()
     {
+        print("destroy");
         Destroy(gameObject);
     }
 }
