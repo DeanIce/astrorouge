@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LavaBoss : MonoBehaviour, IBoss
+public class LavaBoss : MonoBehaviour
 {
     // Animation stuff
     private Animator animator;
