@@ -47,23 +47,6 @@ public class StatusEffectManager : MonoBehaviour
         SlowVFX.SetActive(false);
     }
 
-    private void FixedUpdate()
-    {
-        if (SmiteVFX) straightenEffects(SmiteVFX);
-        if (SmiteVFX) straightenEffects(SlowVFX);
-    }
-
-    private void straightenEffects(GameObject effect)
-    {
-        Vector3 sumForce = GravityManager.GetGravity(effect.transform.position, out Vector3 upAxis);
-        //effect.GetComponent<Rigidbody>().AddForce(sumForce * Time.deltaTime);
-        Debug.DrawLine(effect.transform.position, sumForce, Color.blue);
-
-        // Upright?
-        effect.GetComponent<Rigidbody>()
-            .MoveRotation(Quaternion.FromToRotation(effect.transform.up, upAxis) * effect.transform.rotation);
-    }
-
     public void DeathEffects()
     {
         StartCoroutine(Martyrdom());
