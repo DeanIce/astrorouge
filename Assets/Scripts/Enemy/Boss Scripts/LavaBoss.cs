@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class LavaBoss : MonoBehaviour
 {
+    /*
+     * Future Proofing Ideas:
+     * 1) Abstract animation stuff to new class
+     * 2)
+     */
+
     // Animation stuff
     private Animator animator;
 
     // Components
     private Rigidbody rb;
+
+    // Omnipotence
+    public GameObject player;
 
     // Status stuff
     private bool dying;
@@ -39,40 +48,55 @@ public class LavaBoss : MonoBehaviour
         if (!dying)
         {
             dying = true;
-            //StartCoroutine(DeathAnimation(1));
+            StartCoroutine(DeathAnimation());
         }
     }
-    
+
     // Death
-    /*
-    IEnumerator DeathAnimation(int anim)
+    IEnumerator DeathAnimation()
     {
-        
+        animator.SetBool("Dying", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("Dying", false);
     }
 
     // Attacks
     IEnumerator Roar()
     {
-
+        // Don't set false here, instead set false in followup attacks
+        animator.SetBool("Roaring", true);
+        yield return new WaitForSeconds(3);
     }
 
     IEnumerator TongueAttack()
     {
-
+        animator.SetBool("TongueAttacking", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("TongueAttacking", false);
     }
 
     IEnumerator HornAttack()
     {
-
+        animator.SetBool("HornAttacking", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("HornAttacking", false);
     }
 
     IEnumerator RamAttack()
     {
-
+        // Setting roaring false here since we come from roaring and need it to be true to attack
+        animator.SetBool("RamAttacking", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("RamAttacking", false);
+        animator.SetBool("Roaring", false);
     }
 
     IEnumerator SlamAttack()
     {
-
-    }*/
+        // Setting roaring false here since we come from roaring and need it to be true to attack
+        animator.SetBool("SlamAttacking", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("SlamAttacking", false);
+        animator.SetBool("Roaring", false);
+    }
 }
