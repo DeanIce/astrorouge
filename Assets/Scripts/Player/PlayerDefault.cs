@@ -1,5 +1,6 @@
 using Gravity;
 using Managers;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private bool isPrimaryAttacking;
     private bool jump;
     private Vector3 jumpForceVal;
+    private float timeOfLastDamage;
+    private float globalAttackDealy;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
@@ -46,12 +49,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float secondaryAttackProcChance = 2f;
     [SerializeField] private float secondaryAttackCooldown = 5f;
 
+    [SerializeField] private float specialActionDelay = 0.8f;
     [SerializeField] private float specialActionDamageMult = 24f;
     [SerializeField] private float specialActionProcChance = 0.7f;
     [SerializeField] private float specialActionCooldown = 8f;
 
     [SerializeField] private float meleeAttackProcChance = 2f;
-
 
     // Misc values
     private Animator animator;
@@ -59,8 +62,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private LayerMask groundMask;
     private InputAction movement, look;
     private Rigidbody rb;
-
-    private float timeOfLastDamage;
     protected internal bool useGravity = true;
 
     private void Start()
@@ -82,11 +83,15 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
         MeleeAttackDelay = Decrement(MeleeAttackDelay);
         SpecialActionDelay = Decrement(SpecialActionDelay);
+        globalAttackDealy = Decrement(globalAttackDealy);
 
-        if (isPrimaryAttacking && PrimaryAttackDelay < 0)
+        if (globalAttackDealy <= 0)
         {
-            ProjectileAttack();
-            PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+            if (isPrimaryAttacking && PrimaryAttackDelay < 0)
+            {
+                ProjectileAttack();
+                PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
+            }
         }
         
         // Health regen
@@ -284,7 +289,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void SecondaryAttack(InputAction.CallbackContext obj)
     {
-        if (SecondaryAttackDelay > 0) return;
+        if (SecondaryAttackDelay > 0 || globalAttackDealy > 0) return;
         SecondaryAttackDelay = secondaryAttackCooldown;
 
         BeamAttack();
@@ -292,7 +297,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void MeleeAttack(InputAction.CallbackContext obj)
     {
-        if (MeleeAttackDelay > 0) return;
+        if (MeleeAttackDelay > 0 || globalAttackDealy > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
         print("Melee Attack Initialized"); //TODO (Simon): Remove when melee animation is added
@@ -301,10 +306,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void SpecialAction(InputAction.CallbackContext obj)
     {
-        if (SpecialActionDelay > 0) return;
+        if (SpecialActionDelay > 0 || globalAttackDealy > 0) return;
         SpecialActionDelay = specialActionCooldown;
 
-        LobAttack();
+        _ = StartCoroutine(LobAttack());
     }
 
     private void ProjectileAttack()
@@ -321,6 +326,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void BeamAttack()
     {
+        globalAttackDealy = secondaryAttackDuration + 0.2f;
+
         float tickCount = secondaryAttackDuration / secondaryAttackTickTime;
         float beamDamage = PlayerStats.Instance.GetRangeDPS() * secondaryAttackDamageMult / tickCount;
 
@@ -348,14 +355,19 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             1f);
     }*/
 
-    private void LobAttack()
+    private IEnumerator LobAttack()
     {
+        globalAttackDealy = 1.2f;
+
         animator.SetTrigger("lobThrow");
+        yield return new WaitForSeconds(specialActionDelay);
         Vector3 attackVec = AttackVector();
         Vector3 liftVec = transform.up - Vector3.Project(transform.up, attackVec);
 
+        Vector3 handOffset = transform.right * .3f + transform.up * .15f;
+
         GameObject projectile = ProjectileFactory.Instance.CreateGravityProjectile(
-            transform.position + transform.forward,
+            transform.position + transform.forward + handOffset,
             10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
@@ -365,6 +377,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     private void InstantaneousAttack()
     {
+        globalAttackDealy = 0.5f;
+
         GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
             transform.position + transform.forward,
             transform.rotation,
