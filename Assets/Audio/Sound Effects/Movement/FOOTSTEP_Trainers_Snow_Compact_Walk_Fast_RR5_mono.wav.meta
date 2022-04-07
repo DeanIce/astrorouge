@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 61278dac07de1614fb3c8ef33db0076d
+guid: 379b0fe42121f424a97388c36c19aefe
 labels:
 - usfx
 - imphenzia
@@ -12,8 +12,7 @@ labels:
 - run
 - ground
 - mono
-- asphalt
-- loop
+- snow
 AudioImporter:
   serializedVersion: 6
   defaultSettings:

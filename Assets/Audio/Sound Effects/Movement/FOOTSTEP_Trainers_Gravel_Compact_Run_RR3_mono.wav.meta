@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2466fc7be2c9f4d4e8ee56efd248b42e
+guid: f339e45954b2ce44ca2e0ed0317cf217
 labels:
 - usfx
 - imphenzia
@@ -13,7 +13,6 @@ labels:
 - ground
 - mono
 - gravel
-- loop
 AudioImporter:
   serializedVersion: 6
   defaultSettings:
