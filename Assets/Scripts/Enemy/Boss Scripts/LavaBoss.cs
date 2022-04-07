@@ -22,6 +22,8 @@ public class LavaBoss : MonoBehaviour
     // Status stuff
     private bool dying;
     private bool attacking;
+    private bool hunting;
+    private bool inRange;
     public float health;
     public float movementSpeed;
 
@@ -31,16 +33,46 @@ public class LavaBoss : MonoBehaviour
         // May need to be GetComponentInChildren
         animator = GetComponent<Animator>();
         dying = false;
+        inRange = false;
+        hunting = false;
     }
 
     void Update()
     {
-        
+        if (!inRange && !hunting)
+        {
+            Hunt();
+        }
     }
 
     void FixedUpdate()
     {
         
+    }
+
+    void Hunt()
+    {
+
+    }
+
+    // For detecting if the player is within a reasonable attacking range
+    void OnTriggerEnter(Collider other)
+    {
+        // Convention: Player layer is 9
+        if (other.gameObject.layer == 9)
+        {
+            inRange = true;
+        }
+    }
+
+    // For detecting if the player leaves the reasonable attacking range
+    private void OnTriggerExit(Collider other)
+    {
+        // Convention: Player layer is 9
+        if (other.gameObject.layer == 9)
+        {
+            inRange = false;
+        }
     }
 
     public void Die()
@@ -50,6 +82,31 @@ public class LavaBoss : MonoBehaviour
             dying = true;
             StartCoroutine(DeathAnimation());
         }
+    }
+
+    // Movement
+    // IEnums for crawl/rotate?
+
+    // Damage Taken
+    IEnumerator DamageLevel1()
+    {
+        animator.SetBool("Destroyed1", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("Destroyed1", false);
+    }
+
+    IEnumerator DamageLevel2()
+    {
+        animator.SetBool("Destroyed2", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("Destroyed2", false);
+    }
+
+    IEnumerator DamagedRoar()
+    {
+        animator.SetBool("DamagedRoar", true);
+        yield return new WaitForSeconds(3);
+        animator.SetBool("DamagedRoar", false);
     }
 
     // Death
