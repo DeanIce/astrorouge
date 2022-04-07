@@ -6058,10 +6058,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 579053813939167120, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
-      propertyPath: specialActionDelay
-      value: 0.79
-      objectReference: {fileID: 0}
     - target: {fileID: 579053813939167121, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
       propertyPath: m_RootOrder
       value: 0
