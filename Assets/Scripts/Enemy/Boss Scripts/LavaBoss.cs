@@ -12,8 +12,9 @@ public class LavaBoss : MonoBehaviour
 
     // Status stuff
     private bool dying;
-    private float health;
-    private float movementSpeed;
+    private bool attacking;
+    public float health;
+    public float movementSpeed;
 
     void Start()
     {
@@ -23,8 +24,55 @@ public class LavaBoss : MonoBehaviour
         dying = false;
     }
 
+    void Update()
+    {
+        
+    }
+
+    void FixedUpdate()
+    {
+        
+    }
+
     public void Die()
+    {
+        if (!dying)
+        {
+            dying = true;
+            //StartCoroutine(DeathAnimation(1));
+        }
+    }
+    
+    // Death
+    /*
+    IEnumerator DeathAnimation(int anim)
+    {
+        
+    }
+
+    // Attacks
+    IEnumerator Roar()
     {
 
     }
+
+    IEnumerator TongueAttack()
+    {
+
+    }
+
+    IEnumerator HornAttack()
+    {
+
+    }
+
+    IEnumerator RamAttack()
+    {
+
+    }
+
+    IEnumerator SlamAttack()
+    {
+
+    }*/
 }
