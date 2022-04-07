@@ -73,6 +73,7 @@ public class LavaBoss : MonoBehaviour
         animator.SetBool("TongueAttacking", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("TongueAttacking", false);
+        attacking = false;
     }
 
     IEnumerator HornAttack()
@@ -80,6 +81,7 @@ public class LavaBoss : MonoBehaviour
         animator.SetBool("HornAttacking", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("HornAttacking", false);
+        attacking = false;
     }
 
     IEnumerator RamAttack()
@@ -89,6 +91,7 @@ public class LavaBoss : MonoBehaviour
         yield return new WaitForSeconds(3);
         animator.SetBool("RamAttacking", false);
         animator.SetBool("Roaring", false);
+        attacking = false;
     }
 
     IEnumerator SlamAttack()
@@ -98,5 +101,6 @@ public class LavaBoss : MonoBehaviour
         yield return new WaitForSeconds(3);
         animator.SetBool("SlamAttacking", false);
         animator.SetBool("Roaring", false);
+        attacking = false;
     }
 }
