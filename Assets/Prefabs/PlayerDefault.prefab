@@ -233,6 +233,7 @@ MonoBehaviour:
   secondaryAttackDamageMult: 4
   secondaryAttackProcChance: 2
   secondaryAttackCooldown: 5
+  specialActionDelay: 0.79
   specialActionDamageMult: 24
   specialActionProcChance: 0.7
   specialActionCooldown: 8
