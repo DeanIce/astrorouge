@@ -3,12 +3,12 @@
 		[HideInInspector]_MainTex ("", 2D) = "white" {}
 		[NoScaleOffset]_NoiseTex ("Noise", 2D) = "white" {}
 		_Color ("Color", Color) = (0.2, 0.07, 0.01, 1)
-		_Scale ("Scale", Range(1, 8)) = 3
+		_Scale ("Scale", Range(1, 30)) = 3
 		_Disp ("Displacement Intensity", Range(1, 10)) = 1
 		_NoiseIntensity ("Noise Intensity", Range(3, 18)) = 7
 		_PrimaryFlowSpeed ("Primary Flow Speed", Range(0,5)) = .6
 		_SecondaryFlowSpeed ("Secondary Flow Speed", Range(0,5)) = 1.9
-		_Test ("Test", Range(0,100)) = 40.0
+		_Test ("Test", Range(0,50)) = 1.9
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -67,7 +67,7 @@
 					p = lerp(bp, p, 0.77);   // blending displaced system with base system
 					z *= 1.4;   // intensity scaling
 					p *= 2.0;   // octave scaling
-					bp *= 1.9;
+					bp *= _Test;
 				}
 				return ret;
 			}
