@@ -35,6 +35,8 @@ namespace Levels
 
         public GameObject planetPrefab;
 
+        [ReadOnl] public int[] numEnemiesSpawned;
+
 
         private bool isCreated;
 
