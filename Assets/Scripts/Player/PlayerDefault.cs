@@ -309,7 +309,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (SpecialActionDelay > 0 || globalAttackDealy > 0) return;
         SpecialActionDelay = specialActionCooldown;
 
-        _ = StartCoroutine(LobAttack());
+        EventManager.Instance.SpecialUsed(specialActionCooldown);
+       _ = StartCoroutine(LobAttack());
     }
 
     private void ProjectileAttack()
