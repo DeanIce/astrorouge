@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,50 +47,101 @@ public class PlayerAnimationSounds : MonoBehaviour
     private List<AudioClip> walkingSnow;
     private List<AudioClip> runningSnow;
 
+    private PlayerDefault player;
+    [SerializeField] private float walkStepVolume = 0.7f;
+    [SerializeField] private float runStepVolume = 0.6f;
+
     // Start is called before the first frame update
     void Start()
     {
         walkGravel1 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel2 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel3 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel4 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel5 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel6 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel7 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
-        walkGravel8 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel1");
+        walkGravel2 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel2");
+        walkGravel3 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel3");
+        walkGravel4 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel4");
+        walkGravel5 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel5");
+        walkGravel6 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel6");
+        walkGravel7 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel7");
+        walkGravel8 = (AudioClip) Resources.Load("Audio/Sound Effects/Movement/walkGravel8");
 
         runGravel1 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
-        runGravel8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel1");
+        runGravel2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel2");
+        runGravel3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel3");
+        runGravel4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel4");
+        runGravel5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel5");
+        runGravel6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel6");
+        runGravel7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel7");
+        runGravel8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runGravel8");
 
         walkSnow1 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
-        walkSnow8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow1");
+        walkSnow2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow2");
+        walkSnow3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow3");
+        walkSnow4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow4");
+        walkSnow5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow5");
+        walkSnow6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow6");
+        walkSnow7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow7");
+        walkSnow8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/walkSnow8");
 
         runSnow1 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
-        runSnow8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow1");
+        runSnow2 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow2");
+        runSnow3 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow3");
+        runSnow4 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow4");
+        runSnow5 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow5");
+        runSnow6 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow6");
+        runSnow7 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow7");
+        runSnow8 = (AudioClip)Resources.Load("Audio/Sound Effects/Movement/runSnow8");
+
+        player = GetComponentInParent<PlayerDefault>();
 
         MakeLists();
     }
-    
+
+    private void PlayStepSound(AnimationEvent evt)
+    {
+        int levelNumber = LevelSelect.Instance.requestedLevel;
+        if (evt.animatorClipInfo.weight > 0.5f)
+        {
+            if (levelNumber == 0 || levelNumber == 2)
+            {
+                PlayGravelFootsteps();
+            }
+            else
+            {
+                PlaySnowFootsteps();
+            }
+        }
+    }
+
+    private void PlayGravelFootsteps()
+    {
+        if (!player.IsSprinting)
+        {
+            AudioManager.Instance.PlaySFX(walkingGravel[Random.Range(0, walkingGravel.Count)], walkStepVolume);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX(runningGravel[Random.Range(0, runningGravel.Count)], runStepVolume);
+        }
+    }
+
+    private void PlaySnowFootsteps()
+    {
+        if (!player.IsSprinting)
+        {
+            AudioManager.Instance.PlaySFX(walkingSnow[Random.Range(0, walkingSnow.Count)], walkStepVolume);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX(runningSnow[Random.Range(0, runningSnow.Count)], runStepVolume);
+        }
+    }
+
     private void MakeLists()
     {
+        walkingGravel = new List<AudioClip>();
+        runningGravel = new List<AudioClip>();
+        walkingSnow = new List<AudioClip>();
+        runningSnow = new List<AudioClip>();
+
         walkingGravel.Add(walkGravel1);
         walkingGravel.Add(walkGravel2);
         walkingGravel.Add(walkGravel3);
