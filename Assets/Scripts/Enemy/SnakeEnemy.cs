@@ -11,6 +11,7 @@ public class SnakeEnemy : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
         Dying = false;
         animator = GetComponentInChildren<Animator>();
         factory = ProjectileFactory.Instance;

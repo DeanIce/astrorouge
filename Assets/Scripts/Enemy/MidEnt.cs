@@ -12,6 +12,7 @@ public class MidEnt : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         animator.SetInteger("moving", 2);
