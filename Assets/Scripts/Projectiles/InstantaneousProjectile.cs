@@ -16,7 +16,6 @@ public class InstantaneousProjectile : BaseProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
-            print($"{other.gameObject.name} hit - enter");
             CollisionResponse(other.gameObject);
         }
     }
