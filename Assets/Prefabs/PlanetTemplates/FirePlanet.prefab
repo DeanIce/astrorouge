@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1771534249118131290}
   - component: {fileID: 5840447317443330175}
   - component: {fileID: 6630566679019943783}
+  - component: {fileID: 2685638665353636135}
   m_Layer: 6
   m_Name: Ocean
   m_TagString: Untagged
@@ -114,6 +115,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2685638665353636135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179135356147887248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830b6d9435a7477dbc293c8b53689d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4795155530288409730
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,5 +592,5 @@ MonoBehaviour:
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 9e0319a5dc87dbc47838023b21bfff25, type: 2}
   terrainMesh: {fileID: 4795155531584681974}
-  heightMinMax: {x: 0.984394, y: 1.0825664}
+  heightMinMax: {x: 0.984394, y: 1.0838153}
   key: 0

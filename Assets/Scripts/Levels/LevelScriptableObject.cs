@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GD.MinMaxSlider;
@@ -34,9 +35,6 @@ namespace Levels
         public GameObject bossLevelEntrance;
 
         public GameObject planetPrefab;
-
-
-        private bool isCreated;
 
 
         private void OnValidate()
@@ -102,7 +100,8 @@ namespace Levels
         /// <param name="rng"></param>
         /// <param name="timer"></param>
         /// <returns></returns>
-        public Vector3 Create(GameObject root, Random rng, BallDropper ballDropper, Stopwatch timer)
+        public (Vector3, List<List<GameObject>>) Create(GameObject root, Random rng, BallDropper ballDropper,
+            Stopwatch timer)
         {
             PlanetGenerator.spheres.Clear();
             SpawnObjects.numPropsSpawned = 0;
@@ -175,19 +174,19 @@ namespace Levels
 
             LevelSelect.Instance.LOGTIMER(timer, "Spawn items");
 
+            var enemiesSpawned = new List<List<GameObject>>();
             for (var i = 0; i < actualNumPlanets; i++)
             {
                 GameObject planet = pgs[i].gameObject;
                 // Add enemies to the planet
-                var enemiesOnPlanet = (int) (actualNumEnemies * areaRatios[i]);
-                SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, enemiesOnPlanet);
+                var numEnemiesSpawned = (int) (actualNumEnemies * areaRatios[i]);
+                enemiesSpawned.Add(SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, numEnemiesSpawned, i));
             }
 
             LevelSelect.Instance.LOGTIMER(timer, "Spawn enemies");
 
 
-            isCreated = true;
-            return playerPosition;
+            return (playerPosition, enemiesSpawned);
         }
 
 

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Gravity;
 using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
@@ -53,19 +52,19 @@ public class StatusEffectManager : MonoBehaviour
         StartCoroutine(Ignite());
     }
 
-    public void ApplyBurn(int ticks)
+    public void ApplyBurn(int ticks, int bd)
     {
         //damage will be passed in later and into the coroutine
         if (burnTickTimes.Count <= 0)
         {
             burnTickTimes.Add(ticks);
-            StartCoroutine(Burn());
+            StartCoroutine(Burn(bd));
         }
         else
             burnTickTimes.Add(ticks);
     }
 
-    private IEnumerator Burn()
+    private IEnumerator Burn(int bd)
     {
         if (BurnVFX)
         {
@@ -77,7 +76,7 @@ public class StatusEffectManager : MonoBehaviour
                     burnTickTimes[i]--;
                 }
 
-                damageable.TakeDmg(burnDamage);
+                damageable.TakeDmg(bd);
                 burnTickTimes.RemoveAll(num => num == 0);
                 yield return new WaitForSeconds(0.5f);
             }
@@ -300,7 +299,7 @@ public class StatusEffectManager : MonoBehaviour
             foreach (Collider hitCollider in hitColliders)
             {
                 if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
-                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
+                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6, burnDamage);
             }
 
             IgniteVFX.SetActive(true);
