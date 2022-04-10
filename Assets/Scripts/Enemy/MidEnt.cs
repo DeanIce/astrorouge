@@ -44,6 +44,7 @@ public class MidEnt : BasicEnemyAgent
             GameObject enemy = Instantiate(flower);
             enemy.transform.position = transform.position + 2*Body.transform.forward;
         }
+        animator.speed = 1;
         animator.SetInteger("moving", 2);
         //rend.enabled = false;
         Attacking = false;
@@ -63,14 +64,20 @@ public class MidEnt : BasicEnemyAgent
                 animator.SetInteger("moving", 7);
                 summon = true;
             }
-            else animator.SetInteger("moving", 3);
+            else
+            {
+                animator.speed = 2;
+                animator.SetInteger("moving", 3);
+            }
         }
         else if (attack == 1)
         {
+            animator.speed = 2;
             animator.SetInteger("moving", 4);
         }
         else if (attack == 2)
         {
+            animator.speed = 2;
             animator.SetInteger("moving", 6);
         }
     }

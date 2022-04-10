@@ -59,6 +59,7 @@ public class RockEnemy : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
+        animator.speed = 2;
         if (attack == 0)
         {
             animator.SetBool("attack1A", true);
@@ -76,6 +77,7 @@ public class RockEnemy : BasicEnemyAgent
         }
 
         //rend.enabled = false;
+        animator.speed = 1; 
         Attacking = false;
         if (attack == 0)
         {

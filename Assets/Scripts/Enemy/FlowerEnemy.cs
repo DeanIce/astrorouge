@@ -17,9 +17,11 @@ public class FlowerEnemy : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
+        animator.speed = 2;
         animator.SetInteger("moving", 3);
         yield return WaitForSecondsOrDie(0.833f);
         animator.SetInteger("moving", 0);
+        animator.speed = 1;
         //rend.enabled = false;
         Attacking = false;
     }

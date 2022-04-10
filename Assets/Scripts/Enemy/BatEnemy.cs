@@ -17,8 +17,10 @@ public class BatEnemy : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
+        animator.speed = 2;
         animator.SetInteger("moving", 2);
         yield return WaitForSecondsOrDie(2.08f);
+        animator.speed = 1;
         animator.SetInteger("moving", 0);
         //rend.enabled = false;
         Attacking = false;

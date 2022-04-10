@@ -41,6 +41,7 @@ public class Wolf : BasicEnemyAgent
         Attacking = true;
         StartCoroutine(AttackAnim());
         yield return WaitForSecondsOrDie(0.833f);
+        animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);
         //rend.enabled = false;
@@ -120,6 +121,7 @@ public class Wolf : BasicEnemyAgent
     {
         animator.SetInteger("moving", 0);
         yield return new WaitForSeconds(0.05f);
+        animator.speed = 2;
         animator.SetInteger("moving", 3);
     }
 
