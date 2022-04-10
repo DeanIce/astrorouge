@@ -5,6 +5,7 @@ public class SnakeEnemy : BasicEnemyAgent
 {
     [SerializeField] private GameObject mouth;
     [SerializeField] private float poisonChance = 0.5f;
+    [SerializeField] private float projSpeed;
     private Animator animator;
     private ProjectileFactory factory;
 
@@ -34,7 +35,7 @@ public class SnakeEnemy : BasicEnemyAgent
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
                     projectile = factory.CreateBasicProjectile(mouth.transform.position,
-                        hit.collider.gameObject.transform.position - mouth.transform.position,
+                        projSpeed * (hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
                         LayerMask.GetMask("Player", "Ground"), 5, 5);
                     if (Random.value < poisonChance)
                     {

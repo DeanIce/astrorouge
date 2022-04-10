@@ -97,8 +97,9 @@ public class AlphaWolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        if (attack != 2) yield return new WaitForSeconds(1.25f);
-        else yield return new WaitForSeconds(1.458f);
+        if (attack != 2) yield return WaitForSecondsOrDie(1.25f);
+        else yield return WaitForSecondsOrDie(1.458f);
+        animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);
         //rend.enabled = false;
@@ -146,8 +147,9 @@ public class AlphaWolf : BasicEnemyAgent
 
     private IEnumerator DeathAnim(int anim)
     {
+        yield return new WaitForSeconds(0.2f);
         animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
 
@@ -171,6 +173,7 @@ public class AlphaWolf : BasicEnemyAgent
     {
         animator.SetInteger("moving", 0);
         yield return new WaitForSeconds(0.05f);
+        animator.speed = 2;
         if (attack == 0)
         {
             animator.SetInteger("moving", 3);

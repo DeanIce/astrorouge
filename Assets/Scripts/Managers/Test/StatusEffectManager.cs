@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Gravity;
 using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
@@ -55,7 +54,6 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplyBurn(int ticks)
     {
-        //damage will be passed in later and into the coroutine
         if (burnTickTimes.Count <= 0)
         {
             burnTickTimes.Add(ticks);

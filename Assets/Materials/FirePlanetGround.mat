@@ -8,18 +8,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FirePlanetGround
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 01702eadca74ca44d9677fe677730b54, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlbedoTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -40,15 +43,39 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FlameTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LavaTex:
+        m_Texture: {fileID: 2800000, guid: fcf4c97cf2e1f7e4d868b47329405a8c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: fcf4c97cf2e1f7e4d868b47329405a8c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 2da69d9404801884ea2862f8d4e993a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex3D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -79,7 +106,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _Amount: 0.6
     - _Blend: 0
+    - _BubbleRate: 0.2
+    - _BubbleScale: 8
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -87,26 +117,56 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Disp: 1.3
+    - _Distortion: 0.2
     - _DstBlend: 0
+    - _Edge: 0.1
+    - _EdgeBlur: 0.5
     - _EnvironmentReflections: 1
+    - _FlameBias: -0.12
+    - _FlameScale: 0.82
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Height: 0.1
+    - _LavaBright: 2
+    - _LavaDarkOffset: 0.1
+    - _LavaFlowSpeed: 0.01
+    - _LavaTile: 8
     - _Metallic: 0
+    - _MorphRate: 0.05
+    - _NoiseIntensity: 12.48
+    - _NoiseScale: 0.3
+    - _NoiseTile: 2
     - _OcclusionStrength: 1
+    - _Offset: 0.35
     - _Parallax: 0.005
+    - _PrimaryFlowSpeed: 0.33
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Scale: 29.4
+    - _ScaleDist: 0.5
+    - _SecondaryFlowSpeed: 0.39
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 1
+    - _SpeedDistortX: 0.2
+    - _SpeedDistortY: 0.2
+    - _SpeedMainX: 0.4
+    - _SpeedMainY: 0.4
     - _SrcBlend: 1
+    - _Strength: 2
+    - _StrengthTop: 3
     - _Surface: 0
+    - _Test: 2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
-    - _Color: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
+    - _Color: {r: 0.5566038, g: 0.18665591, b: 0.118147045, a: 1}
+    - _Color2: {r: 0.6, g: 0.39999998, b: 0.09999997, a: 1}
+    - _EdgeC: {r: 1, g: 0.5, b: 0.19999996, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

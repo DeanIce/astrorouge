@@ -18,9 +18,11 @@ public class FlowerEnemy : BasicEnemyAgent
     {
         //rend.enabled = true;
         Attacking = true;
+        animator.speed = 2;
         animator.SetInteger("moving", 3);
-        yield return new WaitForSeconds(0.833f);
+        yield return WaitForSecondsOrDie(0.833f);
         animator.SetInteger("moving", 0);
+        animator.speed = 1;
         //rend.enabled = false;
         Attacking = false;
     }
@@ -38,8 +40,9 @@ public class FlowerEnemy : BasicEnemyAgent
 
     private IEnumerator DeathAnim(int anim)
     {
+        yield return new WaitForSeconds(0.2f);
         animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
 }

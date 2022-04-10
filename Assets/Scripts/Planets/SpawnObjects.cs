@@ -25,18 +25,21 @@ public class SpawnObjects : MonoBehaviour
     }
 
 
-    public static void SpawnEnemies(Random rng, GameObject planet, AssetCount[] enemies, int enemiesOnPlanet)
+    public static List<GameObject> SpawnEnemies(Random rng, GameObject planet, AssetCount[] enemies,
+        int enemiesOnPlanet, int index)
     {
         var planetGenerator = planet.GetComponent<PlanetGenerator>();
         // Set our vertices guaranteed non null
         List<Vector3> vertices = planetGenerator.spawnObjectVertices.ToList();
-
+        var e = new List<GameObject>();
         foreach (AssetCount assetCount in enemies)
         {
             var count = (int) (assetCount.weightedRatio * enemiesOnPlanet);
-            SpawnEnemy(planet.transform, assetCount.prefab, count, assetCount.scale,
-                vertices, planetGenerator.scale, rng);
+            e.AddRange(SpawnEnemy(planet.transform, assetCount.prefab, count, assetCount.scale,
+                vertices, planetGenerator.scale, rng, index));
         }
+
+        return e;
     }
 
     public static void AddProps(Random rng, GameObject planet, AssetCount[] props, int propsOnPlanet)
@@ -102,9 +105,11 @@ public class SpawnObjects : MonoBehaviour
         // totalSpawned += numToSpawn;
     }
 
-    private static void SpawnEnemy(Transform origin, GameObject objectToSpawn, int numToSpawn, Vector3 scale,
-        List<Vector3> vertices, float planetScale, Random rng)
+    private static List<GameObject> SpawnEnemy(Transform origin, GameObject objectToSpawn, int numToSpawn,
+        Vector3 scale,
+        List<Vector3> vertices, float planetScale, Random rng, int index)
     {
+        var e = new List<GameObject>();
         // We need this here so we can set rotation
         for (var i = 0; i < numToSpawn; i++)
         {
@@ -113,6 +118,7 @@ public class SpawnObjects : MonoBehaviour
             Vector3 spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
             spawnLocation += origin.position;
             GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
+            placeObject.GetComponent<BasicEnemyAgent>().planet = index;
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = scale;
@@ -127,6 +133,8 @@ public class SpawnObjects : MonoBehaviour
 
             placeObject.tag = "enemy";
 
+            e.Add(placeObject);
+
             // Set Parent
             // placeObject.transform.parent = origin;
 
@@ -136,6 +144,7 @@ public class SpawnObjects : MonoBehaviour
         }
 
         // totalSpawned += numToSpawn;
+        return e;
     }
 
     private static void SpawnCluster(Transform transform, GameObject objectToSpawn, int numToSpawn, Vector3 scale,

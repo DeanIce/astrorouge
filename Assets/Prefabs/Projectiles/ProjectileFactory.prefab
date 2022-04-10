@@ -49,3 +49,4 @@ MonoBehaviour:
   gravityProjectile: {fileID: 2171838815963128636, guid: 8a470b87f8d7a0a42a0b11f33d05b465, type: 3}
   hitscanProjectile: {fileID: 2171838815963128636, guid: 10778ed6938ce584182db9443f05e5df, type: 3}
   instantaneousBoxProjectile: {fileID: 2171838815963128636, guid: 3f7dac95682ea2a48af1e64f4a7fcad8, type: 3}
+  explosionProjectile: {fileID: 2171838815963128636, guid: 8afa52d7bac908e408bd51d683ef6f39, type: 3}
