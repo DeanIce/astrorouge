@@ -12,7 +12,14 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
     protected List<IEffect> effects = new();
     protected LayerMask collisionLayer;
 
-    public void AttachEffect(IEffect effect) => effects.Add(effect);    
+    public void AttachEffect(IEffect effect) => effects.Add(effect);
+
+    public void CopyEffects(IProjectile target)
+    {
+        foreach (IEffect effect in effects)
+            target.AttachEffect(effect);
+    }
+
     protected void CollisionResponse(GameObject target)
     {
         GameObject root = target.transform.root.gameObject;

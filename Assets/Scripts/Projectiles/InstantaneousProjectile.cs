@@ -4,7 +4,7 @@ public class InstantaneousProjectile : BaseProjectile
 {
     private bool alive = true;
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Dies on second frame
         if (!alive) Die();
