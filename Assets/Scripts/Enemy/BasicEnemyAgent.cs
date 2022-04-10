@@ -231,6 +231,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         Attacking = false;
     }
 
+    public IEnumerator WaitForSecondsOrDie(float seconds)
+    {
+        float timer = seconds;
+        while (timer > 0.0 && !Dying)
+        {
+            timer -= Time.deltaTime;
+            yield return 0;
+        }
+    }
+
     private IEnumerator DestroyLater()
     {
         Dying = true;
