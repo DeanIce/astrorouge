@@ -9,6 +9,7 @@ public class RockEnemy : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= Managers.LevelSelect.Instance.requestedLevel;
         animator = GetComponentInChildren<Animator>();
         Dying = false;
         started = false;

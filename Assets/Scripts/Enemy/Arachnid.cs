@@ -10,6 +10,7 @@ public class Arachnid : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= Managers.LevelSelect.Instance.requestedLevel;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         animator.SetInteger("moving", 2);

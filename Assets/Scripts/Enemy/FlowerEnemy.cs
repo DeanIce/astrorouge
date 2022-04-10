@@ -7,6 +7,7 @@ public class FlowerEnemy : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= Managers.LevelSelect.Instance.requestedLevel;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         Dying = false;
