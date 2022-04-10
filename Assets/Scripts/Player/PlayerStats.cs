@@ -212,7 +212,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public void LevelUp()
     {
         maxHealth = (int) (maxHealth * 1.2f);
-        meleeBaseDamage = (int) (meleeBaseDamage * 1.2f);
-        rangeBaseDamage = (int) (rangeBaseDamage * 1.2f);
+        meleeBaseDamage = (int) (meleeBaseDamage * 1.5f);
+        rangeBaseDamage = (int) (rangeBaseDamage * 1.5f);
     }
 }
