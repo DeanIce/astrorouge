@@ -43,7 +43,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool rotating;
     private Rigidbody targetRb;
 
-    [NonSerialized] public float xpGift = 30;
+    [NonSerialized] public float xpGift = 5;
     public bool Attacking { get; set; }
 
     public float AttackRange => attackRange;
