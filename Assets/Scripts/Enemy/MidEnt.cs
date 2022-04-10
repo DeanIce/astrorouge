@@ -36,9 +36,9 @@ public class MidEnt : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(BattleAnim());
-        if (attack == 2) yield return new WaitForSeconds(2.708f);
-        else if (summon) yield return new WaitForSeconds(1.667f);
-        else yield return new WaitForSeconds(0.833f);
+        if (attack == 2) yield return WaitForSecondsOrDie(2.708f);
+        else if (summon) yield return WaitForSecondsOrDie(1.667f);
+        else yield return WaitForSecondsOrDie(0.833f);
         if (summon)
         {
             GameObject enemy = Instantiate(flower);
@@ -88,8 +88,9 @@ public class MidEnt : BasicEnemyAgent
 
     private IEnumerator DeathAnim(int anim)
     {
-        animator.SetInteger("moving", anim);
         yield return new WaitForSeconds(0.2f);
+        animator.SetInteger("moving", anim);
+        yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
 }

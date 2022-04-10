@@ -46,16 +46,6 @@ public class Arachnid : BasicEnemyAgent
         Attacking = false;
     }
 
-    private IEnumerator WaitForSecondsOrDie(float seconds)
-    {
-        float timer = seconds;
-        while (timer > 0.0 && !Dying)
-        {
-            timer -= Time.deltaTime;
-            yield return 0;
-        }
-    }
-
     public override void Die()
     {
         if (!Dying)

@@ -245,8 +245,8 @@ MonoBehaviour:
   movementSpeed: 2
   detector: {fileID: 8874387944039795536}
   body: {fileID: 687548623638848138}
-  attackRange: 3
-  projSpeed: 2
+  attackRange: 10
+  projSpeed: 5
   mouth: {fileID: 687548623638874114}
 --- !u!114 &5387121337457147419
 MonoBehaviour:
