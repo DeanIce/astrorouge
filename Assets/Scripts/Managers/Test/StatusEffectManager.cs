@@ -17,7 +17,7 @@ public class StatusEffectManager : MonoBehaviour
 
     public static int burnDamage() => 5 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public static int poisonDamage() => 10 * (Managers.LevelSelect.Instance.requestedLevel + 1);
-    public static int lightningDamage() => 50 * (Managers.LevelSelect.Instance.requestedLevel + 1);
+    public static int lightningDamage() => 25 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public static int radDamage() => 2 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public float smiteDamage = float.MaxValue;
 
