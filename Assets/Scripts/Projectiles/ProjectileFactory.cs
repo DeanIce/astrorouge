@@ -83,12 +83,12 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.GetComponent<InstantaneousProjectile>()
             .InitializeValues(collidesWith, damage);
         newProjectile.transform.SetPositionAndRotation(position, orientation);
-        newProjectile.transform.localScale = new(1, 1, depth);
+        newProjectile.transform.localScale = new(1, 2, depth);
 
         return newProjectile;
     }
 
-    public GameObject CreateExplosionProjectile(Vector3 position, Quaternion orientation, LayerMask collidesWith, float blastRadius, float damage)
+    public GameObject CreateExplosionProjectile(Vector3 position, Quaternion orientation, LayerMask collidesWith, float damage, float blastRadius)
     {
         GameObject newProjectile = Instantiate(explosionProjectile);
         newProjectile.transform.parent = transform;

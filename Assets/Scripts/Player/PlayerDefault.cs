@@ -385,10 +385,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         globalAttackDealy = 0.5f;
 
         GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
-            transform.position + transform.forward,
+            transform.position + transform.forward * 0.5f,
             transform.rotation,
             PlayerStats.Instance.meleeAttackRange,
-            LayerMask.GetMask("Enemy", "Ground"),
+            LayerMask.GetMask("Enemy"),
             PlayerStats.Instance.GetMeleeDamage());
         HandleEffects(projectile, meleeAttackProcChance);
     }

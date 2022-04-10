@@ -4,7 +4,7 @@ public class InstantaneousProjectile : BaseProjectile
 {
     private bool alive = true;
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Dies on second frame
         if (!alive) Die();
@@ -16,6 +16,7 @@ public class InstantaneousProjectile : BaseProjectile
     {
         if (((1 << other.gameObject.layer) | collisionLayer) == collisionLayer)
         {
+            print($"{other.gameObject.name} hit - enter");
             CollisionResponse(other.gameObject);
         }
     }
