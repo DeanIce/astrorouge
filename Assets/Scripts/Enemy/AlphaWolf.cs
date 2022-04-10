@@ -14,7 +14,7 @@ public class AlphaWolf : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= Managers.LevelSelect.Instance.requestedLevel;
+        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         Dying = false;
