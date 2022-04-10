@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class ProjectileFactory : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class ProjectileFactory : MonoBehaviour
     [SerializeField] private GameObject gravityProjectile;
     [SerializeField] private GameObject hitscanProjectile;
     [SerializeField] private GameObject instantaneousBoxProjectile;
+    [SerializeField] private GameObject explosionProjectile;
+
     public static ProjectileFactory Instance { get; private set; }
 
     // Start is called before the first frame update
@@ -85,6 +86,25 @@ public class ProjectileFactory : MonoBehaviour
         newProjectile.transform.localScale = new(1, 1, depth);
 
         return newProjectile;
+    }
+
+    public GameObject CreateExplosionProjectile(Vector3 position, Quaternion orientation, LayerMask collidesWith, float blastRadius, float damage)
+    {
+        GameObject newProjectile = Instantiate(explosionProjectile);
+        newProjectile.transform.parent = transform;
+        newProjectile.GetComponent<InstantaneousProjectile>()
+            .InitializeValues(collidesWith, damage);
+        newProjectile.transform.SetPositionAndRotation(position, orientation);
+        newProjectile.transform.localScale = blastRadius * Vector3.one;
+
+        return newProjectile;
+    }
+
+    public GameObject AddExplosionOnDestroy(GameObject baseProjectile, LayerMask collidesWith, float damage, float blastRadius)
+    {
+        SpawnProjectileOnDestroy s = baseProjectile.AddComponent<SpawnProjectileOnDestroy>();
+        s.SpawnProjectile = (transform) => CreateExplosionProjectile(transform.position, transform.rotation, collidesWith, damage, blastRadius);
+        return baseProjectile;
     }
 
     public void AddBurn(GameObject projectile)

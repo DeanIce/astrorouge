@@ -371,8 +371,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
-            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult);
+            PlayerStats.Instance.GetRangeDamage());
         HandleEffects(projectile, specialActionProcChance);
+        _ = ProjectileFactory.Instance.AddExplosionOnDestroy(
+            projectile,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult,
+            3f); //TODO (Jared): Set grenade blast radius
     }
 
     private void InstantaneousAttack()
