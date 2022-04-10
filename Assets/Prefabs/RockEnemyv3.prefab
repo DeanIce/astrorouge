@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   movementSpeed: 2
-  detector: {fileID: 8695082212368961945}
+  detector: {fileID: 7143280557613302023}
   body: {fileID: 8160020369619012089}
   attackRange: 1.5
 --- !u!54 &6893982116740583811
@@ -341,14 +341,14 @@ PrefabInstance:
     - {fileID: 7465113038660681165, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
     - {fileID: 3613028711838996390, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
+--- !u!1 &7143280557613302023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7520327152981475713, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
+  m_PrefabInstance: {fileID: 828546202018594950}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8349941546453404451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8691777926924913573, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
-  m_PrefabInstance: {fileID: 828546202018594950}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8695082212368961945 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8346495388823359775, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
   m_PrefabInstance: {fileID: 828546202018594950}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2849917448833800087

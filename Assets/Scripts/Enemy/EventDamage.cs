@@ -18,6 +18,8 @@ public class EventDamage : MonoBehaviour
         enemy = GetComponentInParent<BasicEnemyAgent>();
         body = enemy.Body;
         attackRange = enemy.AttackRange;
+        //find damage modifier
+        //apply damage modifier to damage and damage2
     }
 
     public void DoDamage()
