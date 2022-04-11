@@ -15,11 +15,6 @@ public class StatusEffectManager : MonoBehaviour
     public GameObject StunVFX;
     public GameObject SlowVFX;
 
-    private AudioClip poisonSound1, poisonSound2;
-    private AudioClip burnSound1, burnSound2;
-    private AudioClip freezeSound1, freezeSound2;
-    private AudioClip lightningSound1, lightningSound2;
-
     public static int BurnDamage() => 5 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public static int PoisonDamage() => 10 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public static int LightningDamage() => 25 * (Managers.LevelSelect.Instance.requestedLevel + 1);
@@ -35,6 +30,7 @@ public class StatusEffectManager : MonoBehaviour
     private readonly List<int> stunTickTimes = new();
     private IDamageable damageable;
 
+    private StatusEffectAudioDictionary statusSFX;
 
     private void Start()
     {
@@ -51,14 +47,8 @@ public class StatusEffectManager : MonoBehaviour
         StunVFX.SetActive(false);
         SlowVFX.SetActive(false);
 
-        poisonSound1 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Poison1");
-        poisonSound2 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Poison2");
-        burnSound1 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Fire1");
-        burnSound2 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Fire2");
-        freezeSound1 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Ice1");
-        freezeSound2 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Ice2");
-        lightningSound1 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Lightning1");
-        lightningSound2 = (AudioClip)Resources.Load("Audio/Sound Effects/PowerUp-Lightning2");
+        statusSFX = new StatusEffectAudioDictionary();
+        statusSFX.LoadSounds();
     }
 
     public void DeathEffects()
@@ -71,7 +61,7 @@ public class StatusEffectManager : MonoBehaviour
     {
         if (burnTickTimes.Count <= 0)
         {
-            AudioManager.Instance.PlaySFX(randomBool() ? burnSound1 : burnSound2);
+            statusSFX.ApplyBurnSFX();
             burnTickTimes.Add(ticks);
             StartCoroutine(Burn());
         }
@@ -102,10 +92,10 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplyPoison(int ticks)
     {
-        AudioManager.Instance.PlaySFX(randomBool() ? poisonSound1 : poisonSound2);
         //damage will be passed in later and into the coroutine
         if (poisonTickTimes.Count <= 0)
         {
+            statusSFX.ApplyPoisonSFX();
             poisonTickTimes.Add(ticks);
             StartCoroutine(Poison());
         }
@@ -143,7 +133,7 @@ public class StatusEffectManager : MonoBehaviour
     private IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
-        AudioManager.Instance.PlaySFX(randomBool() ? lightningSound1 : lightningSound2);
+        statusSFX.ApplyLightningSFX();
         LightningVFX.GetComponent<ParticleSystem>().Play(true);
         damageable.TakeDmg(LightningDamage());
     }
@@ -162,9 +152,10 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplySlow(int ticks)
     {
-        AudioManager.Instance.PlaySFX(randomBool() ? freezeSound1 : freezeSound2);
+
         if (slowTickTimes.Count <= 0)
         {
+            statusSFX.ApplySlowSFX();
             slowTickTimes.Add(ticks);
             StartCoroutine(Slow());
         }
@@ -326,14 +317,5 @@ public class StatusEffectManager : MonoBehaviour
         }
         else
             yield return null;
-    }
-
-    private bool randomBool()
-    {
-        if (Random.value >= 0.5)
-        {
-            return true;
-        }
-        else return false;
     }
 }
