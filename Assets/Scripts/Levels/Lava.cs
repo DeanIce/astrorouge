@@ -35,7 +35,7 @@ namespace Levels
             if (collisionInfo.gameObject.name == "PlayerDefault" && timer <= 0)
             {
                 var sem = collisionInfo.gameObject.GetComponent<StatusEffectManager>();
-                sem.ApplyBurn(3, 1);
+                sem.ApplyBurn(3);
             }
         }
     }

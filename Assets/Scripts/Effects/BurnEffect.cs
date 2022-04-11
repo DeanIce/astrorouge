@@ -8,6 +8,6 @@ public class BurnEffect : IEffect
     {
         var sem = target.GetComponent<StatusEffectManager>();
         if (sem != null)
-            sem.ApplyBurn(burnTicks, sem.burnDamage);
+            sem.ApplyBurn(burnTicks);
     }
 }
