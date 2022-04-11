@@ -112,6 +112,8 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     [Range(0.0f, 1.0f)] public float baseMartyrdomChance;
     [Range(0.0f, 1.0f)] public float baseIgniteChance;
 
+    private AudioClip levelUpSound;
+
     private void Start()
     {
         SetDefaultValues();
@@ -202,6 +204,8 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         stunChance = baseStunChance;
         martyrdomChance = baseMartyrdomChance;
         igniteChance = baseIgniteChance;
+
+        levelUpSound = (AudioClip)Resources.Load("Audio/Sound Effects/LevelUp");
     }
 
     protected internal void Moustache()
@@ -211,6 +215,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
 
     public void LevelUp()
     {
+        AudioManager.Instance.PlaySFX(levelUpSound, 1.5f);
         maxHealth = (int) (maxHealth * 1.2f);
         meleeBaseDamage = (int) (meleeBaseDamage * 1.5f);
         rangeBaseDamage = (int) (rangeBaseDamage * 1.5f);
