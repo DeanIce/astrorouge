@@ -4,6 +4,8 @@ using System.Linq;
 
 public class BeamProjectile : BaseProjectile
 {
+    [SerializeField] private GameObject beamVFX;
+
     private float tickTime;
     private readonly Dictionary<GameObject, float> hitTimings = new();
 
