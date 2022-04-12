@@ -22,16 +22,20 @@ namespace Levels
 
         private void OnTriggerEnter(Collider other)
         {
-            running = true;
+            if (other.gameObject.name == "PlayerDefault")
+            {
+                running = true;
+            }
         }
-
 
         private void OnTriggerExit(Collider other)
         {
-            timer = 1.0f;
-            running = false;
+            if (other.gameObject.name == "PlayerDefault")
+            {
+                timer = 1.0f;
+                running = false;
+            }
         }
-
 
         private void OnTriggerStay(Collider other)
         {
