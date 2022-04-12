@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f1c3adda0ae9b344b0642daea2dcf3b, type: 2}
+  - {fileID: 2100000, guid: 8759ec410a6774b4ea13ae32dc2b8d2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,6 +252,9 @@ MonoBehaviour:
       m_NumAlphaKeys: 2
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 50f5cc7adc16ca64b8363f6fac965afd, type: 2}
+  terrainMesh: {fileID: 8946673809111123043}
+  heightMinMax: {x: 0.9780704, y: 1.0473734}
+  key: 0
 --- !u!1 &8946673809111123043
 GameObject:
   m_ObjectHideFlags: 0
