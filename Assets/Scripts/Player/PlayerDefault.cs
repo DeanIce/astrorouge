@@ -368,6 +368,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         GameObject projectile = ProjectileFactory.Instance.CreateGravityProjectile(
             transform.position + transform.forward + handOffset,
+            transform.rotation,
             10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
