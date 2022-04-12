@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LavaBoss : MonoBehaviour
 {
@@ -27,6 +28,14 @@ public class LavaBoss : MonoBehaviour
     public float health;
     public float movementSpeed;
 
+    // Movement stuff
+    private NavMeshAgent navMeshAgent;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,14 +43,20 @@ public class LavaBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         dying = false;
         inRange = false;
-        hunting = false;
     }
 
     void Update()
     {
-        if (!inRange && !hunting)
+        if (!inRange)
         {
-            Hunt();
+            animator.SetBool("Crawling", true);
+            navMeshAgent.isStopped = false;
+            navMeshAgent.destination = player.transform.position;
+        }
+        else
+        {
+            navMeshAgent.isStopped = true;
+            animator.SetBool("Crawling", false);
         }
     }
 
@@ -50,17 +65,13 @@ public class LavaBoss : MonoBehaviour
         
     }
 
-    void Hunt()
-    {
-
-    }
-
     // For detecting if the player is within a reasonable attacking range
     void OnTriggerEnter(Collider other)
     {
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
         {
+            Debug.Log("In Range!");
             inRange = true;
         }
     }
@@ -71,6 +82,7 @@ public class LavaBoss : MonoBehaviour
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
         {
+            Debug.Log("Left Range!");
             inRange = false;
         }
     }
@@ -88,6 +100,7 @@ public class LavaBoss : MonoBehaviour
     // IEnums for crawl/rotate?
 
     // Damage Taken
+    // TODO: Alter timings to match animation speeds
     IEnumerator DamageLevel1()
     {
         animator.SetBool("Destroyed1", true);

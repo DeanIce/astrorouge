@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
+    agentRadius: 10
+    agentHeight: 10
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 3.3333333
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4e7938f1be9828e4eab150a1df9a3e5b, type: 2}
 --- !u!1001 &6456766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +133,10 @@ PrefabInstance:
     - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
@@ -208,6 +212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Bone_Skull_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 6fcce90750f14824b879587aec3b40d9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6fcce90750f14824b879587aec3b40d9, type: 3}
       propertyPath: m_RootOrder
       value: 33
@@ -281,6 +289,10 @@ PrefabInstance:
     - target: {fileID: 1428366185923174, guid: a8c6f4295734c9d41912dc2e9c60c8a6, type: 3}
       propertyPath: m_Name
       value: SM_Env_Lava_Flow_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428366185923174, guid: a8c6f4295734c9d41912dc2e9c60c8a6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4342605586752012, guid: a8c6f4295734c9d41912dc2e9c60c8a6, type: 3}
       propertyPath: m_RootOrder
@@ -471,6 +483,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Gem_Spike_01
       objectReference: {fileID: 0}
+    - target: {fileID: 120426, guid: dcf56c462b61a4c43b82009dc5a23df2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 439734, guid: dcf56c462b61a4c43b82009dc5a23df2, type: 3}
       propertyPath: m_RootOrder
       value: 31
@@ -561,7 +577,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &191218252
 Transform:
@@ -652,6 +668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_RockPile_Square_06 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 445084, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
       propertyPath: m_RootOrder
       value: 73
@@ -726,6 +746,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Bone_Rigcage_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 19943a3f2b30bc74c80b50dc1c4a11f1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 19943a3f2b30bc74c80b50dc1c4a11f1, type: 3}
       propertyPath: m_RootOrder
       value: 34
@@ -795,6 +819,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Rock_Cliff_02
       objectReference: {fileID: 0}
+    - target: {fileID: 1716737473692010, guid: a9c00c34a26fd9241bbcd16787d05731, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1716737473692010, guid: a9c00c34a26fd9241bbcd16787d05731, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4007674007779858, guid: a9c00c34a26fd9241bbcd16787d05731, type: 3}
       propertyPath: m_RootOrder
       value: 67
@@ -861,6 +893,14 @@ PrefabInstance:
     - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_03 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_RootOrder
@@ -937,7 +977,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &325663637
 Transform:
@@ -1034,6 +1074,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -1102,6 +1150,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -1292,6 +1344,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 24
@@ -1365,6 +1425,10 @@ PrefabInstance:
     - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
@@ -1440,6 +1504,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
       value: 41
@@ -1508,6 +1576,10 @@ PrefabInstance:
     - target: {fileID: 1083415637120010, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
       propertyPath: m_Name
       value: SM_Env_Small_Rocks_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083415637120010, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4877872213052568, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
       propertyPath: m_RootOrder
@@ -1578,6 +1650,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -1646,6 +1726,10 @@ PrefabInstance:
     - target: {fileID: 163730, guid: bc7587a1903408140949231ab23591ab, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stone_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 163730, guid: bc7587a1903408140949231ab23591ab, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 439656, guid: bc7587a1903408140949231ab23591ab, type: 3}
       propertyPath: m_RootOrder
@@ -1794,6 +1878,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_03
       objectReference: {fileID: 0}
+    - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -1862,6 +1950,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -1942,6 +2034,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
       value: 16
@@ -2016,6 +2112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2084,6 +2184,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -2163,6 +2267,10 @@ PrefabInstance:
     - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_03 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_RootOrder
@@ -2332,7 +2440,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &643871375
 BoxCollider:
@@ -2423,6 +2531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Small_Rocks_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1083415637120010, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4877872213052568, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
       propertyPath: m_RootOrder
       value: 43
@@ -2491,6 +2603,10 @@ PrefabInstance:
     - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rock_Peak_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4645450713910756, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_RootOrder
@@ -2566,6 +2682,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Rock_Peak_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4645450713910756, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2634,6 +2754,10 @@ PrefabInstance:
     - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rock_Peak_02 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4645450713910756, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_RootOrder
@@ -2771,6 +2895,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2839,6 +2971,10 @@ PrefabInstance:
     - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_03 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170954, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
       propertyPath: m_RootOrder
@@ -3030,7 +3166,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &746320418
 Transform:
@@ -3126,6 +3262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 57
@@ -3200,6 +3340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 25
@@ -3268,6 +3412,10 @@ PrefabInstance:
     - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
@@ -3616,7 +3764,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &830983436
 BoxCollider:
@@ -3707,6 +3855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 60
@@ -3792,7 +3944,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &902598610
 BoxCollider:
@@ -3889,7 +4041,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &903999917
 Transform:
@@ -3999,6 +4151,10 @@ PrefabInstance:
     - target: {fileID: 1316608995091718, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rubble_Rocks_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316608995091718, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4304446898657832, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
       propertyPath: m_RootOrder
@@ -4146,7 +4302,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1025891415
 BoxCollider:
@@ -4242,6 +4398,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Gem_Large_02
       objectReference: {fileID: 0}
+    - target: {fileID: 149278, guid: cfed6864439a806439810e6a55908101, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 457688, guid: cfed6864439a806439810e6a55908101, type: 3}
       propertyPath: m_RootOrder
       value: 32
@@ -4316,6 +4476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Rock_Flat_Platform_Large_04
       objectReference: {fileID: 0}
+    - target: {fileID: 166194, guid: 603b0181429de4546be274f2b6c57679, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 423904, guid: 603b0181429de4546be274f2b6c57679, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -4384,6 +4548,10 @@ PrefabInstance:
     - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
@@ -4459,6 +4627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 54
@@ -4533,6 +4705,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Bone_Rigcage_01
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 19943a3f2b30bc74c80b50dc1c4a11f1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 19943a3f2b30bc74c80b50dc1c4a11f1, type: 3}
       propertyPath: m_RootOrder
       value: 36
@@ -4594,6 +4770,10 @@ PrefabInstance:
     - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
       propertyPath: m_Name
       value: SM_Env_RockPile_Square_06 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 445084, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
       propertyPath: m_RootOrder
@@ -4669,6 +4849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 62
@@ -4742,6 +4926,10 @@ PrefabInstance:
     - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
@@ -4827,6 +5015,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_RockPile_Square_06 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 445084, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
       propertyPath: m_RootOrder
       value: 74
@@ -4900,6 +5092,14 @@ PrefabInstance:
     - target: {fileID: 1508107601742334, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rock_Angle_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1508107601742334, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1508107601742334, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4917709747824526, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
       propertyPath: m_RootOrder
@@ -4975,6 +5175,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 55
@@ -5048,6 +5252,10 @@ PrefabInstance:
     - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rock_Peak_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1481292745760412, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4645450713910756, guid: 42e59e52ccf127a41a92cf3cd3cdd98a, type: 3}
       propertyPath: m_RootOrder
@@ -5192,6 +5400,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 48
@@ -5265,6 +5477,10 @@ PrefabInstance:
     - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
@@ -5341,7 +5557,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1356336839
 BoxCollider:
@@ -5432,6 +5648,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -5501,6 +5721,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Bone_Skull_01
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 6fcce90750f14824b879587aec3b40d9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6fcce90750f14824b879587aec3b40d9, type: 3}
       propertyPath: m_RootOrder
       value: 35
@@ -5561,7 +5785,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1427322825
 Transform:
@@ -5667,6 +5891,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 56
@@ -5740,6 +5968,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -5820,6 +6052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 53
@@ -5893,6 +6129,10 @@ PrefabInstance:
     - target: {fileID: 1023369019368602, guid: 398af32a3423bd840b25d0c6842b7874, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rubble_Rocks_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1023369019368602, guid: 398af32a3423bd840b25d0c6842b7874, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4156738125930064, guid: 398af32a3423bd840b25d0c6842b7874, type: 3}
       propertyPath: m_RootOrder
@@ -6043,6 +6283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 49
@@ -6116,6 +6360,10 @@ PrefabInstance:
     - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
@@ -6227,6 +6475,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_GlowingOrb_01
       objectReference: {fileID: 0}
+    - target: {fileID: 122892, guid: 20002ad77119e9849a8815f85c128ba3, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122892, guid: 20002ad77119e9849a8815f85c128ba3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 487850, guid: 20002ad77119e9849a8815f85c128ba3, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -6295,6 +6551,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -6386,7 +6646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621361457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 12.5, z: -6.6}
+  m_LocalPosition: {x: -0.6, y: 12.9, z: -6.6}
   m_LocalScale: {x: 100, y: 25, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6413,7 +6673,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621361457}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6471,6 +6731,10 @@ PrefabInstance:
     - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
@@ -6551,6 +6815,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -6620,6 +6892,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Small_Rocks_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1083415637120010, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4877872213052568, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
       propertyPath: m_RootOrder
       value: 44
@@ -6678,6 +6954,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 966ddfe1e3c2ff749b52901ca588e467, type: 3}
+--- !u!1 &1659842845 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 579053813939167122, guid: 13f6451b397dddb4cb7def073673cba8, type: 3}
+  m_PrefabInstance: {fileID: 1519450458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1663521239 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 421326, guid: d38455e41106b784aa3bf9114d0e80ef, type: 3}
@@ -6693,6 +6974,14 @@ PrefabInstance:
     - target: {fileID: 164466, guid: fd7c2c80e9550e34db706643f77b5610, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_07
+      objectReference: {fileID: 0}
+    - target: {fileID: 164466, guid: fd7c2c80e9550e34db706643f77b5610, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 164466, guid: fd7c2c80e9550e34db706643f77b5610, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 458650, guid: fd7c2c80e9550e34db706643f77b5610, type: 3}
       propertyPath: m_RootOrder
@@ -6834,6 +7123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
       value: 71
@@ -6914,7 +7207,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1684324310
 BoxCollider:
@@ -7004,6 +7297,10 @@ PrefabInstance:
     - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397378998792244, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4081151041263752, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
       propertyPath: m_RootOrder
@@ -7202,6 +7499,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Rubble_Rocks_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1316608995091718, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4304446898657832, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
       propertyPath: m_RootOrder
       value: 29
@@ -7278,7 +7579,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1778459057
 Transform:
@@ -7383,6 +7684,10 @@ PrefabInstance:
     - target: {fileID: 1316608995091718, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rubble_Rocks_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316608995091718, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4304446898657832, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
       propertyPath: m_RootOrder
@@ -7586,13 +7891,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841525780}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1841525782
 MonoBehaviour:
@@ -7606,14 +7911,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f4c7c537b4a9a4b88d2f288b1db836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  health: 0
-  movementSpeed: 0
+  player: {fileID: 1659842845}
+  health: 100
+  movementSpeed: 5
 --- !u!4 &1841525784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5274238539529761510, guid: 84e799cbded21504d8deffddbf0f8bcb, type: 3}
   m_PrefabInstance: {fileID: 1841525779}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &1841525786
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841525780}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1843778528
 GameObject:
   m_ObjectHideFlags: 0
@@ -7778,6 +8105,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Gem_Spike_02
       objectReference: {fileID: 0}
+    - target: {fileID: 147340, guid: ff8e23c9e979e9d4b8760b6c3e81a87a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 430350, guid: ff8e23c9e979e9d4b8760b6c3e81a87a, type: 3}
       propertyPath: m_RootOrder
       value: 37
@@ -7853,7 +8184,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1896786766
 BoxCollider:
@@ -7952,7 +8283,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1911997813
 Transform:
@@ -7993,6 +8324,10 @@ PrefabInstance:
     - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_06 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 456150, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
       propertyPath: m_RootOrder
@@ -8068,6 +8403,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Crystal_Rock_C_03
       objectReference: {fileID: 0}
+    - target: {fileID: 1573887196509228, guid: f991877d71441204293ab2ebedde555d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4471096804397598, guid: f991877d71441204293ab2ebedde555d, type: 3}
       propertyPath: m_RootOrder
       value: 39
@@ -8137,6 +8476,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_RockPile_Square_06
       objectReference: {fileID: 0}
+    - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156408, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 445084, guid: 51e254adee22b4d40bca863a6138e8af, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -8205,6 +8552,14 @@ PrefabInstance:
     - target: {fileID: 142700, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
       propertyPath: m_Name
       value: SM_Env_Volcanic_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 142700, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 142700, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 495216, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
       propertyPath: m_RootOrder
@@ -8281,7 +8636,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &2012514958
 BoxCollider:
@@ -8394,7 +8749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029440324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 12.5, z: 55.8}
+  m_LocalPosition: {x: -0.1, y: 12.83, z: 55.8}
   m_LocalScale: {x: 40, y: 25, z: 35}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8421,7 +8776,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029440324}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8489,6 +8844,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
@@ -8564,6 +8923,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Rock_Angle_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1508107601742334, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4917709747824526, guid: 439c3b5bf18b04a4eb79d1e135301737, type: 3}
       propertyPath: m_RootOrder
       value: 66
@@ -8638,6 +9001,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Stalactite_04 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 187418, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
       propertyPath: m_RootOrder
       value: 51
@@ -8701,6 +9068,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 440356, guid: 315b65f382572af4b89cde35ba50cbfb, type: 3}
   m_PrefabInstance: {fileID: 2130870122}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2143586208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2143586209}
+  m_Layer: 0
+  m_Name: NavMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2143586209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143586208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2146663573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8711,6 +9109,10 @@ PrefabInstance:
     - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_Name
       value: SM_Env_Stalagmite_01 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 400150, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
       propertyPath: m_RootOrder
