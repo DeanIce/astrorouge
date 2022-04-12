@@ -63,13 +63,14 @@ public class ProjectileFactory : MonoBehaviour
         return newProjectile;
     }
 
-    public GameObject CreateGravityProjectile(Vector3 position, Vector3 velocity, LayerMask collidesWith,
+    public GameObject CreateGravityProjectile(Vector3 position, Quaternion orientation, Vector3 velocity, LayerMask collidesWith,
         float lifeSpan, float damage, float health = 1)
     {
         GameObject newProjectile = Instantiate(gravityProjectile);
         newProjectile.transform.parent = transform;
         newProjectile.GetComponent<GravityProjectile>()
             .InitializeValues(velocity, collidesWith, lifeSpan, health, damage);
+        newProjectile.transform.SetPositionAndRotation(position, orientation);
         newProjectile.transform.position = position;
 
         return newProjectile;
@@ -81,7 +82,7 @@ public class ProjectileFactory : MonoBehaviour
         GameObject newProjectile = Instantiate(instantaneousBoxProjectile);
         newProjectile.transform.parent = transform;
         newProjectile.GetComponent<InstantaneousProjectile>()
-            .InitializeValues(collidesWith, damage);
+            .InitializeValues(collidesWith, 0.1f, damage);
         newProjectile.transform.SetPositionAndRotation(position, orientation);
         newProjectile.transform.localScale = new(1, 2, depth);
 
@@ -93,7 +94,7 @@ public class ProjectileFactory : MonoBehaviour
         GameObject newProjectile = Instantiate(explosionProjectile);
         newProjectile.transform.parent = transform;
         newProjectile.GetComponent<InstantaneousProjectile>()
-            .InitializeValues(collidesWith, damage);
+            .InitializeValues(collidesWith, 3f, damage);
         newProjectile.transform.SetPositionAndRotation(position, orientation);
         newProjectile.transform.localScale = blastRadius * Vector3.one;
 
