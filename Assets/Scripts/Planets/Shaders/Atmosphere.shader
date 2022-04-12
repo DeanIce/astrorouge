@@ -62,10 +62,10 @@
 
 			float3 dirToSun;
 
-			float3 planetCentre;
-			float atmosphereRadius;
+			float3 planetCentre = float3(0,0,0);
+			float atmosphereRadius = 5;
 			float oceanRadius;
-			float planetRadius;
+			float planetRadius = 10;
 
 			// Paramaters
 			int numInScatteringPoints;
@@ -183,9 +183,11 @@
 				// 	float3 light = calculateLight(pointInAtmosphere, rayDir, dstThroughAtmosphere - epsilon * 2, originalCol, i.uv);
 				// 	return float4(light, 1);
 				// }
+				return float4(_WorldSpaceCameraPos,0);
+				return float4(dstToAtmosphere, dstThroughAtmosphere, 0,0);
 				return dstThroughAtmosphere / (atmosphereRadius * 2);
-				return float4(sceneDepthNonLinear,sceneDepthNonLinear,sceneDepthNonLinear,sceneDepthNonLinear);
 				return originalCol;
+				return float4(sceneDepthNonLinear,sceneDepthNonLinear,sceneDepthNonLinear,sceneDepthNonLinear);
 			}
 
 
