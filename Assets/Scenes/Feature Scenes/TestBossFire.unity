@@ -6633,7 +6633,7 @@ GameObject:
   - component: {fileID: 1621361459}
   m_Layer: 0
   m_Name: BodyRange
-  m_TagString: Untagged
+  m_TagString: LavaBossBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8617,6 +8617,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 64301892492042144, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14a2a6aefc4a6e7469991cd18bc527d1, type: 3}
 --- !u!1 &2012514957
@@ -8736,7 +8740,7 @@ GameObject:
   - component: {fileID: 2029440326}
   m_Layer: 0
   m_Name: TongueRange
-  m_TagString: Untagged
+  m_TagString: LavaBossTongue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

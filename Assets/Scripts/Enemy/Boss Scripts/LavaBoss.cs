@@ -43,6 +43,7 @@ public class LavaBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         dying = false;
         inRange = false;
+        attacking = false;
     }
 
     void Update()
@@ -141,7 +142,7 @@ public class LavaBoss : MonoBehaviour
     IEnumerator TongueAttack()
     {
         animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         animator.SetBool("TongueAttacking", false);
         attacking = false;
     }
