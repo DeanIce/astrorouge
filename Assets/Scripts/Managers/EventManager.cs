@@ -171,7 +171,7 @@ namespace Managers
 
         public void UpdateSettings(UserSettings settings, string name)
         {
-            PersistentUpgrades.Save(settings, name);
+            PersistentData.Save(settings, name);
             settingsUpdated?.Invoke(settings);
         }
 
