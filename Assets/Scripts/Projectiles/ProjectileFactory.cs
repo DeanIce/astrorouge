@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileFactory : MonoBehaviour
@@ -9,6 +10,9 @@ public class ProjectileFactory : MonoBehaviour
     [SerializeField] private GameObject hitscanProjectile;
     [SerializeField] private GameObject instantaneousBoxProjectile;
     [SerializeField] private GameObject explosionProjectile;
+
+    // Projectile Skin prefabs
+    [SerializeField] private List<GameObject> projectileSkins;
 
     public static ProjectileFactory Instance { get; private set; }
 
@@ -105,6 +109,41 @@ public class ProjectileFactory : MonoBehaviour
         SpawnProjectileOnDestroy s = baseProjectile.AddComponent<SpawnProjectileOnDestroy>();
         s.SpawnProjectile = (transform) => CreateExplosionProjectile(transform.position, transform.rotation, collidesWith, damage, blastRadius);
         return baseProjectile;
+    }
+
+    public GameObject SetSkin(GameObject target, int skinIndex)
+    {
+        if (skinIndex >= projectileSkins.Count)
+            throw new System.Exception($"ProjectileFactory doesn't contain skinIndex: {skinIndex}. Only {projectileSkins.Count} skins currently registered.");
+
+        return SetSkin(target, projectileSkins[skinIndex]);
+    }
+
+    public GameObject SetSkin(GameObject target, GameObject projectileSkin)
+    {
+        DestroyProjectileSkin(target);
+
+        GameObject newSkin = Instantiate(projectileSkin);
+        GameObject skinContainer = new GameObject("ProjectileSkin");
+        newSkin.transform.parent = skinContainer.transform;
+        skinContainer.transform.parent = target.transform;
+
+        SetToLocalOrigin(skinContainer);
+        SetToLocalOrigin(newSkin);
+
+        return target;
+    }
+
+    private void DestroyProjectileSkin(GameObject target)
+    {
+        Transform oldSkin = target.transform.Find("ProjectileSkin");
+        Destroy(oldSkin.gameObject);
+    }
+
+    private void SetToLocalOrigin(GameObject target)
+    {
+        target.transform.localPosition = Vector3.zero;
+        target.transform.localRotation = Quaternion.identity;
     }
 
     public void AddBurn(GameObject projectile)
