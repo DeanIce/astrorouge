@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement class="settings" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Popup/Popup_Frame03_Navy.png?fileID=2800000&amp;guid=bd0e6a39a0e67974f85d3107721356c1&amp;type=3#Popup_Frame03_Navy&apos;); width: 1080px; height: 936px; padding-left: 35px; padding-right: 35px; -unity-slice-left: 500; -unity-slice-right: 500; -unity-slice-top: 263; -unity-slice-bottom: 252; padding-top: 0; padding-bottom: 25px;">
+        <ui:VisualElement name="header" style="flex-direction: row; justify-content: space-between; padding-top: 30px; padding-bottom: 3px; padding-left: 55px;">
+            <ui:Label text="Player Skills" display-tooltip-when-elided="true" name="Skills" style="-unity-font: resource(&apos;NEXON Football Gothic B&apos;); -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 32px; height: 35px;" />
+            <ui:VisualElement style="flex-direction: row; padding-right: 50px;">
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-settings" class="settings-button" />
+                <ui:Button text="Exit" display-tooltip-when-elided="true" name="back-button" class="settings-button" style="padding-right: 6px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
