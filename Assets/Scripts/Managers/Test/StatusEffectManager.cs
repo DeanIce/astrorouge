@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class StatusEffectManager : MonoBehaviour
     private readonly List<int> stunTickTimes = new();
     private IDamageable damageable;
 
+    private StatusEffectAudioDictionary statusSFX;
 
     private void Start()
     {
@@ -44,6 +46,9 @@ public class StatusEffectManager : MonoBehaviour
         IgniteVFX.SetActive(false);
         StunVFX.SetActive(false);
         SlowVFX.SetActive(false);
+
+        statusSFX = new StatusEffectAudioDictionary();
+        statusSFX.LoadSounds();
     }
 
     public void DeathEffects()
@@ -56,6 +61,7 @@ public class StatusEffectManager : MonoBehaviour
     {
         if (burnTickTimes.Count <= 0)
         {
+            statusSFX.ApplyBurnSFX();
             burnTickTimes.Add(ticks);
             StartCoroutine(Burn());
         }
@@ -89,6 +95,7 @@ public class StatusEffectManager : MonoBehaviour
         //damage will be passed in later and into the coroutine
         if (poisonTickTimes.Count <= 0)
         {
+            statusSFX.ApplyPoisonSFX();
             poisonTickTimes.Add(ticks);
             StartCoroutine(Poison());
         }
@@ -126,6 +133,7 @@ public class StatusEffectManager : MonoBehaviour
     private IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
+        statusSFX.ApplyLightningSFX();
         LightningVFX.GetComponent<ParticleSystem>().Play(true);
         damageable.TakeDmg(LightningDamage());
     }
@@ -144,8 +152,10 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplySlow(int ticks)
     {
+
         if (slowTickTimes.Count <= 0)
         {
+            statusSFX.ApplySlowSFX();
             slowTickTimes.Add(ticks);
             StartCoroutine(Slow());
         }

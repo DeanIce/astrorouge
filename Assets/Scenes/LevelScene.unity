@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4014463406395459279, guid: df544cebdba399245853a916ec1a917d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df544cebdba399245853a916ec1a917d, type: 3}
 --- !u!1 &539473548 stripped
@@ -1123,6 +1127,14 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 886235219}
+    - target: {fileID: 3945245729049554768, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945245729049554768, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
+      propertyPath: m_FocalLength
+      value: 20.78461
+      objectReference: {fileID: 0}
     - target: {fileID: 3945245729049554773, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
       propertyPath: m_WorldUpOverride
       value: 

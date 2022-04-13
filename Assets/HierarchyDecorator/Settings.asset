@@ -17,7 +17,7 @@ MonoBehaviour:
     showComponentIcons: 1
     showAllComponents: 1
     twoToneBackground: 1
-    showLayers: 1
+    showLayers: 0
     editableLayers: 1
     applyChildLayers: 1
   styleData:
@@ -871,61 +871,13 @@ MonoBehaviour:
       shown: 0
     - name: WaitForEndOfFrameComponent
       shown: 0
-    - name: PixelPerfectCamera
+    - name: Placeholder
       shown: 0
-    - name: CinemachineUniversalPixelPerfect
+    - name: ApplicationQuit
       shown: 0
-    - name: Light2D
+    - name: CoroutineExecutor
       shown: 0
-    - name: CompositeShadowCaster2D
-      shown: 0
-    - name: ShadowCaster2D
-      shown: 0
-    - name: ShadowCasterGroup2D
-      shown: 0
-    - name: DecalProjector
-      shown: 0
-    - name: UniversalAdditionalCameraData
-      shown: 0
-    - name: UniversalAdditionalLightData
-      shown: 0
-    - name: PlaymodeTestsController
-      shown: 0
-    - name: PlayerQuitHandler
-      shown: 0
-    - name: PlayModeRunnerCallback
-      shown: 0
-    - name: RemoteTestResultSender
-      shown: 0
-    - name: TestResultRendererCallback
-      shown: 0
-    - name: SignalReceiver
-      shown: 0
-    - name: TextContainer
-      shown: 0
-    - name: TextMeshPro
-      shown: 0
-    - name: TextMeshProUGUI
-      shown: 0
-    - name: TMP_Dropdown
-      shown: 0
-    - name: TMP_InputField
-      shown: 0
-    - name: TMP_ScrollbarEventHandler
-      shown: 0
-    - name: TMP_SelectionCaret
-      shown: 0
-    - name: TMP_SpriteAnimator
-      shown: 0
-    - name: TMP_SubMesh
-      shown: 0
-    - name: TMP_SubMeshUI
-      shown: 0
-    - name: TMP_Text
-      shown: 0
-    - name: DropdownItem
-      shown: 0
-    - name: ScriptMachine
+    - name: BannerPlaceholder
       shown: 0
     - name: PlayerInput
       shown: 0
@@ -1051,6 +1003,250 @@ MonoBehaviour:
       shown: 0
     - name: DebugsOnScrollListener
       shown: 0
+    - name: DataPrivacyButton
+      shown: 0
+    - name: CinemachineCameraOffset
+      shown: 0
+    - name: CinemachineRecomposer
+      shown: 0
+    - name: CinemachineTouchInputMapper
+      shown: 0
+    - name: Cinemachine3rdPersonAim
+      shown: 0
+    - name: CinemachineBlendListCamera
+      shown: 0
+    - name: CinemachineBrain
+      shown: 0
+    - name: CinemachineClearShot
+      shown: 0
+    - name: CinemachineCollider
+      shown: 0
+    - name: CinemachineConfiner
+      shown: 0
+    - name: CinemachineConfiner2D
+      shown: 0
+    - name: CinemachineDollyCart
+      shown: 0
+    - name: CinemachineExternalCamera
+      shown: 0
+    - name: CinemachineFollowZoom
+      shown: 0
+    - name: CinemachineFreeLook
+      shown: 0
+    - name: CinemachineMixingCamera
+      shown: 0
+    - name: CinemachinePath
+      shown: 0
+    - name: CinemachinePipeline
+      shown: 0
+    - name: CinemachinePixelPerfect
+      shown: 0
+    - name: CinemachineSmoothPath
+      shown: 0
+    - name: CinemachineStateDrivenCamera
+      shown: 0
+    - name: CinemachineStoryboard
+      shown: 0
+    - name: CinemachineTargetGroup
+      shown: 0
+    - name: CinemachineVirtualCamera
+      shown: 0
+    - name: Cinemachine3rdPersonFollow
+      shown: 0
+    - name: CinemachineBasicMultiChannelPerlin
+      shown: 0
+    - name: CinemachineComposer
+      shown: 0
+    - name: CinemachineFramingTransposer
+      shown: 0
+    - name: CinemachineGroupComposer
+      shown: 0
+    - name: CinemachineHardLockToTarget
+      shown: 0
+    - name: CinemachineHardLookAt
+      shown: 0
+    - name: CinemachineOrbitalTransposer
+      shown: 0
+    - name: CinemachinePOV
+      shown: 0
+    - name: CinemachineSameAsFollowTarget
+      shown: 0
+    - name: CinemachineTrackedDolly
+      shown: 0
+    - name: CinemachineTransposer
+      shown: 0
+    - name: CinemachineComponentBase
+      shown: 0
+    - name: CinemachineExtension
+      shown: 0
+    - name: CinemachinePathBase
+      shown: 0
+    - name: CinemachineVirtualCameraBase
+      shown: 0
+    - name: CinemachineInputProvider
+      shown: 0
+    - name: CinemachineTriggerAction
+      shown: 0
+    - name: GroupWeightManipulator
+      shown: 0
+    - name: CinemachineCollisionImpulseSource
+      shown: 0
+    - name: CinemachineImpulseListener
+      shown: 0
+    - name: CinemachineImpulseSource
+      shown: 0
+    - name: CinemachineIndependentImpulseListener
+      shown: 0
+    - name: CinemachinePostProcessing
+      shown: 0
+    - name: CinemachineVolumeSettings
+      shown: 0
+    - name: IAPButton
+      shown: 0
+    - name: IAPListener
+      shown: 0
+    - name: Placeholder
+      shown: 0
+    - name: RecorderBindings
+      shown: 0
+    - name: PixelPerfectCamera
+      shown: 0
+    - name: CinemachineUniversalPixelPerfect
+      shown: 0
+    - name: Light2D
+      shown: 0
+    - name: CompositeShadowCaster2D
+      shown: 0
+    - name: ShadowCaster2D
+      shown: 0
+    - name: ShadowCasterGroup2D
+      shown: 0
+    - name: DecalProjector
+      shown: 0
+    - name: UniversalAdditionalCameraData
+      shown: 0
+    - name: UniversalAdditionalLightData
+      shown: 0
+    - name: ExampleScript
+      shown: 0
+    - name: ExampleScript2
+      shown: 0
+    - name: ExampleScriptWithIcon
+      shown: 0
+    - name: PlaymodeTestsController
+      shown: 0
+    - name: PlayerQuitHandler
+      shown: 0
+    - name: PlayModeRunnerCallback
+      shown: 0
+    - name: RemoteTestResultSender
+      shown: 0
+    - name: TestResultRendererCallback
+      shown: 0
+    - name: SignalReceiver
+      shown: 0
+    - name: TextContainer
+      shown: 0
+    - name: TextMeshPro
+      shown: 0
+    - name: TextMeshProUGUI
+      shown: 0
+    - name: TMP_Dropdown
+      shown: 0
+    - name: TMP_InputField
+      shown: 0
+    - name: TMP_ScrollbarEventHandler
+      shown: 0
+    - name: TMP_SelectionCaret
+      shown: 0
+    - name: TMP_SpriteAnimator
+      shown: 0
+    - name: TMP_SubMesh
+      shown: 0
+    - name: TMP_SubMeshUI
+      shown: 0
+    - name: TMP_Text
+      shown: 0
+    - name: DropdownItem
+      shown: 0
+    - name: SceneRenderPipeline
+      shown: 0
+    - name: LightAnchor
+      shown: 0
+    - name: ProbeVolume
+      shown: 0
+    - name: ProbeVolumePerSceneData
+      shown: 0
+    - name: CameraSwitcher
+      shown: 0
+    - name: FreeCamera
+      shown: 0
+    - name: DebugUpdater
+      shown: 0
+    - name: LensFlareComponentSRP
+      shown: 0
+    - name: Volume
+      shown: 0
+    - name: DebugUIHandlerBitField
+      shown: 0
+    - name: DebugUIHandlerButton
+      shown: 0
+    - name: DebugUIHandlerCanvas
+      shown: 0
+    - name: DebugUIHandlerColor
+      shown: 0
+    - name: DebugUIHandlerContainer
+      shown: 0
+    - name: DebugUIHandlerEnumField
+      shown: 0
+    - name: DebugUIHandlerEnumHistory
+      shown: 0
+    - name: DebugUIHandlerFloatField
+      shown: 0
+    - name: DebugUIHandlerFoldout
+      shown: 0
+    - name: DebugUIHandlerGroup
+      shown: 0
+    - name: DebugUIHandlerHBox
+      shown: 0
+    - name: DebugUIHandlerIndirectFloatField
+      shown: 0
+    - name: DebugUIHandlerIndirectToggle
+      shown: 0
+    - name: DebugUIHandlerIntField
+      shown: 0
+    - name: DebugUIHandlerMessageBox
+      shown: 0
+    - name: DebugUIHandlerPanel
+      shown: 0
+    - name: DebugUIHandlerPersistentCanvas
+      shown: 0
+    - name: DebugUIHandlerRow
+      shown: 0
+    - name: DebugUIHandlerToggle
+      shown: 0
+    - name: DebugUIHandlerToggleHistory
+      shown: 0
+    - name: DebugUIHandlerUIntField
+      shown: 0
+    - name: DebugUIHandlerValue
+      shown: 0
+    - name: DebugUIHandlerVBox
+      shown: 0
+    - name: DebugUIHandlerVector2
+      shown: 0
+    - name: DebugUIHandlerVector3
+      shown: 0
+    - name: DebugUIHandlerVector4
+      shown: 0
+    - name: DebugUIHandlerWidget
+      shown: 0
+    - name: UIFoldout
+      shown: 0
+    - name: GameViewEventCatcher
+      shown: 0
+    - name: ScriptMachine
+      shown: 0
     - name: AnimatorMessageListener
       shown: 0
     - name: EventMachine`2
@@ -1173,191 +1369,21 @@ MonoBehaviour:
       shown: 0
     - name: VariablesSaver
       shown: 0
-    - name: SceneRenderPipeline
+    - name: PostProcessDebug
       shown: 0
-    - name: LightAnchor
+    - name: PostProcessLayer
       shown: 0
-    - name: ProbeVolume
+    - name: PostProcessVolume
       shown: 0
-    - name: ProbeVolumePerSceneData
+    - name: LifecycleNotifier
       shown: 0
-    - name: CameraSwitcher
+    - name: UIFakeStoreWindow
       shown: 0
-    - name: FreeCamera
+    - name: AsyncWebUtil
       shown: 0
-    - name: DebugUpdater
-      shown: 0
-    - name: LensFlareComponentSRP
-      shown: 0
-    - name: Volume
-      shown: 0
-    - name: DebugUIHandlerBitField
-      shown: 0
-    - name: DebugUIHandlerButton
-      shown: 0
-    - name: DebugUIHandlerCanvas
-      shown: 0
-    - name: DebugUIHandlerColor
-      shown: 0
-    - name: DebugUIHandlerContainer
-      shown: 0
-    - name: DebugUIHandlerEnumField
-      shown: 0
-    - name: DebugUIHandlerEnumHistory
-      shown: 0
-    - name: DebugUIHandlerFloatField
-      shown: 0
-    - name: DebugUIHandlerFoldout
-      shown: 0
-    - name: DebugUIHandlerGroup
-      shown: 0
-    - name: DebugUIHandlerHBox
-      shown: 0
-    - name: DebugUIHandlerIndirectFloatField
-      shown: 0
-    - name: DebugUIHandlerIndirectToggle
-      shown: 0
-    - name: DebugUIHandlerIntField
-      shown: 0
-    - name: DebugUIHandlerMessageBox
-      shown: 0
-    - name: DebugUIHandlerPanel
-      shown: 0
-    - name: DebugUIHandlerPersistentCanvas
-      shown: 0
-    - name: DebugUIHandlerRow
-      shown: 0
-    - name: DebugUIHandlerToggle
-      shown: 0
-    - name: DebugUIHandlerToggleHistory
-      shown: 0
-    - name: DebugUIHandlerUIntField
-      shown: 0
-    - name: DebugUIHandlerValue
-      shown: 0
-    - name: DebugUIHandlerVBox
-      shown: 0
-    - name: DebugUIHandlerVector2
-      shown: 0
-    - name: DebugUIHandlerVector3
-      shown: 0
-    - name: DebugUIHandlerVector4
-      shown: 0
-    - name: DebugUIHandlerWidget
-      shown: 0
-    - name: UIFoldout
-      shown: 0
-    - name: GameViewEventCatcher
-      shown: 0
-    - name: CinemachineCameraOffset
-      shown: 0
-    - name: CinemachineRecomposer
-      shown: 0
-    - name: CinemachineTouchInputMapper
-      shown: 0
-    - name: Cinemachine3rdPersonAim
-      shown: 0
-    - name: CinemachineBlendListCamera
-      shown: 0
-    - name: CinemachineBrain
-      shown: 0
-    - name: CinemachineClearShot
-      shown: 0
-    - name: CinemachineCollider
-      shown: 0
-    - name: CinemachineConfiner
-      shown: 0
-    - name: CinemachineConfiner2D
-      shown: 0
-    - name: CinemachineDollyCart
-      shown: 0
-    - name: CinemachineExternalCamera
-      shown: 0
-    - name: CinemachineFollowZoom
-      shown: 0
-    - name: CinemachineFreeLook
-      shown: 0
-    - name: CinemachineMixingCamera
-      shown: 0
-    - name: CinemachinePath
-      shown: 0
-    - name: CinemachinePipeline
-      shown: 0
-    - name: CinemachinePixelPerfect
-      shown: 0
-    - name: CinemachineSmoothPath
-      shown: 0
-    - name: CinemachineStateDrivenCamera
-      shown: 0
-    - name: CinemachineStoryboard
-      shown: 0
-    - name: CinemachineTargetGroup
-      shown: 0
-    - name: CinemachineVirtualCamera
-      shown: 0
-    - name: Cinemachine3rdPersonFollow
-      shown: 0
-    - name: CinemachineBasicMultiChannelPerlin
-      shown: 0
-    - name: CinemachineComposer
-      shown: 0
-    - name: CinemachineFramingTransposer
-      shown: 0
-    - name: CinemachineGroupComposer
-      shown: 0
-    - name: CinemachineHardLockToTarget
-      shown: 0
-    - name: CinemachineHardLookAt
-      shown: 0
-    - name: CinemachineOrbitalTransposer
-      shown: 0
-    - name: CinemachinePOV
-      shown: 0
-    - name: CinemachineSameAsFollowTarget
-      shown: 0
-    - name: CinemachineTrackedDolly
-      shown: 0
-    - name: CinemachineTransposer
-      shown: 0
-    - name: CinemachineComponentBase
-      shown: 0
-    - name: CinemachineExtension
-      shown: 0
-    - name: CinemachinePathBase
-      shown: 0
-    - name: CinemachineVirtualCameraBase
-      shown: 0
-    - name: CinemachineInputProvider
-      shown: 0
-    - name: CinemachineTriggerAction
-      shown: 0
-    - name: GroupWeightManipulator
-      shown: 0
-    - name: CinemachineCollisionImpulseSource
-      shown: 0
-    - name: CinemachineImpulseListener
-      shown: 0
-    - name: CinemachineImpulseSource
-      shown: 0
-    - name: CinemachineIndependentImpulseListener
-      shown: 0
-    - name: CinemachinePostProcessing
-      shown: 0
-    - name: CinemachineVolumeSettings
+    - name: UnityUtil
       shown: 0
     - name: StateMachine
-      shown: 0
-    - name: RecorderBindings
-      shown: 0
-    - name: IAPButton
-      shown: 0
-    - name: IAPListener
-      shown: 0
-    - name: ExampleScript
-      shown: 0
-    - name: ExampleScript2
-      shown: 0
-    - name: ExampleScriptWithIcon
       shown: 0
     - name: Placeholder
       shown: 0

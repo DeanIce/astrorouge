@@ -20,7 +20,7 @@ namespace Managers
         public BallDropper ballDropper;
 
 
-        public List<List<GameObject>> enemies;
+        public List<List<GameObject>> enemies = new();
 
         public List<GameObject> debug;
 
