@@ -76,4 +76,22 @@ public class EventDamage : MonoBehaviour
             }
         }
     }
+
+    public void DoDamageFlower2()
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(transform.position + flowerHeight * transform.up, body.transform.forward, attackRange + flowerEpsilon, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage2);
+                }
+            }
+        }
+    }
 }
