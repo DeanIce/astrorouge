@@ -703,6 +703,8 @@ MonoBehaviour:
       shown: 0
     - name: HandleDeath
       shown: 0
+    - name: PlayerAnimationSounds
+      shown: 0
     - name: PlayerDefault
       shown: 0
     - name: PlayerStats
@@ -720,6 +722,8 @@ MonoBehaviour:
     - name: InstantaneousProjectile
       shown: 0
     - name: ProjectileFactory
+      shown: 0
+    - name: SpawnProjectileOnDestroy
       shown: 0
     - name: TrailRotate
       shown: 0
@@ -843,6 +847,8 @@ MonoBehaviour:
       shown: 0
     - name: BallDropper
       shown: 0
+    - name: Lava
+      shown: 0
     - name: ScatterAsteroids
       shown: 0
     - name: PlanarSource
@@ -852,6 +858,12 @@ MonoBehaviour:
     - name: SpherePlanet
       shown: 0
     - name: SphereSource
+      shown: 0
+    - name: AutoRotate
+      shown: 0
+    - name: FreeCamera
+      shown: 0
+    - name: Demo
       shown: 0
     - name: _FrameRequestComponent
       shown: 0
@@ -1337,13 +1349,47 @@ MonoBehaviour:
       shown: 0
     - name: RecorderBindings
       shown: 0
+    - name: IAPButton
+      shown: 0
+    - name: IAPListener
+      shown: 0
     - name: ExampleScript
       shown: 0
     - name: ExampleScript2
       shown: 0
     - name: ExampleScriptWithIcon
       shown: 0
+    - name: Placeholder
+      shown: 0
+    - name: ApplicationQuit
+      shown: 0
+    - name: CoroutineExecutor
+      shown: 0
+    - name: BannerPlaceholder
+      shown: 0
+    - name: DataPrivacyButton
+      shown: 0
+    - name: LifecycleNotifier
+      shown: 0
+    - name: UIFakeStoreWindow
+      shown: 0
+    - name: AsyncWebUtil
+      shown: 0
+    - name: UnityUtil
+      shown: 0
+    - name: Placeholder
+      shown: 0
+    - name: PostProcessDebug
+      shown: 0
+    - name: PostProcessLayer
+      shown: 0
+    - name: PostProcessVolume
+      shown: 0
     - name: DOTweenComponent
+      shown: 0
+    - name: AnalyticsEventTracker
+      shown: 0
+    - name: AnalyticsTracker
       shown: 0
     customComponents: []
     unityVersion: 2021.2.8f1

@@ -6,8 +6,10 @@ public class AlphaWolf : BasicEnemyAgent
 {
     [SerializeField] private List<GameObject> wolves;
     [SerializeField] private float attackChance = 0.5f;
+    [SerializeField] private GameObject wolf;
     private Animator animator;
-    private int attack;
+    private int attack, wolfNum;
+    private float rand;
     private bool condition;
     private const float viewAngle = 30f;
     private Rigidbody rb;
@@ -20,6 +22,18 @@ public class AlphaWolf : BasicEnemyAgent
         Dying = false;
         rb = GetComponent<Rigidbody>();
         attack = 0;
+        rand = Random.value;
+        if (rand < 0.5) wolfNum = 0;
+        else if (rand < 0.55) wolfNum = 1;
+        else if (rand < 0.75) wolfNum = 2;
+        else if (rand < 0.95) wolfNum = 3;
+        else wolfNum = 4;
+        for (int count = 0; count < wolfNum; count++)
+        {
+            GameObject enemy = Instantiate(wolf);
+            enemy.transform.position = transform.position;
+            enemy.tag = "enemy";
+        }
         base.Start();
     }
 

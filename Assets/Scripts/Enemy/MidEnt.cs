@@ -44,6 +44,7 @@ public class MidEnt : BasicEnemyAgent
         {
             GameObject enemy = Instantiate(flower);
             enemy.transform.position = transform.position + 2*Body.transform.forward;
+            enemy.tag = "enemy";
         }
         animator.speed = 1;
         animator.SetInteger("moving", 2);
