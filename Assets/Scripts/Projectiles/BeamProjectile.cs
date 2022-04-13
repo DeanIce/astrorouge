@@ -4,6 +4,8 @@ using System.Linq;
 
 public class BeamProjectile : BaseProjectile
 {
+    [SerializeField] private GameObject beamVFX;
+
     private float tickTime;
     private readonly Dictionary<GameObject, float> hitTimings = new();
 
@@ -65,7 +67,20 @@ public class BeamProjectile : BaseProjectile
     public void ExtendBeam(LayerMask stopsAt, float range)
     {
         bool collisionDetected = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, stopsAt);
-        transform.localScale = new Vector3(1,1, collisionDetected ? hit.distance : range);
+        float distance = collisionDetected ? hit.distance : range;
+        transform.localScale = new Vector3(1,1, distance);
+
+        if (beamVFX != null)
+        {
+            // Spawns two ahead and default time yields 5 units from spawn
+            float modifiedDistanceMultiplier = (distance - 2) / 5f;
+
+            // Assumes VFX has ParticleSystem using constant value for startLifetime
+            var beamVFXmain = beamVFX.GetComponent<ParticleSystem>().main;
+            beamVFXmain.startLifetime = new ParticleSystem.MinMaxCurve(beamVFXmain.startLifetime.constant * modifiedDistanceMultiplier);
+
+            beamVFX.SetActive(true);
+        }
     }
 
     /// <summary>
