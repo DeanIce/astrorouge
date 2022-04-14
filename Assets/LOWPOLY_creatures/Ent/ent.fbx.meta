@@ -1131,7 +1131,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5847203
-        functionName: DoDamage
+        functionName: DoDamageFlower
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1273,7 +1273,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.6347056
-        functionName: DoDamage
+        functionName: DoDamageFlower
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1820,21 +1820,21 @@ ModelImporter:
       curves: []
       events:
       - time: 0.22604154
-        functionName: DoDamage2
+        functionName: DoDamageFlower2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.49406633
-        functionName: DoDamage2
+        functionName: DoDamageFlower2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.7367173
-        functionName: DoDamage2
+        functionName: DoDamageFlower2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
