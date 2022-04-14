@@ -1004,6 +1004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18d745f714f4b44cb1376c3c2cfe1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ability1Icon: {fileID: 2800000, guid: 7f4776d0f79cc4926b32cede06142fa2, type: 3}
+  ability2Icon: {fileID: 2800000, guid: 5931b0470f8f94a5aa827787a39b3f35, type: 3}
+  ability3Icon: {fileID: 2800000, guid: 77ea13923e1074d0e928e45176023ba0, type: 3}
 --- !u!1001 &1923782083296720989
 PrefabInstance:
   m_ObjectHideFlags: 0

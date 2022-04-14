@@ -292,6 +292,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (SecondaryAttackDelay > 0 || globalAttackDealy > 0) return;
         SecondaryAttackDelay = secondaryAttackCooldown;
 
+        EventManager.Instance.SecondaryUsed(secondaryAttackCooldown);
         BeamAttack();
     }
 
@@ -301,6 +302,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
         print("Melee Attack Initialized"); //TODO (Simon): Remove when melee animation is added
+        EventManager.Instance.MeleeUsed(MeleeAttackDelay);
         InstantaneousAttack();
     }
 

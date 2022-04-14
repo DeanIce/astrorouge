@@ -36,7 +36,7 @@ namespace Managers
         public event Action<AbstractItem> itemAcquired;
 
 
-        public event Action<float> crosshairSpread, playerDamaged, specialUsed;
+        public event Action<float> crosshairSpread, playerDamaged, specialUsed, meleeUsed, secondaryUsed;
 
         public void CrosshairSpread(float a)
         {
@@ -45,6 +45,14 @@ namespace Managers
         public void SpecialUsed(float a)
         {
             specialUsed?.Invoke(a);
+        }
+        public void MeleeUsed(float a)
+        {
+            meleeUsed?.Invoke(a);
+        }
+        public void SecondaryUsed(float a)
+        {
+            secondaryUsed?.Invoke(a);
         }
         public void ItemAcquired(AbstractItem item)
         {
