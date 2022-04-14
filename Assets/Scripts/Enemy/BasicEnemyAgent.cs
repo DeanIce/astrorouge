@@ -218,7 +218,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             EventManager.Instance.runStats.damageDealt += dmg;
             // Temp, add damage negation and other maths here later.
             health -= dmg;
-            gameObject.GetComponent<HealthBarUI>().SetHealth(health);
+            gameObject.GetComponent<HealthBarUI>().SetHealth(health, maxHealth);
             // make damage popup TODO:: change the "false" to when this is a critical hit.
             // I think this would require adding a parameter and passing the
             // critical hit chance, or whenever the crit is defined.
