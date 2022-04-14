@@ -292,10 +292,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 2463301388167029399}
   StunVFX: {fileID: 6440867475234552080}
   SlowVFX: {fileID: 0}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0

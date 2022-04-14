@@ -42,6 +42,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool rotating;
     private Rigidbody targetRb;
 
+    private float awareTimer;
+
 
     [NonSerialized] public float xpGift = 5;
     public GameObject Detector => detector;
@@ -60,6 +62,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         rb = GetComponent<Rigidbody>();
         detectorRenderer = detector.GetComponent<Renderer>();
+        Wandering = true;
         Dying = false;
     }
 
@@ -69,6 +72,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (!hunting && !Dying)
             Wander(body.transform.forward);
         else if (Dying) DoGravity();
+
+        if (awareTimer > 0)
+        {
+            Hunt(FindObjectOfType<PlayerDefault>().GetComponent<Collider>());
+            awareTimer -= Time.deltaTime;
+        }
 
         if (!hunting)
             detectorRenderer.material.SetColor("_BaseColor", green);
@@ -106,7 +115,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == PlayerLayer && !Dying) Hunt(other);
+        if (other.gameObject.layer == PlayerLayer && !Dying)
+        {
+            Hunt(other);
+        }
     }
 
     public void setSpeed(float speed)
@@ -187,6 +199,11 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // critical hit chance, or whenever the crit is defined.
             DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
             EventManager.Instance.EnemyDamaged();
+
+            if (Wandering)
+            {
+                awareTimer = 2f;
+            }
 
 
             if (health <= 0f && iAmAlive) Die();
