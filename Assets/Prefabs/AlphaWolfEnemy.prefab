@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 8262775871286234938}
   body: {fileID: 6593476235084119765}
@@ -332,7 +333,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9207026939266957276, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
 --- !u!4 &7091395534814971166 stripped
 Transform:
