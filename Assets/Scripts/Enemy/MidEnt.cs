@@ -44,7 +44,7 @@ public class MidEnt : BasicEnemyAgent
         if (summon)
         {
             GameObject enemy = Instantiate(flower);
-            enemy.transform.position = transform.position + 2*Body.transform.forward;
+            enemy.transform.position = transform.position + 2*Body.transform.up + 2*Body.transform.forward;
             enemy.tag = "enemy";
         }
         animator.speed = 1;
