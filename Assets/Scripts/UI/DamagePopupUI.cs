@@ -14,12 +14,12 @@ public class DamagePopupUI : MonoBehaviour
     public Transform enemyTrans {get; set;}
     
     // create a Damage Popup
-    public static DamagePopupUI Create(Transform enemyTransform, Quaternion rotation, int damageAmount, bool isCriticalHit) {
+    public static DamagePopupUI Create(Transform enemyTransform, Quaternion rotation, int damageAmount, int type) {
         Vector3 randOffset = new Vector3(Random.Range(-.75f, .75f), Random.Range(-.75f, .75f), Random.Range(-.75f, .75f));
         GameObject damagePopupInstance = Instantiate(DamagePopupPF, enemyTransform.position + randOffset, rotation);
 
         DamagePopupUI damagePopupUI = damagePopupInstance.GetComponent<DamagePopupUI>();
-        damagePopupUI.Setup(damageAmount, isCriticalHit);
+        damagePopupUI.Setup(damageAmount, type);
 
         damagePopupUI.enemyTrans = enemyTransform;
 
@@ -36,16 +36,44 @@ public class DamagePopupUI : MonoBehaviour
 
     }
 
-    public void Setup(int damageAmount, bool isCriticalHit) {
+    public void Setup(int damageAmount, int type) {
         textMesh.SetText(damageAmount.ToString());
         
         
-        if (isCriticalHit) {
+        if (type == 1) {
             textMesh.color = Color.red;
-            textMesh.fontSize = 16;
+            textMesh.fontSize = 6;
         } else {
             textMesh.color = Color.white;
             textMesh.fontSize = 6;
+        }
+
+        switch (type)
+        {
+            case 1:
+                textMesh.color = Color.red;
+                textMesh.fontSize = 6;
+                break;
+            case 2:
+                textMesh.color = Color.magenta;
+                textMesh.fontSize = 6;
+                break;
+            case 3:
+                textMesh.color = Color.yellow;
+                textMesh.fontSize = 6;
+                break;
+            case 4:
+                textMesh.color = Color.green;
+                textMesh.fontSize = 6;
+                break;
+            case 5:
+                textMesh.color = Color.blue;
+                textMesh.fontSize = 6;
+                break;
+            default:
+                textMesh.color = Color.white;
+                textMesh.fontSize = 6;
+                break;
         }
 
         textColor = textMesh.color;
