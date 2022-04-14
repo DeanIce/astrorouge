@@ -15,15 +15,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     public float health;
     public float movementSpeed;
     [SerializeField] private GameObject detector;
-    public GameObject Detector => detector;
     [SerializeField] private GameObject body;
     [SerializeField] private float attackRange;
     private readonly Color green = new(0, 1, 0, 0.5f);
     private readonly Vector3 jumpForce = new(0f, 20f, 0f);
 
     // Swapping to collider and layer based detection
-    private readonly int playerLayer = 9;
-    public int PlayerLayer => playerLayer;
     private readonly Color red = new(1, 0, 0, 0.5f);
 
     // Private enemy specific variables
@@ -38,12 +35,18 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     private int leftOrRight;
 
+    internal int planet;
+
     private int randomRotation;
     private Rigidbody rb;
     private bool rotating;
     private Rigidbody targetRb;
 
-    [NonSerialized] public float xpGift = 30;
+
+    [NonSerialized] public float xpGift = 5;
+    public GameObject Detector => detector;
+    public int PlayerLayer { get; } = 9;
+
     public bool Attacking { get; set; }
 
     public float AttackRange => attackRange;
@@ -83,7 +86,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Detected
     public virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == playerLayer)
+        if (other.gameObject.layer == PlayerLayer)
         {
             Wandering = false;
             hunting = true;
@@ -93,7 +96,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Lost Player
     public virtual void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == playerLayer)
+        if (other.gameObject.layer == PlayerLayer)
         {
             Wandering = true;
             hunting = false;
@@ -103,7 +106,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == playerLayer && !Dying) Hunt(other);
+        if (other.gameObject.layer == PlayerLayer && !Dying) Hunt(other);
     }
 
     public void setSpeed(float speed)
@@ -205,6 +208,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         Body.GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         StartCoroutine(DestroyLater());
+        LevelSelect.Instance.RemoveEnemy(planet, gameObject);
     }
 
     public virtual IEnumerator Attack()
@@ -213,7 +217,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         //rend.enabled = true;
         Attacking = true;
         yield return new WaitForSeconds(1f);
-        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, playerLayer);
+        hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, PlayerLayer);
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
@@ -226,6 +230,16 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
         //rend.enabled = false;
         Attacking = false;
+    }
+
+    public IEnumerator WaitForSecondsOrDie(float seconds)
+    {
+        float timer = seconds;
+        while (timer > 0.0 && !Dying)
+        {
+            timer -= Time.deltaTime;
+            yield return 0;
+        }
     }
 
     private IEnumerator DestroyLater()

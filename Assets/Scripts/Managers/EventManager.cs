@@ -28,7 +28,16 @@ namespace Managers
 
 
         // Game State events
-        public event Action pauseGame, playGame, menu, win, recap, exit, loadBoss, playerStatsUpdated, enemyDamaged;
+        public event Action pauseGame,
+            playGame,
+            planetCleared,
+            win,
+            menu,
+            recap,
+            exit,
+            loadBoss,
+            playerStatsUpdated,
+            enemyDamaged;
 
         // Settings event
         public event Action<UserSettings> settingsUpdated;
@@ -37,6 +46,11 @@ namespace Managers
 
 
         public event Action<float> crosshairSpread, playerDamaged, specialUsed, meleeUsed, secondaryUsed;
+
+        public void PlanetCleared()
+        {
+            planetCleared?.Invoke();
+        }
 
         public void CrosshairSpread(float a)
         {

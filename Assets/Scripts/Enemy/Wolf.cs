@@ -12,6 +12,7 @@ public class Wolf : BasicEnemyAgent
 
     public override void Start()
     {
+        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         if (alpha != null) alpha.AddWolf(gameObject);
@@ -40,7 +41,8 @@ public class Wolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        yield return new WaitForSeconds(0.833f);
+        yield return WaitForSecondsOrDie(0.833f);
+        animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);
         //rend.enabled = false;
@@ -94,8 +96,9 @@ public class Wolf : BasicEnemyAgent
 
     private IEnumerator DeathAnim(int anim)
     {
+        yield return new WaitForSeconds(0.2f);
         animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
     
@@ -119,6 +122,7 @@ public class Wolf : BasicEnemyAgent
     {
         animator.SetInteger("moving", 0);
         yield return new WaitForSeconds(0.05f);
+        animator.speed = 2;
         animator.SetInteger("moving", 3);
     }
 

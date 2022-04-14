@@ -1,6 +1,6 @@
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
-using Gravity;
 using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
@@ -15,10 +15,10 @@ public class StatusEffectManager : MonoBehaviour
     public GameObject StunVFX;
     public GameObject SlowVFX;
 
-    public int burnDamage = 5;
-    public int poisonDamage = 10;
-    public int lightningDamage = 50;
-    public int radDamage = 2;
+    public static int BurnDamage() => 5 * (Managers.LevelSelect.Instance.requestedLevel + 1);
+    public static int PoisonDamage() => 10 * (Managers.LevelSelect.Instance.requestedLevel + 1);
+    public static int LightningDamage() => 25 * (Managers.LevelSelect.Instance.requestedLevel + 1);
+    public static int RadDamage() => 2 * (Managers.LevelSelect.Instance.requestedLevel + 1);
     public float smiteDamage = float.MaxValue;
 
     public bool martyrdom;
@@ -30,6 +30,7 @@ public class StatusEffectManager : MonoBehaviour
     private readonly List<int> stunTickTimes = new();
     private IDamageable damageable;
 
+    private StatusEffectAudioDictionary statusSFX;
 
     private void Start()
     {
@@ -45,6 +46,9 @@ public class StatusEffectManager : MonoBehaviour
         IgniteVFX.SetActive(false);
         StunVFX.SetActive(false);
         SlowVFX.SetActive(false);
+
+        statusSFX = new StatusEffectAudioDictionary();
+        statusSFX.LoadSounds();
     }
 
     public void DeathEffects()
@@ -55,9 +59,9 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplyBurn(int ticks)
     {
-        //damage will be passed in later and into the coroutine
         if (burnTickTimes.Count <= 0)
         {
+            statusSFX.ApplyBurnSFX();
             burnTickTimes.Add(ticks);
             StartCoroutine(Burn());
         }
@@ -77,7 +81,7 @@ public class StatusEffectManager : MonoBehaviour
                     burnTickTimes[i]--;
                 }
 
-                damageable.TakeDmg(burnDamage);
+                damageable.TakeDmg(BurnDamage());
                 burnTickTimes.RemoveAll(num => num == 0);
                 yield return new WaitForSeconds(0.5f);
             }
@@ -91,6 +95,7 @@ public class StatusEffectManager : MonoBehaviour
         //damage will be passed in later and into the coroutine
         if (poisonTickTimes.Count <= 0)
         {
+            statusSFX.ApplyPoisonSFX();
             poisonTickTimes.Add(ticks);
             StartCoroutine(Poison());
         }
@@ -110,7 +115,7 @@ public class StatusEffectManager : MonoBehaviour
                     poisonTickTimes[i]--;
                 }
 
-                damageable.TakeDmg(poisonDamage);
+                damageable.TakeDmg(PoisonDamage());
                 poisonTickTimes.RemoveAll(num => num == 0);
                 yield return new WaitForSeconds(1f);
             }
@@ -128,8 +133,9 @@ public class StatusEffectManager : MonoBehaviour
     private IEnumerator Lightning()
     {
         yield return new WaitForSeconds(1.5f);
+        statusSFX.ApplyLightningSFX();
         LightningVFX.GetComponent<ParticleSystem>().Play(true);
-        damageable.TakeDmg(lightningDamage);
+        damageable.TakeDmg(LightningDamage());
     }
 
     public void ApplySmite()
@@ -146,8 +152,10 @@ public class StatusEffectManager : MonoBehaviour
 
     public void ApplySlow(int ticks)
     {
+
         if (slowTickTimes.Count <= 0)
         {
+            statusSFX.ApplySlowSFX();
             slowTickTimes.Add(ticks);
             StartCoroutine(Slow());
         }
@@ -213,7 +221,7 @@ public class StatusEffectManager : MonoBehaviour
                 foreach (Collider hitCollider in hitColliders)
                 {
                     if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
-                        hitCollider.GetComponent<IEnemy>().TakeDmg(radDamage);
+                        hitCollider.GetComponent<IEnemy>().TakeDmg(RadDamage());
                 }
 
                 radTickTimes.RemoveAll(num => num == 0);
@@ -279,7 +287,7 @@ public class StatusEffectManager : MonoBehaviour
             foreach (Collider hitCollider in hitColliders)
             {
                 if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
-                    hitCollider.GetComponent<IEnemy>().TakeDmg(lightningDamage);
+                    hitCollider.GetComponent<IEnemy>().TakeDmg(LightningDamage());
             }
         }
 
@@ -300,7 +308,7 @@ public class StatusEffectManager : MonoBehaviour
             foreach (Collider hitCollider in hitColliders)
             {
                 if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
-                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(6);
+                    hitCollider.GetComponent<StatusEffectManager>().ApplyBurn(BurnDamage());
             }
 
             IgniteVFX.SetActive(true);

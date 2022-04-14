@@ -19,6 +19,11 @@ namespace Managers
         public GameObject player;
         public BallDropper ballDropper;
 
+
+        public List<List<GameObject>> enemies = new();
+
+        public List<GameObject> debug;
+
         private bool isHackDone = true;
 
 
@@ -50,6 +55,8 @@ namespace Managers
 
                 StartCoroutine(LoadLevel());
             }
+
+            enemies.RemoveAll(item => item == null);
         }
 
 
@@ -63,6 +70,12 @@ namespace Managers
         {
             EventManager.Instance.loadBoss -= LoadBossEvent;
             SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        internal void RemoveEnemy(int planet, GameObject self)
+        {
+            enemies[planet].Remove(self);
+            if (enemies[planet].Count == 0) EventManager.Instance.PlanetCleared();
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -90,7 +103,9 @@ namespace Managers
 
             // Do the hard work
             GameObject root = GetOrCreate();
-            Vector3 newPlayerPos = CurrentLevel.Create(root, rng, ballDropper, timer);
+            (Vector3 newPlayerPos, List<List<GameObject>> stuff) = CurrentLevel.Create(root, rng, ballDropper, timer);
+            enemies = stuff;
+            debug = enemies[0];
             // print($"Creating {id} level.");
             LOGTIMER(timer, "finish Create()");
 

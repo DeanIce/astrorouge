@@ -18,6 +18,9 @@ public class EventDamage : MonoBehaviour
         enemy = GetComponentInParent<BasicEnemyAgent>();
         body = enemy.Body;
         attackRange = enemy.AttackRange;
+
+        damage *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        damage2 *= (Managers.LevelSelect.Instance.requestedLevel + 1);
     }
 
     public void DoDamage()

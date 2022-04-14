@@ -301,8 +301,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (MeleeAttackDelay > 0 || globalAttackDealy > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
-        print("Melee Attack Initialized"); //TODO (Simon): Remove when melee animation is added
-        EventManager.Instance.MeleeUsed(MeleeAttackDelay);
+
+        animator.SetTrigger("meleeAttack");
         InstantaneousAttack();
     }
 
@@ -371,11 +371,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         GameObject projectile = ProjectileFactory.Instance.CreateGravityProjectile(
             transform.position + transform.forward + handOffset,
+            transform.rotation,
             10f * (attackVec + liftVec).normalized, //TODO (Simon): Fix magic number 10
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / 10f, //TODO (Simon): Fix magic number 10
-            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult);
+            PlayerStats.Instance.GetRangeDamage());
         HandleEffects(projectile, specialActionProcChance);
+        _ = ProjectileFactory.Instance.AddExplosionOnDestroy(
+            projectile,
+            LayerMask.GetMask("Enemy", "Ground"),
+            PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult,
+            3f); //TODO (Jared): Set grenade blast radius
     }
 
     private void InstantaneousAttack()
@@ -383,10 +389,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         globalAttackDealy = 0.5f;
 
         GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
-            transform.position + transform.forward,
+            transform.position + transform.forward * 0.5f,
             transform.rotation,
             PlayerStats.Instance.meleeAttackRange,
-            LayerMask.GetMask("Enemy", "Ground"),
+            LayerMask.GetMask("Enemy"),
             PlayerStats.Instance.GetMeleeDamage());
         HandleEffects(projectile, meleeAttackProcChance);
     }

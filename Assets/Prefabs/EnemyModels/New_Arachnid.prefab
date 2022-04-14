@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 582562102410056344}
   - component: {fileID: 582562102402890966}
   - component: {fileID: 4188668699670104660}
-  - component: {fileID: 6857787161716951388}
   m_Layer: 0
   m_Name: New_Arachnid
   m_TagString: Untagged
@@ -388,20 +387,6 @@ CapsuleCollider:
   m_Height: 1.3620028
   m_Direction: 1
   m_Center: {x: 0, y: 0.64663863, z: 0.08542025}
---- !u!114 &6857787161716951388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 582562102410241744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 266be1ff46f1ef6448c421468b16795c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  damage2: 0
 --- !u!1 &582562102410242924
 GameObject:
   m_ObjectHideFlags: 0

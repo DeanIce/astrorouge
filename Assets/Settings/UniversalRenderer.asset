@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-24733058047341065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081feb69236a45b7864a0e449f81ed47, type: 3}
+  m_Name: BlitFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    IsEnabled: 1
+    WhenToInsert: 1000
+    MaterialToBlit: {fileID: 2100000, guid: 7f429e1ff91948e489b6c3723f1b5b17, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17,9 +34,11 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 4680715191934154759}
   - {fileID: 6993192196931712663}
-  m_RendererFeatureMap: 077802e6aa3df54097f6256840cf0c61
+  - {fileID: -24733058047341065}
+  m_RendererFeatureMap: 077802e6aa3df54097f6256840cf0c61f70de12c6a21a8ff
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
+  xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
     copyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
