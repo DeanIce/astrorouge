@@ -39,6 +39,7 @@ public class Arachnid : BasicEnemyAgent
                     projectile = factory.CreateBasicProjectile(mouth.transform.position,
                         projSpeed*(hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
                         LayerMask.GetMask("Player", "Ground"), 5, 5);
+                    factory.SetSkin(projectile, 0);
                 }
             }
         }
