@@ -198,7 +198,31 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             // make damage popup TODO:: change the "false" to when this is a critical hit.
             // I think this would require adding a parameter and passing the
             // critical hit chance, or whenever the crit is defined.
-            DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
+            DamagePopupUI.Create(transform, transform.rotation, (int) dmg, 0);
+            EventManager.Instance.EnemyDamaged();
+
+            if (Wandering)
+            {
+                awareTimer = 2f;
+            }
+
+
+            if (health <= 0f && iAmAlive) Die();
+        }
+    }
+
+    public void TakeDmg(float dmg, int type)
+    {
+        if (!Dying)
+        {
+            EventManager.Instance.runStats.damageDealt += dmg;
+            // Temp, add damage negation and other maths here later.
+            health -= dmg;
+            gameObject.GetComponent<HealthBarUI>().SetHealth(health);
+            // make damage popup TODO:: change the "false" to when this is a critical hit.
+            // I think this would require adding a parameter and passing the
+            // critical hit chance, or whenever the crit is defined.
+            DamagePopupUI.Create(transform, transform.rotation, (int)dmg, type);
             EventManager.Instance.EnemyDamaged();
 
             if (Wandering)
