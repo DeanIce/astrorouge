@@ -26,6 +26,7 @@ public class Wolf : BasicEnemyAgent
     public override void FixedUpdate()
     {
         Detector.GetComponent<Collider>().enabled = alpha == null;
+        CheckDeath();
         base.FixedUpdate();
     }
 
@@ -76,7 +77,7 @@ public class Wolf : BasicEnemyAgent
         {
             Dying = true;
             if (alpha != null) alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
-            StartCoroutine(DeathAnim(12));
+            animator.SetInteger("moving", 12);
             base.Die();
         }
     }
@@ -87,12 +88,12 @@ public class Wolf : BasicEnemyAgent
         if (alpha != null) alpha.AddWolf(gameObject);
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            animator.SetInteger("moving", 12);
+        }
     }
 
     private IEnumerator BattleAnim(bool start)

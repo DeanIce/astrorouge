@@ -16,6 +16,12 @@ public class BatEnemy : BasicEnemyAgent
         base.Start();
     }
 
+    public override void FixedUpdate()
+    {
+        CheckDeath();
+        base.FixedUpdate();
+    }
+
     public override IEnumerator Attack()
     {
         //rend.enabled = true;
@@ -34,16 +40,16 @@ public class BatEnemy : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            StartCoroutine(DeathAnim(14));
+            animator.SetInteger("moving", 14);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            animator.SetInteger("moving", 14);
+        }
     }
 }

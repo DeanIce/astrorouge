@@ -50,6 +50,8 @@ public class AlphaWolf : BasicEnemyAgent
             wolf.GetComponent<Wolf>().maxDistance = 5 + wolves.Count;
         }
 
+        CheckDeath();
+
         if (Wandering) attack = 0;
 
         base.FixedUpdate();
@@ -153,18 +155,19 @@ public class AlphaWolf : BasicEnemyAgent
                 wolf.GetComponent<Wolf>().SetAlpha(null);
             }
 
-            if (Random.value < 0.5) StartCoroutine(DeathAnim(13));
-            else StartCoroutine(DeathAnim(12));
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
+        }
     }
 
     private IEnumerator BattleAnim(bool start)
