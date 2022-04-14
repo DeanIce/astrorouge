@@ -1,17 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class Arachnid : BasicEnemyAgent
 {
-    private Animator animator;
-    private ProjectileFactory factory;
     [SerializeField] private float projSpeed;
     [SerializeField] private GameObject mouth;
+    private Animator animator;
+    private ProjectileFactory factory;
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= LevelSelect.Instance.requestedLevel + 1;
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         animator.SetInteger("moving", 2);
@@ -32,16 +33,17 @@ public class Arachnid : BasicEnemyAgent
         if (hits.Length != 0 && !Dying)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
                     projectile = factory.CreateBasicProjectile(mouth.transform.position,
-                        projSpeed*(hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
+                        projSpeed * (hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
                         LayerMask.GetMask("Player", "Ground"), 5, 5);
                 }
             }
         }
+
         animator.SetInteger("moving", 0);
         //rend.enabled = false;
         Attacking = false;

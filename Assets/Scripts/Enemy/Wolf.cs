@@ -1,18 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class Wolf : BasicEnemyAgent
 {
     [SerializeField] private AlphaWolf alpha;
     public float maxDistance = 5f;
-    private bool attacked;
     public bool ordered;
     private Animator animator;
+    private bool attacked;
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= LevelSelect.Instance.requestedLevel + 1;
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         if (alpha != null) alpha.AddWolf(gameObject);
@@ -24,15 +25,34 @@ public class Wolf : BasicEnemyAgent
 
     public override void FixedUpdate()
     {
-        Detector.GetComponent<Collider>().enabled = (alpha == null);
+        Detector.GetComponent<Collider>().enabled = alpha == null;
         base.FixedUpdate();
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer) StartCoroutine(BattleAnim(true));
+        base.OnTriggerEnter(other);
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer) StartCoroutine(BattleAnim(false));
+        base.OnTriggerExit(other);
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        if (Wandering) base.OnTriggerEnter(other);
+        base.OnTriggerStay(other);
     }
 
     public override void Wander(Vector3 direction)
     {
         DoGravity();
 
-        if (alpha != null && Mathf.Abs((transform.position - alpha.transform.position).magnitude) > maxDistance) base.Wander(alpha.transform.position - Body.transform.position);
+        if (alpha != null && Mathf.Abs((transform.position - alpha.transform.position).magnitude) > maxDistance)
+            base.Wander(alpha.transform.position - Body.transform.position);
         else base.Wander(direction);
     }
 
@@ -50,39 +70,12 @@ public class Wolf : BasicEnemyAgent
         attacked = true;
     }
 
-    public override void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == PlayerLayer)
-        {
-            StartCoroutine(BattleAnim(true));            
-        }
-        base.OnTriggerEnter(other);
-    }
-
-    public override void OnTriggerStay(Collider other)
-    {
-        if (Wandering) base.OnTriggerEnter(other);
-        base.OnTriggerStay(other);
-    }
-
-    public override void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == PlayerLayer)
-        {
-            StartCoroutine(BattleAnim(false));            
-        }
-        base.OnTriggerExit(other);
-    }
-
     public override void Die()
     {
         if (!Dying)
         {
             Dying = true;
-            if (alpha != null)
-            {
-                alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
-            }
+            if (alpha != null) alpha.GetComponent<AlphaWolf>().RemoveWolf(gameObject);
             StartCoroutine(DeathAnim(12));
             base.Die();
         }
@@ -101,7 +94,7 @@ public class Wolf : BasicEnemyAgent
         yield return new WaitForSeconds(0.1f);
         animator.SetInteger("moving", 0);
     }
-    
+
     private IEnumerator BattleAnim(bool start)
     {
         animator.SetInteger("moving", 0);
