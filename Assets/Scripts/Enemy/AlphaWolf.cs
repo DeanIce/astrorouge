@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class AlphaWolf : BasicEnemyAgent
 {
+    private const float viewAngle = 30f;
     [SerializeField] private List<GameObject> wolves;
     [SerializeField] private float attackChance = 0.5f;
     [SerializeField] private GameObject wolf;
@@ -11,12 +13,12 @@ public class AlphaWolf : BasicEnemyAgent
     private int attack, wolfNum;
     private float rand;
     private bool condition;
-    private const float viewAngle = 30f;
     private Rigidbody rb;
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= LevelSelect.Instance.requestedLevel + 1;
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         Dying = false;
@@ -48,12 +50,29 @@ public class AlphaWolf : BasicEnemyAgent
             wolf.GetComponent<Wolf>().maxDistance = 5 + wolves.Count;
         }
 
-        if (Wandering)
-        {
-            attack = 0;
-        }
+        if (Wandering) attack = 0;
 
         base.FixedUpdate();
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer) StartCoroutine(BattleAnim(true));
+        base.OnTriggerEnter(other);
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == PlayerLayer)
+        {
+            StartCoroutine(BattleAnim(false));
+            foreach (GameObject wolf in wolves)
+            {
+                wolf.GetComponent<Wolf>().OnTriggerExit(other);
+            }
+        }
+
+        base.OnTriggerExit(other);
     }
 
     public override void Hunt(Collider target)
@@ -64,7 +83,8 @@ public class AlphaWolf : BasicEnemyAgent
 
         foreach (GameObject wolf in wolves)
         {
-            if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered == true) wolf.GetComponent<Wolf>().ReceiveOrder(target);
+            if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered)
+                wolf.GetComponent<Wolf>().ReceiveOrder(target);
         }
 
         //attacking
@@ -72,7 +92,7 @@ public class AlphaWolf : BasicEnemyAgent
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                 {
@@ -84,6 +104,7 @@ public class AlphaWolf : BasicEnemyAgent
         }
         else
         {
+
             if (wolves.Count > 0) condition = !Attacking && (Mathf.Abs((Body.transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count || Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle);
             else condition = !Attacking;
 
@@ -102,9 +123,7 @@ public class AlphaWolf : BasicEnemyAgent
                 //if (targetRb.transform.position.y > transform.position.y && IsGrounded()) Jump();
             }
             else
-            {
                 animator.SetInteger("moving", 0);
-            }
         }
     }
 
@@ -124,28 +143,6 @@ public class AlphaWolf : BasicEnemyAgent
         if (attack > 2) attack = 0;
     }
 
-    public override void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == PlayerLayer)
-        {
-            StartCoroutine(BattleAnim(true));
-        }
-        base.OnTriggerEnter(other);
-    }
-
-    public override void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == PlayerLayer)
-        {
-            StartCoroutine(BattleAnim(false));
-            foreach (GameObject wolf in wolves)
-            {
-                wolf.GetComponent<Wolf>().OnTriggerExit(other);
-            }
-        }
-        base.OnTriggerExit(other);
-    }
-
     public override void Die()
     {
         if (!Dying)
@@ -155,6 +152,7 @@ public class AlphaWolf : BasicEnemyAgent
             {
                 wolf.GetComponent<Wolf>().SetAlpha(null);
             }
+
             if (Random.value < 0.5) StartCoroutine(DeathAnim(13));
             else StartCoroutine(DeathAnim(12));
             base.Die();
@@ -191,20 +189,13 @@ public class AlphaWolf : BasicEnemyAgent
         yield return new WaitForSeconds(0.05f);
         animator.speed = 2;
         if (attack == 0)
-        {
             animator.SetInteger("moving", 3);
-        }
         else if (attack == 1)
-        {
             animator.SetInteger("moving", 4);
-        }
-        else if (attack == 2)
-        {
-            animator.SetInteger("moving", 6);
-        }
+        else if (attack == 2) animator.SetInteger("moving", 6);
     }
 
-    public void AddWolf (GameObject wolf)
+    public void AddWolf(GameObject wolf)
     {
         wolves.Add(wolf);
     }

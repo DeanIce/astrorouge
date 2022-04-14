@@ -8,6 +8,7 @@ public class FlowerEnemy : BasicEnemyAgent
     public override void Start()
     {
         health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         Dying = false;
