@@ -61,7 +61,7 @@ public class Wolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        yield return WaitForSecondsOrDie(0.833f);
+        yield return WaitForSecondsOrDie(0.833f/animator.speed);
         animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);

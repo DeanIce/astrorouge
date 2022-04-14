@@ -38,20 +38,21 @@ public class MidEnt : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(BattleAnim());
-        if (attack == 2) yield return WaitForSecondsOrDie(2.708f);
+        if (attack == 2) yield return WaitForSecondsOrDie(2.708f/animator.speed);
         else if (summon) yield return WaitForSecondsOrDie(1.667f);
-        else yield return WaitForSecondsOrDie(0.833f);
+        else yield return WaitForSecondsOrDie(0.833f/animator.speed);
         if (summon)
         {
             GameObject enemy = Instantiate(flower);
             enemy.transform.position = transform.position + 2*Body.transform.forward;
+            enemy.tag = "enemy";
         }
         animator.speed = 1;
         animator.SetInteger("moving", 2);
         //rend.enabled = false;
-        Attacking = false;
         if (!summon) attack += 1;
         if (attack > 2) attack = 0;
+        Attacking = false;
         summon = false;
     }
 

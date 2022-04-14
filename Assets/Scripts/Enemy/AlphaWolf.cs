@@ -8,8 +8,10 @@ public class AlphaWolf : BasicEnemyAgent
     private const float viewAngle = 30f;
     [SerializeField] private List<GameObject> wolves;
     [SerializeField] private float attackChance = 0.5f;
+    [SerializeField] private GameObject wolf;
     private Animator animator;
-    private int attack;
+    private int attack, wolfNum;
+    private float rand;
     private bool condition;
     private Rigidbody rb;
 
@@ -22,12 +24,26 @@ public class AlphaWolf : BasicEnemyAgent
         Dying = false;
         rb = GetComponent<Rigidbody>();
         attack = 0;
+        rand = Random.value;
+        if (rand < 0.1) wolfNum = 0;
+        else if (rand < 0.2) wolfNum = 1;
+        else if (rand < 0.55) wolfNum = 2;
+        else if (rand < 0.9) wolfNum = 3;
+        else wolfNum = 4;
+        for (int count = 0; count < wolfNum; count++)
+        {
+            GameObject enemy = Instantiate(wolf);
+            enemy.transform.position = transform.position;
+            enemy.tag = "enemy";
+            enemy.GetComponent<Wolf>().SetAlpha(this);
+            AddWolf(enemy);
+        }
         base.Start();
     }
 
     public override void FixedUpdate()
     {
-        Detector.transform.localScale = new Vector3(8 + wolves.Count, 1, 8 + wolves.Count);
+        Detector.transform.localScale = new Vector3(30 + wolves.Count, 15, 30 + wolves.Count);
 
         foreach (GameObject wolf in wolves)
         {
@@ -88,11 +104,8 @@ public class AlphaWolf : BasicEnemyAgent
         }
         else
         {
-            if (wolves.Count > 0)
-                condition = !Attacking &&
-                            Mathf.Abs((transform.position - target.transform.position).magnitude) >
-                            AttackRange + wolves.Count && Vector3.Angle(Body.transform.forward,
-                                target.transform.position - Body.transform.position) > viewAngle;
+
+            if (wolves.Count > 0) condition = !Attacking && (Mathf.Abs((Body.transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count || Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle);
             else condition = !Attacking;
 
             if (condition)
@@ -119,8 +132,8 @@ public class AlphaWolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        if (attack != 2) yield return WaitForSecondsOrDie(1.25f);
-        else yield return WaitForSecondsOrDie(1.458f);
+        if (attack != 2) yield return WaitForSecondsOrDie(1.25f/animator.speed);
+        else yield return WaitForSecondsOrDie(1.458f/animator.speed);
         animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);

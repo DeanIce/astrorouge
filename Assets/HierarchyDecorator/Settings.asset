@@ -1385,6 +1385,32 @@ MonoBehaviour:
       shown: 0
     - name: StateMachine
       shown: 0
+    - name: Placeholder
+      shown: 0
+    - name: ApplicationQuit
+      shown: 0
+    - name: CoroutineExecutor
+      shown: 0
+    - name: BannerPlaceholder
+      shown: 0
+    - name: DataPrivacyButton
+      shown: 0
+    - name: LifecycleNotifier
+      shown: 0
+    - name: UIFakeStoreWindow
+      shown: 0
+    - name: AsyncWebUtil
+      shown: 0
+    - name: UnityUtil
+      shown: 0
+    - name: Placeholder
+      shown: 0
+    - name: PostProcessDebug
+      shown: 0
+    - name: PostProcessLayer
+      shown: 0
+    - name: PostProcessVolume
+      shown: 0
     - name: DOTweenComponent
       shown: 0
     - name: AnalyticsEventTracker
