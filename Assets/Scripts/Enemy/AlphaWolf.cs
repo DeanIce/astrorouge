@@ -13,7 +13,7 @@ public class AlphaWolf : BasicEnemyAgent
     private int attack, wolfNum;
     private float rand;
     private bool condition;
-    private Rigidbody rb;
+    private Rigidbody rb2;
 
     public override void Start()
     {
@@ -22,7 +22,7 @@ public class AlphaWolf : BasicEnemyAgent
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         Dying = false;
-        rb = GetComponent<Rigidbody>();
+        rb2 = GetComponent<Rigidbody>();
         attack = 0;
         rand = Random.value;
         if (rand < 0.1) wolfNum = 0;
@@ -112,8 +112,8 @@ public class AlphaWolf : BasicEnemyAgent
             {
                 // NEW MOVEMENT HERE
                 animator.SetInteger("moving", 2);
-                rb.MovePosition(
-                    rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+                rb2.MovePosition(
+                    rb2.position + (target.transform.position - rb2.position) * Time.deltaTime * movementSpeed);
                 Body.transform.RotateAround(transform.position, transform.up,
                     -Vector3.SignedAngle(target.transform.position - transform.position, Body.transform.forward,
                         transform.up) /
