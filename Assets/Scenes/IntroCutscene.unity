@@ -7509,7 +7509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &896901665
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15231,8 +15231,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 860, y: -240}
-  m_SizeDelta: {x: 1500, y: 300}
+  m_AnchoredPosition: {x: 1371, y: -240}
+  m_SizeDelta: {x: 2300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1716779976
 MonoBehaviour:
@@ -15831,8 +15831,6 @@ PlayableDirector:
     value: {fileID: 1531813062}
   - key: {fileID: 6277835207453655458, guid: 38cedd90db0669b4b8a42f29f02bac86, type: 2}
     value: {fileID: 1531813062}
-  - key: {fileID: -7532215792096604310, guid: 38cedd90db0669b4b8a42f29f02bac86, type: 2}
-    value: {fileID: 896901664}
   m_ExposedReferences:
     m_References:
     - 987fbadf37069cb41a28a6452f941fd5: {fileID: 1212596976}
@@ -15874,6 +15872,7 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 852a74c5bbe303e42811036f47cc7833, type: 2}
+    - {fileID: 11400000, guid: 89dfe4dc8788eea49b9a936973aec959, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -15888,6 +15887,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 896901664}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
 --- !u!1 &1860223118
 GameObject:
