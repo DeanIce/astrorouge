@@ -33,7 +33,7 @@ public class MeleeEnemy : BasicEnemyAgent
         }
     }
 
-    public virtual IEnumerator Attack()
+    public new virtual IEnumerator Attack()
     {
         RaycastHit[] hits;
         //rend.enabled = true;
@@ -43,7 +43,7 @@ public class MeleeEnemy : BasicEnemyAgent
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (var hit in hits)
+            foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
