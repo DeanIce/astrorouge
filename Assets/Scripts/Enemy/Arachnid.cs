@@ -21,6 +21,12 @@ public class Arachnid : BasicEnemyAgent
         base.Start();
     }
 
+    public override void FixedUpdate()
+    {
+        CheckDeath();
+        base.FixedUpdate();
+    }
+
     public override IEnumerator Attack()
     {
         RaycastHit[] hits;
@@ -55,17 +61,18 @@ public class Arachnid : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            if (Random.value < 0.5) StartCoroutine(DeathAnim(12));
-            else StartCoroutine(DeathAnim(13));
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
+        }
     }
 }

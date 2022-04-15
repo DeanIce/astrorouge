@@ -11,9 +11,9 @@ public class AlphaWolf : BasicEnemyAgent
     [SerializeField] private GameObject wolf;
     private Animator animator;
     private int attack, wolfNum;
-    private float rand;
     private bool condition;
-    private Rigidbody rb;
+    private float rand;
+    private Rigidbody rb2;
 
     public override void Start()
     {
@@ -22,7 +22,7 @@ public class AlphaWolf : BasicEnemyAgent
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
         Dying = false;
-        rb = GetComponent<Rigidbody>();
+        rb2 = GetComponent<Rigidbody>();
         attack = 0;
         rand = Random.value;
         if (rand < 0.1) wolfNum = 0;
@@ -30,7 +30,7 @@ public class AlphaWolf : BasicEnemyAgent
         else if (rand < 0.55) wolfNum = 2;
         else if (rand < 0.9) wolfNum = 3;
         else wolfNum = 4;
-        for (int count = 0; count < wolfNum; count++)
+        for (var count = 0; count < wolfNum; count++)
         {
             GameObject enemy = Instantiate(wolf);
             enemy.transform.position = transform.position;
@@ -38,6 +38,7 @@ public class AlphaWolf : BasicEnemyAgent
             enemy.GetComponent<Wolf>().SetAlpha(this);
             AddWolf(enemy);
         }
+
         base.Start();
     }
 
@@ -47,8 +48,14 @@ public class AlphaWolf : BasicEnemyAgent
 
         foreach (GameObject wolf in wolves)
         {
-            wolf.GetComponent<Wolf>().maxDistance = 5 + wolves.Count;
+            if (wolf != null)
+            {
+                if (wolf && wolf.GetComponent<Wolf>())
+                    wolf.GetComponent<Wolf>().maxDistance = 5 + wolves.Count;
+            }
         }
+
+        CheckDeath();
 
         if (Wandering) attack = 0;
 
@@ -68,7 +75,8 @@ public class AlphaWolf : BasicEnemyAgent
             StartCoroutine(BattleAnim(false));
             foreach (GameObject wolf in wolves)
             {
-                wolf.GetComponent<Wolf>().OnTriggerExit(other);
+                if (wolf != null)
+                    wolf.GetComponent<Wolf>().OnTriggerExit(other);
             }
         }
 
@@ -83,8 +91,11 @@ public class AlphaWolf : BasicEnemyAgent
 
         foreach (GameObject wolf in wolves)
         {
-            if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered)
-                wolf.GetComponent<Wolf>().ReceiveOrder(target);
+            if (wolf != null)
+            {
+                if (Random.value < attackChance || wolf.GetComponent<Wolf>().ordered)
+                    wolf.GetComponent<Wolf>().ReceiveOrder(target);
+            }
         }
 
         //attacking
@@ -104,16 +115,21 @@ public class AlphaWolf : BasicEnemyAgent
         }
         else
         {
-
-            if (wolves.Count > 0) condition = !Attacking && (Mathf.Abs((Body.transform.position - target.transform.position).magnitude) > AttackRange + wolves.Count || Vector3.Angle(Body.transform.forward, target.transform.position - Body.transform.position) > viewAngle);
+            if (wolves.Count > 0)
+            {
+                condition = !Attacking &&
+                            (Mathf.Abs((Body.transform.position - target.transform.position).magnitude) >
+                                AttackRange + wolves.Count || Vector3.Angle(Body.transform.forward,
+                                    target.transform.position - Body.transform.position) > viewAngle);
+            }
             else condition = !Attacking;
 
             if (condition)
             {
                 // NEW MOVEMENT HERE
                 animator.SetInteger("moving", 2);
-                rb.MovePosition(
-                    rb.position + (target.transform.position - rb.position) * Time.deltaTime * movementSpeed);
+                rb2.MovePosition(
+                    rb2.position + (target.transform.position - rb2.position) * Time.deltaTime * movementSpeed);
                 Body.transform.RotateAround(transform.position, transform.up,
                     -Vector3.SignedAngle(target.transform.position - transform.position, Body.transform.forward,
                         transform.up) /
@@ -132,8 +148,8 @@ public class AlphaWolf : BasicEnemyAgent
         //rend.enabled = true;
         Attacking = true;
         StartCoroutine(AttackAnim());
-        if (attack != 2) yield return WaitForSecondsOrDie(1.25f/animator.speed);
-        else yield return WaitForSecondsOrDie(1.458f/animator.speed);
+        if (attack != 2) yield return WaitForSecondsOrDie(1.25f / animator.speed);
+        else yield return WaitForSecondsOrDie(1.458f / animator.speed);
         animator.speed = 1;
         if (animator.GetInteger("battle") == 1) animator.SetInteger("moving", 2);
         else animator.SetInteger("moving", 1);
@@ -150,21 +166,23 @@ public class AlphaWolf : BasicEnemyAgent
             Dying = true;
             foreach (GameObject wolf in wolves)
             {
-                wolf.GetComponent<Wolf>().SetAlpha(null);
+                if (wolf != null)
+                    wolf.GetComponent<Wolf>().SetAlpha(null);
             }
 
-            if (Random.value < 0.5) StartCoroutine(DeathAnim(13));
-            else StartCoroutine(DeathAnim(12));
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12)
+        {
+            if (Random.value < 0.5) animator.SetInteger("moving", 12);
+            else animator.SetInteger("moving", 13);
+        }
     }
 
     private IEnumerator BattleAnim(bool start)
