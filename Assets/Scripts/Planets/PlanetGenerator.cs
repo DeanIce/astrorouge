@@ -450,6 +450,11 @@ namespace Planets
             lod2.GetComponent<MeshFilter>().sharedMesh = meshLoDs[2];
 
 
+            lod0.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
+            lod1.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
+            lod2.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
+
+
             // Medium LOD used for spawning objects
             spawnObjectVertices = meshLoDs[1].vertices;
 
