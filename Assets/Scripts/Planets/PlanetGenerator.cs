@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Managers;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -86,7 +85,7 @@ namespace Planets
         // Update is called once per frame
         private void Update()
         {
-            bool requestPlanets = DevTools.drawPlanets;
+            var requestPlanets = false;
             if (InEditMode)
             {
                 if (requestPlanets)
@@ -284,7 +283,7 @@ namespace Planets
 
         private void LogTimer(Stopwatch sw, string text)
         {
-            if (DevTools.logPlanetInfo) print(text + " " + sw.ElapsedMilliseconds + " ms.");
+            if (false) print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
 

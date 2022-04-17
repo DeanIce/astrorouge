@@ -79,5 +79,12 @@ namespace Utilities
 
             return "done";
         }
+
+
+        [ConsoleMethod("fps", "show/hide FPS counter")]
+        public static void FPS(bool show)
+        {
+            DevTools.Instance.showFPSCounter = show;
+        }
     }
 }
