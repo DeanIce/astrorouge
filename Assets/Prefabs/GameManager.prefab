@@ -167,6 +167,8 @@ MonoBehaviour:
     weight: 200
   - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
     weight: 2000
+  - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
+    weight: 200
 --- !u!114 &1187498790012229965
 MonoBehaviour:
   m_ObjectHideFlags: 0
