@@ -19,24 +19,6 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.ads": {
-      "version": "3.7.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.analytics": {
-      "version": "3.5.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.burst": {
       "version": "1.6.4",
       "depth": 1,
@@ -51,15 +33,6 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.collab-proxy": {
-      "version": "1.5.7",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "2.0.0"
-      },
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
@@ -101,7 +74,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.10",
+      "version": "3.0.13",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -141,8 +114,8 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.nuget.newtonsoft-json": {
-      "version": "2.0.0",
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.10.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -156,7 +129,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
-      "version": "3.1.1",
+      "version": "3.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -164,18 +137,14 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.purchasing": {
-      "version": "3.2.2",
+    "com.unity.project-auditor": {
+      "version": "https://github.com/Unity-Technologies/ProjectAuditor.git",
       "depth": 0,
-      "source": "registry",
+      "source": "git",
       "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.nuget.mono-cecil": "1.10.1"
       },
-      "url": "https://packages.unity.com"
+      "hash": "a310e439211bbec980b4503d7fd9a32e5e435a8e"
     },
     "com.unity.recorder": {
       "version": "3.0.3",

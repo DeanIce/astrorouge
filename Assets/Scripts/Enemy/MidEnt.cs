@@ -13,6 +13,7 @@ public class MidEnt : BasicEnemyAgent
     public override void Start()
     {
         health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         animator.SetInteger("moving", 2);
@@ -29,6 +30,8 @@ public class MidEnt : BasicEnemyAgent
             attack = 0;
         }
 
+        CheckDeath();
+
         base.FixedUpdate();
     }
 
@@ -43,7 +46,7 @@ public class MidEnt : BasicEnemyAgent
         if (summon)
         {
             GameObject enemy = Instantiate(flower);
-            enemy.transform.position = transform.position + 2*Body.transform.forward;
+            enemy.transform.position = transform.position + 2*Body.transform.up + 2*Body.transform.forward;
             enemy.tag = "enemy";
         }
         animator.speed = 1;
@@ -89,17 +92,18 @@ public class MidEnt : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            if (Random.value < 0.5) StartCoroutine(DeathAnim(13));
-            else StartCoroutine(DeathAnim(14));
+            if (Random.value < 0.5) animator.SetInteger("moving", 13);
+            else animator.SetInteger("moving", 14);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            if (Random.value < 0.5) animator.SetInteger("moving", 13);
+            else animator.SetInteger("moving", 14);
+        }
     }
 }

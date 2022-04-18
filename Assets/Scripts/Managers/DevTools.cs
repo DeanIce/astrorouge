@@ -1,12 +1,7 @@
-﻿using UnityEngine;
-
-namespace Managers
+﻿namespace Managers
 {
-    [ExecuteInEditMode]
     public class DevTools : ManagerSingleton<DevTools>
     {
-        public static bool drawPlanets = true;
-
-        public static bool logPlanetInfo;
+        public bool showFPSCounter;
     }
 }

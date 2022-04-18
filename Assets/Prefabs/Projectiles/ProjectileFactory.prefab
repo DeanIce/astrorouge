@@ -50,3 +50,5 @@ MonoBehaviour:
   hitscanProjectile: {fileID: 2171838815963128636, guid: 10778ed6938ce584182db9443f05e5df, type: 3}
   instantaneousBoxProjectile: {fileID: 2171838815963128636, guid: 3f7dac95682ea2a48af1e64f4a7fcad8, type: 3}
   explosionProjectile: {fileID: 2171838815963128636, guid: 8afa52d7bac908e408bd51d683ef6f39, type: 3}
+  projectileSkins:
+  - {fileID: 7677835714251546019, guid: 557aa81df3c1ebd42ac2397220971cb7, type: 3}

@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
 
 public class BatEnemy : BasicEnemyAgent
@@ -7,11 +8,18 @@ public class BatEnemy : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= LevelSelect.Instance.requestedLevel + 1;
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
         Dying = false;
         base.Start();
+    }
+
+    public override void FixedUpdate()
+    {
+        CheckDeath();
+        base.FixedUpdate();
     }
 
     public override IEnumerator Attack()
@@ -32,16 +40,16 @@ public class BatEnemy : BasicEnemyAgent
         if (!Dying)
         {
             Dying = true;
-            StartCoroutine(DeathAnim(14));
+            animator.SetInteger("moving", 14);
             base.Die();
         }
     }
 
-    private IEnumerator DeathAnim(int anim)
+    private void CheckDeath()
     {
-        yield return new WaitForSeconds(0.2f);
-        animator.SetInteger("moving", anim);
-        yield return new WaitForSeconds(0.1f);
-        animator.SetInteger("moving", 0);
+        if (Dying && (animator.GetInteger("moving") != 13 && animator.GetInteger("moving") != 12))
+        {
+            animator.SetInteger("moving", 14);
+        }
     }
 }

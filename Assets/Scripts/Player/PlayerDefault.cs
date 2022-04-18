@@ -252,6 +252,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         IsSprinting = !IsSprinting;
     }
 
+    public void TakeDmg(float dmg, int type)
+    {
+        TakeDmg(dmg);
+    }
+
     public void TakeDmg(float dmg)
     {
         timeOfLastDamage = Time.time;
