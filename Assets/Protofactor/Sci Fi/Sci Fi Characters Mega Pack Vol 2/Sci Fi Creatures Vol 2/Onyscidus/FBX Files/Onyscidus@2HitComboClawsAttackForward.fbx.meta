@@ -1,241 +1,701 @@
 fileFormatVersion: 2
 guid: a6eb79857f3537d4aa521ca1a57e4ec1
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Onyscidus_Head
-    100004: Onyscidus_JawLowerLeft
-    100006: Onyscidus_JawLowerRight
-    100008: Onyscidus_JawUpperLeft
-    100010: Onyscidus_JawUpperRight
-    100012: Onyscidus_LegFontLeft1
-    100014: Onyscidus_LegFontLeft2
-    100016: Onyscidus_LegFontLeft3
-    100018: Onyscidus_LegFontRight1
-    100020: Onyscidus_LegFontRight2
-    100022: Onyscidus_LegFontRight3
-    100024: Onyscidus_LegMiddleLeft1
-    100026: Onyscidus_LegMiddleLeft2
-    100028: Onyscidus_LegMiddleLeft3
-    100030: Onyscidus_LegMiddleRight1
-    100032: Onyscidus_LegMiddleRight2
-    100034: Onyscidus_LegMiddleRight3
-    100036: Onyscidus_LegRearLeft1
-    100038: Onyscidus_LegRearLeft2
-    100040: Onyscidus_LegRearLeft3
-    100042: Onyscidus_LegRearRight1
-    100044: Onyscidus_LegRearRight2
-    100046: Onyscidus_LegRearRight3
-    100048: Onyscidus_LowerSpine1
-    100050: Onyscidus_LowerSpine2
-    100052: Onyscidus_LowerSpine3
-    100054: Onyscidus_LowerSpine4
-    100056: Onyscidus_MandibuleLowerLeft1
-    100058: Onyscidus_MandibuleLowerLeft2
-    100060: Onyscidus_MandibuleLowerLeft3
-    100062: Onyscidus_MandibuleLowerRight1
-    100064: Onyscidus_MandibuleLowerRight2
-    100066: Onyscidus_MandibuleLowerRight3
-    100068: Onyscidus_MandibuleMiddleLeft1
-    100070: Onyscidus_MandibuleMiddleLeft2
-    100072: Onyscidus_MandibuleMiddleLeft3
-    100074: Onyscidus_MandibuleMiddleRight1
-    100076: Onyscidus_MandibuleMiddleRight2
-    100078: Onyscidus_MandibuleMiddleRight3
-    100080: Onyscidus_MandibuleUpperLeft1
-    100082: Onyscidus_MandibuleUpperLeft2
-    100084: Onyscidus_MandibuleUpperLeft3
-    100086: Onyscidus_MandibuleUpperRight1
-    100088: Onyscidus_MandibuleUpperRight2
-    100090: Onyscidus_MandibuleUpperRight3
-    100092: Onyscidus_Pelvis
-    100094: Onyscidus_Pelvis2
-    100096: Onyscidus_UpperSpine1
-    100098: Onyscidus_UpperSpine2
-    100100: root
-    100102: Dummy001
-    100104: Dummy002
-    100106: Dummy003
-    100108: Dummy005
-    100110: Dummy006
-    100112: Dummy007
-    100114: Dummy008
-    100116: Dummy019
-    100118: Dummy020
-    100120: Dummy021
-    100122: Dummy022
-    100124: Dummy023
-    100126: Dummy024
-    100128: IK Chain004
-    100130: IK Chain005
-    100132: IK Chain006
-    100134: IK Chain007
-    100136: IK Chain008
-    100138: IK Chain009
-    100140: IK Chain010
-    100142: IK Chain011
-    100144: IK Chain012
-    100146: IK Chain013
-    100148: IK Chain014
-    100150: IK Chain015
-    100152: Nub
-    100154: nub
-    100156: nub 1
-    100158: nub 10
-    100160: nub 11
-    100162: nub 12
-    100164: nub 13
-    100166: nub 14
-    100168: nub 15
-    100170: nub 16
-    100172: nub 17
-    100174: nub 18
-    100176: nub 19
-    100178: nub 2
-    100180: nub 3
-    100182: nub 4
-    100184: nub 5
-    100186: nub 6
-    100188: nub 7
-    100190: nub 8
-    100192: nub 9
-    100194: Point001
-    100196: Point002
-    100198: Point003
-    100200: Point004
-    100202: Point005
-    100204: Point006
-    100206: Point007
-    100208: Point008
-    100210: Point009
-    100212: Point010
-    100214: Point011
-    100216: Point012
-    100218: SK_Unyscidus
-    100220: Unyscidus_RENDER
-    400000: //RootNode
-    400002: Onyscidus_Head
-    400004: Onyscidus_JawLowerLeft
-    400006: Onyscidus_JawLowerRight
-    400008: Onyscidus_JawUpperLeft
-    400010: Onyscidus_JawUpperRight
-    400012: Onyscidus_LegFontLeft1
-    400014: Onyscidus_LegFontLeft2
-    400016: Onyscidus_LegFontLeft3
-    400018: Onyscidus_LegFontRight1
-    400020: Onyscidus_LegFontRight2
-    400022: Onyscidus_LegFontRight3
-    400024: Onyscidus_LegMiddleLeft1
-    400026: Onyscidus_LegMiddleLeft2
-    400028: Onyscidus_LegMiddleLeft3
-    400030: Onyscidus_LegMiddleRight1
-    400032: Onyscidus_LegMiddleRight2
-    400034: Onyscidus_LegMiddleRight3
-    400036: Onyscidus_LegRearLeft1
-    400038: Onyscidus_LegRearLeft2
-    400040: Onyscidus_LegRearLeft3
-    400042: Onyscidus_LegRearRight1
-    400044: Onyscidus_LegRearRight2
-    400046: Onyscidus_LegRearRight3
-    400048: Onyscidus_LowerSpine1
-    400050: Onyscidus_LowerSpine2
-    400052: Onyscidus_LowerSpine3
-    400054: Onyscidus_LowerSpine4
-    400056: Onyscidus_MandibuleLowerLeft1
-    400058: Onyscidus_MandibuleLowerLeft2
-    400060: Onyscidus_MandibuleLowerLeft3
-    400062: Onyscidus_MandibuleLowerRight1
-    400064: Onyscidus_MandibuleLowerRight2
-    400066: Onyscidus_MandibuleLowerRight3
-    400068: Onyscidus_MandibuleMiddleLeft1
-    400070: Onyscidus_MandibuleMiddleLeft2
-    400072: Onyscidus_MandibuleMiddleLeft3
-    400074: Onyscidus_MandibuleMiddleRight1
-    400076: Onyscidus_MandibuleMiddleRight2
-    400078: Onyscidus_MandibuleMiddleRight3
-    400080: Onyscidus_MandibuleUpperLeft1
-    400082: Onyscidus_MandibuleUpperLeft2
-    400084: Onyscidus_MandibuleUpperLeft3
-    400086: Onyscidus_MandibuleUpperRight1
-    400088: Onyscidus_MandibuleUpperRight2
-    400090: Onyscidus_MandibuleUpperRight3
-    400092: Onyscidus_Pelvis
-    400094: Onyscidus_Pelvis2
-    400096: Onyscidus_UpperSpine1
-    400098: Onyscidus_UpperSpine2
-    400100: root
-    400102: Dummy001
-    400104: Dummy002
-    400106: Dummy003
-    400108: Dummy005
-    400110: Dummy006
-    400112: Dummy007
-    400114: Dummy008
-    400116: Dummy019
-    400118: Dummy020
-    400120: Dummy021
-    400122: Dummy022
-    400124: Dummy023
-    400126: Dummy024
-    400128: IK Chain004
-    400130: IK Chain005
-    400132: IK Chain006
-    400134: IK Chain007
-    400136: IK Chain008
-    400138: IK Chain009
-    400140: IK Chain010
-    400142: IK Chain011
-    400144: IK Chain012
-    400146: IK Chain013
-    400148: IK Chain014
-    400150: IK Chain015
-    400152: Nub
-    400154: nub
-    400156: nub 1
-    400158: nub 10
-    400160: nub 11
-    400162: nub 12
-    400164: nub 13
-    400166: nub 14
-    400168: nub 15
-    400170: nub 16
-    400172: nub 17
-    400174: nub 18
-    400176: nub 19
-    400178: nub 2
-    400180: nub 3
-    400182: nub 4
-    400184: nub 5
-    400186: nub 6
-    400188: nub 7
-    400190: nub 8
-    400192: nub 9
-    400194: Point001
-    400196: Point002
-    400198: Point003
-    400200: Point004
-    400202: Point005
-    400204: Point006
-    400206: Point007
-    400208: Point008
-    400210: Point009
-    400212: Point010
-    400214: Point011
-    400216: Point012
-    400218: SK_Unyscidus
-    400220: Unyscidus_RENDER
-    2100000: M_Onyscidus
-    2300000: Unyscidus_RENDER
-    3300000: Unyscidus_RENDER
-    4300000: SK_Unyscidus
-    4300002: Unyscidus_RENDER
-    7400000: 2HitComboClawsAttackForward
-    9500000: //RootNode
-    13700000: SK_Unyscidus
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Onyscidus_Head
+  - first:
+      1: 100004
+    second: Onyscidus_JawLowerLeft
+  - first:
+      1: 100006
+    second: Onyscidus_JawLowerRight
+  - first:
+      1: 100008
+    second: Onyscidus_JawUpperLeft
+  - first:
+      1: 100010
+    second: Onyscidus_JawUpperRight
+  - first:
+      1: 100012
+    second: Onyscidus_LegFontLeft1
+  - first:
+      1: 100014
+    second: Onyscidus_LegFontLeft2
+  - first:
+      1: 100016
+    second: Onyscidus_LegFontLeft3
+  - first:
+      1: 100018
+    second: Onyscidus_LegFontRight1
+  - first:
+      1: 100020
+    second: Onyscidus_LegFontRight2
+  - first:
+      1: 100022
+    second: Onyscidus_LegFontRight3
+  - first:
+      1: 100024
+    second: Onyscidus_LegMiddleLeft1
+  - first:
+      1: 100026
+    second: Onyscidus_LegMiddleLeft2
+  - first:
+      1: 100028
+    second: Onyscidus_LegMiddleLeft3
+  - first:
+      1: 100030
+    second: Onyscidus_LegMiddleRight1
+  - first:
+      1: 100032
+    second: Onyscidus_LegMiddleRight2
+  - first:
+      1: 100034
+    second: Onyscidus_LegMiddleRight3
+  - first:
+      1: 100036
+    second: Onyscidus_LegRearLeft1
+  - first:
+      1: 100038
+    second: Onyscidus_LegRearLeft2
+  - first:
+      1: 100040
+    second: Onyscidus_LegRearLeft3
+  - first:
+      1: 100042
+    second: Onyscidus_LegRearRight1
+  - first:
+      1: 100044
+    second: Onyscidus_LegRearRight2
+  - first:
+      1: 100046
+    second: Onyscidus_LegRearRight3
+  - first:
+      1: 100048
+    second: Onyscidus_LowerSpine1
+  - first:
+      1: 100050
+    second: Onyscidus_LowerSpine2
+  - first:
+      1: 100052
+    second: Onyscidus_LowerSpine3
+  - first:
+      1: 100054
+    second: Onyscidus_LowerSpine4
+  - first:
+      1: 100056
+    second: Onyscidus_MandibuleLowerLeft1
+  - first:
+      1: 100058
+    second: Onyscidus_MandibuleLowerLeft2
+  - first:
+      1: 100060
+    second: Onyscidus_MandibuleLowerLeft3
+  - first:
+      1: 100062
+    second: Onyscidus_MandibuleLowerRight1
+  - first:
+      1: 100064
+    second: Onyscidus_MandibuleLowerRight2
+  - first:
+      1: 100066
+    second: Onyscidus_MandibuleLowerRight3
+  - first:
+      1: 100068
+    second: Onyscidus_MandibuleMiddleLeft1
+  - first:
+      1: 100070
+    second: Onyscidus_MandibuleMiddleLeft2
+  - first:
+      1: 100072
+    second: Onyscidus_MandibuleMiddleLeft3
+  - first:
+      1: 100074
+    second: Onyscidus_MandibuleMiddleRight1
+  - first:
+      1: 100076
+    second: Onyscidus_MandibuleMiddleRight2
+  - first:
+      1: 100078
+    second: Onyscidus_MandibuleMiddleRight3
+  - first:
+      1: 100080
+    second: Onyscidus_MandibuleUpperLeft1
+  - first:
+      1: 100082
+    second: Onyscidus_MandibuleUpperLeft2
+  - first:
+      1: 100084
+    second: Onyscidus_MandibuleUpperLeft3
+  - first:
+      1: 100086
+    second: Onyscidus_MandibuleUpperRight1
+  - first:
+      1: 100088
+    second: Onyscidus_MandibuleUpperRight2
+  - first:
+      1: 100090
+    second: Onyscidus_MandibuleUpperRight3
+  - first:
+      1: 100092
+    second: Onyscidus_Pelvis
+  - first:
+      1: 100094
+    second: Onyscidus_Pelvis2
+  - first:
+      1: 100096
+    second: Onyscidus_UpperSpine1
+  - first:
+      1: 100098
+    second: Onyscidus_UpperSpine2
+  - first:
+      1: 100100
+    second: root
+  - first:
+      1: 100102
+    second: Dummy001
+  - first:
+      1: 100104
+    second: Dummy002
+  - first:
+      1: 100106
+    second: Dummy003
+  - first:
+      1: 100108
+    second: Dummy005
+  - first:
+      1: 100110
+    second: Dummy006
+  - first:
+      1: 100112
+    second: Dummy007
+  - first:
+      1: 100114
+    second: Dummy008
+  - first:
+      1: 100116
+    second: Dummy019
+  - first:
+      1: 100118
+    second: Dummy020
+  - first:
+      1: 100120
+    second: Dummy021
+  - first:
+      1: 100122
+    second: Dummy022
+  - first:
+      1: 100124
+    second: Dummy023
+  - first:
+      1: 100126
+    second: Dummy024
+  - first:
+      1: 100128
+    second: IK Chain004
+  - first:
+      1: 100130
+    second: IK Chain005
+  - first:
+      1: 100132
+    second: IK Chain006
+  - first:
+      1: 100134
+    second: IK Chain007
+  - first:
+      1: 100136
+    second: IK Chain008
+  - first:
+      1: 100138
+    second: IK Chain009
+  - first:
+      1: 100140
+    second: IK Chain010
+  - first:
+      1: 100142
+    second: IK Chain011
+  - first:
+      1: 100144
+    second: IK Chain012
+  - first:
+      1: 100146
+    second: IK Chain013
+  - first:
+      1: 100148
+    second: IK Chain014
+  - first:
+      1: 100150
+    second: IK Chain015
+  - first:
+      1: 100152
+    second: Nub
+  - first:
+      1: 100154
+    second: nub
+  - first:
+      1: 100156
+    second: nub 1
+  - first:
+      1: 100158
+    second: nub 10
+  - first:
+      1: 100160
+    second: nub 11
+  - first:
+      1: 100162
+    second: nub 12
+  - first:
+      1: 100164
+    second: nub 13
+  - first:
+      1: 100166
+    second: nub 14
+  - first:
+      1: 100168
+    second: nub 15
+  - first:
+      1: 100170
+    second: nub 16
+  - first:
+      1: 100172
+    second: nub 17
+  - first:
+      1: 100174
+    second: nub 18
+  - first:
+      1: 100176
+    second: nub 19
+  - first:
+      1: 100178
+    second: nub 2
+  - first:
+      1: 100180
+    second: nub 3
+  - first:
+      1: 100182
+    second: nub 4
+  - first:
+      1: 100184
+    second: nub 5
+  - first:
+      1: 100186
+    second: nub 6
+  - first:
+      1: 100188
+    second: nub 7
+  - first:
+      1: 100190
+    second: nub 8
+  - first:
+      1: 100192
+    second: nub 9
+  - first:
+      1: 100194
+    second: Point001
+  - first:
+      1: 100196
+    second: Point002
+  - first:
+      1: 100198
+    second: Point003
+  - first:
+      1: 100200
+    second: Point004
+  - first:
+      1: 100202
+    second: Point005
+  - first:
+      1: 100204
+    second: Point006
+  - first:
+      1: 100206
+    second: Point007
+  - first:
+      1: 100208
+    second: Point008
+  - first:
+      1: 100210
+    second: Point009
+  - first:
+      1: 100212
+    second: Point010
+  - first:
+      1: 100214
+    second: Point011
+  - first:
+      1: 100216
+    second: Point012
+  - first:
+      1: 100218
+    second: SK_Unyscidus
+  - first:
+      1: 100220
+    second: Unyscidus_RENDER
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Onyscidus_Head
+  - first:
+      4: 400004
+    second: Onyscidus_JawLowerLeft
+  - first:
+      4: 400006
+    second: Onyscidus_JawLowerRight
+  - first:
+      4: 400008
+    second: Onyscidus_JawUpperLeft
+  - first:
+      4: 400010
+    second: Onyscidus_JawUpperRight
+  - first:
+      4: 400012
+    second: Onyscidus_LegFontLeft1
+  - first:
+      4: 400014
+    second: Onyscidus_LegFontLeft2
+  - first:
+      4: 400016
+    second: Onyscidus_LegFontLeft3
+  - first:
+      4: 400018
+    second: Onyscidus_LegFontRight1
+  - first:
+      4: 400020
+    second: Onyscidus_LegFontRight2
+  - first:
+      4: 400022
+    second: Onyscidus_LegFontRight3
+  - first:
+      4: 400024
+    second: Onyscidus_LegMiddleLeft1
+  - first:
+      4: 400026
+    second: Onyscidus_LegMiddleLeft2
+  - first:
+      4: 400028
+    second: Onyscidus_LegMiddleLeft3
+  - first:
+      4: 400030
+    second: Onyscidus_LegMiddleRight1
+  - first:
+      4: 400032
+    second: Onyscidus_LegMiddleRight2
+  - first:
+      4: 400034
+    second: Onyscidus_LegMiddleRight3
+  - first:
+      4: 400036
+    second: Onyscidus_LegRearLeft1
+  - first:
+      4: 400038
+    second: Onyscidus_LegRearLeft2
+  - first:
+      4: 400040
+    second: Onyscidus_LegRearLeft3
+  - first:
+      4: 400042
+    second: Onyscidus_LegRearRight1
+  - first:
+      4: 400044
+    second: Onyscidus_LegRearRight2
+  - first:
+      4: 400046
+    second: Onyscidus_LegRearRight3
+  - first:
+      4: 400048
+    second: Onyscidus_LowerSpine1
+  - first:
+      4: 400050
+    second: Onyscidus_LowerSpine2
+  - first:
+      4: 400052
+    second: Onyscidus_LowerSpine3
+  - first:
+      4: 400054
+    second: Onyscidus_LowerSpine4
+  - first:
+      4: 400056
+    second: Onyscidus_MandibuleLowerLeft1
+  - first:
+      4: 400058
+    second: Onyscidus_MandibuleLowerLeft2
+  - first:
+      4: 400060
+    second: Onyscidus_MandibuleLowerLeft3
+  - first:
+      4: 400062
+    second: Onyscidus_MandibuleLowerRight1
+  - first:
+      4: 400064
+    second: Onyscidus_MandibuleLowerRight2
+  - first:
+      4: 400066
+    second: Onyscidus_MandibuleLowerRight3
+  - first:
+      4: 400068
+    second: Onyscidus_MandibuleMiddleLeft1
+  - first:
+      4: 400070
+    second: Onyscidus_MandibuleMiddleLeft2
+  - first:
+      4: 400072
+    second: Onyscidus_MandibuleMiddleLeft3
+  - first:
+      4: 400074
+    second: Onyscidus_MandibuleMiddleRight1
+  - first:
+      4: 400076
+    second: Onyscidus_MandibuleMiddleRight2
+  - first:
+      4: 400078
+    second: Onyscidus_MandibuleMiddleRight3
+  - first:
+      4: 400080
+    second: Onyscidus_MandibuleUpperLeft1
+  - first:
+      4: 400082
+    second: Onyscidus_MandibuleUpperLeft2
+  - first:
+      4: 400084
+    second: Onyscidus_MandibuleUpperLeft3
+  - first:
+      4: 400086
+    second: Onyscidus_MandibuleUpperRight1
+  - first:
+      4: 400088
+    second: Onyscidus_MandibuleUpperRight2
+  - first:
+      4: 400090
+    second: Onyscidus_MandibuleUpperRight3
+  - first:
+      4: 400092
+    second: Onyscidus_Pelvis
+  - first:
+      4: 400094
+    second: Onyscidus_Pelvis2
+  - first:
+      4: 400096
+    second: Onyscidus_UpperSpine1
+  - first:
+      4: 400098
+    second: Onyscidus_UpperSpine2
+  - first:
+      4: 400100
+    second: root
+  - first:
+      4: 400102
+    second: Dummy001
+  - first:
+      4: 400104
+    second: Dummy002
+  - first:
+      4: 400106
+    second: Dummy003
+  - first:
+      4: 400108
+    second: Dummy005
+  - first:
+      4: 400110
+    second: Dummy006
+  - first:
+      4: 400112
+    second: Dummy007
+  - first:
+      4: 400114
+    second: Dummy008
+  - first:
+      4: 400116
+    second: Dummy019
+  - first:
+      4: 400118
+    second: Dummy020
+  - first:
+      4: 400120
+    second: Dummy021
+  - first:
+      4: 400122
+    second: Dummy022
+  - first:
+      4: 400124
+    second: Dummy023
+  - first:
+      4: 400126
+    second: Dummy024
+  - first:
+      4: 400128
+    second: IK Chain004
+  - first:
+      4: 400130
+    second: IK Chain005
+  - first:
+      4: 400132
+    second: IK Chain006
+  - first:
+      4: 400134
+    second: IK Chain007
+  - first:
+      4: 400136
+    second: IK Chain008
+  - first:
+      4: 400138
+    second: IK Chain009
+  - first:
+      4: 400140
+    second: IK Chain010
+  - first:
+      4: 400142
+    second: IK Chain011
+  - first:
+      4: 400144
+    second: IK Chain012
+  - first:
+      4: 400146
+    second: IK Chain013
+  - first:
+      4: 400148
+    second: IK Chain014
+  - first:
+      4: 400150
+    second: IK Chain015
+  - first:
+      4: 400152
+    second: Nub
+  - first:
+      4: 400154
+    second: nub
+  - first:
+      4: 400156
+    second: nub 1
+  - first:
+      4: 400158
+    second: nub 10
+  - first:
+      4: 400160
+    second: nub 11
+  - first:
+      4: 400162
+    second: nub 12
+  - first:
+      4: 400164
+    second: nub 13
+  - first:
+      4: 400166
+    second: nub 14
+  - first:
+      4: 400168
+    second: nub 15
+  - first:
+      4: 400170
+    second: nub 16
+  - first:
+      4: 400172
+    second: nub 17
+  - first:
+      4: 400174
+    second: nub 18
+  - first:
+      4: 400176
+    second: nub 19
+  - first:
+      4: 400178
+    second: nub 2
+  - first:
+      4: 400180
+    second: nub 3
+  - first:
+      4: 400182
+    second: nub 4
+  - first:
+      4: 400184
+    second: nub 5
+  - first:
+      4: 400186
+    second: nub 6
+  - first:
+      4: 400188
+    second: nub 7
+  - first:
+      4: 400190
+    second: nub 8
+  - first:
+      4: 400192
+    second: nub 9
+  - first:
+      4: 400194
+    second: Point001
+  - first:
+      4: 400196
+    second: Point002
+  - first:
+      4: 400198
+    second: Point003
+  - first:
+      4: 400200
+    second: Point004
+  - first:
+      4: 400202
+    second: Point005
+  - first:
+      4: 400204
+    second: Point006
+  - first:
+      4: 400206
+    second: Point007
+  - first:
+      4: 400208
+    second: Point008
+  - first:
+      4: 400210
+    second: Point009
+  - first:
+      4: 400212
+    second: Point010
+  - first:
+      4: 400214
+    second: Point011
+  - first:
+      4: 400216
+    second: Point012
+  - first:
+      4: 400218
+    second: SK_Unyscidus
+  - first:
+      4: 400220
+    second: Unyscidus_RENDER
+  - first:
+      21: 2100000
+    second: M_Onyscidus
+  - first:
+      23: 2300000
+    second: Unyscidus_RENDER
+  - first:
+      33: 3300000
+    second: Unyscidus_RENDER
+  - first:
+      43: 4300000
+    second: SK_Unyscidus
+  - first:
+      43: 4300002
+    second: Unyscidus_RENDER
+  - first:
+      74: 7400000
+    second: 2HitComboClawsAttackForward
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: SK_Unyscidus
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -244,6 +704,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -264,6 +725,7 @@ ModelImporter:
     - serializedVersion: 16
       name: 2HitComboClawsAttackForward
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 65
       wrapMode: 0
@@ -284,7 +746,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.32584265
+        functionName: DoDamage
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7335848
+        functionName: NewEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -296,25 +772,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -323,10 +808,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -336,14 +821,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: root
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 31d7511636360e046a439c1b7e1c27ec,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 31d7511636360e046a439c1b7e1c27ec, type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
