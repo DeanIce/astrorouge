@@ -221,6 +221,7 @@ MonoBehaviour:
   rangeKnockbackForce: 0
   rangeProjectileRange: 0
   rangeProjectileSpeed: 0
+  rangeGrenadeSizeMultiplier: 0
   maxHealth: 0
   currentHealth: 0
   healthRegen: 0
@@ -260,6 +261,7 @@ MonoBehaviour:
   baseRangeKnockbackForce: 2
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
+  baseRangeGrenadeSizeMultiplier: 1
   baseMaxHealth: 100
   baseHealthRegen: 2
   baseRegenDelay: 10
