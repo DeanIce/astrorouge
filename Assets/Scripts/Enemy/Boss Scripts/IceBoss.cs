@@ -126,9 +126,9 @@ public class IceBoss : MonoBehaviour
     // Death
     IEnumerator DeathAnimation()
     {
-        animator.SetBool("Dying", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("Dying", false);
+        animator.SetBool("Death", true);
+        yield return new WaitForSeconds(2.333f);
+        animator.SetBool("Death", false);
     }
 
     // Attacks
