@@ -31,6 +31,11 @@ public class IceBoss : MonoBehaviour
     // Movement stuff
     private NavMeshAgent navMeshAgent;
 
+    // damage stuff
+    [SerializeField] private float attackRange;
+    [SerializeField] private int damage;
+    [SerializeField] private int damage2;
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -173,5 +178,42 @@ public class IceBoss : MonoBehaviour
         animator.SetBool("SlamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
+    }
+
+    // DAMAGE
+    public void DoDamage()
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage);
+                }
+            }
+        }
+    }
+
+    public void DoDamage2()
+    {
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"));
+        if (hits.Length != 0)
+        {
+            //check for the player in the things the ray hit by whether it has a PlayerDefault
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
+                {
+                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage2);
+                }
+            }
+        }
     }
 }
