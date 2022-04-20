@@ -13,6 +13,13 @@ public class Ingenalvus : MonoBehaviour
 
     public List<IngenalvusCollider> weakPoints;
 
+    /// <summary>
+    ///     Number of damage levels to display
+    /// </summary>
+    public int level;
+
+    private readonly int maxLevel = 2;
+
     private Animator animator;
 
     // Start is called before the first frame update
@@ -46,6 +53,11 @@ public class Ingenalvus : MonoBehaviour
         {
             EventManager.Instance.runStats.damageDealt += dmg;
             health -= dmg;
+
+            level += 1;
+
+            animator.SetInteger("Weak Points", level);
+            animator.SetTrigger("Take Damage");
 
             print(health);
             if (health <= 0f && iAmAlive) Die();
