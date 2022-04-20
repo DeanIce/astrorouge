@@ -51,6 +51,8 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
         root.GetComponent<IPlayer>()?.TakeDmg(damage);
         root.GetComponent<Ingenalvus>()?.TakeDmg(damage);
 
+        // target.GetComponent<IngenalvusCollider>()?.PassThroughDamage(damage);
+
         effects.ForEach(effect => effect.ApplyEffect(root));
     }
 }
