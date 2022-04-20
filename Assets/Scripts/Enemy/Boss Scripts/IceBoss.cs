@@ -33,6 +33,7 @@ public class IceBoss : MonoBehaviour
 
     // damage stuff
     [SerializeField] private float attackRange;
+    [SerializeField] private float attackRange2;
     [SerializeField] private int damage;
     [SerializeField] private int damage2;
 
@@ -53,17 +54,20 @@ public class IceBoss : MonoBehaviour
 
     void Update()
     {
-        if (!inRange)
-        {
-            animator.SetBool("CrawlForward_RM", true);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.destination = player.transform.position;
-        }
-        else
-        {
-            navMeshAgent.isStopped = true;
-            animator.SetBool("CrawlForward_RM", false);
-        }
+        // Debug.DrawLine(transform.position, transform.position + transform.forward * attackRange2, Color.green, 1f);
+
+        // Attack();
+        // if (!inRange)
+        // {
+        //     animator.SetBool("CrawlForward_RM", true);
+        //     navMeshAgent.isStopped = false;
+        //     navMeshAgent.destination = player.transform.position;
+        // }
+        // else
+        // {
+        //     navMeshAgent.isStopped = true;
+        //     animator.SetBool("CrawlForward_RM", false);
+        // }
     }
 
     void FixedUpdate()
@@ -93,12 +97,43 @@ public class IceBoss : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other) {
+        // Convention: Player layer is 9
+        if (other.gameObject.layer == 9)
+        {
+            // increment timer, call attack when timer is done -> good for rolling
+            // must reset timer after attack
+            // reset timer in OnTriggerExit
+            Debug.Log("In Range!");
+            inRange = true;
+        }
+    }
+
     public void Die()
     {
         if (!dying)
         {
             dying = true;
             StartCoroutine(DeathAnimation());
+        }
+    }
+
+    private void Attack()
+    {
+        if (!attacking) {
+            float randomAttack = Random.value;
+            if (randomAttack < 0.25) {
+                StartCoroutine(JumpAttack());
+            }
+            else if (randomAttack < 0.5) {
+                StartCoroutine(ComboAttack());
+            }
+            else if (randomAttack < 0.75) {
+                StartCoroutine(LeftAttack());
+            }
+            else {
+                StartCoroutine(RightAttack());
+            }
         }
     }
 
@@ -137,46 +172,39 @@ public class IceBoss : MonoBehaviour
     }
 
     // Attacks
-    IEnumerator Roar()
+    IEnumerator JumpAttack()
     {
-        // Don't set false here, instead set false in followup attacks
-        animator.SetBool("Roaring", true);
-        yield return new WaitForSeconds(3);
-    }
-
-    IEnumerator TongueAttack()
-    {
-        animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(5);
-        animator.SetBool("TongueAttacking", false);
+        attacking = true;
+        animator.SetBool("JumpAttack_RM", true);
+        yield return new WaitForSeconds(1.667f);
+        animator.SetBool("JumpAttack_RM", false);
         attacking = false;
     }
 
-    IEnumerator HornAttack()
+    IEnumerator LeftAttack()
     {
-        animator.SetBool("HornAttacking", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("HornAttacking", false);
+        attacking = true;
+        animator.SetBool("LeftAttack_RM", true);
+        yield return new WaitForSeconds(1.333f);
+        animator.SetBool("LeftAttack_RM", false);
         attacking = false;
     }
 
-    IEnumerator RamAttack()
+    IEnumerator RightAttack()
     {
-        // Setting roaring false here since we come from roaring and need it to be true to attack
-        animator.SetBool("RamAttacking", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("RamAttacking", false);
-        animator.SetBool("Roaring", false);
+        attacking = true;
+        animator.SetBool("RightAttack_RM", true);
+        yield return new WaitForSeconds(1.333f);
+        animator.SetBool("RightAttack_RM", false);
         attacking = false;
     }
 
-    IEnumerator SlamAttack()
+    IEnumerator ComboAttack()
     {
-        // Setting roaring false here since we come from roaring and need it to be true to attack
-        animator.SetBool("SlamAttacking", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("SlamAttacking", false);
-        animator.SetBool("Roaring", false);
+        attacking = true;
+        animator.SetBool("ComboAttack_RM", true);
+        yield return new WaitForSeconds(2.167f);
+        animator.SetBool("ComboAttack_RM", false);
         attacking = false;
     }
 
@@ -203,7 +231,7 @@ public class IceBoss : MonoBehaviour
     {
         RaycastHit[] hits;
 
-        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"));
+        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange2, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
         {
             //check for the player in the things the ray hit by whether it has a PlayerDefault

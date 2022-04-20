@@ -4732,7 +4732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1152970638
 Transform:
   m_ObjectHideFlags: 0
@@ -6579,9 +6579,10 @@ MonoBehaviour:
   player: {fileID: 1519450461}
   health: 5000
   movementSpeed: 2
-  attackRange: 0
+  attackRange: 20
+  attackRange2: 15
   damage: 20
-  damage2: 0
+  damage2: 30
 --- !u!54 &1594675659
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6818,7 +6819,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
