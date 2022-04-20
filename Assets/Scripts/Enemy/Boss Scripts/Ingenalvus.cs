@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
+using UnityEngine.AI;
 
 /*
  * Steps in battle:
@@ -24,6 +25,8 @@ public class Ingenalvus : MonoBehaviour
         Dead
     }
 
+    public GameObject player;
+
     public float health = 100;
 
     public GameObject[] bodyColliders;
@@ -40,16 +43,47 @@ public class Ingenalvus : MonoBehaviour
 
     public Mode mode = Mode.AcceptingDamage;
 
+    public float offset = 20;
+    public float speed = 2;
+    private NavMeshAgent agent;
+
     private Animator animator;
 
     private int weakPointsRemaining;
-
 
     // Start is called before the first frame update
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         weakPointsRemaining = weakPoints.Count;
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Update()
+    {
+        if (mode == Mode.AcceptingDamage)
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            // print(dist);
+            agent.SetDestination(player.transform.position);
+            // print($"pos:{agent.updatePosition}, rot:{agent.updateRotation}");
+            if (dist < offset)
+            {
+                print("range reached");
+                agent.isStopped = true;
+                // agent.updatePosition = false;
+                // agent.velocity = Vector3.zero;
+                agent.ResetPath();
+            }
+            else
+            {
+                agent.isStopped = false;
+                // agent.updatePosition = true;
+            }
+
+            float magnitude = agent.velocity.magnitude;
+            animator.SetFloat("Vertical", magnitude);
+        }
     }
 
     public void TakeDmg(float dmg)
@@ -86,6 +120,9 @@ public class Ingenalvus : MonoBehaviour
         {
             weakPoints[i].acceptingDamage = true;
         }
+
+        agent.isStopped = true;
+        agent.ResetPath();
     }
 
 
@@ -98,6 +135,8 @@ public class Ingenalvus : MonoBehaviour
         mode = Mode.Dead;
         EventManager.Instance.runStats.enemiesKilled++;
         animator.SetTrigger("Die");
+        agent.velocity = Vector3.zero;
+        agent.enabled = false;
     }
 
     public void DestroyWeakPoint(IngenalvusCollider ic)
@@ -123,5 +162,6 @@ public class Ingenalvus : MonoBehaviour
         // Set mode back
         mode = Mode.AcceptingDamage;
         health = 20;
+        agent.isStopped = false;
     }
 }
