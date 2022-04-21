@@ -3543,7 +3543,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 2.2328482, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5245,7 +5245,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 2.2328482, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5261,6 +5261,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1299312664}
     m_Modifications:
+    - target: {fileID: 861762933833432580, guid: 4aa1d7b5b9bbe7649b922a39df6f21ca, type: 3}
+      propertyPath: itemDescription
+      value: Increase rate of fire by 2.5% of base rate
+      objectReference: {fileID: 0}
     - target: {fileID: 2063516095916895168, guid: 4aa1d7b5b9bbe7649b922a39df6f21ca, type: 3}
       propertyPath: m_RootOrder
       value: 2

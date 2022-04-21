@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Deathcaps' Dance
-  itemDescription: Adds chance to poisen enemy
+  itemDescription: Adds 5% chance to poisen enemy
   itemIcon: {fileID: 2800000, guid: 2a83b778cead3224387df1d246c33c29, type: 3}
 --- !u!4 &4670045950060823019 stripped
 Transform:
