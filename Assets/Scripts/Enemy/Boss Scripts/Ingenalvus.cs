@@ -25,6 +25,7 @@ public class Ingenalvus : MonoBehaviour
         Dead
     }
 
+
     public GameObject player;
 
     public float health = 100;

@@ -48,24 +48,24 @@ MonoBehaviour:
     weightedRatio: 0.13208853
   enemyAssets:
   - prefab: {fileID: 1743840420767579991, guid: 80502c498e7a5eb4e9cb6b535dffa32b, type: 3}
-    ratio: 0.147
+    ratio: 1
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.07302534
+    weightedRatio: 0.34891832
   - prefab: {fileID: 6092937446732967473, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
     ratio: 0.109
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.054148037
+    weightedRatio: 0.038032096
   - prefab: {fileID: 6876643510276138002, guid: 72847cb29d96a024b8074d1cbc41b42c, type: 3}
     ratio: 0.851
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.4227521
+    weightedRatio: 0.2969295
   - prefab: {fileID: 7964091094029442610, guid: 0d93c61bfe868b545bf6b0bfae0e22b2, type: 3}
     ratio: 0.906
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.45007452
+    weightedRatio: 0.31612003
   numPlanets: {x: 3, y: 4}
   scale: {x: 16.446655, y: 24.66}
-  totalNumEnemies: {x: 58, y: 69}
+  totalNumEnemies: {x: 90, y: 101}
   totalNumProps: {x: 398, y: 398}
   levelMusic: {fileID: 8300000, guid: 301908ce092b54a1ab059af6f2e2a728, type: 3}
   gravityHeight: 5
