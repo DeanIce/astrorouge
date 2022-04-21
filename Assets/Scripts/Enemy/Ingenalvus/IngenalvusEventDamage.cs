@@ -32,5 +32,10 @@ namespace Enemy.Ingenalvus
             ia.BreathFireStop();
             ing.EndWeakPoints();
         }
+
+        public void Smash()
+        {
+            ia.SmashParticleDamage();
+        }
     }
 }

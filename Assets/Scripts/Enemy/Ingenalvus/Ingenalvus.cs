@@ -56,6 +56,7 @@ namespace Enemy.Ingenalvus
         public float fireDamage = 10;
 
         public Animator animator;
+        public float smashDamage = 40;
         private NavMeshAgent agent;
 
         private int weakPointsRemaining;
