@@ -271,7 +271,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
                 dmgAfterArmor = dmg - PlayerStats.Instance.armor;
                 if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
             }
-            else //Debug.Log("Dodged Damage");
+            else Debug.Log("Dodged Damage");
 
             PlayerStats.Instance.currentHealth -= dmgAfterArmor;
             if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
@@ -279,7 +279,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
             StartCoroutine(beginIFrames());
-        }
+        } //else { Debug.Log("got hit while invincible"); }
 
         EventManager.Instance.PlayerStatsUpdated();
         EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth)/ PlayerStats.Instance.maxHealth);
@@ -289,10 +289,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private IEnumerator beginIFrames()
     {
         IframeActive = true;
-        //Debug.Log("starting Iframes");
-        yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.1f);
+        Debug.Log("starting Iframes");
+        yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.001f); // converted to ms
         IframeActive = false;
-        //Debug.Log("Iframes over");
+        Debug.Log("Iframes over");
     }
 
     public void Die()

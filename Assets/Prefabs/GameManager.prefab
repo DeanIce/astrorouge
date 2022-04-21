@@ -263,7 +263,7 @@ MonoBehaviour:
   baseRegenDelay: 10
   baseArmor: 0
   baseDodgeChance: 0
-  baseInvincibilityDuration: 1
+  baseInvincibilityDuration: 175
   baseMaxExtraJumps: 2
   baseJumpForce: 16
   baseExtraJumpDampaner: 0.8
