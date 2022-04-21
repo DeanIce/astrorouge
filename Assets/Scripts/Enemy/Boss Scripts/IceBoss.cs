@@ -28,6 +28,8 @@ public class IceBoss : MonoBehaviour
     public float health;
     public float movementSpeed;
 
+    public string movementState = "forward";
+
     // Movement stuff
     private NavMeshAgent navMeshAgent;
 
@@ -66,21 +68,36 @@ public class IceBoss : MonoBehaviour
         // if (InRollRange()) {
         //     StartCoroutine(RollAttack());
         // }
-
+        print($"movement state: {movementState}");
         if (InCrawlForwardRange()) {
             //print("in crawl forward range");
+            if (movementState != "forward") {
+                StopCrawl();
+                StartForwardCrawl();
+            }
             if (InAttackRange()) {
                 Attack();
             }
             // StartCoroutine(RollAttack());
         }
         else if (InCrawlLeftRange()) {
-            //print("in crawl left range");
-            //animator.SetBool("CrawlLeft_RM", true);
+            if (movementState != "left") {
+                StopCrawl();
+                StartLeftCrawl();
+            }
         }
         else if (InCrawlRightRange()) {
             //print("in crawl right range");
-            //animator.SetBool("CrawlLeft_RM", true);
+            if (movementState != "right") {
+                StopCrawl();
+                StartRightCrawl();
+            }
+        }
+        else if (InCrawlBackwardRange()) {
+            if (movementState != "backward") {
+                StopCrawl();
+                StartBackwardCrawl();
+            }
         }
 
         // Attack();
@@ -108,7 +125,15 @@ public class IceBoss : MonoBehaviour
     }
 
     private bool InCrawlForwardRange() {
-        return Vector3.Angle(transform.forward, player.transform.position - transform.position) <= crawlForwardAngle;
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return (angle <= crawlForwardAngle) && (distance >= 15);
+    }
+
+    private bool InCrawlBackwardRange() {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return (angle <= crawlForwardAngle) && (distance < 15);
     }
 
     private bool InCrawlLeftRange() {
@@ -169,6 +194,7 @@ public class IceBoss : MonoBehaviour
         }
     }
 
+    // death
     public void Die()
     {
         if (!dying)
@@ -178,6 +204,45 @@ public class IceBoss : MonoBehaviour
         }
     }
 
+    // movement states
+    private void StartLeftCrawl() {
+        movementState = "left";
+        animator.SetBool("CrawlLeft_RM", true);
+    }
+
+    private void StartRightCrawl() {
+        movementState = "right";
+        animator.SetBool("CrawlRight_RM", true);
+    }
+
+    private void StartForwardCrawl() {
+        movementState = "forward";
+        animator.SetBool("CrawlForward_RM", true);
+    }
+
+    private void StartBackwardCrawl() {
+        movementState = "backward";
+        animator.SetBool("CrawlBackward_RM", true);
+    }
+
+    private void StopCrawl() {
+        switch (movementState) {
+            case "forward":
+                animator.SetBool("CrawlForward_RM", false);
+                return;
+            case "left":
+                animator.SetBool("CrawlLeft_RM", false);
+                return;
+            case "right":
+                animator.SetBool("CrawlRight_RM", false);
+                return;
+            case "backward":
+                animator.SetBool("CrawlBackward_RM", false);
+                return;
+        }
+    }
+
+    // normal attacking
     private void Attack()
     {
         if (!attacking) {
