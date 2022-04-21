@@ -13,6 +13,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
     // Public variables that the game manager or other objects may need
     public float health;
+    [HideInInspector] public float maxHealth;
     public float movementSpeed;
     [SerializeField] private GameObject detector;
     [SerializeField] private GameObject body;
@@ -42,6 +43,8 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private bool rotating;
     private Rigidbody targetRb;
 
+    private float awareTimer;
+
 
     [NonSerialized] public float xpGift = 5;
     public GameObject Detector => detector;
@@ -60,6 +63,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     {
         rb = GetComponent<Rigidbody>();
         detectorRenderer = detector.GetComponent<Renderer>();
+        Wandering = true;
         Dying = false;
     }
 
@@ -69,6 +73,12 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         if (!hunting && !Dying)
             Wander(body.transform.forward);
         else if (Dying) DoGravity();
+
+        if (awareTimer > 0)
+        {
+            Hunt(FindObjectOfType<PlayerDefault>().GetComponent<Collider>());
+            awareTimer -= Time.deltaTime;
+        }
 
         if (!hunting)
             detectorRenderer.material.SetColor("_BaseColor", green);
@@ -106,7 +116,10 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     // Hunting
     public virtual void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == PlayerLayer && !Dying) Hunt(other);
+        if (other.gameObject.layer == PlayerLayer && !Dying)
+        {
+            Hunt(other);
+        }
     }
 
     public void setSpeed(float speed)
@@ -181,12 +194,41 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
             EventManager.Instance.runStats.damageDealt += dmg;
             // Temp, add damage negation and other maths here later.
             health -= dmg;
-            gameObject.GetComponent<HealthBarUI>().SetHealth(health);
+            gameObject.GetComponent<HealthBarUI>().SetHealth(health, maxHealth);
             // make damage popup TODO:: change the "false" to when this is a critical hit.
             // I think this would require adding a parameter and passing the
             // critical hit chance, or whenever the crit is defined.
-            DamagePopupUI.Create(transform, transform.rotation, (int) dmg, false);
+            DamagePopupUI.Create(transform, transform.rotation, (int) dmg, 0);
             EventManager.Instance.EnemyDamaged();
+
+            if (Wandering)
+            {
+                awareTimer = 2f;
+            }
+
+
+            if (health <= 0f && iAmAlive) Die();
+        }
+    }
+
+    public void TakeDmg(float dmg, int type)
+    {
+        if (!Dying)
+        {
+            EventManager.Instance.runStats.damageDealt += dmg;
+            // Temp, add damage negation and other maths here later.
+            health -= dmg;
+            gameObject.GetComponent<HealthBarUI>().SetHealth(health, maxHealth);
+            // make damage popup TODO:: change the "false" to when this is a critical hit.
+            // I think this would require adding a parameter and passing the
+            // critical hit chance, or whenever the crit is defined.
+            DamagePopupUI.Create(transform, transform.rotation, (int)dmg, type);
+            EventManager.Instance.EnemyDamaged();
+
+            if (Wandering)
+            {
+                awareTimer = 2f;
+            }
 
 
             if (health <= 0f && iAmAlive) Die();

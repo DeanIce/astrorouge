@@ -499,6 +499,8 @@ MonoBehaviour:
       shown: 0
     - name: WindZone
       shown: 0
+    - name: WaterReflection
+      shown: 0
     - name: Angry_Flower_ctrl
       shown: 0
     - name: Ape_beast_ctrl
@@ -554,6 +556,8 @@ MonoBehaviour:
     - name: BasicEnemyAgent
       shown: 0
     - name: BatEnemy
+      shown: 0
+    - name: LavaBoss
       shown: 0
     - name: BossInstanceEnter
       shown: 0
@@ -727,6 +731,8 @@ MonoBehaviour:
       shown: 0
     - name: TrailRotate
       shown: 0
+    - name: AbilityCooldown
+      shown: 0
     - name: CameraFollow
       shown: 0
     - name: CameraRotate
@@ -850,6 +856,8 @@ MonoBehaviour:
     - name: Lava
       shown: 0
     - name: ScatterAsteroids
+      shown: 0
+    - name: Slow
       shown: 0
     - name: PlanarSource
       shown: 0

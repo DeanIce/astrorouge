@@ -252,6 +252,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         IsSprinting = !IsSprinting;
     }
 
+    public void TakeDmg(float dmg, int type)
+    {
+        TakeDmg(dmg);
+    }
+
     public void TakeDmg(float dmg)
     {
         timeOfLastDamage = Time.time;
@@ -292,6 +297,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (SecondaryAttackDelay > 0 || globalAttackDealy > 0) return;
         SecondaryAttackDelay = secondaryAttackCooldown;
 
+        EventManager.Instance.SecondaryUsed(secondaryAttackCooldown);
         BeamAttack();
     }
 
@@ -299,6 +305,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         if (MeleeAttackDelay > 0 || globalAttackDealy > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
+
 
         animator.SetTrigger("meleeAttack");
         InstantaneousAttack();
@@ -309,7 +316,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (SpecialActionDelay > 0 || globalAttackDealy > 0) return;
         SpecialActionDelay = specialActionCooldown;
 
-        _ = StartCoroutine(LobAttack());
+        EventManager.Instance.SpecialUsed(specialActionCooldown);
+       _ = StartCoroutine(LobAttack());
     }
 
     private void ProjectileAttack()

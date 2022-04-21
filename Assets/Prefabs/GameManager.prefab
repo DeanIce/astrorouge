@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7689409263527498331}
-  - component: {fileID: 1718721338396914493}
+  - component: {fileID: 1424600662760365373}
   - component: {fileID: 7689409263527498332}
   - component: {fileID: 5915032664712744906}
   - component: {fileID: 6854432826354650640}
@@ -38,7 +38,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1718721338396914493
+--- !u!114 &1424600662760365373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logEvents: 1
+  showFPSCounter: 0
 --- !u!114 &7689409263527498332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +187,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8228096c239e4a84e8e306f5b7285a25, type: 2}
   player: {fileID: 0}
   ballDropper: {fileID: 1421862117859555043}
+  debug: []
 --- !u!114 &8027408832269683781
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Managers;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -86,7 +85,7 @@ namespace Planets
         // Update is called once per frame
         private void Update()
         {
-            bool requestPlanets = DevTools.drawPlanets;
+            var requestPlanets = false;
             if (InEditMode)
             {
                 if (requestPlanets)
@@ -284,7 +283,7 @@ namespace Planets
 
         private void LogTimer(Stopwatch sw, string text)
         {
-            if (DevTools.logPlanetInfo) print(text + " " + sw.ElapsedMilliseconds + " ms.");
+            if (false) print(text + " " + sw.ElapsedMilliseconds + " ms.");
         }
 
 
@@ -448,6 +447,11 @@ namespace Planets
             lod0.GetComponent<MeshFilter>().sharedMesh = meshLoDs[0];
             lod1.GetComponent<MeshFilter>().sharedMesh = meshLoDs[1];
             lod2.GetComponent<MeshFilter>().sharedMesh = meshLoDs[2];
+
+
+            lod0.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
+            lod1.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
+            lod2.GetComponent<MeshRenderer>().sharedMaterial = shader.terrainMaterial;
 
 
             // Medium LOD used for spawning objects

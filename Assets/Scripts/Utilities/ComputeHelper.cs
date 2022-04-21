@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
@@ -33,27 +32,6 @@ public static class ComputeHelper
 
     // Set all values from settings object on the shader. Note, variable names must be an exact match in the shader.
     // Settings object can be any class/struct containing vectors/ints/floats/bools
-    public static void SetParams(object settings, ComputeShader shader, string variableNamePrefix = "",
-        string variableNameSuffix = "")
-    {
-        FieldInfo[] fields = settings.GetType().GetFields();
-        foreach (FieldInfo field in fields)
-        {
-            Type fieldType = field.FieldType;
-            string shaderVariableName = variableNamePrefix + field.Name + variableNameSuffix;
-
-            if (fieldType == typeof(Vector4) || fieldType == typeof(Vector3) || fieldType == typeof(Vector2))
-                shader.SetVector(shaderVariableName, (Vector4) field.GetValue(settings));
-            else if (fieldType == typeof(int))
-                shader.SetInt(shaderVariableName, (int) field.GetValue(settings));
-            else if (fieldType == typeof(float))
-                shader.SetFloat(shaderVariableName, (float) field.GetValue(settings));
-            else if (fieldType == typeof(bool))
-                shader.SetBool(shaderVariableName, (bool) field.GetValue(settings));
-            else
-                Debug.Log($"Type {fieldType} not implemented");
-        }
-    }
 
     public static void CreateStructuredBuffer<T>(ref ComputeBuffer buffer, int count)
     {
@@ -74,43 +52,7 @@ public static class ComputeHelper
     }
 
 
-    public static ComputeBuffer CreateBufferFromJob(Vector3[] vertices)
-    {
-        // return PlanetCache.RunOnUnityThread<ComputeBuffer>(() =>
-        // {
-        ComputeBuffer vertexBuffer = null;
-        CreateStructuredBuffer(ref vertexBuffer, vertices);
-        vertexBuffer.SetData(vertices);
-        return vertexBuffer;
-        // });
-    }
-
     // Test
-
-    public static ComputeBuffer CreateAndSetBuffer<T>(T[] data, ComputeShader cs, string nameID,
-        int kernelIndex = 0)
-    {
-        ComputeBuffer buffer = null;
-        CreateAndSetBuffer(ref buffer, data, cs, nameID, kernelIndex);
-        return buffer;
-    }
-
-    public static void CreateAndSetBuffer<T>(ref ComputeBuffer buffer, T[] data, ComputeShader cs, string nameID,
-        int kernelIndex = 0)
-    {
-        int stride = Marshal.SizeOf(typeof(T));
-        CreateStructuredBuffer<T>(ref buffer, data.Length);
-        buffer.SetData(data);
-        cs.SetBuffer(kernelIndex, nameID, buffer);
-    }
-
-    public static ComputeBuffer CreateAndSetBuffer<T>(int length, ComputeShader cs, string nameID,
-        int kernelIndex = 0)
-    {
-        ComputeBuffer buffer = null;
-        CreateAndSetBuffer<T>(ref buffer, length, cs, nameID, kernelIndex);
-        return buffer;
-    }
 
     public static void CreateAndSetBuffer<T>(ref ComputeBuffer buffer, int length, ComputeShader cs, string nameID,
         int kernelIndex = 0)
@@ -137,16 +79,6 @@ public static class ComputeHelper
     }
 
     // https://cmwdexint.com/2017/12/04/computeshader-setfloats/
-    public static float[] PackFloats(params float[] values)
-    {
-        var packed = new float[values.Length * 4];
-        for (var i = 0; i < values.Length; i++)
-        {
-            packed[i * 4] = values[i];
-        }
-
-        return values;
-    }
 
     private static bool CheckIfCanRunInEditMode()
     {

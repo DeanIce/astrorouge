@@ -121,10 +121,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 2902419615399407577}
   StunVFX: {fileID: 3736303652783861701}
   SlowVFX: {fileID: 1678387584456087249}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
@@ -141,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 8786360853359569384}
   body: {fileID: 1069417733189170424}
@@ -480,6 +477,10 @@ PrefabInstance:
     - target: {fileID: 6521004445743518666, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
       propertyPath: damage
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107407462187973062, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
