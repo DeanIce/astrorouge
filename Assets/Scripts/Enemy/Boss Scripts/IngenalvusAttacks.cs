@@ -4,6 +4,8 @@ public class IngenalvusAttacks : MonoBehaviour
 {
     public GameObject fireParticles;
     private Animator animator;
+
+    private IngenalvusFire ingFire;
     private ParticleSystem particles;
 
     // Start is called before the first frame update
@@ -11,7 +13,10 @@ public class IngenalvusAttacks : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         particles = fireParticles.GetComponent<ParticleSystem>();
+        ingFire = fireParticles.GetComponent<IngenalvusFire>();
+        ingFire.Hide();
         particles.Stop();
+
         // particles.emission.rateOverDistanceMultiplier = 0;
     }
 
@@ -23,10 +28,12 @@ public class IngenalvusAttacks : MonoBehaviour
     public void BreathFireStart()
     {
         particles.Play();
+        ingFire.Show();
     }
 
     public void BreathFireStop()
     {
         particles.Stop();
+        ingFire.Hide();
     }
 }

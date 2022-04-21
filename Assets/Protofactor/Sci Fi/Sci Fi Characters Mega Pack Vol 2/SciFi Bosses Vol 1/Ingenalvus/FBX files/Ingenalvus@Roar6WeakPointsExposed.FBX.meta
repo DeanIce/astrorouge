@@ -442,12 +442,19 @@ ModelImporter:
         floatParameter: 0
         intParameter: 6
         messageOptions: 0
-      - time: 0.157754
+      - time: 0.1764706
+        functionName: BreathFireStart
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9037433
         functionName: BreathFireStop
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 6
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 3

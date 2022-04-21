@@ -46,6 +46,7 @@ public class Ingenalvus : MonoBehaviour
 
     public float offset = 20;
     public float speed = 2;
+    public float fireDamage = 10;
     private NavMeshAgent agent;
 
     private Animator animator;
@@ -70,7 +71,6 @@ public class Ingenalvus : MonoBehaviour
             // print($"pos:{agent.updatePosition}, rot:{agent.updateRotation}");
             if (dist < offset)
             {
-                print("range reached");
                 agent.isStopped = true;
                 // agent.updatePosition = false;
                 // agent.velocity = Vector3.zero;
