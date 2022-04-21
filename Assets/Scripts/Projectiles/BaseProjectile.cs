@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Enemy.Ingenalvus;
 using UnityEngine;
 
 public abstract class BaseProjectile : MonoBehaviour, IProjectile
