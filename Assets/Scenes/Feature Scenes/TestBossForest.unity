@@ -11885,6 +11885,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 100138, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100140, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -30106,9 +30114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aeacbee3b3818b4d84517222e55339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageHealth: 20
   portal: {fileID: 692339184}
   player: {fileID: 2062209236}
-  health: 1
   bodyColliders:
   - {fileID: 1006629218}
   - {fileID: 1773977530}

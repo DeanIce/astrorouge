@@ -33,10 +33,10 @@ namespace Enemy.Ingenalvus
         private static readonly int die = Animator.StringToHash("Die");
 
 
+        public float stageHealth = 20f;
+
         public GameObject portal;
         public GameObject player;
-
-        public float health = 100;
 
         public GameObject[] bodyColliders;
 
@@ -60,6 +60,8 @@ namespace Enemy.Ingenalvus
         public float smashDamage = 40;
         private NavMeshAgent agent;
 
+        private float health;
+
         private int weakPointsRemaining;
 
         private void Start()
@@ -68,6 +70,7 @@ namespace Enemy.Ingenalvus
             weakPointsRemaining = weakPoints.Count;
             agent = GetComponent<NavMeshAgent>();
             portal.SetActive(false);
+            health = stageHealth;
         }
 
         private void Update()
@@ -166,7 +169,7 @@ namespace Enemy.Ingenalvus
 
             // Set mode back
             mode = Mode.AcceptingDamage;
-            health = 20;
+            health = stageHealth;
             agent.isStopped = false;
         }
     }

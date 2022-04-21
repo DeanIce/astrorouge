@@ -44,6 +44,8 @@ namespace Enemy.Ingenalvus
                 animator.SetTrigger("Smash");
                 smashDamageLeft.gameObject.SetActive(true);
                 smashDamageRight.gameObject.SetActive(true);
+                smashPointLeft.GetComponent<CapsuleCollider>().enabled = false;
+                smashPointRight.GetComponent<CapsuleCollider>().enabled = false;
             }
         }
 
@@ -67,6 +69,9 @@ namespace Enemy.Ingenalvus
             Destroy(b);
             smashDamageLeft.gameObject.SetActive(false);
             smashDamageRight.gameObject.SetActive(false);
+            // Todo: actually prevent the player from being shoved below ground
+            smashPointLeft.GetComponent<CapsuleCollider>().enabled = true;
+            smashPointRight.GetComponent<CapsuleCollider>().enabled = true;
         }
     }
 }
