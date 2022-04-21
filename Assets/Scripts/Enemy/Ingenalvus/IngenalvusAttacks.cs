@@ -5,11 +5,13 @@ namespace Enemy.Ingenalvus
     public class IngenalvusAttacks : MonoBehaviour
     {
         public GameObject fireParticles;
+        public Animator animator;
 
         private IngenalvusFire ingFire;
 
         private void Start()
         {
+            animator = GetComponentInChildren<Animator>();
             ingFire = fireParticles.GetComponent<IngenalvusFire>();
             ingFire.Hide();
         }
@@ -23,6 +25,11 @@ namespace Enemy.Ingenalvus
         public void BreathFireStop()
         {
             ingFire.Hide();
+        }
+
+        public void Smash()
+        {
+            animator.SetTrigger("Smash");
         }
     }
 }
