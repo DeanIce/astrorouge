@@ -15,7 +15,6 @@ namespace Enemy.Ingenalvus
 
         private void OnTriggerEnter(Collider other)
         {
-            print(other.gameObject.name);
             other.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(ing.smashDamage);
         }
     }

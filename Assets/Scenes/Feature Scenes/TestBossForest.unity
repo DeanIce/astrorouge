@@ -30106,8 +30106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aeacbee3b3818b4d84517222e55339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portal: {fileID: 692339184}
   player: {fileID: 2062209236}
-  health: 25
+  health: 1
   bodyColliders:
   - {fileID: 1006629218}
   - {fileID: 1773977530}
