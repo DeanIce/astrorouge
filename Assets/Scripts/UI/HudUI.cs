@@ -13,19 +13,18 @@ namespace UI
 
 
         private VisualElement crosshair;
-        private VisualElement hitmarker;
 
         private VisualElement expBar;
 
-        private float hitmarkerTimer;
-        private bool hitmarkerDisplayed = false;
-
         private TextElement expLevelText;
 
-        // Start is called before the first frame update
         private VisualElement healthBar;
         private VisualElement healthBarCorner;
         private TextElement healthBarText;
+        private VisualElement hitmarker;
+        private bool hitmarkerDisplayed;
+
+        private float hitmarkerTimer;
 
         private void Start()
         {
@@ -48,6 +47,15 @@ namespace UI
             SetExp(PlayerStats.Instance.xp);
         }
 
+        private void Update()
+        {
+            if (hitmarkerDisplayed)
+            {
+                hitmarkerTimer -= Time.deltaTime;
+                if (hitmarkerTimer <= 0) HideHitmarker();
+            }
+        }
+
         private void OnEnable()
         {
             EventManager.Instance.playerStatsUpdated += UpdateBars;
@@ -65,18 +73,6 @@ namespace UI
         {
             SetExp(PlayerStats.Instance.xp);
             SetHealth(PlayerStats.Instance.currentHealth);
-        }
-
-        private void Update()
-        {
-            if (hitmarkerDisplayed)
-            {
-                hitmarkerTimer -= Time.deltaTime;
-                if(hitmarkerTimer <= 0)
-                {
-                    HideHitmarker();
-                }
-            }
         }
 
         private void DisplayHitmarker()

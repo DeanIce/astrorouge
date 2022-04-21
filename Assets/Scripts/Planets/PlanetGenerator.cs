@@ -69,7 +69,6 @@ namespace Planets
             // which sets the local scale of the generator object (this object)
             transform.localScale.x;
 
-        // Start is called before the first frame update
         private void Start()
         {
             if (!ocean) ocean = transform.Find("Ocean").gameObject;
@@ -82,7 +81,6 @@ namespace Planets
             HandleGameModeGeneration();
         }
 
-        // Update is called once per frame
         private void Update()
         {
             var requestPlanets = false;
