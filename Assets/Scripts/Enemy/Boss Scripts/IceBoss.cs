@@ -31,6 +31,11 @@ public class IceBoss : MonoBehaviour
     // Movement stuff
     private NavMeshAgent navMeshAgent;
 
+    // view angles
+    private float rollAngle = 1f;
+    private float crawlForwardAngle = 10f;
+    private float crawlLeftRightAngle = 20f;
+
     // damage stuff
     [SerializeField] private float attackRange;
     [SerializeField] private float attackRange2;
@@ -54,7 +59,26 @@ public class IceBoss : MonoBehaviour
 
     void Update()
     {
+        // DEBUGS
+        // Debug.DrawLine(transform.position, transform.position + transform.forward * attackRange, Color.red, 1f);
         // Debug.DrawLine(transform.position, transform.position + transform.forward * attackRange2, Color.green, 1f);
+
+        // if (InRollRange()) {
+        //     StartCoroutine(RollAttack());
+        // }
+
+        if (InCrawlForwardRange()) {
+            print("in crawl forward range");
+            // StartCoroutine(RollAttack());
+        }
+        else if (InCrawlLeftRange()) {
+            print("in crawl left range");
+            //animator.SetBool("CrawlLeft_RM", true);
+        }
+        else if (InCrawlRightRange()) {
+            print("in crawl right range");
+            //animator.SetBool("CrawlLeft_RM", true);
+        }
 
         // Attack();
         // if (!inRange)
@@ -75,13 +99,32 @@ public class IceBoss : MonoBehaviour
         
     }
 
+    // FOV
+    private bool InRollRange() {
+        return Vector3.Angle(transform.forward, player.transform.position - transform.position) <= rollAngle;
+    }
+
+    private bool InCrawlForwardRange() {
+        return Vector3.Angle(transform.forward, player.transform.position - transform.position) <= crawlForwardAngle;
+    }
+
+    private bool InCrawlLeftRange() {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        return (angle <= crawlLeftRightAngle) && (AngleDir(transform.forward, player.transform.position, transform.up) < 0);
+    }
+
+    private bool InCrawlRightRange() {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        return (angle <= crawlLeftRightAngle) && (AngleDir(transform.forward, player.transform.position, transform.up) > 0);
+    }
+
     // For detecting if the player is within a reasonable attacking range
     void OnTriggerEnter(Collider other)
     {
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
         {
-            Debug.Log("In Range!");
+            // Debug.Log("In Range!");
             inRange = true;
         }
     }
@@ -92,7 +135,7 @@ public class IceBoss : MonoBehaviour
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
         {
-            Debug.Log("Left Range!");
+           // Debug.Log("Left Range!");
             inRange = false;
         }
     }
@@ -104,7 +147,7 @@ public class IceBoss : MonoBehaviour
             // increment timer, call attack when timer is done -> good for rolling
             // must reset timer after attack
             // reset timer in OnTriggerExit
-            Debug.Log("In Range!");
+            // Debug.Log("In Range!");
             inRange = true;
         }
     }
@@ -136,9 +179,6 @@ public class IceBoss : MonoBehaviour
             }
         }
     }
-
-    // Movement
-    // IEnums for crawl/rotate?
 
     // Damage Taken
     // TODO: Alter timings to match animation speeds
@@ -208,6 +248,15 @@ public class IceBoss : MonoBehaviour
         attacking = false;
     }
 
+    IEnumerator RollAttack()
+    {
+        attacking = true;
+        animator.SetBool("Rolling", true);
+        yield return new WaitForSeconds(1.333f);
+        animator.SetBool("Rolling", false);
+        attacking = false;
+    }
+
     // DAMAGE
     public void DoDamage()
     {
@@ -244,4 +293,20 @@ public class IceBoss : MonoBehaviour
             }
         }
     }
+
+    //returns -1 when to the left, 1 to the right, and 0 for forward/backward
+    public float AngleDir(Vector3 fwd, Vector3 targetDir, Vector3 up)
+    {
+        Vector3 perp = Vector3.Cross(fwd, targetDir);
+        float dir = Vector3.Dot(perp, up);
+ 
+        if (dir > 0.0f) {
+            return 1.0f;
+        } else if (dir < 0.0f) {
+            return -1.0f;
+        } else {
+            return 0.0f;
+        }
+    }  
+    
 }
