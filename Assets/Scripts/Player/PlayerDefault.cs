@@ -22,6 +22,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Vector3 jumpForceVal;
     private float timeOfLastDamage;
     private float globalAttackDealy;
+    private bool IframeActive = false;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
@@ -260,16 +261,38 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void TakeDmg(float dmg)
     {
         timeOfLastDamage = Time.time;
-        animator.SetTrigger("takeDamage");
-        // Temp, add damage negation and other maths here later.
-        PlayerStats.Instance.currentHealth -= dmg;
-        if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmg;
-        //Doesn't actually matter once we implement game over
-        if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+        if (!IframeActive)
+        {
+            animator.SetTrigger("takeDamage");
+            // Temp, add damage negation and other maths here later.
+            float dmgAfterArmor = 0.0f;
+            if (Random.value >= PlayerStats.Instance.dodgeChance)
+            {
+                dmgAfterArmor = dmg - PlayerStats.Instance.armor;
+                if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
+            }
+            else //Debug.Log("Dodged Damage");
+
+            PlayerStats.Instance.currentHealth -= dmgAfterArmor;
+            if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
+            //Doesn't actually matter once we implement game over
+            if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+
+            StartCoroutine(beginIFrames());
+        }
 
         EventManager.Instance.PlayerStatsUpdated();
         EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth)/ PlayerStats.Instance.maxHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
+    }
+
+    private IEnumerator beginIFrames()
+    {
+        IframeActive = true;
+        //Debug.Log("starting Iframes");
+        yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.1f);
+        IframeActive = false;
+        //Debug.Log("Iframes over");
     }
 
     public void Die()
