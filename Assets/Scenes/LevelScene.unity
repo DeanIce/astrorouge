@@ -1374,5 +1374,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8027408832269683781, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: baseRangeProjectileSpeed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}

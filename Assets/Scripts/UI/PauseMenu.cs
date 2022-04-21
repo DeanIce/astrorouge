@@ -25,7 +25,6 @@ namespace UI
 
         private bool settingsOpen;
 
-        // Start is called before the first frame update
         private void Start()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
