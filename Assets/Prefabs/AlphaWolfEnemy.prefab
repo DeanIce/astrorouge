@@ -250,10 +250,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 3398211856550543166}
   StunVFX: {fileID: 6679571350328723145}
   SlowVFX: {fileID: 1163472914102126134}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
@@ -270,12 +266,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 8262775871286234938}
   body: {fileID: 6593476235084119765}
   attackRange: 1
   wolves: []
   attackChance: 0.5
+  wolf: {fileID: 575978631029552076, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
 --- !u!1001 &1942977045009059515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -335,7 +333,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9207026939266957276, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c6d83713970b534eb2d7d146c5890b4, type: 3}
 --- !u!4 &7091395534814971166 stripped
 Transform:

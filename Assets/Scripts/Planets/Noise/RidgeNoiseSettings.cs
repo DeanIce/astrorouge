@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 namespace Planets.Noise
 {
@@ -28,14 +27,14 @@ namespace Planets.Noise
         public void SetComputeValues(ComputeShader cs, PRNG prng, string varSuffix, float scale, float elevation,
             float power)
         {
-            var seededOffset = new Vector3(prng.Value(), prng.Value(), prng.Value()) * prng.Value() * 10000;
+            Vector3 seededOffset = new Vector3(prng.Value(), prng.Value(), prng.Value()) * prng.Value() * 10000;
 
             float[] noiseParams =
             {
                 // [0]
-                seededOffset.X + offset.X,
-                seededOffset.Y + offset.Y,
-                seededOffset.Z + offset.Z,
+                seededOffset.x + offset.x,
+                seededOffset.y + offset.y,
+                seededOffset.z + offset.z,
                 numLayers,
                 // [1]
                 persistence,

@@ -21,16 +21,6 @@ public class BasicProjectile : BaseProjectile
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        BurnTrail.SetActive(false);
-        PoisonTrail.SetActive(false);
-        LightningTrail.SetActive(false);
-        StunTrail.SetActive(false);
-        SmiteTrail.SetActive(false);
-        SlowTrail.SetActive(false);
-        IgniteTrail.SetActive(false);
-        MartyrdomTrail.SetActive(false);
-        RadioActiveTrail.SetActive(false);
     }
 
     private void FixedUpdate()

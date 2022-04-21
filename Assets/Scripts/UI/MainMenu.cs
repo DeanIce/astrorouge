@@ -1,5 +1,6 @@
 using Managers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -63,6 +64,7 @@ Todo: add assets here... names not links
         private Button settingsButton;
 
         private VisualElement settingsMenu;
+        private Button tutorialButton;
 
         private void Start()
         {
@@ -76,6 +78,7 @@ Todo: add assets here... names not links
             newGameButton = mainMenu.Q<Button>("newgame-button");
             settingsButton = mainMenu.Q<Button>("settings-button");
             aboutButton = mainMenu.Q<Button>("about-button");
+            tutorialButton = mainMenu.Q<Button>("tutorial-button");
             quitButton = mainMenu.Q<Button>("quit-button");
 
             feedbackButton = mainMenu.Q<Button>("feedback-button");
@@ -92,15 +95,17 @@ Todo: add assets here... names not links
             aboutButton.clicked += AboutButtonPressed;
             settingsBackButton.clicked += BackButtonPressed;
             aboutBackButton.clicked += BackButtonPressed;
+            tutorialButton.clicked += () => { SceneManager.LoadScene("Tutorial"); };
 
             quitButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             newGameButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             settingsButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             aboutButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             feedbackButton.RegisterCallback<MouseEnterEvent>(PlaySound);
+            tutorialButton.RegisterCallback<MouseEnterEvent>(PlaySound);
 
 
-            feedbackButton.clicked += () => Application.OpenURL("https://forms.gle/M6GhsLW5vpnR3Vit6");
+            feedbackButton.clicked += () => Application.OpenURL("https://forms.gle/gvcTaM3z1M9WdjEEA");
 
 
             AudioManager.Instance.PlayMusic(mainMenuMusic);

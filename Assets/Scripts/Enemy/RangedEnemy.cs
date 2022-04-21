@@ -1,19 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Gravity;
 
 public class RangedEnemy : BasicEnemyAgent
 {
     //[Deprecated]
-    
+
     //new public variables
     //public MeshRenderer rend;
 
     // Private enemy specific variables
-    private bool attacking = false;
 
-    public bool Attacking { get { return attacking; } set { attacking = value; } }
+    public new bool Attacking { get; set; }
 
     public override void Hunt(Collider target)
     {
@@ -23,22 +20,22 @@ public class RangedEnemy : BasicEnemyAgent
 
         //attacking
         if (Physics.Raycast(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player")))
-        //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
+            //old condition: (Mathf.Abs((TargetRb.transform.position - transform.position).magnitude) < attackRange && !attacking) NEW ELIMINATES NEED FOR GETTER METHOD IN BASE
         {
             //it makes more sense of the !attacking condition to just be above but for some reason it doesn't work there
-            if (!attacking && Health > 0) StartCoroutine(Attack());
+            if (!Attacking && Health > 0) StartCoroutine(Attack());
         }
         else
         {
-            if (!attacking) base.Hunt(target);
+            if (!Attacking) base.Hunt(target);
         }
     }
 
-    public virtual IEnumerator Attack()
+    public new virtual IEnumerator Attack()
     {
         RaycastHit[] hits;
         //rend.enabled = true;
-        attacking = true;
+        Attacking = true;
         yield return new WaitForSeconds(1f);
         hits = Physics.RaycastAll(transform.position, Body.transform.forward, AttackRange, LayerMask.GetMask("Player"));
         if (hits.Length != 0)
@@ -47,12 +44,11 @@ public class RangedEnemy : BasicEnemyAgent
             foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
                     hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(5);
-                }
             }
         }
+
         //rend.enabled = false;
-        attacking = false;
+        Attacking = false;
     }
 }

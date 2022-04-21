@@ -34,4 +34,5 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
     public abstract void Die();
     public virtual Vector3 Displacement(float deltaTime) => deltaTime * velocity;
     public virtual void TakeDmg(float incDamage) => currHealth -= incDamage;
+    public virtual void TakeDmg(float incDamage, int type) => currHealth -= incDamage;
 }

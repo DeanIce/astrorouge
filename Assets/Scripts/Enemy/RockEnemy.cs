@@ -10,6 +10,7 @@ public class RockEnemy : BasicEnemyAgent
     public override void Start()
     {
         health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         Dying = false;
         started = false;
@@ -64,17 +65,17 @@ public class RockEnemy : BasicEnemyAgent
         if (attack == 0)
         {
             animator.SetBool("attack1A", true);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2f/animator.speed);
         }
         else if (attack == 1)
         {
             animator.SetBool("attack1B", true);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2f / animator.speed);
         }
         else if (attack == 2)
         {
             animator.SetBool("attack2", true);
-            yield return new WaitForSeconds(2.4f);
+            yield return new WaitForSeconds(2.4f / animator.speed);
         }
 
         //rend.enabled = false;

@@ -118,7 +118,7 @@ public class SpawnObjects : MonoBehaviour
             Vector3 spawnLocation = ObjectSpawnLocation(vertices, planetScale, rng);
             spawnLocation += origin.position;
             GameObject placeObject = Instantiate(objectToSpawn, spawnLocation, Quaternion.identity);
-            placeObject.GetComponent<BasicEnemyAgent>().planet = index;
+            //placeObject.GetComponent<BasicEnemyAgent>().planet = index;
 
             // TEMP: Scale down huge assets
             placeObject.transform.localScale = scale;

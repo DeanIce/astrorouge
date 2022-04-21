@@ -12,6 +12,7 @@ public class SnakeEnemy : BasicEnemyAgent
     public override void Start()
     {
         health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        maxHealth = health;
         Dying = false;
         animator = GetComponentInChildren<Animator>();
         factory = ProjectileFactory.Instance;
@@ -37,6 +38,7 @@ public class SnakeEnemy : BasicEnemyAgent
                     projectile = factory.CreateBasicProjectile(mouth.transform.position,
                         projSpeed * (hit.collider.gameObject.transform.position - mouth.transform.position).normalized,
                         LayerMask.GetMask("Player", "Ground"), 5, 5);
+                    factory.SetSkin(projectile, 0);
                     if (Random.value < poisonChance)
                     {
                         factory.AddPoison(projectile);
