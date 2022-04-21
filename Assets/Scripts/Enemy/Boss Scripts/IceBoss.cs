@@ -68,15 +68,18 @@ public class IceBoss : MonoBehaviour
         // }
 
         if (InCrawlForwardRange()) {
-            print("in crawl forward range");
+            //print("in crawl forward range");
+            if (InAttackRange()) {
+                Attack();
+            }
             // StartCoroutine(RollAttack());
         }
         else if (InCrawlLeftRange()) {
-            print("in crawl left range");
+            //print("in crawl left range");
             //animator.SetBool("CrawlLeft_RM", true);
         }
         else if (InCrawlRightRange()) {
-            print("in crawl right range");
+            //print("in crawl right range");
             //animator.SetBool("CrawlLeft_RM", true);
         }
 
@@ -116,6 +119,20 @@ public class IceBoss : MonoBehaviour
     private bool InCrawlRightRange() {
         float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
         return (angle <= crawlLeftRightAngle) && (AngleDir(transform.forward, player.transform.position, transform.up) > 0);
+    }
+
+    private bool InAttackRange() {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance >= 15 && distance <= 20;
+    }
+    private bool InJumpAttackRange() {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance <= 17 && distance >= 13;
+    }
+
+    private bool InClawAttackRange() {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance <= 22 && distance >= 18;
     }
 
     // For detecting if the player is within a reasonable attacking range
@@ -165,16 +182,16 @@ public class IceBoss : MonoBehaviour
     {
         if (!attacking) {
             float randomAttack = Random.value;
-            if (randomAttack < 0.25) {
+            if (randomAttack < 0.25 && InJumpAttackRange()) {
                 StartCoroutine(JumpAttack());
             }
-            else if (randomAttack < 0.5) {
+            else if (randomAttack < 0.5 && InClawAttackRange()) {
                 StartCoroutine(ComboAttack());
             }
-            else if (randomAttack < 0.75) {
+            else if (randomAttack < 0.75 && InClawAttackRange()) {
                 StartCoroutine(LeftAttack());
             }
-            else {
+            else if (InClawAttackRange()) {
                 StartCoroutine(RightAttack());
             }
         }
