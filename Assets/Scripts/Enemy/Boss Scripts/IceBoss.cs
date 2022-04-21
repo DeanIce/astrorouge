@@ -69,7 +69,13 @@ public class IceBoss : MonoBehaviour
         //     StartCoroutine(RollAttack());
         // }
         print($"movement state: {movementState}");
-        if (InCrawlForwardRange()) {
+        if (InCrawlBackwardRange()) {
+            if (movementState != "backward") {
+                StopCrawl();
+                StartBackwardCrawl();
+            }
+        }
+        else if (InCrawlForwardRange()) {
             //print("in crawl forward range");
             if (movementState != "forward") {
                 StopCrawl();
@@ -92,26 +98,17 @@ public class IceBoss : MonoBehaviour
                 StopCrawl();
                 StartRightCrawl();
             }
+        } else if (!inRange)
+        {
+            animator.SetBool("CrawlForward_RM", true);
+            navMeshAgent.isStopped = false;
+            navMeshAgent.destination = player.transform.position;
         }
-        else if (InCrawlBackwardRange()) {
-            if (movementState != "backward") {
-                StopCrawl();
-                StartBackwardCrawl();
-            }
+        else
+        {
+            navMeshAgent.isStopped = true;
+            animator.SetBool("CrawlForward_RM", false);
         }
-
-        // Attack();
-        // if (!inRange)
-        // {
-        //     animator.SetBool("CrawlForward_RM", true);
-        //     navMeshAgent.isStopped = false;
-        //     navMeshAgent.destination = player.transform.position;
-        // }
-        // else
-        // {
-        //     navMeshAgent.isStopped = true;
-        //     animator.SetBool("CrawlForward_RM", false);
-        // }
     }
 
     void FixedUpdate()
@@ -133,7 +130,7 @@ public class IceBoss : MonoBehaviour
     private bool InCrawlBackwardRange() {
         float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
         float distance = Vector3.Distance(transform.position, player.transform.position);
-        return (angle <= crawlForwardAngle) && (distance < 15);
+        return (distance < 0) || (angle <= crawlForwardAngle) && (distance < 15);
     }
 
     private bool InCrawlLeftRange() {
