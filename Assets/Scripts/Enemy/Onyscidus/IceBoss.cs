@@ -23,6 +23,7 @@ public class IceBoss : MonoBehaviour
     // Status stuff
     private bool dying;
     private bool attacking;
+    public bool rolling;
     private bool hunting;
     private bool inRange;
     public float health;
@@ -34,7 +35,7 @@ public class IceBoss : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     // view angles
-    private float rollAngle = 1f;
+    private float rollAngle = 5f;
     private float crawlForwardAngle = 10f;
     private float crawlLeftRightAngle = 20f;
 
@@ -47,6 +48,7 @@ public class IceBoss : MonoBehaviour
 
     public CapsuleCollider LeftClaw;
     public CapsuleCollider RightClaw;
+    public BoxCollider RollCollider;
 
     private void Awake()
     {
@@ -72,53 +74,52 @@ public class IceBoss : MonoBehaviour
         if (health < 0) {
             Die();
         } else {
-            // if (InRollRange()) {
-            //     StartCoroutine(RollAttack());
-            // }
-
             // DEBUG
-            print($"movement state: {movementState}");
-            
-            if (InCrawlBackwardRange()) {
-                if (movementState != "backward") {
-                    StopCrawl();
-                    StartBackwardCrawl();
-                }
+            // print($"movement state: {movementState}");
+
+            if (InRollRange()) {
+                RollAttack();
             }
-            else if (InCrawlForwardRange()) {
-                //print("in crawl forward range");
-                if (movementState != "forward") {
-                    StopCrawl();
-                    StartForwardCrawl();
-                }
-                if (InAttackRange()) {
-                    Attack();
-                }
-                // StartCoroutine(RollAttack());
-            }
-            else if (InCrawlLeftRange()) {
-                if (movementState != "left") {
-                    StopCrawl();
-                    StartLeftCrawl();
-                }
-            }
-            else if (InCrawlRightRange()) {
-                //print("in crawl right range");
-                if (movementState != "right") {
-                    StopCrawl();
-                    StartRightCrawl();
-                }
-            } else if (!inRange)
-            {
-                animator.SetBool("CrawlForward_RM", true);
-                navMeshAgent.isStopped = false;
-                navMeshAgent.destination = player.transform.position;
-            }
-            else
-            {
-                navMeshAgent.isStopped = true;
-                animator.SetBool("CrawlForward_RM", false);
-            }
+            // if (!rolling) {
+            //     if (InCrawlBackwardRange()) {
+            //         if (movementState != "backward") {
+            //             StopCrawl();
+            //             StartBackwardCrawl();
+            //         }
+            //     }
+            //     else if (InCrawlForwardRange()) {
+            //         //print("in crawl forward range");
+            //         if (movementState != "forward") {
+            //             StopCrawl();
+            //             StartForwardCrawl();
+            //         }
+            //         if (InAttackRange()) {
+            //             Attack();
+            //         }
+            //     }
+            //     else if (InCrawlLeftRange()) {
+            //         if (movementState != "left") {
+            //             StopCrawl();
+            //             StartLeftCrawl();
+            //         }
+            //     }
+            //     else if (InCrawlRightRange()) {
+            //         //print("in crawl right range");
+            //         if (movementState != "right") {
+            //             StopCrawl();
+            //             StartRightCrawl();
+            //         }
+                // } else if (!inRange)
+                // {
+                //     animator.SetBool("CrawlForward_RM", true);
+                //     navMeshAgent.isStopped = false;
+                //     navMeshAgent.destination = player.transform.position;
+                // }
+                // else
+                // {
+                //     navMeshAgent.isStopped = true;
+                //     animator.SetBool("CrawlForward_RM", false);
+                // }
         }
     }
 
@@ -129,7 +130,9 @@ public class IceBoss : MonoBehaviour
 
     // FOV
     private bool InRollRange() {
-        return Vector3.Angle(transform.forward, player.transform.position - transform.position) <= rollAngle;
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return (angle <= rollAngle);
     }
 
     private bool InCrawlForwardRange() {
@@ -190,18 +193,6 @@ public class IceBoss : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        // Convention: Player layer is 9
-        if (other.gameObject.layer == 9)
-        {
-            // increment timer, call attack when timer is done -> good for rolling
-            // must reset timer after attack
-            // reset timer in OnTriggerExit
-            // Debug.Log("In Range!");
-            inRange = true;
-        }
-    }
-
     // death
     public void Die()
     {
@@ -213,8 +204,10 @@ public class IceBoss : MonoBehaviour
     }
 
     public void TakeDmg(float dmg) {
-        health -= dmg;
-        Flinch();
+        if (!dying) {
+            health -= dmg;
+            Flinch();
+        }
     }
 
     private void Flinch() {
@@ -360,16 +353,15 @@ public class IceBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator RollAttack()
+    private void RollAttack()
     {
-        attacking = true;
         attackDamage = damage2;
+        rolling = true;
+        RollCollider.isTrigger = true;
         animator.SetBool("Rolling", true);
-        yield return new WaitForSeconds(1.333f);
-        animator.SetBool("Rolling", false);
-        attacking = false;
     }
 
+    // Attack Colliders
     public void TurnClawColliderOn() {
         LeftClaw.isTrigger = true;
         RightClaw.isTrigger = true;
