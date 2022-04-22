@@ -8233,7 +8233,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.0977716
+  m_Radius: 3
   m_Center: {x: 2.5951996, y: 28.695692, z: 12.011796}
 --- !u!4 &534140007 stripped
 Transform:
@@ -11899,15 +11899,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.45000002
       objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.45000002
       objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.45000002
       objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 0ae33cdbc3e6cff428b7987624215cad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14011,7 +14011,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.3833628
+  m_Radius: 3
   m_Center: {x: -2.2992864, y: 26.743969, z: 14.982911}
 --- !u!1001 &878606271
 PrefabInstance:
@@ -22946,7 +22946,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.3448632
+  m_Radius: 3
   m_Center: {x: -2.581021, y: 28.716055, z: 11.97781}
 --- !u!1001 &1454044089
 PrefabInstance:
@@ -23857,7 +23857,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.3833654
+  m_Radius: 3
   m_Center: {x: 2.2992852, y: 26.743967, z: 14.982958}
 --- !u!4 &1512613280 stripped
 Transform:
@@ -26939,7 +26939,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.3203614
+  m_Radius: 3
   m_Center: {x: 2.1516235, y: 25.260855, z: 18.261656}
 --- !u!4 &1696897284 stripped
 Transform:
@@ -29487,7 +29487,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.3203652
+  m_Radius: 3
   m_Center: {x: -2.151624, y: 25.260853, z: 18.261658}
 --- !u!1 &1843778528
 GameObject:
@@ -30093,8 +30093,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1874436458}
   - component: {fileID: 1874436457}
-  - component: {fileID: 1874436459}
   - component: {fileID: 1874436460}
+  - component: {fileID: 1874436459}
   m_Layer: 0
   m_Name: Ingenalvus
   m_TagString: Untagged
@@ -30163,10 +30163,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 13.87
-  m_Speed: 2.5
+  m_Speed: 3
   m_Acceleration: 1
   avoidancePriority: 50
-  m_AngularSpeed: 50
+  m_AngularSpeed: 60
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
