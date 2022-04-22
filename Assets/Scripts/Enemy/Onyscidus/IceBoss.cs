@@ -41,8 +41,12 @@ public class IceBoss : MonoBehaviour
     // damage stuff
     [SerializeField] private float attackRange;
     [SerializeField] private float attackRange2;
-    [SerializeField] private int damage;
-    [SerializeField] private int damage2;
+    public int damage = 20;
+    public int damage2 = 30;
+    public int attackDamage;
+
+    public CapsuleCollider LeftClaw;
+    public CapsuleCollider RightClaw;
 
     private void Awake()
     {
@@ -57,57 +61,64 @@ public class IceBoss : MonoBehaviour
         dying = false;
         inRange = false;
         attacking = false;
+
+        // claw colliders
+        LeftClaw.isTrigger = false;
+        RightClaw.isTrigger = false;
     }
 
     void Update()
     {
-        // DEBUGS
-        // Debug.DrawLine(transform.position, transform.position + transform.forward * attackRange, Color.red, 1f);
-        // Debug.DrawLine(transform.position, transform.position + transform.forward * attackRange2, Color.green, 1f);
+        if (health < 0) {
+            Die();
+        } else {
+            // if (InRollRange()) {
+            //     StartCoroutine(RollAttack());
+            // }
 
-        // if (InRollRange()) {
-        //     StartCoroutine(RollAttack());
-        // }
-        print($"movement state: {movementState}");
-        if (InCrawlBackwardRange()) {
-            if (movementState != "backward") {
-                StopCrawl();
-                StartBackwardCrawl();
+            // DEBUG
+            print($"movement state: {movementState}");
+            
+            if (InCrawlBackwardRange()) {
+                if (movementState != "backward") {
+                    StopCrawl();
+                    StartBackwardCrawl();
+                }
             }
-        }
-        else if (InCrawlForwardRange()) {
-            //print("in crawl forward range");
-            if (movementState != "forward") {
-                StopCrawl();
-                StartForwardCrawl();
+            else if (InCrawlForwardRange()) {
+                //print("in crawl forward range");
+                if (movementState != "forward") {
+                    StopCrawl();
+                    StartForwardCrawl();
+                }
+                if (InAttackRange()) {
+                    Attack();
+                }
+                // StartCoroutine(RollAttack());
             }
-            if (InAttackRange()) {
-                Attack();
+            else if (InCrawlLeftRange()) {
+                if (movementState != "left") {
+                    StopCrawl();
+                    StartLeftCrawl();
+                }
             }
-            // StartCoroutine(RollAttack());
-        }
-        else if (InCrawlLeftRange()) {
-            if (movementState != "left") {
-                StopCrawl();
-                StartLeftCrawl();
+            else if (InCrawlRightRange()) {
+                //print("in crawl right range");
+                if (movementState != "right") {
+                    StopCrawl();
+                    StartRightCrawl();
+                }
+            } else if (!inRange)
+            {
+                animator.SetBool("CrawlForward_RM", true);
+                navMeshAgent.isStopped = false;
+                navMeshAgent.destination = player.transform.position;
             }
-        }
-        else if (InCrawlRightRange()) {
-            //print("in crawl right range");
-            if (movementState != "right") {
-                StopCrawl();
-                StartRightCrawl();
+            else
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("CrawlForward_RM", false);
             }
-        } else if (!inRange)
-        {
-            animator.SetBool("CrawlForward_RM", true);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.destination = player.transform.position;
-        }
-        else
-        {
-            navMeshAgent.isStopped = true;
-            animator.SetBool("CrawlForward_RM", false);
         }
     }
 
@@ -201,6 +212,18 @@ public class IceBoss : MonoBehaviour
         }
     }
 
+    public void TakeDmg(float dmg) {
+        health -= dmg;
+        Flinch();
+    }
+
+    private void Flinch() {
+        float flinchChance = Random.value;
+        if (flinchChance <= 0.1) {
+            GetHitFront();
+        }
+    }
+
     // movement states
     private void StartLeftCrawl() {
         movementState = "left";
@@ -260,26 +283,32 @@ public class IceBoss : MonoBehaviour
     }
 
     // Damage Taken
-    // TODO: Alter timings to match animation speeds
-    IEnumerator DamageLevel1()
+    IEnumerator GetHitRight()
     {
-        animator.SetBool("Destroyed1", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("Destroyed1", false);
+        animator.SetBool("HitRight", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("HitRight", false);
     }
 
-    IEnumerator DamageLevel2()
+    IEnumerator GetHitLeft()
     {
-        animator.SetBool("Destroyed2", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("Destroyed2", false);
+        animator.SetBool("HitLeft", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("HitLeft", false);
     }
 
-    IEnumerator DamagedRoar()
+    IEnumerator GetHitFront()
     {
-        animator.SetBool("DamagedRoar", true);
-        yield return new WaitForSeconds(3);
-        animator.SetBool("DamagedRoar", false);
+        animator.SetBool("HitFront", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("HitFront", false);
+    }
+
+    IEnumerator GetHitBack()
+    {
+        animator.SetBool("HitBack", true);
+        yield return new WaitForSeconds(1);
+        animator.SetBool("HitBack", false);
     }
 
     // Death
@@ -294,6 +323,7 @@ public class IceBoss : MonoBehaviour
     IEnumerator JumpAttack()
     {
         attacking = true;
+        attackDamage = damage2;
         animator.SetBool("JumpAttack_RM", true);
         yield return new WaitForSeconds(1.667f);
         animator.SetBool("JumpAttack_RM", false);
@@ -303,6 +333,7 @@ public class IceBoss : MonoBehaviour
     IEnumerator LeftAttack()
     {
         attacking = true;
+        attackDamage = damage;
         animator.SetBool("LeftAttack_RM", true);
         yield return new WaitForSeconds(1.333f);
         animator.SetBool("LeftAttack_RM", false);
@@ -312,6 +343,7 @@ public class IceBoss : MonoBehaviour
     IEnumerator RightAttack()
     {
         attacking = true;
+        attackDamage = damage;
         animator.SetBool("RightAttack_RM", true);
         yield return new WaitForSeconds(1.333f);
         animator.SetBool("RightAttack_RM", false);
@@ -321,6 +353,7 @@ public class IceBoss : MonoBehaviour
     IEnumerator ComboAttack()
     {
         attacking = true;
+        attackDamage = damage;
         animator.SetBool("ComboAttack_RM", true);
         yield return new WaitForSeconds(2.167f);
         animator.SetBool("ComboAttack_RM", false);
@@ -330,47 +363,21 @@ public class IceBoss : MonoBehaviour
     IEnumerator RollAttack()
     {
         attacking = true;
+        attackDamage = damage2;
         animator.SetBool("Rolling", true);
         yield return new WaitForSeconds(1.333f);
         animator.SetBool("Rolling", false);
         attacking = false;
     }
 
-    // DAMAGE
-    public void DoDamage()
-    {
-        RaycastHit[] hits;
-
-        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange, LayerMask.GetMask("Player"));
-        if (hits.Length != 0)
-        {
-            //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
-                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage);
-                }
-            }
-        }
+    public void TurnClawColliderOn() {
+        LeftClaw.isTrigger = true;
+        RightClaw.isTrigger = true;
     }
 
-    public void DoDamage2()
-    {
-        RaycastHit[] hits;
-
-        hits = Physics.RaycastAll(transform.position, transform.forward, attackRange2, LayerMask.GetMask("Player"));
-        if (hits.Length != 0)
-        {
-            //check for the player in the things the ray hit by whether it has a PlayerDefault
-            foreach (RaycastHit hit in hits)
-            {
-                if (hit.collider.gameObject.GetComponent<PlayerDefault>() != null)
-                {
-                    hit.collider.gameObject.GetComponent<PlayerDefault>().TakeDmg(damage2);
-                }
-            }
-        }
+    public void TurnClawColliderOff() {
+        LeftClaw.isTrigger = false;
+        RightClaw.isTrigger = false;
     }
 
     //returns -1 when to the left, 1 to the right, and 0 for forward/backward
