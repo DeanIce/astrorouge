@@ -20,6 +20,7 @@
             <ui:Label text="Maybe have stuff in here like toggle/hold sprint etc." display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
             <ui:Label text="Input" display-tooltip-when-elided="true" class="setting-header" />
             <ui:Label text="IDK Todo connect controllers and whatnot" display-tooltip-when-elided="true" style="color: rgb(255, 255, 255);" />
+            <ui:Slider picking-mode="Ignore" label="Look Sensitivity" value="100" high-value="5" name="look" class="setting-slider" />
         </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>

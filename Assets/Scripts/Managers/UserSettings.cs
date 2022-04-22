@@ -11,6 +11,8 @@ namespace Managers
         public float volumeMusic = 1; // [0,1]
         public int msaa = 4; // {1, 2, 4, 8}
 
+        public float lookSensitivity = 1; // [0,5]
+
         public Resolution resolution;
 
         public void Init()

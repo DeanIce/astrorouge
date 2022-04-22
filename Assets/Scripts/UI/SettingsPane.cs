@@ -22,6 +22,7 @@ namespace UI
         private readonly string saveFile = "userSettings";
         private DropdownField displayMode;
         private Slider gameVolume;
+        private Slider look;
         private DropdownField msaa;
         private Slider musicVolume;
         private DropdownField resolution;
@@ -75,7 +76,7 @@ namespace UI
                     _ => 0
                 };
             });
-            
+
             // Audio settings
             musicVolume = root.Q<Slider>("volume-music");
             gameVolume = root.Q<Slider>("volume-game");
@@ -83,6 +84,11 @@ namespace UI
             musicVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMusic = e.newValue);
             gameVolume.value = settings.volumeGame;
             musicVolume.value = settings.volumeMusic;
+
+            // Look sensitivity
+            look = root.Q<Slider>("look");
+            look.value = settings.lookSensitivity;
+            look.RegisterValueChangedCallback(e => settings.lookSensitivity = e.newValue);
 
 
             saveSettings = root.Q<Button>("save-settings");
@@ -94,7 +100,6 @@ namespace UI
 
             // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
             saveSettings.clicked += ApplyCurrentSettings;
-
         }
 
 
@@ -108,6 +113,9 @@ namespace UI
 
             // Update quality settings
             urp.msaaSampleCount = settings.msaa;
+
+            // Sensitivity settings
+            EventManager.Instance.user.lookSensitivity = settings.lookSensitivity;
         }
 
 

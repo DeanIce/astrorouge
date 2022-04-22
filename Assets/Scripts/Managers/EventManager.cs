@@ -18,6 +18,8 @@ namespace Managers
 
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
+        private UserSettings _user;
+
 
         public Action<int> loadLevel;
 
@@ -25,6 +27,15 @@ namespace Managers
         private Mode mode = Mode.Play;
 
         public RunStats runStats = new();
+
+        public UserSettings user
+        {
+            get
+            {
+                if (_user == null) _user = PersistentUpgrades.Load<UserSettings>("userSettings");
+                return _user;
+            }
+        }
 
 
         // Game State events
@@ -56,18 +67,22 @@ namespace Managers
         {
             crosshairSpread?.Invoke(a);
         }
+
         public void SpecialUsed(float a)
         {
             specialUsed?.Invoke(a);
         }
+
         public void MeleeUsed(float a)
         {
             meleeUsed?.Invoke(a);
         }
+
         public void SecondaryUsed(float a)
         {
             secondaryUsed?.Invoke(a);
         }
+
         public void ItemAcquired(AbstractItem item)
         {
             itemAcquired?.Invoke(item);
