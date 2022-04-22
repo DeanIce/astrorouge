@@ -52,30 +52,10 @@ namespace UI
             resolution.index = Array.IndexOf(rez, settings.resolution);
             resolution.RegisterValueChangedCallback(e => { settings.resolution = rez[resolution.index]; });
 
-            // Screen brightness override
-            // brightness = root.Q<Slider>("brightness");
-            // brightness.value = settings.brightness;
-            // brightness.RegisterValueChangedCallback(e => settings.brightness = e.newValue);
+            // Renderer MSAA 
             msaa = root.Q<DropdownField>("msaa");
-            msaa.index = settings.msaa switch
-            {
-                1 => 0,
-                2 => 1,
-                4 => 2,
-                8 => 3,
-                _ => 0
-            };
-            msaa.RegisterValueChangedCallback(e =>
-            {
-                settings.msaa = e.newValue switch
-                {
-                    "Disabled" => 1,
-                    "2x" => 2,
-                    "4x" => 4,
-                    "8x" => 8,
-                    _ => 0
-                };
-            });
+            msaa.index = (int) Math.Log(settings.msaa, 2);
+            msaa.RegisterValueChangedCallback(e => settings.msaa = UserSettings.mapping.GetValueOrDefault(e.newValue));
 
             // Audio settings
             musicVolume = root.Q<Slider>("volume-music");
@@ -94,8 +74,6 @@ namespace UI
             saveSettings = root.Q<Button>("save-settings");
 
             ApplyCurrentSettings();
-
-            // Register events to update the UserSettings class
 
 
             // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
@@ -116,19 +94,6 @@ namespace UI
 
             // Sensitivity settings
             EventManager.Instance.user.lookSensitivity = settings.lookSensitivity;
-        }
-
-
-        /// <summary>
-        ///     "Hydrate" the settings UI with values from disk.
-        ///     Add a line here to set the starting value of a control.
-        /// </summary>
-        private void Hydrate()
-        {
-            gameVolume.value = settings.volumeGame;
-            musicVolume.value = settings.volumeMusic;
-            // silly hack to trigger settings events immediately
-            EventManager.Instance.UpdateSettings(settings, saveFile);
         }
     }
 }
