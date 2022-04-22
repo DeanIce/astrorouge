@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
 
-[Serializable]
 public class PersistentUpgrades
 {
-    public int currency = 0;
+    public PersistentUpgradesData data;
 
-    public List<string> purchasedNodes = new();
-    public Dictionary<string, float> statUpgrades = defaultStatUpgrades;
+    public int Currency
+    { 
+        get => data.currency; 
+        set => data.currency = value; 
+    }
+    public List<string> PurchasedNodes => data.purchasedNodes;
 
     // Constant
     public static readonly List<string> intStats = new()
@@ -18,7 +20,7 @@ public class PersistentUpgrades
         "armor",
         "baseMaxExtraJumps",
     };
-    private static readonly Dictionary<string, float> defaultStatUpgrades = new()
+    public static readonly Dictionary<string, float> defaultStatUpgrades = new()
     {
         // Melee Stats
         { "meleeBaseDamage", 0f },
@@ -51,6 +53,10 @@ public class PersistentUpgrades
 
     public void ApplyStats(PlayerStats target)
     {
+        Dictionary<string, float> statUpgrades = new();
+        foreach (KeyValuePair<string, float> pair in data.statUpgrades)
+            statUpgrades.Add(pair.Key, pair.Value);
+
         target.meleeBaseDamage += (int)statUpgrades["meleeBaseDamage"];
         target.meleeDamageMultiplier += statUpgrades["meleeDamageMultiplier"];
         target.meleeCritChance += statUpgrades["meleeCritChance"];
@@ -81,5 +87,19 @@ public class PersistentUpgrades
         target.stunChance += statUpgrades["baseEffectChance"];
         target.martyrdomChance += statUpgrades["baseEffectChance"];
         target.igniteChance += statUpgrades["baseEffectChance"];
+    }
+
+    public void AddStatUpgrade(string statName, float value)
+    {
+        for(int i = 0; i < data.statUpgrades.Count; i++)
+        {
+            KeyValuePair<string, float> pair = data.statUpgrades[i];
+            if (pair.Key.Equals(statName))
+            {
+                data.statUpgrades[i] = new(statName, value + pair.Value);
+                return;
+            }
+        }
+        data.statUpgrades.Add(new(statName, value));
     }
 }

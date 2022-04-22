@@ -7,12 +7,13 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
     private bool unsavedChanges = false;
 
     // Constants
-    private const string upgradeSaveFileName = "persistentUpgrades";
+    private const string upgradeSaveFileName = "persistentUpgradesData";
 
     // Start is called before the first frame update
     void Start()
     {
-        upgrades = PersistentData.Load<PersistentUpgrades>(upgradeSaveFileName);
+        upgrades = new();
+        upgrades.data = PersistentData.Load<PersistentUpgradesData>(upgradeSaveFileName);
     }
 
     // Update is called once per frame
@@ -20,14 +21,14 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
     {
         if (unsavedChanges)
         {
-            PersistentData.Save(upgrades, upgradeSaveFileName);
+            PersistentData.Save(upgrades.data, upgradeSaveFileName);
             unsavedChanges = false;
         }
     }
 
     private void OnDestroy()
     {
-        PersistentData.Save(upgrades, upgradeSaveFileName);
+        PersistentData.Save(upgrades.data, upgradeSaveFileName);
     }
 
     public void ApplyPersistentStats()
@@ -38,9 +39,9 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
     /// <returns>If adding the upgrade was successful.</returns>
     public bool AddPersistentUpgrade(string nodeName, string statName, float value, int cost)
     {
-        if (!upgrades.statUpgrades.ContainsKey(statName))
-            throw new Exception($"No persistent upgrade named: {statName}, valid names are: {upgrades.statUpgrades.Keys}");
-        if (upgrades.purchasedNodes.Contains(nodeName))
+        if (!PersistentUpgrades.defaultStatUpgrades.ContainsKey(statName))
+            throw new Exception($"No persistent upgrade named: {statName}, valid names are: {PersistentUpgrades.defaultStatUpgrades.Keys}");
+        if (upgrades.PurchasedNodes.Contains(nodeName))
             throw new Exception($"Node {nodeName} is already purchased!");
         if (PersistentUpgrades.intStats.Contains(statName)
             && Math.Abs(value - Math.Truncate(value)) >= 0.001f)
@@ -49,8 +50,8 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
         if (!DecCurrency(cost))
             return false;
 
-        upgrades.purchasedNodes.Add(nodeName);
-        upgrades.statUpgrades[statName] += value;
+        upgrades.PurchasedNodes.Add(nodeName);
+        upgrades.AddStatUpgrade(statName, value);
         unsavedChanges = true;
 
         return true;
@@ -58,24 +59,24 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
 
     public bool NodePurchased(string nodeName)
     {
-        return upgrades.purchasedNodes.Contains(nodeName);
+        return upgrades.PurchasedNodes.Contains(nodeName);
     }
 
     public void IncCurrency(int value)
     {
-        upgrades.currency += value;
+        upgrades.Currency += value;
         unsavedChanges = true;
     }
 
-    public int GetCurrency() => upgrades.currency;
+    public int GetCurrency() => upgrades.Currency;
 
     /// <returns>If the deduction was successful.</returns>
     private bool DecCurrency(int value)
     {
-        if (upgrades.currency < value)
+        if (upgrades.Currency < value)
             return false;
 
-        upgrades.currency -= value;
+        upgrades.Currency -= value;
         unsavedChanges = true;
 
         return true;
