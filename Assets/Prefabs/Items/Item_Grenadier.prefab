@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a67e2a9cdce9744bf00f584865f2e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Grenades!!!
-  itemDescription: Adds chance to throw a grenade
+  itemName: Improved Explosives
+  itemDescription: Increases grenade explosion size
   itemIcon: {fileID: 2800000, guid: 7a9bef78151e0a148abcc0d40b00d8f5, type: 3}
 --- !u!1001 &8821035614116864933
 PrefabInstance:
