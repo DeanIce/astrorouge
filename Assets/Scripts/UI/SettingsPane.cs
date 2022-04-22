@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Managers;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -19,20 +20,20 @@ namespace UI
         public UserSettings settings;
 
         private readonly string saveFile = "userSettings";
-        private Slider brightness;
         private DropdownField displayMode;
         private Slider gameVolume;
-        private Slider masterVolume;
+        private DropdownField msaa;
         private Slider musicVolume;
         private DropdownField resolution;
         private VisualElement root;
         private Button saveSettings;
-        private Slider screenShake;
+        private UniversalRenderPipelineAsset urp;
 
 
         private void Start()
         {
             settings = PersistentUpgrades.Load<UserSettings>(saveFile);
+            urp = (UniversalRenderPipelineAsset) QualitySettings.renderPipeline;
             root = GetComponent<UIDocument>().rootVisualElement;
 
             // Fullscreen, Windowed etc
@@ -51,45 +52,62 @@ namespace UI
             resolution.RegisterValueChangedCallback(e => { settings.resolution = rez[resolution.index]; });
 
             // Screen brightness override
-            brightness = root.Q<Slider>("brightness");
-            brightness.value = settings.brightness;
-            brightness.RegisterValueChangedCallback(e => settings.brightness = e.newValue);
-
-
-            screenShake = root.Q<Slider>("screen-shake");
-            masterVolume = root.Q<Slider>("volume-master");
+            // brightness = root.Q<Slider>("brightness");
+            // brightness.value = settings.brightness;
+            // brightness.RegisterValueChangedCallback(e => settings.brightness = e.newValue);
+            msaa = root.Q<DropdownField>("msaa");
+            msaa.index = settings.msaa switch
+            {
+                1 => 0,
+                2 => 1,
+                4 => 2,
+                8 => 3,
+                _ => 0
+            };
+            msaa.RegisterValueChangedCallback(e =>
+            {
+                settings.msaa = e.newValue switch
+                {
+                    "Disabled" => 1,
+                    "2x" => 2,
+                    "4x" => 4,
+                    "8x" => 8,
+                    _ => 0
+                };
+            });
+            
+            // Audio settings
             musicVolume = root.Q<Slider>("volume-music");
             gameVolume = root.Q<Slider>("volume-game");
+            gameVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeGame = e.newValue);
+            musicVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMusic = e.newValue);
+            gameVolume.value = settings.volumeGame;
+            musicVolume.value = settings.volumeMusic;
+
+
             saveSettings = root.Q<Button>("save-settings");
 
             ApplyCurrentSettings();
 
             // Register events to update the UserSettings class
 
-            gameVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeGame = e.newValue);
-            masterVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMaster = e.newValue);
-            musicVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMusic = e.newValue);
 
             // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
-            saveSettings.clicked += () =>
-            {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
-                EventManager.Instance.UpdateSettings(settings, saveFile);
+            saveSettings.clicked += ApplyCurrentSettings;
 
-                // Update screen settings
-                Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.displayMode);
-            };
-
-            // Set values when the panel is created
-            Hydrate();
         }
 
-        private void SetupEnumField(DropdownField dropdownField)
-        {
-        }
 
         private void ApplyCurrentSettings()
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
+            EventManager.Instance.UpdateSettings(settings, saveFile);
+
+            // Update screen settings
+            Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.displayMode);
+
+            // Update quality settings
+            urp.msaaSampleCount = settings.msaa;
         }
 
 
@@ -101,7 +119,6 @@ namespace UI
         {
             gameVolume.value = settings.volumeGame;
             musicVolume.value = settings.volumeMusic;
-            masterVolume.value = settings.volumeMaster;
             // silly hack to trigger settings events immediately
             EventManager.Instance.UpdateSettings(settings, saveFile);
         }

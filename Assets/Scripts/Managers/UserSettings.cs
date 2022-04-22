@@ -7,12 +7,9 @@ namespace Managers
     public class UserSettings
     {
         public FullScreenMode displayMode = FullScreenMode.FullScreenWindow;
-        public float fov = 60;
-        public float screenShake = 1; // [0,1]
         public float volumeGame = 1; // [0,1]
-        public float volumeMaster = 1; // [0,1]
         public float volumeMusic = 1; // [0,1]
-        public float brightness = 1; // [0,1]
+        public int msaa = 4; // {1, 2, 4, 8}
 
         public Resolution resolution;
 

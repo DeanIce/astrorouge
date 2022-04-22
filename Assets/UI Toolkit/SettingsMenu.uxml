@@ -12,10 +12,8 @@
             <ui:Label text="Video" display-tooltip-when-elided="true" class="setting-header" />
             <ui:DropdownField label="Display Mode" name="display-mode" class="settings-dropdown" />
             <ui:DropdownField label="Resolution" name="resolution" class="settings-dropdown" />
-            <ui:Slider label="Brightness" value="1" high-value="1" name="brightness" low-value="0" class="setting-slider" />
-            <ui:Slider picking-mode="Ignore" label="Screen Shake" value="1" high-value="1" name="screen-shake" low-value="0" class="setting-slider" />
+            <ui:DropdownField label="MSAA" name="msaa" index="0" choices="Disabled,2x,4x,8x" class="settings-dropdown" />
             <ui:Label text="Audio" display-tooltip-when-elided="true" class="setting-header" />
-            <ui:Slider picking-mode="Ignore" label="Master Volume" value="100" high-value="1" name="volume-master" class="setting-slider" />
             <ui:Slider picking-mode="Ignore" label="Music Volume" value="100" high-value="1" name="volume-music" class="setting-slider" />
             <ui:Slider picking-mode="Ignore" label="Game Volume" value="100" high-value="1" name="volume-game" class="setting-slider" />
             <ui:Label text="Gameplay" display-tooltip-when-elided="true" class="setting-header" />
