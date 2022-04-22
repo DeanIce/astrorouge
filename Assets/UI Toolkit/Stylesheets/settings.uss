@@ -87,6 +87,11 @@
     color: rgb(168, 168, 168);
 }
 
+.upgrade-bought {
+    color: rgba(171, 171, 171, 255);
+    -unity-background-image-tint-color: rgba(154, 154, 154, 255);
+}
+
 .upgrade {
     flex-grow: 1;
     background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_CardFrame01_Blue.png?fileID=2800000&guid=37a5c14426548db43aa26aa2891ba08f&type=3#Frame_CardFrame01_Blue');

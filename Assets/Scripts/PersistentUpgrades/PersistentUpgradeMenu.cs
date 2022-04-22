@@ -6,6 +6,13 @@ public class PersistentUpgradeMenu : MonoBehaviour
 {
     private class ButtonData
     {
+        private enum ButtonStatus
+        {
+            Available,
+            Bought,
+            Locked,
+        }
+
         private readonly List<ButtonData> dependents = new();
         private readonly Button button;
         private readonly string buttonName;
@@ -14,7 +21,7 @@ public class PersistentUpgradeMenu : MonoBehaviour
         private readonly float statValue;
         private readonly int cost;
 
-        private bool locked = false;
+        private ButtonStatus status = ButtonStatus.Available;
 
         public ButtonData(VisualElement root, string buttonName, string buttonText, string statName, float statValue, int cost)
         {
@@ -27,17 +34,18 @@ public class PersistentUpgradeMenu : MonoBehaviour
             button.text = buttonText;
 
             button.clicked += OnClick;
+            Lock();
         }
 
         public void OnClick()
         {
-            if (locked)
+            if (status == ButtonStatus.Locked)
             {
                 Debug.Log($"Can't buy locked upgrade {buttonName}");
                 return;
             }
 
-            if (PersistentUpgradeManager.Instance.NodePurchased(buttonName))
+            if (status == ButtonStatus.Bought)
             {
                 Debug.Log($"Upgrade already purchased {buttonName}");
                 return;
@@ -46,6 +54,8 @@ public class PersistentUpgradeMenu : MonoBehaviour
             if (PersistentUpgradeManager.Instance.AddPersistentUpgrade(buttonName, statName, statValue, cost))
             {
                 SetPurchased();
+                foreach (ButtonData dependent in dependents)
+                    dependent.Unlock();
                 Debug.Log($"Successfuly purchase of {buttonName}");
             }
             else
@@ -58,26 +68,39 @@ public class PersistentUpgradeMenu : MonoBehaviour
 
         public void Lock()
         {
-            if (locked) return;
+            if (status != ButtonStatus.Available) return;
 
             foreach(ButtonData dependent in dependents)
                 dependent.Lock();
 
-            locked = true;
-            button.text = "[REDACTED]";
+            status = ButtonStatus.Locked;
+            button.text = "[LOCKED]";
         }
 
         public void Unlock()
         {
-            if (!locked) return;
+            if (status != ButtonStatus.Locked) return;
 
-            locked = false;
+            status = ButtonStatus.Available;
             button.text = buttonText;
         }
 
         public void SetPurchased()
         {
+            status = ButtonStatus.Bought;
+            button.AddToClassList("upgrade-bought");
+        }
 
+        public void ResolveStatus()
+        {
+            Unlock();
+
+            if (PersistentUpgradeManager.Instance.NodePurchased(buttonName))
+            {
+                SetPurchased();
+                foreach (ButtonData dependent in dependents)
+                    dependent.ResolveStatus();
+            }
         }
     }
 
@@ -129,10 +152,10 @@ public class PersistentUpgradeMenu : MonoBehaviour
         for (int i = 0; i < elementsT.Length - 1; i++)
             elementsT[i].AddDependent(elementsT[i + 1]);
 
-        healthT[1].Lock();
-        mobilityT[1].Lock();
-        damageT[1].Lock();
-        elementsT[1].Lock();
+        healthT[0].ResolveStatus();
+        mobilityT[0].ResolveStatus();
+        damageT[0].ResolveStatus();
+        elementsT[0].ResolveStatus();
 
         balanceLabel = root.Q<Label>("Balance");
     }

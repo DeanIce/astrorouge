@@ -54,8 +54,8 @@ public class PersistentUpgrades
     public void ApplyStats(PlayerStats target)
     {
         Dictionary<string, float> statUpgrades = new();
-        foreach (KeyValuePair<string, float> pair in data.statUpgrades)
-            statUpgrades.Add(pair.Key, pair.Value);
+        for(int i = 0; i < data.statNames.Count; i++)
+            statUpgrades.Add(data.statNames[i], data.statValues[i]);
 
         target.meleeBaseDamage += (int)statUpgrades["meleeBaseDamage"];
         target.meleeDamageMultiplier += statUpgrades["meleeDamageMultiplier"];
@@ -91,15 +91,15 @@ public class PersistentUpgrades
 
     public void AddStatUpgrade(string statName, float value)
     {
-        for(int i = 0; i < data.statUpgrades.Count; i++)
+        for(int i = 0; i < data.statNames.Count; i++)
         {
-            KeyValuePair<string, float> pair = data.statUpgrades[i];
-            if (pair.Key.Equals(statName))
+            if (data.statNames[i].Equals(statName))
             {
-                data.statUpgrades[i] = new(statName, value + pair.Value);
+                data.statValues[i] += value;
                 return;
             }
         }
-        data.statUpgrades.Add(new(statName, value));
+        data.statNames.Add(statName);
+        data.statValues.Add(value);
     }
 }

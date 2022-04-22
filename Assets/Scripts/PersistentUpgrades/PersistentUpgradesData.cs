@@ -6,12 +6,14 @@ public class PersistentUpgradesData
 {
     public int currency;
     public List<string> purchasedNodes;
-    public List<KeyValuePair<string, float>> statUpgrades;
+    public List<string> statNames;
+    public List<float> statValues;
 
     public PersistentUpgradesData()
     {
         currency = 0;
         purchasedNodes = new();
-        statUpgrades = new();
+        statNames = new();
+        statValues = new();
     }
 }
