@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Feature Scenes/TestBossIce.unity
     guid: 06eb37c3e8ab38245862bbf31e8721c6
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 78e7dbd4e69cba04ba4be79c85cf40f0
   m_configObjects: {}

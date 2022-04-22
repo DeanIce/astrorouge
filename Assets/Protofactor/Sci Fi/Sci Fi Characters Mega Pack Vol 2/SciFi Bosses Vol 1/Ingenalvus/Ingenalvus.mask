@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ingenalvus
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: root
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_AbdomenHive
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftFront_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftFront_1/Ingenalvus_LegLeftFront_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftFront_1/Ingenalvus_LegLeftFront_2/Ingenalvus_LegLeftFront_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftFront_1/Ingenalvus_LegLeftFront_2/Ingenalvus_LegLeftFront_3/Ingenalvus_LegLeftFront_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftMiddle_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftMiddle_1/Ingenalvus_LegLeftMiddle_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftMiddle_1/Ingenalvus_LegLeftMiddle_2/Ingenalvus_LegLeftMiddle_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftMiddle_1/Ingenalvus_LegLeftMiddle_2/Ingenalvus_LegLeftMiddle_3/Ingenalvus_LegLeftMiddle_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftRear_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftRear_1/Ingenalvus_LegLeftRear_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftRear_1/Ingenalvus_LegLeftRear_2/Ingenalvus_LegLeftRear_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegLeftRear_1/Ingenalvus_LegLeftRear_2/Ingenalvus_LegLeftRear_3/Ingenalvus_LegLeftRear_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightFront_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightFront_1/Ingenalvus_LegRightFront_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightFront_1/Ingenalvus_LegRightFront_2/Ingenalvus_LegRightFront_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightFront_1/Ingenalvus_LegRightFront_2/Ingenalvus_LegRightFront_3/Ingenalvus_LegRightFront_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightMiddle_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightMiddle_1/Ingenalvus_LegRightMiddle_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightMiddle_1/Ingenalvus_LegRightMiddle_2/Ingenalvus_LegRightMiddle_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightMiddle_1/Ingenalvus_LegRightMiddle_2/Ingenalvus_LegRightMiddle_3/Ingenalvus_LegRightMiddle_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightRear_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightRear_1/Ingenalvus_LegRightRear_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightRear_1/Ingenalvus_LegRightRear_2/Ingenalvus_LegRightRear_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_LegRightRear_1/Ingenalvus_LegRightRear_2/Ingenalvus_LegRightRear_3/Ingenalvus_LegRightRear_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1/Ingenalvus_AntennaLeft_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1/Ingenalvus_AntennaLeft_2/Ingenalvus_AntennaLeft_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1/Ingenalvus_AntennaLeft_2/Ingenalvus_AntennaLeft_3/Ingenalvus_AntennaLeft_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1/Ingenalvus_AntennaLeft_2/Ingenalvus_AntennaLeft_3/Ingenalvus_AntennaLeft_4/Ingenalvus_AntennaLeft_5
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaLeft_1/Ingenalvus_AntennaLeft_2/Ingenalvus_AntennaLeft_3/Ingenalvus_AntennaLeft_4/Ingenalvus_AntennaLeft_5/Ingenalvus_AntennaLeft_6
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1/Ingenalvus_AntennaRight_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1/Ingenalvus_AntennaRight_2/Ingenalvus_AntennaRight_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1/Ingenalvus_AntennaRight_2/Ingenalvus_AntennaRight_3/Ingenalvus_AntennaRight_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1/Ingenalvus_AntennaRight_2/Ingenalvus_AntennaRight_3/Ingenalvus_AntennaRight_4/Ingenalvus_AntennaRight_5
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_AntennaRight_1/Ingenalvus_AntennaRight_2/Ingenalvus_AntennaRight_3/Ingenalvus_AntennaRight_4/Ingenalvus_AntennaRight_5/Ingenalvus_AntennaRight_6
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_Jaw
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_MandibuleLeft_A
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_MandibuleLeft_B
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_MandibuleRight_A
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_MandibuleRight_B
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_Tongue_1
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_Tongue_1/Ingenalvus_Tongue_2
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_Tongue_1/Ingenalvus_Tongue_2/Ingenalvus_Tongue_3
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_Head/Ingenalvus_Tongue_1/Ingenalvus_Tongue_2/Ingenalvus_Tongue_3/Ingenalvus_Tongue_4
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_NeckWeakPointLeft_A
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_Neck_3/Ingenalvus_NeckWeakPointRight_A
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_NeckWeakPointLeft_B
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_Neck_2/Ingenalvus_NeckWeakPointRight_B
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_NeckWeakPointLeft_C
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_NeckRoot/Ingenalvus_Neck_1/Ingenalvus_NeckWeakPointRight_C
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_ThoraxWeakPointLeft
+    m_Weight: 1
+  - m_Path: root/Ibgenalvus_Thorax/Ingenalvus_ThoraxWeakPointRight
+    m_Weight: 1
+  - m_Path: SK_Ingenalvus
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointLeft_A
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointLeft_B
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointLeft_C
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointRight_A
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointRight_B
+    m_Weight: 1
+  - m_Path: SK_IngenalvusNeckWeakPointRight_C
+    m_Weight: 1
+  - m_Path: SK_IngenalvusThoraxWeakPointLeft
+    m_Weight: 1
+  - m_Path: SK_IngenalvusThoraxWeakPointRight
+    m_Weight: 1
