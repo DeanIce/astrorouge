@@ -110,7 +110,7 @@ Todo: add assets here... names not links
 
             AudioManager.Instance.PlayMusic(mainMenuMusic);
 
-            SettingsButtonPressed();
+            // SettingsButtonPressed();
         }
 
 
