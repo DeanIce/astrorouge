@@ -53,9 +53,9 @@ public class PersistentUpgrades
 
     public void ApplyStats(PlayerStats target)
     {
-        Dictionary<string, float> statUpgrades = new();
-        for(int i = 0; i < data.statNames.Count; i++)
-            statUpgrades.Add(data.statNames[i], data.statValues[i]);
+        Dictionary<string, float> statUpgrades = defaultStatUpgrades;
+        for (int i = 0; i < data.statNames.Count; i++)
+            statUpgrades[data.statNames[i]] += data.statValues[i];
 
         target.meleeBaseDamage += (int)statUpgrades["meleeBaseDamage"];
         target.meleeDamageMultiplier += statUpgrades["meleeDamageMultiplier"];

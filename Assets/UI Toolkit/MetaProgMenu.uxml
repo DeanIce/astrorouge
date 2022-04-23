@@ -6,6 +6,7 @@
                 <ui:Label text="Player Upgrades" display-tooltip-when-elided="true" name="Skills" style="-unity-font: resource(&apos;NEXON Football Gothic B&apos;); -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 32px; height: 35px; padding-left: 2px; padding-top: 5px;" />
                 <ui:VisualElement style="flex-direction: row; padding-right: 50px;">
                     <ui:Label text="Balance: X" display-tooltip-when-elided="true" name="Balance" style="-unity-font: resource(&apos;NEXON Football Gothic B&apos;); -unity-font-style: bold; color: rgb(255, 255, 255); font-size: 32px; height: 35px; padding-left: 2px; padding-top: 5px;" />
+                    <ui:Button text="Reset" display-tooltip-when-elided="true" name="reset-button" class="settings-button" style="padding-right: 30px;" />
                     <ui:Button text="Exit" display-tooltip-when-elided="true" name="back-button" class="settings-button" style="padding-right: 30px;" />
                 </ui:VisualElement>
             </ui:VisualElement>

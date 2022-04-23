@@ -28,7 +28,15 @@ public class PersistentUpgradeManager : ManagerSingleton<PersistentUpgradeManage
 
     private void OnDestroy()
     {
-        PersistentData.Save(upgrades.data, upgradeSaveFileName);
+        if (upgrades != null && upgrades.data != null)
+            PersistentData.Save(upgrades.data, upgradeSaveFileName);
+    }
+
+    public void Reset()
+    {
+        upgrades = new();
+        upgrades.data = new();
+        unsavedChanges = true;
     }
 
     public void ApplyPersistentStats()
