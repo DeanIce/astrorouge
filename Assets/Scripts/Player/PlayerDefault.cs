@@ -1,6 +1,6 @@
+using System.Collections;
 using Gravity;
 using Managers;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,23 +12,6 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private const float increasePerSecond = 60f;
     private const float maxSpread = 30f;
     private const float minSpread = 1f;
-
-    // Dynamic Player Info
-    private float crosshairSpread = 1f;
-    private int extraJumpsLeft;
-    private bool isGrounded;
-    private bool isPrimaryAttacking;
-    private bool jump;
-    private Vector3 jumpForceVal;
-    private float timeOfLastDamage;
-    private float globalAttackDealy;
-
-    // Public Getters
-    public bool IsSprinting { get; private set; }
-    public float PrimaryAttackDelay { get; private set; }
-    public float SecondaryAttackDelay { get; private set; }
-    public float MeleeAttackDelay { get; private set; }
-    public float SpecialActionDelay { get; private set; }
 
     // Inspector set-able references
     [SerializeField] private GameObject followTarget;
@@ -58,11 +41,28 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Misc values
     private Animator animator;
+
+    // Dynamic Player Info
+    private float crosshairSpread = 1f;
+    private int extraJumpsLeft;
+    private float globalAttackDealy;
     private Transform groundCheck;
     private LayerMask groundMask;
+    private bool isGrounded;
+    private bool isPrimaryAttacking;
+    private bool jump;
+    private Vector3 jumpForceVal;
     private InputAction movement, look;
     private Rigidbody rb;
+    private float timeOfLastDamage;
     protected internal bool useGravity = true;
+
+    // Public Getters
+    public bool IsSprinting { get; private set; }
+    public float PrimaryAttackDelay { get; private set; }
+    public float SecondaryAttackDelay { get; private set; }
+    public float MeleeAttackDelay { get; private set; }
+    public float SpecialActionDelay { get; private set; }
 
     private void Start()
     {
@@ -78,7 +78,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public void Update()
     {
         // Adjust delay timers
-        static float Decrement(float value) => value < 0 ? value : value - Time.deltaTime;
+        static float Decrement(float value)
+        {
+            return value < 0 ? value : value - Time.deltaTime;
+        }
+
         PrimaryAttackDelay = Decrement(PrimaryAttackDelay);
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
         MeleeAttackDelay = Decrement(MeleeAttackDelay);
@@ -93,7 +97,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
                 PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
             }
         }
-        
+
         // Health regen
         if (Time.time - timeOfLastDamage > PlayerStats.Instance.regenDelay &&
             PlayerStats.Instance.IsAlive() &&
@@ -216,6 +220,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     // Translates 2D input into 3D looking direction
     public Vector3 Look(Vector2 direction)
     {
+        float f = EventManager.Instance.user.lookSensitivity;
+        direction *= new Vector2(f, f);
         return Vector3.RotateTowards(transform.forward, transform.right * Mathf.Sign(direction.x),
             sensitivity * Time.deltaTime * Mathf.Abs(direction.x), 0.0f);
     }
@@ -268,7 +274,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
 
         EventManager.Instance.PlayerStatsUpdated();
-        EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth)/ PlayerStats.Instance.maxHealth);
+        EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth) /
+                                            PlayerStats.Instance.maxHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
     }
 
@@ -317,7 +324,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         SpecialActionDelay = specialActionCooldown;
 
         EventManager.Instance.SpecialUsed(specialActionCooldown);
-       _ = StartCoroutine(LobAttack());
+        _ = StartCoroutine(LobAttack());
     }
 
     private void ProjectileAttack()
@@ -407,7 +414,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Vector3 AttackVector()
     {
         float bulletSpread = IsSprinting ? spread + 1.5f : spread;
-        
+
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
@@ -432,13 +439,16 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     }
 
     /// <summary>
-    /// Applys status effects to provided projectile.
+    ///     Applys status effects to provided projectile.
     /// </summary>
     /// <param name="projectile">The designated projectile.</param>
     /// <param name="procChance">The probability boost to apply an effect. (actual chance) = (proc chance) * (effect chance)</param>
     private void HandleEffects(GameObject projectile, float procChance)
     {
-        float GetRandom() => procChance * Random.Range(0.0f, 1.0f);
+        float GetRandom()
+        {
+            return procChance * Random.Range(0.0f, 1.0f);
+        }
 
         if (GetRandom() < PlayerStats.Instance.burnChance)
             ProjectileFactory.Instance.AddBurn(projectile);

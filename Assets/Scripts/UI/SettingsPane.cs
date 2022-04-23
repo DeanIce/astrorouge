@@ -1,5 +1,9 @@
-﻿using Managers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Managers;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -14,59 +18,79 @@ namespace UI
     public class SettingsPane : MonoBehaviour
     {
         public UserSettings settings;
-
-        private readonly string saveFile = "userSettings";
-        private DropdownMenu displayMode;
-        private Slider fov;
+        private DropdownField displayMode;
         private Slider gameVolume;
-        private Slider masterVolume;
+        private Slider look;
+        private DropdownField msaa;
         private Slider musicVolume;
-        private DropdownMenu resolution;
+        private DropdownField resolution;
         private VisualElement root;
         private Button saveSettings;
-        private Slider screenShake;
+        private UniversalRenderPipelineAsset urp;
+
 
         private void Start()
         {
+            settings = PersistentData.Load<UserSettings>(UserSettings.SAVE_FILE);
+            urp = (UniversalRenderPipelineAsset) QualitySettings.renderPipeline;
             root = GetComponent<UIDocument>().rootVisualElement;
-            fov = root.Q<Slider>("fov");
-            screenShake = root.Q<Slider>("screen-shake");
-            masterVolume = root.Q<Slider>("volume-master");
+
+            // Fullscreen, Windowed etc
+            displayMode = root.Q<DropdownField>("display-mode");
+            displayMode.choices = new List<string>(Enum.GetNames(typeof(FullScreenMode)));
+            displayMode.RegisterValueChangedCallback(e => settings.DisplayMode = (FullScreenMode) displayMode.index);
+            Screen.fullScreenMode = settings.DisplayMode;
+            displayMode.index = displayMode.choices.IndexOf(settings.DisplayMode.ToString());
+
+            // Resolution
+            Resolution[] rez = Screen.resolutions.Distinct().ToArray();
+            resolution = root.Q<DropdownField>("resolution");
+            resolution.choices = rez.Select((i, d) => i.ToString())
+                .ToList();
+            resolution.index = Array.IndexOf(rez, settings.resolution);
+            resolution.RegisterValueChangedCallback(e => { settings.resolution = rez[resolution.index]; });
+
+            // Renderer MSAA 
+            msaa = root.Q<DropdownField>("msaa");
+            msaa.index = (int) Math.Log(settings.msaa, 2);
+            msaa.RegisterValueChangedCallback(e => settings.msaa = UserSettings.mapping.GetValueOrDefault(e.newValue));
+
+            // Audio settings
             musicVolume = root.Q<Slider>("volume-music");
             gameVolume = root.Q<Slider>("volume-game");
-            saveSettings = root.Q<Button>("save-settings");
-
-            settings = PersistentData.Load<UserSettings>(saveFile);
-
-            // Register events to update the UserSettings class
-            fov.RegisterCallback<ChangeEvent<float>>(e => settings.fov = e.newValue);
             gameVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeGame = e.newValue);
-            masterVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMaster = e.newValue);
             musicVolume.RegisterCallback<ChangeEvent<float>>(e => settings.volumeMusic = e.newValue);
-
-            // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
-            saveSettings.clicked += () =>
-            {
-                AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
-                EventManager.Instance.UpdateSettings(settings, saveFile);
-            };
-
-            // Set values when the panel is created
-            Hydrate();
-        }
-
-        /// <summary>
-        ///     "Hydrate" the settings UI with values from disk.
-        ///     Add a line here to set the starting value of a control.
-        /// </summary>
-        private void Hydrate()
-        {
-            fov.value = settings.fov;
             gameVolume.value = settings.volumeGame;
             musicVolume.value = settings.volumeMusic;
-            masterVolume.value = settings.volumeMaster;
-            // silly hack to trigger settings events immediately
-            EventManager.Instance.UpdateSettings(settings, saveFile);
+
+            // Look sensitivity
+            look = root.Q<Slider>("look");
+            look.value = settings.lookSensitivity;
+            look.RegisterValueChangedCallback(e => settings.lookSensitivity = e.newValue);
+
+
+            saveSettings = root.Q<Button>("save-settings");
+
+            ApplyCurrentSettings();
+
+            // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
+            saveSettings.clicked += ApplyCurrentSettings;
+        }
+
+
+        private void ApplyCurrentSettings()
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
+            EventManager.Instance.UpdateSettings(settings, UserSettings.SAVE_FILE);
+
+            // Update screen settings
+            Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.DisplayMode);
+
+            // Update quality settings
+            urp.msaaSampleCount = settings.msaa;
+
+            // Sensitivity settings
+            EventManager.Instance.user.lookSensitivity = settings.lookSensitivity;
         }
     }
 }

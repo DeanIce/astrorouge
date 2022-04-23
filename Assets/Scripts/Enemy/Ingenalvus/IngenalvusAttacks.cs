@@ -27,15 +27,9 @@ namespace Enemy.Ingenalvus
         }
 
 
-        public void BreathFireStart()
-        {
-            ingFire.Show();
-        }
+        public void BreathFireStart() => ingFire.Show();
 
-        public void BreathFireStop()
-        {
-            ingFire.Hide();
-        }
+        public void BreathFireStop() => ingFire.Hide();
 
         public void Smash()
         {
