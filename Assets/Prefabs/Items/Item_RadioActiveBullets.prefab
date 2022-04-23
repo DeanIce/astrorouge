@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Radioactive Bullets
   itemDescription: Adds 5% chance to make enemy radioactive
-  itemIcon: {fileID: 2800000, guid: 49590e7b0cef6fe4f922c40c23559368, type: 3}
+  itemIcon: {fileID: 2800000, guid: 2ebe7661b7a595a4c8b7eb3d61f22215, type: 3}
 --- !u!4 &7942254777140327103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4162041519204196704, guid: a15166dbe40bcae4bbacdb3f1af9c53d, type: 3}
