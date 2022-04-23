@@ -409,7 +409,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             projectile,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult,
-            3f); //TODO (Jared): Set grenade blast radius
+            3f * PlayerStats.Instance.rangeGrenadeSizeMultiplier);
     }
 
     private IEnumerator InstantaneousAttack(float attackDelay)
