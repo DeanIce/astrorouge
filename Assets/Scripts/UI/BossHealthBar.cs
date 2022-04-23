@@ -20,6 +20,8 @@ namespace UI
 
         public void SetHealth(float hp, float maxHealth)
         {
+            if (hp < 0) hp = 0;
+
             hp = Mathf.Round(hp);
             healthBarText.text = hp + " / " + maxHealth;
             float percentRemaining = hp / maxHealth * 100;

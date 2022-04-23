@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,34 +11,15 @@ public class IceBoss : MonoBehaviour
      * 2)
      */
 
-    // Animation stuff
-    private Animator animator;
 
-    // Components
-    private Rigidbody rb;
+    public BossHealthBar bossHealthBar;
 
     // Omnipotence
     public GameObject player;
-
-    // Status stuff
-    private bool dying;
-    private bool attacking;
-    private float rollTimerStart = 3f;
-    private float rollTimer;
-    private bool hunting;
-    private bool inRange;
-    public float health;
+    public float maxHealth;
     public float movementSpeed;
 
     public string movementState = "forward";
-
-    // Movement stuff
-    private NavMeshAgent navMeshAgent;
-
-    // view angles
-    private float rollAngle = 5f;
-    private float crawlForwardAngle = 10f;
-    private float crawlLeftRightAngle = 20f;
 
     // damage stuff
     [SerializeField] private float attackRange;
@@ -50,14 +31,38 @@ public class IceBoss : MonoBehaviour
     public CapsuleCollider LeftClaw;
     public CapsuleCollider RightClaw;
     public BoxCollider RollCollider;
+    private readonly float crawlForwardAngle = 10f;
+    private readonly float crawlLeftRightAngle = 20f;
+
+    // view angles
+    private readonly float rollAngle = 5f;
+    private readonly float rollTimerStart = 3f;
+
+    // Animation stuff
+    private Animator animator;
+    private bool attacking;
+
+    // Status stuff
+    private bool dying;
+    private float health;
+    private bool hunting;
+    private bool inRange;
+
+    // Movement stuff
+    private NavMeshAgent navMeshAgent;
+
+    // Components
+    private Rigidbody rb;
+    private float rollTimer;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    private void Start()
     {
+        health = maxHealth;
         rb = GetComponent<Rigidbody>();
         // May need to be GetComponentInChildren
         animator = GetComponent<Animator>();
@@ -70,49 +75,58 @@ public class IceBoss : MonoBehaviour
         LeftClaw.isTrigger = false;
         RightClaw.isTrigger = false;
         RollCollider.isTrigger = false;
+        bossHealthBar.SetHealth(health, maxHealth);
     }
 
-    void Update()
+    private void Update()
     {
-        if (health < 0) {
+        if (health < 0)
             Die();
-        } else {
+        else
+        {
             // DEBUG
             // print($"movement state: {movementState}");
 
-            if (animator.GetBool("Rolling") == false) {
-                if (InCrawlBackwardRange()) {
-                    if (movementState != "backward") {
+            if (animator.GetBool("Rolling") == false)
+            {
+                if (InCrawlBackwardRange())
+                {
+                    if (movementState != "backward")
+                    {
                         StopCrawl();
                         StartBackwardCrawl();
                     }
                 }
-                else if (InCrawlForwardRange()) {
+                else if (InCrawlForwardRange())
+                {
                     //print("in crawl forward range");
-                    if (movementState != "forward") {
+                    if (movementState != "forward")
+                    {
                         StopCrawl();
                         StartForwardCrawl();
                     }
-                    if (InRollRange()) {
-                        RollAttack();
-                    }
-                    if (InAttackRange()) {
-                        Attack();
-                    }
+
+                    if (InRollRange()) RollAttack();
+                    if (InAttackRange()) Attack();
                 }
-                else if (InCrawlLeftRange()) {
-                    if (movementState != "left") {
+                else if (InCrawlLeftRange())
+                {
+                    if (movementState != "left")
+                    {
                         StopCrawl();
                         StartLeftCrawl();
                     }
                 }
-                else if (InCrawlRightRange()) {
+                else if (InCrawlRightRange())
+                {
                     //print("in crawl right range");
-                    if (movementState != "right") {
+                    if (movementState != "right")
+                    {
                         StopCrawl();
                         StartRightCrawl();
                     }
-                } else if (!inRange)
+                }
+                else if (!inRange)
                 {
                     animator.SetBool("CrawlForward_RM", true);
                     navMeshAgent.isStopped = false;
@@ -123,65 +137,21 @@ public class IceBoss : MonoBehaviour
                     navMeshAgent.isStopped = true;
                     animator.SetBool("CrawlForward_RM", false);
                 }
-            } else {
+            }
+            else
+            {
                 rollTimer -= Time.deltaTime;
-                if (rollTimer < 0) {
-                    StopRolling();
-                }
+                if (rollTimer < 0) StopRolling();
             }
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        
-    }
-
-    // FOV
-    private bool InRollRange() {
-        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return (angle <= rollAngle);
-    }
-
-    private bool InCrawlForwardRange() {
-        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return (angle <= crawlForwardAngle) && (distance >= 15);
-    }
-
-    private bool InCrawlBackwardRange() {
-        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return (distance < 0) || (angle <= crawlForwardAngle) && (distance < 15);
-    }
-
-    private bool InCrawlLeftRange() {
-        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
-        return (angle <= crawlLeftRightAngle) && (AngleDir(transform.forward, player.transform.position, transform.up) < 0);
-    }
-
-    private bool InCrawlRightRange() {
-        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
-        return (angle <= crawlLeftRightAngle) && (AngleDir(transform.forward, player.transform.position, transform.up) > 0);
-    }
-
-    private bool InAttackRange() {
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return distance >= 15 && distance <= 20;
-    }
-    private bool InJumpAttackRange() {
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return distance <= 17 && distance >= 13;
-    }
-
-    private bool InClawAttackRange() {
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return distance <= 22 && distance >= 18;
     }
 
     // For detecting if the player is within a reasonable attacking range
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
@@ -197,9 +167,61 @@ public class IceBoss : MonoBehaviour
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
         {
-           // Debug.Log("Left Range!");
+            // Debug.Log("Left Range!");
             inRange = false;
         }
+    }
+
+    // FOV
+    private bool InRollRange()
+    {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return angle <= rollAngle;
+    }
+
+    private bool InCrawlForwardRange()
+    {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return angle <= crawlForwardAngle && distance >= 15;
+    }
+
+    private bool InCrawlBackwardRange()
+    {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance < 0 || angle <= crawlForwardAngle && distance < 15;
+    }
+
+    private bool InCrawlLeftRange()
+    {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        return angle <= crawlLeftRightAngle && AngleDir(transform.forward, player.transform.position, transform.up) < 0;
+    }
+
+    private bool InCrawlRightRange()
+    {
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        return angle <= crawlLeftRightAngle && AngleDir(transform.forward, player.transform.position, transform.up) > 0;
+    }
+
+    private bool InAttackRange()
+    {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance >= 15 && distance <= 20;
+    }
+
+    private bool InJumpAttackRange()
+    {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance <= 17 && distance >= 13;
+    }
+
+    private bool InClawAttackRange()
+    {
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance <= 22 && distance >= 18;
     }
 
     // death
@@ -212,43 +234,51 @@ public class IceBoss : MonoBehaviour
         }
     }
 
-    public void TakeDmg(float dmg) {
-        if (!dying) {
+    public void TakeDmg(float dmg)
+    {
+        if (!dying)
+        {
             health -= dmg;
+            bossHealthBar.SetHealth(health, maxHealth);
             Flinch();
         }
     }
 
-    private void Flinch() {
+    private void Flinch()
+    {
         float flinchChance = Random.value;
-        if (flinchChance <= 0.1) {
-            GetHitFront();
-        }
+        if (flinchChance <= 0.1) GetHitFront();
     }
 
     // movement states
-    private void StartLeftCrawl() {
+    private void StartLeftCrawl()
+    {
         movementState = "left";
         animator.SetBool("CrawlLeft_RM", true);
     }
 
-    private void StartRightCrawl() {
+    private void StartRightCrawl()
+    {
         movementState = "right";
         animator.SetBool("CrawlRight_RM", true);
     }
 
-    private void StartForwardCrawl() {
+    private void StartForwardCrawl()
+    {
         movementState = "forward";
         animator.SetBool("CrawlForward_RM", true);
     }
 
-    private void StartBackwardCrawl() {
+    private void StartBackwardCrawl()
+    {
         movementState = "backward";
         animator.SetBool("CrawlBackward_RM", true);
     }
 
-    private void StopCrawl() {
-        switch (movementState) {
+    private void StopCrawl()
+    {
+        switch (movementState)
+        {
             case "forward":
                 animator.SetBool("CrawlForward_RM", false);
                 return;
@@ -264,7 +294,8 @@ public class IceBoss : MonoBehaviour
         }
     }
 
-    public void StopRolling() {
+    public void StopRolling()
+    {
         rollTimer = rollTimerStart;
         animator.SetBool("Rolling", false);
         RollCollider.isTrigger = false;
@@ -273,46 +304,42 @@ public class IceBoss : MonoBehaviour
     // normal attacking
     private void Attack()
     {
-        if (!attacking) {
+        if (!attacking)
+        {
             float randomAttack = Random.value;
-            if (randomAttack < 0.25 && InJumpAttackRange()) {
+            if (randomAttack < 0.25 && InJumpAttackRange())
                 StartCoroutine(JumpAttack());
-            }
-            else if (randomAttack < 0.5 && InClawAttackRange()) {
+            else if (randomAttack < 0.5 && InClawAttackRange())
                 StartCoroutine(ComboAttack());
-            }
-            else if (randomAttack < 0.75 && InClawAttackRange()) {
+            else if (randomAttack < 0.75 && InClawAttackRange())
                 StartCoroutine(LeftAttack());
-            }
-            else if (InClawAttackRange()) {
-                StartCoroutine(RightAttack());
-            }
+            else if (InClawAttackRange()) StartCoroutine(RightAttack());
         }
     }
 
     // Damage Taken
-    IEnumerator GetHitRight()
+    private IEnumerator GetHitRight()
     {
         animator.SetBool("HitRight", true);
         yield return new WaitForSeconds(1);
         animator.SetBool("HitRight", false);
     }
 
-    IEnumerator GetHitLeft()
+    private IEnumerator GetHitLeft()
     {
         animator.SetBool("HitLeft", true);
         yield return new WaitForSeconds(1);
         animator.SetBool("HitLeft", false);
     }
 
-    IEnumerator GetHitFront()
+    private IEnumerator GetHitFront()
     {
         animator.SetBool("HitFront", true);
         yield return new WaitForSeconds(1);
         animator.SetBool("HitFront", false);
     }
 
-    IEnumerator GetHitBack()
+    private IEnumerator GetHitBack()
     {
         animator.SetBool("HitBack", true);
         yield return new WaitForSeconds(1);
@@ -320,7 +347,7 @@ public class IceBoss : MonoBehaviour
     }
 
     // Death
-    IEnumerator DeathAnimation()
+    private IEnumerator DeathAnimation()
     {
         animator.SetBool("Death", true);
         yield return new WaitForSeconds(2.333f);
@@ -328,7 +355,7 @@ public class IceBoss : MonoBehaviour
     }
 
     // Attacks
-    IEnumerator JumpAttack()
+    private IEnumerator JumpAttack()
     {
         attacking = true;
         attackDamage = damage2;
@@ -338,7 +365,7 @@ public class IceBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator LeftAttack()
+    private IEnumerator LeftAttack()
     {
         attacking = true;
         attackDamage = damage;
@@ -348,7 +375,7 @@ public class IceBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator RightAttack()
+    private IEnumerator RightAttack()
     {
         attacking = true;
         attackDamage = damage;
@@ -358,7 +385,7 @@ public class IceBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator ComboAttack()
+    private IEnumerator ComboAttack()
     {
         attacking = true;
         attackDamage = damage;
@@ -376,12 +403,14 @@ public class IceBoss : MonoBehaviour
     }
 
     // Attack Colliders
-    public void TurnClawColliderOn() {
+    public void TurnClawColliderOn()
+    {
         LeftClaw.isTrigger = true;
         RightClaw.isTrigger = true;
     }
 
-    public void TurnClawColliderOff() {
+    public void TurnClawColliderOff()
+    {
         LeftClaw.isTrigger = false;
         RightClaw.isTrigger = false;
     }
@@ -391,14 +420,11 @@ public class IceBoss : MonoBehaviour
     {
         Vector3 perp = Vector3.Cross(fwd, targetDir);
         float dir = Vector3.Dot(perp, up);
- 
-        if (dir > 0.0f) {
+
+        if (dir > 0.0f)
             return 1.0f;
-        } else if (dir < 0.0f) {
+        if (dir < 0.0f)
             return -1.0f;
-        } else {
-            return 0.0f;
-        }
-    }  
-    
+        return 0.0f;
+    }
 }

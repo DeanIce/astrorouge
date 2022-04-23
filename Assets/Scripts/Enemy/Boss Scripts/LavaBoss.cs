@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,33 +11,38 @@ public class LavaBoss : MonoBehaviour
      * 2)
      */
 
-    // Animation stuff
-    private Animator animator;
-
-    // Components
-    private Rigidbody rb;
+    public BossHealthBar bossHealthBar;
 
     // Omnipotence
     public GameObject player;
+    public float maxHealth;
+    public float movementSpeed;
+
+    // Animation stuff
+    private Animator animator;
+    private bool attacking;
 
     // Status stuff
     private bool dying;
-    private bool attacking;
+    private float health;
     private bool hunting;
     private bool inRange;
-    public float health;
-    public float movementSpeed;
 
     // Movement stuff
     private NavMeshAgent navMeshAgent;
+
+    // Components
+    private Rigidbody rb;
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    private void Start()
     {
+        health = maxHealth;
+        bossHealthBar.SetHealth(health, maxHealth);
         rb = GetComponent<Rigidbody>();
         // May need to be GetComponentInChildren
         animator = GetComponent<Animator>();
@@ -46,7 +51,7 @@ public class LavaBoss : MonoBehaviour
         attacking = false;
     }
 
-    void Update()
+    private void Update()
     {
         if (!inRange)
         {
@@ -61,13 +66,12 @@ public class LavaBoss : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        
     }
 
     // For detecting if the player is within a reasonable attacking range
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // Convention: Player layer is 9
         if (other.gameObject.layer == 9)
@@ -102,21 +106,21 @@ public class LavaBoss : MonoBehaviour
 
     // Damage Taken
     // TODO: Alter timings to match animation speeds
-    IEnumerator DamageLevel1()
+    private IEnumerator DamageLevel1()
     {
         animator.SetBool("Destroyed1", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("Destroyed1", false);
     }
 
-    IEnumerator DamageLevel2()
+    private IEnumerator DamageLevel2()
     {
         animator.SetBool("Destroyed2", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("Destroyed2", false);
     }
 
-    IEnumerator DamagedRoar()
+    private IEnumerator DamagedRoar()
     {
         animator.SetBool("DamagedRoar", true);
         yield return new WaitForSeconds(3);
@@ -124,7 +128,7 @@ public class LavaBoss : MonoBehaviour
     }
 
     // Death
-    IEnumerator DeathAnimation()
+    private IEnumerator DeathAnimation()
     {
         animator.SetBool("Dying", true);
         yield return new WaitForSeconds(3);
@@ -132,14 +136,14 @@ public class LavaBoss : MonoBehaviour
     }
 
     // Attacks
-    IEnumerator Roar()
+    private IEnumerator Roar()
     {
         // Don't set false here, instead set false in followup attacks
         animator.SetBool("Roaring", true);
         yield return new WaitForSeconds(3);
     }
 
-    IEnumerator TongueAttack()
+    private IEnumerator TongueAttack()
     {
         animator.SetBool("TongueAttacking", true);
         yield return new WaitForSeconds(5);
@@ -147,7 +151,7 @@ public class LavaBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator HornAttack()
+    private IEnumerator HornAttack()
     {
         animator.SetBool("HornAttacking", true);
         yield return new WaitForSeconds(3);
@@ -155,7 +159,7 @@ public class LavaBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator RamAttack()
+    private IEnumerator RamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
         animator.SetBool("RamAttacking", true);
@@ -165,7 +169,7 @@ public class LavaBoss : MonoBehaviour
         attacking = false;
     }
 
-    IEnumerator SlamAttack()
+    private IEnumerator SlamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
         animator.SetBool("SlamAttacking", true);
