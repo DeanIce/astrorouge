@@ -24,6 +24,8 @@ public class IceBoss : MonoBehaviour
     private bool dying;
     private bool attacking;
     public bool rolling;
+    private float rollTimerStart = 3f;
+    private float rollTimer;
     private bool hunting;
     private bool inRange;
     public float health;
@@ -63,10 +65,13 @@ public class IceBoss : MonoBehaviour
         dying = false;
         inRange = false;
         attacking = false;
+        rolling = false;
+        rollTimer = rollTimerStart;
 
         // claw colliders
         LeftClaw.isTrigger = false;
         RightClaw.isTrigger = false;
+        RollCollider.isTrigger = false;
     }
 
     void Update()
@@ -77,49 +82,55 @@ public class IceBoss : MonoBehaviour
             // DEBUG
             // print($"movement state: {movementState}");
 
-            if (InRollRange()) {
-                RollAttack();
+            if (!rolling) {
+                if (InCrawlBackwardRange()) {
+                    if (movementState != "backward") {
+                        StopCrawl();
+                        StartBackwardCrawl();
+                    }
+                }
+                else if (InCrawlForwardRange()) {
+                    //print("in crawl forward range");
+                    if (movementState != "forward") {
+                        StopCrawl();
+                        StartForwardCrawl();
+                    }
+                    if (InRollRange()) {
+                        RollAttack();
+                    }
+                    if (InAttackRange()) {
+                        Attack();
+                    }
+                }
+                else if (InCrawlLeftRange()) {
+                    if (movementState != "left") {
+                        StopCrawl();
+                        StartLeftCrawl();
+                    }
+                }
+                else if (InCrawlRightRange()) {
+                    //print("in crawl right range");
+                    if (movementState != "right") {
+                        StopCrawl();
+                        StartRightCrawl();
+                    }
+                } else if (!inRange)
+                {
+                    animator.SetBool("CrawlForward_RM", true);
+                    navMeshAgent.isStopped = false;
+                    navMeshAgent.destination = player.transform.position;
+                }
+                else
+                {
+                    navMeshAgent.isStopped = true;
+                    animator.SetBool("CrawlForward_RM", false);
+                }
+            } else {
+                rollTimer -= Time.deltaTime;
+                if (rollTimer < 0) {
+                    StopRolling();
+                }
             }
-            // if (!rolling) {
-            //     if (InCrawlBackwardRange()) {
-            //         if (movementState != "backward") {
-            //             StopCrawl();
-            //             StartBackwardCrawl();
-            //         }
-            //     }
-            //     else if (InCrawlForwardRange()) {
-            //         //print("in crawl forward range");
-            //         if (movementState != "forward") {
-            //             StopCrawl();
-            //             StartForwardCrawl();
-            //         }
-            //         if (InAttackRange()) {
-            //             Attack();
-            //         }
-            //     }
-            //     else if (InCrawlLeftRange()) {
-            //         if (movementState != "left") {
-            //             StopCrawl();
-            //             StartLeftCrawl();
-            //         }
-            //     }
-            //     else if (InCrawlRightRange()) {
-            //         //print("in crawl right range");
-            //         if (movementState != "right") {
-            //             StopCrawl();
-            //             StartRightCrawl();
-            //         }
-                // } else if (!inRange)
-                // {
-                //     animator.SetBool("CrawlForward_RM", true);
-                //     navMeshAgent.isStopped = false;
-                //     navMeshAgent.destination = player.transform.position;
-                // }
-                // else
-                // {
-                //     navMeshAgent.isStopped = true;
-                //     animator.SetBool("CrawlForward_RM", false);
-                // }
         }
     }
 
@@ -253,6 +264,13 @@ public class IceBoss : MonoBehaviour
                 animator.SetBool("CrawlBackward_RM", false);
                 return;
         }
+    }
+
+    public void StopRolling() {
+        rollTimer = rollTimerStart;
+        animator.SetBool("Rolling", false);
+        rolling = false;
+        RollCollider.isTrigger = false;
     }
 
     // normal attacking

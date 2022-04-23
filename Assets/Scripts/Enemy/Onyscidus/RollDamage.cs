@@ -17,8 +17,6 @@ public class RollDamage : MonoBehaviour
         {
             // print("roll collider");
             other.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(oni.attackDamage);
-            oni.GetComponent<Animator>().SetBool("Rolling", false);
-            oni.rolling = false;
-            oni.RollCollider.isTrigger = false;
+            oni.StopRolling();
         }
     }
