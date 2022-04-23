@@ -10,7 +10,6 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public int xpLevel;
     public float xpPerLevel = 100;
 
-
     // Melee Stats
     public float meleeAttackDelay;
     public int meleeBaseDamage;
