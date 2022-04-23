@@ -29,6 +29,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public float rangeKnockbackForce; // TODO (Simon): Incorporate into 'collision' of Projectiles
     public float rangeProjectileRange;
     public float rangeProjectileSpeed;
+    public float rangeGrenadeSizeMultiplier;
 
     // Defense Stats
     public int maxHealth;
@@ -82,6 +83,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
     public float baseRangeKnockbackForce;
     public float baseRangeProjectileRange;
     public float baseRangeProjectileSpeed;
+    public float baseRangeGrenadeSizeMultiplier;
 
     // Base Defense Stats
     public int baseMaxHealth;
@@ -174,6 +176,7 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
         rangeKnockbackForce = baseRangeKnockbackForce;
         rangeProjectileRange = baseRangeProjectileRange;
         rangeProjectileSpeed = baseRangeProjectileSpeed;
+        rangeGrenadeSizeMultiplier = baseRangeGrenadeSizeMultiplier;
 
         // Defense Stats
         maxHealth = baseMaxHealth;

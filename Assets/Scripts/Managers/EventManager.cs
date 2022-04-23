@@ -132,11 +132,19 @@ namespace Managers
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        public void UpgradeMenu()
+        {
+            LOG("Request Upgrade Menu");
+
+            SceneManager.LoadScene("MetaProgression");
+        }
+
         private void resetInternalState()
         {
             LevelSelect.Instance.requestedLevel = 0;
             runStats = new RunStats();
             PlayerStats.Instance.SetDefaultValues();
+            PersistentUpgradeManager.Instance.ApplyPersistentStats();
             inventory.Clear();
         }
 
@@ -182,7 +190,7 @@ namespace Managers
 
         public void UpdateSettings(UserSettings settings, string name)
         {
-            PersistentUpgrades.Save(settings, name);
+            PersistentData.Save(settings, name);
             settingsUpdated?.Invoke(settings);
         }
 

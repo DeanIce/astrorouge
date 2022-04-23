@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb4d22cf26f59f498f504bbc3bb240b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Feeling Lucky?
-  itemDescription: Drops an item of ANY rarity
+  itemName: Party Gift
+  itemDescription: Contains 3 random items
   itemIcon: {fileID: 2800000, guid: 5aedb85f6069f6d4b93f315c6783df4f, type: 3}
 --- !u!4 &7352256033103147327 stripped
 Transform:

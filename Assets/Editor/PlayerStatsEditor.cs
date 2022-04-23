@@ -57,6 +57,7 @@ public class PlayerStatsEditor : Editor
     private SerializedProperty baseSmiteChance;
     private SerializedProperty baseSprintMultiplier;
     private SerializedProperty baseStunChance;
+    private SerializedProperty baseRangeGrenadeSizeMultiplier;
 
     // Bullet Effect Chances
     private SerializedProperty burnChance;
@@ -100,6 +101,7 @@ public class PlayerStatsEditor : Editor
     private SerializedProperty rangeKnockbackForce;
     private SerializedProperty rangeProjectileRange;
     private SerializedProperty rangeProjectileSpeed;
+    private SerializedProperty rangeGrenadeSizeMultiplier;
     private SerializedProperty regenDelay;
     private bool showBaseDefense;
     private bool showBaseEffects;
@@ -138,6 +140,7 @@ public class PlayerStatsEditor : Editor
         rangeKnockbackForce = serializedObject.FindProperty("rangeKnockbackForce");
         rangeProjectileRange = serializedObject.FindProperty("rangeProjectileRange");
         rangeProjectileSpeed = serializedObject.FindProperty("rangeProjectileSpeed");
+        rangeGrenadeSizeMultiplier = serializedObject.FindProperty("rangeGrenadeSizeMultiplier");
 
         // Defense Stats
         maxHealth = serializedObject.FindProperty("maxHealth");
@@ -181,6 +184,7 @@ public class PlayerStatsEditor : Editor
         baseMeleeCritMultiplier = serializedObject.FindProperty("baseMeleeCritMultiplier");
         baseMeleeKnockbackForce = serializedObject.FindProperty("baseMeleeKnockbackForce");
         baseMeleeAttackRange = serializedObject.FindProperty("baseMeleeAttackRange");
+        baseRangeGrenadeSizeMultiplier = serializedObject.FindProperty("baseRangeGrenadeSizeMultiplier");
 
         // Base Range Stats
         baseRangeAttackDelay = serializedObject.FindProperty("baseRangeAttackDelay");
@@ -253,7 +257,8 @@ public class PlayerStatsEditor : Editor
             rangeCritMultiplier,
             rangeKnockbackForce,
             rangeProjectileRange,
-            rangeProjectileSpeed);
+            rangeProjectileSpeed,
+            rangeGrenadeSizeMultiplier);
 
         showBaseRange = CreateFoldout(showBaseRange, "Base Range Stats",
             baseRangeAttackDelay,
@@ -263,7 +268,8 @@ public class PlayerStatsEditor : Editor
             baseRangeCritMultiplier,
             baseRangeKnockbackForce,
             baseRangeProjectileRange,
-            baseRangeProjectileSpeed);
+            baseRangeProjectileSpeed,
+            baseRangeGrenadeSizeMultiplier);
 
         showCurrentDefense = CreateFoldout(showCurrentDefense, "Current Defense Stats",
             maxHealth,
