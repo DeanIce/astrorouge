@@ -51,7 +51,7 @@ public class DamagePopupUI : MonoBehaviour
         switch (type)
         {
             case 1:
-                textMesh.color = Color.red;
+                textMesh.color = Color.Lerp(Color.yellow, Color.red, 0.5f);
                 textMesh.fontSize = 6;
                 break;
             case 2:
