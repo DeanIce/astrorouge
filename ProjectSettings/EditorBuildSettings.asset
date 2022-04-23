@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 78e7dbd4e69cba04ba4be79c85cf40f0
+  - enabled: 1
+    path: Assets/Scenes/MetaProgression.unity
+    guid: fe36f3a2308d7804b819d70e3b1d2d65
   m_configObjects: {}

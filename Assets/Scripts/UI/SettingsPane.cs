@@ -73,7 +73,6 @@ namespace UI
 
             ApplyCurrentSettings();
 
-
             // Trigger an event when Save is pressed that AudioManager (and others) can subscribe to
             saveSettings.clicked += ApplyCurrentSettings;
         }

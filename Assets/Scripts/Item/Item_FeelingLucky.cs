@@ -6,6 +6,8 @@ public class Item_FeelingLucky : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        Managers.DropManager.Instance.SpawnItem(transform.position, transform.rotation).GetComponent<AbstractItem>().ApplyStats();
+        Managers.DropManager.Instance.SpawnItem(transform.position, transform.rotation).GetComponent<AbstractItem>().ApplyStats();
+        Managers.DropManager.Instance.SpawnItem(transform.position, transform.rotation).GetComponent<AbstractItem>().ApplyStats();
     }
 }

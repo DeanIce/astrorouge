@@ -19,11 +19,13 @@ namespace Managers
 
 
         // This is what enemies will call when they die, all logic done here
-        public void SpawnItem(Vector3 location, Quaternion rotation)
+        public GameObject SpawnItem(Vector3 location, Quaternion rotation)
         {
             GameObject spawnItem = GetSpawnItem();
             LOG("Spawn Item " + spawnItem.name + " at " + location + " with rotation " + rotation);
             Instantiate(spawnItem, location, rotation);
+
+            return spawnItem;
         }
 
 

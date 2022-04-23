@@ -57,6 +57,7 @@ Todo: add assets here... names not links
 
         private Button newGameButton;
         private Button quitButton;
+        private Button upgradeButton;
 
         private bool scrolling;
 
@@ -80,6 +81,7 @@ Todo: add assets here... names not links
             aboutButton = mainMenu.Q<Button>("about-button");
             tutorialButton = mainMenu.Q<Button>("tutorial-button");
             quitButton = mainMenu.Q<Button>("quit-button");
+            upgradeButton = mainMenu.Q<Button>("upgrades-button");
 
             feedbackButton = mainMenu.Q<Button>("feedback-button");
 
@@ -96,6 +98,7 @@ Todo: add assets here... names not links
             settingsBackButton.clicked += BackButtonPressed;
             aboutBackButton.clicked += BackButtonPressed;
             tutorialButton.clicked += () => { SceneManager.LoadScene("Tutorial"); };
+            upgradeButton.clicked += UpgradeButtonPressed;
 
             quitButton.RegisterCallback<MouseEnterEvent>(PlaySound);
             newGameButton.RegisterCallback<MouseEnterEvent>(PlaySound);
@@ -170,6 +173,13 @@ Todo: add assets here... names not links
             mainMenu.style.display = DisplayStyle.Flex;
             aboutMenu.style.display = DisplayStyle.None;
             scrolling = false;
+        }
+
+        private void UpgradeButtonPressed()
+        {
+            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            //AudioManager.Instance.FadeOut();
+            EventManager.Instance.UpgradeMenu();
         }
 
         private void PlaySound(MouseEnterEvent ev)
