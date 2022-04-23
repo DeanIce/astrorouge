@@ -331,7 +331,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
 
         animator.SetTrigger("meleeAttack");
-        InstantaneousAttack();
+        _ = StartCoroutine(InstantaneousAttack(0.5f));
     }
 
     private void SpecialAction(InputAction.CallbackContext obj)
@@ -412,9 +412,11 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             3f); //TODO (Jared): Set grenade blast radius
     }
 
-    private void InstantaneousAttack()
+    private IEnumerator InstantaneousAttack(float attackDelay)
     {
         globalAttackDealy = 0.5f;
+
+        yield return new WaitForSeconds(attackDelay);
 
         GameObject projectile = ProjectileFactory.Instance.CreateInstantaneousProjectile(
             transform.position + transform.forward * 0.5f,

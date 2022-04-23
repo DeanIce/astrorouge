@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4699123925192593757
 Transform:
   m_ObjectHideFlags: 0
@@ -95,6 +95,10 @@ PrefabInstance:
     - target: {fileID: 1624714524768532, guid: c9eb15264aa6c4348b00d5b9b3daab2a, type: 3}
       propertyPath: m_Name
       value: FX_LevelUp_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624714524768532, guid: c9eb15264aa6c4348b00d5b9b3daab2a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4248596120498176, guid: c9eb15264aa6c4348b00d5b9b3daab2a, type: 3}
       propertyPath: m_RootOrder
@@ -177,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 1677232327238848, guid: 673011a12ec748844a398a9504a957a4, type: 3}
       propertyPath: m_Name
       value: FX_Trail_Fire_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677232327238848, guid: 673011a12ec748844a398a9504a957a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4293721835894692, guid: 673011a12ec748844a398a9504a957a4, type: 3}
       propertyPath: m_RootOrder
@@ -362,6 +370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Grenade_Explosive_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1829163952570794, guid: f171ac3dbb620c44e81cd88ddee1cbbd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4642304544289128, guid: f171ac3dbb620c44e81cd88ddee1cbbd, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -468,6 +480,10 @@ PrefabInstance:
     - target: {fileID: 1454807473737458, guid: 6108438f5e38d0b4b8fed06af6b74254, type: 3}
       propertyPath: m_Name
       value: FX_LightningStrike_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1454807473737458, guid: 6108438f5e38d0b4b8fed06af6b74254, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4352720194566004, guid: 6108438f5e38d0b4b8fed06af6b74254, type: 3}
       propertyPath: m_RootOrder

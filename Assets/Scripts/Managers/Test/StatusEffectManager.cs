@@ -22,6 +22,7 @@ public class StatusEffectManager : MonoBehaviour
      * Lightning Damage = 3
      * Radation Damage = 4
      * Smite Damage = 5
+     * Martyrdom Damage = 6
     */
 
     public static int BurnDamage() => 5 * (Managers.LevelSelect.Instance.requestedLevel + 1);
@@ -296,7 +297,7 @@ public class StatusEffectManager : MonoBehaviour
             foreach (Collider hitCollider in hitColliders)
             {
                 if (hitCollider.GetComponent<IEnemy>() != null && hitCollider != GetComponent<Collider>())
-                    hitCollider.GetComponent<IEnemy>().TakeDmg(LightningDamage(),3);
+                    hitCollider.GetComponent<IEnemy>().TakeDmg(LightningDamage(),6);
             }
         }
 

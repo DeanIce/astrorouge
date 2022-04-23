@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6854432826354650640}
   - component: {fileID: 1187498790012229965}
   - component: {fileID: 8027408832269683781}
+  - component: {fileID: 4360235021831522834}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -48,8 +49,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c585da603ec48978d68d6f674818321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 1
   showFPSCounter: 0
 --- !u!114 &7689409263527498332
@@ -62,8 +63,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68b9db49491b32b4cb3e50fb63502533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 0
   requestedScene: 0
   scenePlay: LevelScene
@@ -77,8 +78,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1f7729b2b795014da7111b95d626f30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 0
   buttonClick: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
 --- !u!114 &6854432826354650640
@@ -91,8 +92,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 663c483ea59b2db489bbafec5ebac70c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 0
   drops:
   - prefab: {fileID: 6613647429278394061, guid: d24e42757c92470428d9d5401924125d, type: 3}
@@ -170,7 +171,9 @@ MonoBehaviour:
   - prefab: {fileID: 9006083277569277750, guid: 50a8cb335533cf648ad00c40f9bd3c1c, type: 3}
     weight: 400
   - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
-    weight: 2500
+    weight: 2000
+  - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
+    weight: 200
 --- !u!114 &1187498790012229965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +184,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a15ab8a64c4158869cdde4aaef6ab2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 0
   requestedLevel: 0
   levels:
@@ -202,8 +205,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2328b8e90ae63d4891df998ebafa546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   logEvents: 1
   xp: 0
   xpLevel: 0
@@ -223,6 +226,7 @@ MonoBehaviour:
   rangeKnockbackForce: 0
   rangeProjectileRange: 0
   rangeProjectileSpeed: 0
+  rangeGrenadeSizeMultiplier: 0
   maxHealth: 0
   currentHealth: 0
   healthRegen: 0
@@ -262,6 +266,7 @@ MonoBehaviour:
   baseRangeKnockbackForce: 2
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
+  baseRangeGrenadeSizeMultiplier: 1
   baseMaxHealth: 100
   baseHealthRegen: 5
   baseRegenDelay: 10
@@ -285,6 +290,19 @@ MonoBehaviour:
   baseStunChance: 0
   baseMartyrdomChance: 0
   baseIgniteChance: 0
+--- !u!114 &4360235021831522834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7689409263527498333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfad7e46c0045484ab706cc7470b192e, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  logEvents: 1
 --- !u!1001 &1421862118601994529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,8 +369,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b780410f5b94c359213a6644ec0ed72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!4 &4341222289374962843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3423974572803282362, guid: 07c67387344a8234988ff6b810d6f8c5, type: 3}

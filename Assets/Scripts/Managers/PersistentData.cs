@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Managers
 {
-    public static class PersistentUpgrades
+    public static class PersistentData
     {
         //make this a coroutine if synchronization issues occur
         public static void Save(Data data)

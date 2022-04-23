@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1674664265865780124
 Transform:
   m_ObjectHideFlags: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1.5
   detector: {fileID: 6743012128722043234}
   body: {fileID: 887132320808828032}
@@ -187,10 +188,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 5366342712193449386}
   StunVFX: {fileID: 3810966002459718593}
   SlowVFX: {fileID: 4019717364732985953}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0
@@ -806,7 +803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1002530091286178, guid: 2cfd9cf3b1dc4ad489f9d2a7574d2463, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4979504664547992, guid: 2cfd9cf3b1dc4ad489f9d2a7574d2463, type: 3}
       propertyPath: m_RootOrder

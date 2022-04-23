@@ -11,7 +11,7 @@ namespace Managers.Test
         // Start is called before the first frame update
         private void Start()
         {
-            data = PersistentUpgrades.Load();
+            data = PersistentData.Load();
         }
 
         // Update is called once per frame
@@ -19,7 +19,7 @@ namespace Managers.Test
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                PersistentUpgrades.Save(data);
+                PersistentData.Save(data);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 
@@ -32,10 +32,10 @@ namespace Managers.Test
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 print("Saved.");
-                PersistentUpgrades.Save(data);
+                PersistentData.Save(data);
             }
 
-            if (Input.GetKeyDown(KeyCode.O)) print($"Current: {PersistentUpgrades.Load()}");
+            if (Input.GetKeyDown(KeyCode.O)) print($"Current: {PersistentData.Load()}");
         }
     }
 }
