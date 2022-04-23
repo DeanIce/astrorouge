@@ -7,6 +7,8 @@ namespace Managers
     [Serializable]
     public class UserSettings
     {
+        public const string SAVE_FILE = "userSettings";
+
         public static Dictionary<string, int> mapping = new()
         {
             {"Disabled", 1},

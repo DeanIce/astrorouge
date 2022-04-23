@@ -18,8 +18,6 @@ namespace UI
     public class SettingsPane : MonoBehaviour
     {
         public UserSettings settings;
-
-        private readonly string saveFile = "userSettings";
         private DropdownField displayMode;
         private Slider gameVolume;
         private Slider look;
@@ -33,7 +31,7 @@ namespace UI
 
         private void Start()
         {
-            settings = PersistentUpgrades.Load<UserSettings>(saveFile);
+            settings = PersistentUpgrades.Load<UserSettings>(UserSettings.SAVE_FILE);
             urp = (UniversalRenderPipelineAsset) QualitySettings.renderPipeline;
             root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -84,7 +82,7 @@ namespace UI
         private void ApplyCurrentSettings()
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
-            EventManager.Instance.UpdateSettings(settings, saveFile);
+            EventManager.Instance.UpdateSettings(settings, UserSettings.SAVE_FILE);
 
             // Update screen settings
             Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.displayMode);

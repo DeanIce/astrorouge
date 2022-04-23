@@ -40,4 +40,5 @@
             <ui:VisualElement name="Right" style="flex-grow: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Label text="Label" display-tooltip-when-elided="true" name="loading" style="position: absolute; left: 452px; top: 369px; font-size: 198px; color: rgba(255, 255, 255, 255);" />
 </ui:UXML>

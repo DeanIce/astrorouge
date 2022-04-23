@@ -25,6 +25,7 @@ namespace UI
         private bool hitmarkerDisplayed;
 
         private float hitmarkerTimer;
+        private Label loading;
 
         private void Start()
         {
@@ -45,6 +46,8 @@ namespace UI
 
             expLevelText.text = PlayerStats.Instance.xpLevel.ToString();
             SetExp(PlayerStats.Instance.xp);
+
+            loading = root.Q<Label>("loading");
         }
 
         private void Update()
@@ -67,6 +70,11 @@ namespace UI
         {
             EventManager.Instance.playerStatsUpdated -= UpdateBars;
             EventManager.Instance.crosshairSpread -= AdjustCrosshair;
+        }
+
+        public void DoShit(string val)
+        {
+            loading.text = val;
         }
 
         private void UpdateBars()

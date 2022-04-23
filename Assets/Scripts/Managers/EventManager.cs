@@ -37,6 +37,11 @@ namespace Managers
             }
         }
 
+        // private void Update()
+        // {
+        //     print(Time.frameCount);
+        // }
+
 
         // Game State events
         public event Action pauseGame,
