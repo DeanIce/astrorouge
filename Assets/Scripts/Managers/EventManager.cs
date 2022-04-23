@@ -32,7 +32,7 @@ namespace Managers
         {
             get
             {
-                if (_user == null) _user = PersistentUpgrades.Load<UserSettings>("userSettings");
+                if (_user == null) _user = PersistentData.Load<UserSettings>("userSettings");
                 return _user;
             }
         }

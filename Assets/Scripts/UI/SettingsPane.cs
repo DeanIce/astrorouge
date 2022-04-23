@@ -31,7 +31,7 @@ namespace UI
 
         private void Start()
         {
-            settings = PersistentUpgrades.Load<UserSettings>(UserSettings.SAVE_FILE);
+            settings = PersistentData.Load<UserSettings>(UserSettings.SAVE_FILE);
             urp = (UniversalRenderPipelineAsset) QualitySettings.renderPipeline;
             root = GetComponent<UIDocument>().rootVisualElement;
 
