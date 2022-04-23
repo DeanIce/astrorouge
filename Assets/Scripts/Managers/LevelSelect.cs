@@ -156,8 +156,11 @@ namespace Managers
 
         internal void RemoveEnemy(int planet, GameObject self)
         {
-            enemies[planet].Remove(self);
-            if (enemies[planet].Count == 0) EventManager.Instance.PlanetCleared();
+            if (enemies != null)
+            {
+                enemies[planet].Remove(self);
+                if (enemies[planet].Count == 0) EventManager.Instance.PlanetCleared();
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
