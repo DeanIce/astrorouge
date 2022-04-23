@@ -23,7 +23,6 @@ public class IceBoss : MonoBehaviour
     // Status stuff
     private bool dying;
     private bool attacking;
-    public bool rolling;
     private float rollTimerStart = 3f;
     private float rollTimer;
     private bool hunting;
@@ -65,7 +64,6 @@ public class IceBoss : MonoBehaviour
         dying = false;
         inRange = false;
         attacking = false;
-        rolling = false;
         rollTimer = rollTimerStart;
 
         // claw colliders
@@ -82,7 +80,7 @@ public class IceBoss : MonoBehaviour
             // DEBUG
             // print($"movement state: {movementState}");
 
-            if (!rolling) {
+            if (animator.GetBool("Rolling") == false) {
                 if (InCrawlBackwardRange()) {
                     if (movementState != "backward") {
                         StopCrawl();
@@ -269,7 +267,6 @@ public class IceBoss : MonoBehaviour
     public void StopRolling() {
         rollTimer = rollTimerStart;
         animator.SetBool("Rolling", false);
-        rolling = false;
         RollCollider.isTrigger = false;
     }
 
@@ -374,7 +371,6 @@ public class IceBoss : MonoBehaviour
     private void RollAttack()
     {
         attackDamage = damage2;
-        rolling = true;
         RollCollider.isTrigger = true;
         animator.SetBool("Rolling", true);
     }
