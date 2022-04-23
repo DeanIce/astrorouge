@@ -6,6 +6,6 @@ public class Item_Grenadier : AbstractItem
 {
     public override void ApplyStats()
     {
-        //TODO
+        PlayerStats.Instance.rangeGrenadeSizeMultiplier += 0.5f;
     }
 }

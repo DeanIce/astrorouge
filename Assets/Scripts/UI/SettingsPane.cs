@@ -36,7 +36,7 @@ namespace UI
             gameVolume = root.Q<Slider>("volume-game");
             saveSettings = root.Q<Button>("save-settings");
 
-            settings = PersistentUpgrades.Load<UserSettings>(saveFile);
+            settings = PersistentData.Load<UserSettings>(saveFile);
 
             // Register events to update the UserSettings class
             fov.RegisterCallback<ChangeEvent<float>>(e => settings.fov = e.newValue);
