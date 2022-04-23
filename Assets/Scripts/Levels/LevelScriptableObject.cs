@@ -36,16 +36,15 @@ namespace Levels
 
         public GameObject planetPrefab;
 
+        public InternalState state;
+
 
         private void OnValidate()
         {
             // todo
         }
 
-        private float SphereArea(float r)
-        {
-            return 4 * Mathf.PI * r * r;
-        }
+        private float SphereArea(float r) => 4 * Mathf.PI * r * r;
 
         private (float[], float[]) getRadiiAndAreas(Random rng, int actualNumPlanets)
         {
@@ -91,61 +90,63 @@ namespace Levels
             }
         }
 
-
-        /// <summary>
-        ///     Create the level's world meshes, determine asset placement, etc.
-        ///     Expensive process, should be invoked before the level is required.
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="rng"></param>
-        /// <param name="timer"></param>
-        /// <returns></returns>
-        public (Vector3, List<List<GameObject>>) Create(GameObject root, Random rng, BallDropper ballDropper,
-            Stopwatch timer)
+        public void Setup(Random rng, Stopwatch timer)
         {
+            state = new InternalState();
+
             PlanetGenerator.spheres.Clear();
             SpawnObjects.numPropsSpawned = 0;
 
             // Solve range constants
-            int actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
-            int actualNumEnemies = rng.Next(totalNumEnemies.x, totalNumEnemies.y);
-            int actualNumProps = rng.Next(totalNumProps.x, totalNumProps.y);
-            int bossLevelIndex = rng.Next(0, actualNumPlanets);
+            state.actualNumPlanets = rng.Next(numPlanets.x, numPlanets.y);
+            state.actualNumEnemies = rng.Next(totalNumEnemies.x, totalNumEnemies.y);
+            state.actualNumProps = rng.Next(totalNumProps.x, totalNumProps.y);
+            state.bossLevelIndex = rng.Next(0, state.actualNumPlanets);
 
             // Determine planet radii and surface areas
-            (float[] radii, float[] areaRatios) = getRadiiAndAreas(rng, actualNumPlanets);
+            (float[] radii, float[] areaRatios) = getRadiiAndAreas(rng, state.actualNumPlanets);
             LevelSelect.Instance.LOGTIMER(timer, "Solved range constants");
 
+            state.radii = radii;
+            state.areaRatios = areaRatios;
+        }
+
+        public void DropBalls(BallDropper ballDropper, Stopwatch timer)
+        {
             // Perform simulation
-            Vector3[] points = ballDropper.DropBalls(radii, timer);
+            state.points = ballDropper.DropBalls(state.radii, timer);
             LevelSelect.Instance.LOGTIMER(timer, "Ball dropper done");
 
             WeightRatio(enemyAssets);
             WeightRatio(environmentAssets);
 
-            Vector3 playerPosition = Vector3.zero;
-            var pgs = new PlanetGenerator[actualNumPlanets];
+            state.pgs = new PlanetGenerator[state.actualNumPlanets];
+        }
 
+        public void GeneratePlanetMeshes(GameObject root, Stopwatch timer)
+        {
+            PlanetGenerator[] pgs = state.pgs;
             // Create each planet
-            for (var i = 0; i < actualNumPlanets; i++)
+            for (var i = 0; i < state.actualNumPlanets; i++)
             {
                 // Create planet
-                GameObject planet = Instantiate(planetPrefab, points[i], Quaternion.identity);
+                GameObject planet = Instantiate(planetPrefab, state.points[i], Quaternion.identity);
                 planet.transform.parent = root.transform;
                 pgs[i] = planet.GetComponent<PlanetGenerator>();
                 pgs[i].shape.seed = i;
-                pgs[i].scale = radii[i] - gravityHeight;
+                pgs[i].scale = state.radii[i] - gravityHeight;
 
                 var sphereSource = planet.GetComponent<SphereSource>();
-                sphereSource.outerRadius = radii[i];
-                sphereSource.outerFalloffRadius = radii[i] + falloffHeight;
+                sphereSource.outerRadius = state.radii[i];
+                sphereSource.outerFalloffRadius = state.radii[i] + falloffHeight;
 
                 // Generate LOD meshes
                 pgs[i].HandleGameModeGeneration(i);
 
 
                 // The player should spawn at the lowest planet
-                if (points[i] == Vector3.zero) playerPosition = Vector3.right * (radii[i] - gravityHeight + 4f);
+                if (state.points[i] == Vector3.zero)
+                    state.playerPosition = Vector3.right * (state.radii[i] - gravityHeight + 4f);
 
                 // disable for now
                 planet.SetActive(false);
@@ -156,37 +157,28 @@ namespace Levels
             // Bake mesh colliders in parallel (Burst compiled)
             MeshBaker.BakeAndSetColliders(pgs);
             LevelSelect.Instance.LOGTIMER(timer, "Bake mesh colliders");
+        }
 
 
-            for (var i = 0; i < actualNumPlanets; i++)
+        public void SpawnProps(Random rng, Stopwatch timer)
+        {
+            PlanetGenerator[] pgs = state.pgs;
+
+            for (var i = 0; i < state.actualNumPlanets; i++)
             {
                 GameObject planet = pgs[i].gameObject;
                 // Add props to the planet
-                var propsOnPlanet = (int) (actualNumProps * areaRatios[i]);
+                var propsOnPlanet = (int) (state.actualNumProps * state.areaRatios[i]);
                 SpawnObjects.AddProps(rng, planet, environmentAssets, propsOnPlanet);
 
 
                 // Spawn the boss level entrance
-                if (i == bossLevelIndex) AddBossEntrance(pgs[i], bossLevelEntrance, planet.transform, rng);
+                if (i == state.bossLevelIndex) AddBossEntrance(pgs[i], bossLevelEntrance, planet.transform, rng);
 
                 StaticBatchingUtility.Combine(planet);
             }
 
             LevelSelect.Instance.LOGTIMER(timer, "Spawn items");
-
-            var enemiesSpawned = new List<List<GameObject>>();
-            for (var i = 0; i < actualNumPlanets; i++)
-            {
-                GameObject planet = pgs[i].gameObject;
-                // Add enemies to the planet
-                var numEnemiesSpawned = (int) (actualNumEnemies * areaRatios[i]);
-                enemiesSpawned.Add(SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, numEnemiesSpawned, i));
-            }
-
-            LevelSelect.Instance.LOGTIMER(timer, "Spawn enemies");
-
-
-            return (playerPosition, enemiesSpawned);
         }
 
 
@@ -237,6 +229,20 @@ namespace Levels
                 Transform child = root.transform.GetChild(i);
                 child.gameObject.SetActive(true);
             }
+        }
+
+        public struct InternalState
+        {
+            public PlanetGenerator[] pgs;
+            public int actualNumPlanets;
+            public int actualNumProps;
+            public int actualNumEnemies;
+            public int bossLevelIndex;
+            public Vector3[] points;
+            public float[] radii;
+            public float[] areaRatios;
+            public Vector3 playerPosition;
+            public List<List<GameObject>> enemiesSpawned;
         }
 
 

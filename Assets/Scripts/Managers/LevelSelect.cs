@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Levels;
+using Planets;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
@@ -22,12 +24,13 @@ namespace Managers
 
         public List<List<GameObject>> enemies = new();
 
-        public List<GameObject> debug;
+
+        public HudUI hudUI;
+
 
         private bool isHackDone = true;
 
-
-        private Random rng;
+        private string progress;
 
         public LevelScriptableObject CurrentLevel
         {
@@ -53,12 +56,18 @@ namespace Managers
                 // We may need to find the player again for some reason
                 if (player == null) player = GameObject.Find("PlayerDefault");
 
+
+                if (hudUI == null) hudUI = GameObject.Find("HUD").GetComponent<HudUI>();
+                hudUI.ShowProgressMessage();
+
                 StartCoroutine(LoadLevel());
             }
 
-            enemies.RemoveAll(item => item == null);
-        }
+            if (hudUI != null) hudUI.UpdateProgressMessage($"{progress} : {Time.frameCount}");
 
+
+            if (enemies != null) enemies.RemoveAll(item => item == null);
+        }
 
         private void OnEnable()
         {
@@ -72,10 +81,86 @@ namespace Managers
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
+
+        private IEnumerator LoadLevel()
+        {
+            var timer = Stopwatch.StartNew();
+
+            // rng = new Random(0);
+            int seed = DateTime.UtcNow.Millisecond;
+            var rng = new Random(seed);
+            SetProgress("start hard work");
+            yield return null;
+
+
+            // Do the hard work
+            SetProgress("Setup simulation space.");
+            yield return null;
+            GameObject root = GetOrCreate();
+            CurrentLevel.Setup(rng, timer);
+
+            SetProgress("Simulate planet positions.");
+            yield return null;
+            CurrentLevel.DropBalls(ballDropper, timer);
+
+            SetProgress("Generate planet meshes.");
+            yield return null;
+            CurrentLevel.GeneratePlanetMeshes(root, timer);
+
+            SetProgress("Spawn props.");
+            yield return null;
+            CurrentLevel.SpawnProps(rng, timer);
+
+
+            LevelScriptableObject.InternalState state = CurrentLevel.state;
+            PlanetGenerator[] pgs = state.pgs;
+
+
+            state.enemiesSpawned = new List<List<GameObject>>();
+            for (var i = 0; i < state.actualNumPlanets; i++)
+            {
+                GameObject planet = pgs[i].gameObject;
+                // Add enemies to the planet
+                var numEnemiesSpawned = (int) (state.actualNumEnemies * state.areaRatios[i]);
+                state.enemiesSpawned.Add(SpawnObjects.SpawnEnemies(rng, planet, CurrentLevel.enemyAssets,
+                    numEnemiesSpawned, i));
+
+                Instance.LOGTIMER(timer, "Spawn enemies " + i);
+
+                SetProgress($"Spawn enemies on planet {i + 1}/{pgs.Length}");
+                yield return null;
+            }
+
+
+            Vector3 newPlayerPos = CurrentLevel.state.playerPosition;
+            enemies = CurrentLevel.state.enemiesSpawned;
+
+
+            SetProgress("Load level.");
+            yield return null;
+            // And load in the new level
+            CurrentLevel.Load(root, rng);
+
+
+            player.transform.position = newPlayerPos;
+
+
+            hudUI.HideProgressMessage();
+            yield return default;
+        }
+
+        public void SetProgress(string s)
+        {
+            progress = s;
+        }
+
         internal void RemoveEnemy(int planet, GameObject self)
         {
-            enemies[planet].Remove(self);
-            if (enemies[planet].Count == 0) EventManager.Instance.PlanetCleared();
+            if (enemies != null)
+            {
+                enemies[planet].Remove(self);
+                if (enemies[planet].Count == 0) EventManager.Instance.PlanetCleared();
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -87,42 +172,6 @@ namespace Managers
         private void LoadBossEvent()
         {
             // UnloadLevel();
-        }
-
-
-        private IEnumerator LoadLevel()
-        {
-            var timer = Stopwatch.StartNew();
-
-            // rng = new Random(0);
-            int seed = DateTime.UtcNow.Millisecond;
-            rng = new Random(seed);
-
-
-            LOGTIMER(timer, "start hard work");
-
-            // Do the hard work
-            GameObject root = GetOrCreate();
-            (Vector3 newPlayerPos, List<List<GameObject>> stuff) = CurrentLevel.Create(root, rng, ballDropper, timer);
-            enemies = stuff;
-            debug = enemies[0];
-            // print($"Creating {id} level.");
-            LOGTIMER(timer, "finish Create()");
-
-
-            // And load in the new level
-            // print($"Load {CurrentLevel.displayName}");
-            CurrentLevel.Load(root, rng);
-            LOGTIMER(timer, "finish Load()");
-
-
-            // print("Loaded level and snapped Player to spawn point.");
-            player.transform.position = newPlayerPos;
-
-            LOGTIMER(timer, "level loading");
-
-            // yield return new WaitForSeconds(.1f);
-            yield return default;
         }
 
 

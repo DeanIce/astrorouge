@@ -369,8 +369,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6357422
-        functionName: DoDamage2
+      - time: 0.48254016
+        functionName: TurnClawColliderOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.68764615
+        functionName: TurnClawColliderOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
