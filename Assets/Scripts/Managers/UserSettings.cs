@@ -17,8 +17,12 @@ namespace Managers
             {"8x", 8}
         };
 
-
-        public FullScreenMode displayMode = FullScreenMode.FullScreenWindow;
+        public FullScreenMode DisplayMode
+        {
+            get => (FullScreenMode)displayMode;
+            set => displayMode = (int)value;
+        }
+        private int displayMode = (int)FullScreenMode.FullScreenWindow;
         public float volumeGame = 1; // [0,1]
         public float volumeMusic = 1; // [0,1]
         public int msaa = 4; // {1, 2, 4, 8}

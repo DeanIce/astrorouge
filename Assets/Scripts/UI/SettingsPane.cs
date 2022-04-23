@@ -38,9 +38,9 @@ namespace UI
             // Fullscreen, Windowed etc
             displayMode = root.Q<DropdownField>("display-mode");
             displayMode.choices = new List<string>(Enum.GetNames(typeof(FullScreenMode)));
-            displayMode.RegisterValueChangedCallback(e => settings.displayMode = (FullScreenMode) displayMode.index);
-            Screen.fullScreenMode = settings.displayMode;
-            displayMode.index = displayMode.choices.IndexOf(settings.displayMode.ToString());
+            displayMode.RegisterValueChangedCallback(e => settings.DisplayMode = (FullScreenMode) displayMode.index);
+            Screen.fullScreenMode = settings.DisplayMode;
+            displayMode.index = displayMode.choices.IndexOf(settings.DisplayMode.ToString());
 
             // Resolution
             Resolution[] rez = Screen.resolutions.Distinct().ToArray();
@@ -85,7 +85,7 @@ namespace UI
             EventManager.Instance.UpdateSettings(settings, UserSettings.SAVE_FILE);
 
             // Update screen settings
-            Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.displayMode);
+            Screen.SetResolution(settings.resolution.width, settings.resolution.height, settings.DisplayMode);
 
             // Update quality settings
             urp.msaaSampleCount = settings.msaa;
