@@ -56,6 +56,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Rigidbody rb;
     private float timeOfLastDamage;
     protected internal bool useGravity = true;
+    private bool IframeActive = false;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
