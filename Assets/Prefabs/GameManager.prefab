@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6854432826354650640}
   - component: {fileID: 1187498790012229965}
   - component: {fileID: 8027408832269683781}
+  - component: {fileID: 4360235021831522834}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -167,6 +168,8 @@ MonoBehaviour:
     weight: 200
   - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
     weight: 2000
+  - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
+    weight: 200
 --- !u!114 &1187498790012229965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,6 +222,7 @@ MonoBehaviour:
   rangeKnockbackForce: 0
   rangeProjectileRange: 0
   rangeProjectileSpeed: 0
+  rangeGrenadeSizeMultiplier: 0
   maxHealth: 0
   currentHealth: 0
   healthRegen: 0
@@ -258,6 +262,7 @@ MonoBehaviour:
   baseRangeKnockbackForce: 2
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
+  baseRangeGrenadeSizeMultiplier: 1
   baseMaxHealth: 100
   baseHealthRegen: 2
   baseRegenDelay: 10
@@ -281,6 +286,19 @@ MonoBehaviour:
   baseStunChance: 0
   baseMartyrdomChance: 0
   baseIgniteChance: 0
+--- !u!114 &4360235021831522834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7689409263527498333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfad7e46c0045484ab706cc7470b192e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logEvents: 1
 --- !u!1001 &1421862118601994529
 PrefabInstance:
   m_ObjectHideFlags: 0

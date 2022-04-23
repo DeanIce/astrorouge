@@ -1646,9 +1646,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: WolfEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5366636917161922939, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366636917161922939, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998552224835727709, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5998706658969842419, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6352677982827317323, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
       propertyPath: movementSpeed
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027902851056211131, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 202c880f9191b684684ab83f2692b3a4, type: 3}
@@ -3543,7 +3563,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 0.95454544, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -5245,7 +5265,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 0.95454544, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

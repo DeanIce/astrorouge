@@ -84,5 +84,39 @@
     border-bottom-width: 0;
     -unity-slice-left: 0;
     -unity-slice-top: 0;
-    color: rgba(168, 168, 168, 255);
+    color: rgb(168, 168, 168);
+}
+
+.upgrade-bought {
+    color: rgba(171, 171, 171, 255);
+    -unity-background-image-tint-color: rgba(154, 154, 154, 255);
+}
+
+.upgrade {
+    flex-grow: 1;
+    background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_CardFrame01_Blue.png?fileID=2800000&guid=37a5c14426548db43aa26aa2891ba08f&type=3#Frame_CardFrame01_Blue');
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-slice-right: 85;
+    -unity-slice-top: 60;
+    -unity-slice-left: 56;
+    -unity-slice-bottom: 51;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -unity-text-align: middle-center;
+    font-size: 18px;
+}
+
+.upgrade-header {
+    font-size: 36px;
+    align-items: center;
+    -unity-text-align: middle-center;
+    height: 10%;
+}
+
+.upgrade-tier {
+    font-size: 40px;
 }

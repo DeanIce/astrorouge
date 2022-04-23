@@ -25,6 +25,7 @@ namespace UI
         private bool hitmarkerDisplayed;
 
         private float hitmarkerTimer;
+        private Label loading;
 
         private void Start()
         {
@@ -45,6 +46,9 @@ namespace UI
 
             expLevelText.text = PlayerStats.Instance.xpLevel.ToString();
             SetExp(PlayerStats.Instance.xp);
+
+            loading = root.Q<Label>("loading");
+            HideProgressMessage();
         }
 
         private void Update()
@@ -67,6 +71,21 @@ namespace UI
         {
             EventManager.Instance.playerStatsUpdated -= UpdateBars;
             EventManager.Instance.crosshairSpread -= AdjustCrosshair;
+        }
+
+        public void UpdateProgressMessage(string val)
+        {
+            loading.text = val;
+        }
+
+        public void HideProgressMessage()
+        {
+            loading.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+        }
+
+        public void ShowProgressMessage()
+        {
+            loading.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
         }
 
         private void UpdateBars()

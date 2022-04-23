@@ -18,6 +18,8 @@ namespace Managers
 
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
+        private UserSettings _user;
+
 
         public Action<int> loadLevel;
 
@@ -25,6 +27,20 @@ namespace Managers
         private Mode mode = Mode.Play;
 
         public RunStats runStats = new();
+
+        public UserSettings user
+        {
+            get
+            {
+                if (_user == null) _user = PersistentData.Load<UserSettings>("userSettings");
+                return _user;
+            }
+        }
+
+        // private void Update()
+        // {
+        //     print(Time.frameCount);
+        // }
 
 
         // Game State events
@@ -56,18 +72,22 @@ namespace Managers
         {
             crosshairSpread?.Invoke(a);
         }
+
         public void SpecialUsed(float a)
         {
             specialUsed?.Invoke(a);
         }
+
         public void MeleeUsed(float a)
         {
             meleeUsed?.Invoke(a);
         }
+
         public void SecondaryUsed(float a)
         {
             secondaryUsed?.Invoke(a);
         }
+
         public void ItemAcquired(AbstractItem item)
         {
             itemAcquired?.Invoke(item);
@@ -132,11 +152,19 @@ namespace Managers
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        public void UpgradeMenu()
+        {
+            LOG("Request Upgrade Menu");
+
+            SceneManager.LoadScene("MetaProgression");
+        }
+
         private void resetInternalState()
         {
             LevelSelect.Instance.requestedLevel = 0;
             runStats = new RunStats();
             PlayerStats.Instance.SetDefaultValues();
+            PersistentUpgradeManager.Instance.ApplyPersistentStats();
             inventory.Clear();
         }
 
@@ -182,7 +210,7 @@ namespace Managers
 
         public void UpdateSettings(UserSettings settings, string name)
         {
-            PersistentUpgrades.Save(settings, name);
+            PersistentData.Save(settings, name);
             settingsUpdated?.Invoke(settings);
         }
 

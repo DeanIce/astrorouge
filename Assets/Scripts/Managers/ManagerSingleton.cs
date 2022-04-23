@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -48,6 +49,16 @@ namespace Managers
             string className = type.Name;
             string m = message + " " + sw.ElapsedMilliseconds + " ms.";
             if (logEvents) print($"{className}: {m}");
+        }
+
+        protected internal IEnumerator LOGWAIT(Stopwatch sw, object message)
+        {
+            yield return new WaitForSeconds(1);
+
+            Type type = GetType().UnderlyingSystemType;
+            string className = type.Name;
+            string m = message + " " + sw.ElapsedMilliseconds + " ms.";
+            print($"{className}: {m}");
         }
     }
 }
