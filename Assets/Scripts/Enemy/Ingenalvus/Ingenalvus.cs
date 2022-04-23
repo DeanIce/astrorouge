@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Managers;
+using UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -58,6 +59,8 @@ namespace Enemy.Ingenalvus
 
         public Animator animator;
         public float smashDamage = 40;
+
+        public BossHealthBar bossHealthBar;
         private NavMeshAgent agent;
 
         private float health;
@@ -98,6 +101,7 @@ namespace Enemy.Ingenalvus
             if (mode == Mode.AcceptingDamage)
             {
                 health -= dmg;
+                bossHealthBar.SetHealth(health, stageHealth);
                 if (health <= 0f)
                 {
                     mode = Mode.WeakPoints;
