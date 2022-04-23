@@ -38,20 +38,11 @@ public class DamagePopupUI : MonoBehaviour
 
     public void Setup(int damageAmount, int type) {
         textMesh.SetText(damageAmount.ToString());
-        
-        
-        if (type == 1) {
-            textMesh.color = Color.red;
-            textMesh.fontSize = 6;
-        } else {
-            textMesh.color = Color.white;
-            textMesh.fontSize = 6;
-        }
 
         switch (type)
         {
             case 1:
-                textMesh.color = Color.Lerp(Color.yellow, Color.red, 0.5f);
+                textMesh.color = Color.Lerp(Color.yellow, Color.red, 0.5f); //orange
                 textMesh.fontSize = 6;
                 break;
             case 2:
@@ -59,15 +50,23 @@ public class DamagePopupUI : MonoBehaviour
                 textMesh.fontSize = 6;
                 break;
             case 3:
-                textMesh.color = Color.yellow;
+                textMesh.color = Color.cyan;
                 textMesh.fontSize = 6;
                 break;
             case 4:
-                textMesh.color = Color.green;
+                textMesh.color = Color.yellow;
                 textMesh.fontSize = 6;
                 break;
             case 5:
-                textMesh.color = Color.blue;
+                textMesh.color = new Color(212f / 255f, 175f / 255f, 55f / 255f, 1);
+                textMesh.fontSize = 6;
+                break;
+            case 6:
+                textMesh.color = Color.Lerp(Color.black, Color.white, 0.3f);
+                textMesh.fontSize = 6;
+                break;
+            case 7:
+                textMesh.color = Color.red;
                 textMesh.fontSize = 6;
                 break;
             default:
@@ -78,7 +77,6 @@ public class DamagePopupUI : MonoBehaviour
 
         textColor = textMesh.color;
         disappearTimer = 0.5f;
-        
     }
 
     private void Update() {
