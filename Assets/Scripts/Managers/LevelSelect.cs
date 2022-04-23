@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Levels;
+using Planets;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,17 +24,13 @@ namespace Managers
 
         public List<List<GameObject>> enemies = new();
 
-        public List<GameObject> debug;
 
         public HudUI hudUI;
 
-        private readonly object valueLock = new();
-        private bool done;
 
         private bool isHackDone = true;
 
         private string progress;
-        private int value;
 
         public LevelScriptableObject CurrentLevel
         {
@@ -60,25 +56,17 @@ namespace Managers
                 // We may need to find the player again for some reason
                 if (player == null) player = GameObject.Find("PlayerDefault");
 
-                print("start");
-                //ThisGuyRunsWithoutWaiting();
-                // ThisGuyWaits();
-                // LoadLevel();
+
+                if (hudUI == null) hudUI = GameObject.Find("HUD").GetComponent<HudUI>();
+                hudUI.ShowProgressMessage();
 
                 StartCoroutine(LoadLevel());
-                // StartCoroutine(DoBigProcess());
             }
-            // Todo(CURRENT): loading screen async shit
 
-            hudUI.DoShit(progress);
-
-            // lock (valueLock)
-            // {
-            //     hudUI.DoShit(value);
-            // }
+            if (hudUI != null) hudUI.UpdateProgressMessage($"{progress} : {Time.frameCount}");
 
 
-            enemies.RemoveAll(item => item == null);
+            if (enemies != null) enemies.RemoveAll(item => item == null);
         }
 
         private void OnEnable()
@@ -93,38 +81,6 @@ namespace Managers
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        // public IEnumerator DoBigProcess()
-        // {
-        //     var timer = Stopwatch.StartNew();
-        //     int seed = DateTime.UtcNow.Millisecond;
-        //     var rng = new Random(seed);
-        //     progress = 10;
-        //     yield return null;
-        //
-        //     // Do the hard work
-        //     GameObject root = GetOrCreate();
-        //     (Vector3 newPlayerPos, List<List<GameObject>> stuff) = CurrentLevel.Create(root, rng, ballDropper, timer);
-        //     enemies = stuff;
-        //     debug = enemies[0];
-        //     progress = 20;
-        //     yield return null;
-        //
-        //
-        //     CurrentLevel.Load(root, rng);
-        //     progress = 30;
-        //     yield return null;
-        //
-        //
-        //     player.transform.position = newPlayerPos;
-        //     progress = 40;
-        //     yield return null;
-        //
-        //
-        //     progress = 50;
-        //     yield return null;
-        //     // etc.
-        // }
-
 
         private IEnumerator LoadLevel()
         {
@@ -138,38 +94,62 @@ namespace Managers
 
 
             // Do the hard work
-            GameObject root = GetOrCreate();
-            CurrentLevel.Setup(root, rng, ballDropper, timer);
             SetProgress("Setup simulation space.");
             yield return null;
+            GameObject root = GetOrCreate();
+            CurrentLevel.Setup(rng, timer);
 
-            CurrentLevel.GeneratePlanetMeshes(root, rng, ballDropper, timer);
+            SetProgress("Simulate planet positions.");
+            yield return null;
+            CurrentLevel.DropBalls(ballDropper, timer);
+
             SetProgress("Generate planet meshes.");
             yield return null;
+            CurrentLevel.GeneratePlanetMeshes(root, timer);
 
-
-            (Vector3 newPlayerPos, List<List<GameObject>> stuff) = CurrentLevel.Create(root, rng, ballDropper, timer);
-            enemies = stuff;
-            debug = enemies[0];
-            SetProgress("Spawn props and enemies.");
+            SetProgress("Spawn props.");
             yield return null;
+            CurrentLevel.SpawnProps(rng, timer);
 
 
-            // And load in the new level
-            CurrentLevel.Load(root, rng);
+            LevelScriptableObject.InternalState state = CurrentLevel.state;
+            PlanetGenerator[] pgs = state.pgs;
+
+
+            state.enemiesSpawned = new List<List<GameObject>>();
+            for (var i = 0; i < state.actualNumPlanets; i++)
+            {
+                GameObject planet = pgs[i].gameObject;
+                // Add enemies to the planet
+                var numEnemiesSpawned = (int) (state.actualNumEnemies * state.areaRatios[i]);
+                state.enemiesSpawned.Add(SpawnObjects.SpawnEnemies(rng, planet, CurrentLevel.enemyAssets,
+                    numEnemiesSpawned, i));
+
+                Instance.LOGTIMER(timer, "Spawn enemies " + i);
+
+                SetProgress($"Spawn enemies on planet {i + 1}/{pgs.Length}");
+                yield return null;
+            }
+
+
+            Vector3 newPlayerPos = CurrentLevel.state.playerPosition;
+            enemies = CurrentLevel.state.enemiesSpawned;
+
+
             SetProgress("Load level.");
             yield return null;
+            // And load in the new level
+            CurrentLevel.Load(root, rng);
 
 
             player.transform.position = newPlayerPos;
 
-            SetProgress("level loading");
 
-            done = true;
+            hudUI.HideProgressMessage();
             yield return default;
         }
 
-        private void SetProgress(string s)
+        public void SetProgress(string s)
         {
             progress = s;
         }
@@ -189,31 +169,6 @@ namespace Managers
         private void LoadBossEvent()
         {
             // UnloadLevel();
-        }
-
-        private void ThisGuyRunsWithoutWaiting()
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    for (var i = 0; i < 100; i++)
-                    {
-                        Task.Delay(1000);
-                        lock (valueLock)
-                        {
-                            value = i;
-                        }
-                        // hudUI.DoShit(i);
-                    }
-                }
-                catch (Exception e)
-                {
-                    print(e);
-                    Console.WriteLine(e);
-                    throw;
-                }
-            });
         }
 
 

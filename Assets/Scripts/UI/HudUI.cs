@@ -48,6 +48,7 @@ namespace UI
             SetExp(PlayerStats.Instance.xp);
 
             loading = root.Q<Label>("loading");
+            HideProgressMessage();
         }
 
         private void Update()
@@ -72,9 +73,19 @@ namespace UI
             EventManager.Instance.crosshairSpread -= AdjustCrosshair;
         }
 
-        public void DoShit(string val)
+        public void UpdateProgressMessage(string val)
         {
             loading.text = val;
+        }
+
+        public void HideProgressMessage()
+        {
+            loading.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
+        }
+
+        public void ShowProgressMessage()
+        {
+            loading.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
         }
 
         private void UpdateBars()

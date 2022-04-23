@@ -36,7 +36,7 @@ namespace Levels
 
         public GameObject planetPrefab;
 
-        private InternalState state;
+        public InternalState state;
 
 
         private void OnValidate()
@@ -90,8 +90,7 @@ namespace Levels
             }
         }
 
-        public void Setup(GameObject root, Random rng, BallDropper ballDropper,
-            Stopwatch timer)
+        public void Setup(Random rng, Stopwatch timer)
         {
             state = new InternalState();
 
@@ -110,9 +109,12 @@ namespace Levels
 
             state.radii = radii;
             state.areaRatios = areaRatios;
+        }
 
+        public void DropBalls(BallDropper ballDropper, Stopwatch timer)
+        {
             // Perform simulation
-            state.points = ballDropper.DropBalls(radii, timer);
+            state.points = ballDropper.DropBalls(state.radii, timer);
             LevelSelect.Instance.LOGTIMER(timer, "Ball dropper done");
 
             WeightRatio(enemyAssets);
@@ -121,8 +123,7 @@ namespace Levels
             state.pgs = new PlanetGenerator[state.actualNumPlanets];
         }
 
-        public void GeneratePlanetMeshes(GameObject root, Random rng, BallDropper ballDropper,
-            Stopwatch timer)
+        public void GeneratePlanetMeshes(GameObject root, Stopwatch timer)
         {
             PlanetGenerator[] pgs = state.pgs;
             // Create each planet
@@ -159,16 +160,7 @@ namespace Levels
         }
 
 
-        /// <summary>
-        ///     Create the level's world meshes, determine asset placement, etc.
-        ///     Expensive process, should be invoked before the level is required.
-        /// </summary>
-        /// <param name="root"></param>
-        /// <param name="rng"></param>
-        /// <param name="timer"></param>
-        /// <returns></returns>
-        public (Vector3, List<List<GameObject>>) Create(GameObject root, Random rng, BallDropper ballDropper,
-            Stopwatch timer)
+        public void SpawnProps(Random rng, Stopwatch timer)
         {
             PlanetGenerator[] pgs = state.pgs;
 
@@ -187,20 +179,6 @@ namespace Levels
             }
 
             LevelSelect.Instance.LOGTIMER(timer, "Spawn items");
-
-            var enemiesSpawned = new List<List<GameObject>>();
-            for (var i = 0; i < state.actualNumPlanets; i++)
-            {
-                GameObject planet = pgs[i].gameObject;
-                // Add enemies to the planet
-                var numEnemiesSpawned = (int) (state.actualNumEnemies * state.areaRatios[i]);
-                enemiesSpawned.Add(SpawnObjects.SpawnEnemies(rng, planet, enemyAssets, numEnemiesSpawned, i));
-            }
-
-            LevelSelect.Instance.LOGTIMER(timer, "Spawn enemies");
-
-
-            return (state.playerPosition, enemiesSpawned);
         }
 
 
@@ -253,7 +231,7 @@ namespace Levels
             }
         }
 
-        private struct InternalState
+        public struct InternalState
         {
             public PlanetGenerator[] pgs;
             public int actualNumPlanets;
@@ -264,6 +242,7 @@ namespace Levels
             public float[] radii;
             public float[] areaRatios;
             public Vector3 playerPosition;
+            public List<List<GameObject>> enemiesSpawned;
         }
 
 
