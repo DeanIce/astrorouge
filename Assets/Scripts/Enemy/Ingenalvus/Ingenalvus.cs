@@ -69,11 +69,12 @@ namespace Enemy.Ingenalvus
 
         private void Start()
         {
+            health = stageHealth;
+            bossHealthBar.SetHealth(health, stageHealth);
             animator = GetComponentInChildren<Animator>();
             weakPointsRemaining = weakPoints.Count;
             agent = GetComponent<NavMeshAgent>();
             portal.SetActive(false);
-            health = stageHealth;
         }
 
         private void Update()
