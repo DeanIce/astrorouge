@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
 
 public class SnakeEnemy : BasicEnemyAgent
@@ -11,7 +12,7 @@ public class SnakeEnemy : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= (LevelSelect.Instance.requestedLevel + 1) + ((LevelSelect.Instance.requestedLevel + 1) / 2);
         maxHealth = health;
         Dying = false;
         animator = GetComponentInChildren<Animator>();

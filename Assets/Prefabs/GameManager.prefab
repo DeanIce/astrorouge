@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c585da603ec48978d68d6f674818321, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 1
   showFPSCounter: 0
 --- !u!114 &7689409263527498332
@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68b9db49491b32b4cb3e50fb63502533, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 0
   requestedScene: 0
   scenePlay: LevelScene
@@ -78,8 +78,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1f7729b2b795014da7111b95d626f30, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 0
   buttonClick: {fileID: 8300000, guid: 3b47bc525745b404198b520014de9176, type: 3}
 --- !u!114 &6854432826354650640
@@ -92,14 +92,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 663c483ea59b2db489bbafec5ebac70c, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 0
   drops:
   - prefab: {fileID: 6613647429278394061, guid: d24e42757c92470428d9d5401924125d, type: 3}
     weight: 400
   - prefab: {fileID: 4444067496941640041, guid: 33c2bdb68fe6d724ba1acdf272b39b2f, type: 3}
-    weight: 200
+    weight: 100
   - prefab: {fileID: 5435767671005971193, guid: 4aa1d7b5b9bbe7649b922a39df6f21ca, type: 3}
     weight: 200
   - prefab: {fileID: 5152110194406794809, guid: 07988b9fe68f45642b00a7e5629f935d, type: 3}
@@ -119,7 +119,7 @@ MonoBehaviour:
   - prefab: {fileID: 859420143151086843, guid: 77cd243071e411b469b6831317fbdf63, type: 3}
     weight: 200
   - prefab: {fileID: 7001578233619711473, guid: 79326ae4d7f23a1409be6b1506b2fa59, type: 3}
-    weight: 200
+    weight: 100
   - prefab: {fileID: 6293830873215829156, guid: 59de7d120431e614e8edde9b67a56791, type: 3}
     weight: 400
   - prefab: {fileID: 7992705381474194298, guid: b8d0743ea59537e49bc7cd55a204ac19, type: 3}
@@ -170,10 +170,10 @@ MonoBehaviour:
     weight: 100
   - prefab: {fileID: 9006083277569277750, guid: 50a8cb335533cf648ad00c40f9bd3c1c, type: 3}
     weight: 400
-  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
-    weight: 2000
   - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
     weight: 200
+  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
+    weight: 4000
 --- !u!114 &1187498790012229965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a15ab8a64c4158869cdde4aaef6ab2, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 0
   requestedLevel: 0
   levels:
@@ -194,7 +194,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8228096c239e4a84e8e306f5b7285a25, type: 2}
   player: {fileID: 0}
   ballDropper: {fileID: 1421862117859555043}
-  debug: []
+  hudUI: {fileID: 0}
 --- !u!114 &8027408832269683781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,8 +205,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2328b8e90ae63d4891df998ebafa546, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 1
   xp: 0
   xpLevel: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
   baseRangeGrenadeSizeMultiplier: 1
-  baseMaxHealth: 100
+  baseMaxHealth: 50
   baseHealthRegen: 5
   baseRegenDelay: 10
   baseArmor: 0
@@ -300,8 +300,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfad7e46c0045484ab706cc7470b192e, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   logEvents: 1
 --- !u!1001 &1421862118601994529
 PrefabInstance:
@@ -369,8 +369,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b780410f5b94c359213a6644ec0ed72, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4341222289374962843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3423974572803282362, guid: 07c67387344a8234988ff6b810d6f8c5, type: 3}

@@ -12,7 +12,7 @@ public class MidEnt : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= (Managers.LevelSelect.Instance.requestedLevel + 1) + ((Managers.LevelSelect.Instance.requestedLevel + 1) / 2);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);

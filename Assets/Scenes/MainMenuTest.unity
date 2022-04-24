@@ -318,13 +318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    displayMode: Fullscreen
-    fov: 60
-    resolution: TODO
-    screenShake: 1
     volumeGame: 1
-    volumeMaster: 1
     volumeMusic: 1
+    msaa: 4
+    lookSensitivity: 1
 --- !u!1 &1036262569
 GameObject:
   m_ObjectHideFlags: 0

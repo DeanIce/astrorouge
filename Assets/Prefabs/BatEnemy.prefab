@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337cbe5a9e9789149abdef1aa479d233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
   maxHealth: 0
   movementSpeed: 1.5
   detector: {fileID: 6743012128722043234}
@@ -1110,6 +1110,10 @@ PrefabInstance:
     - target: {fileID: 6472305986258161526, guid: e92c5b4d23b950844ac2c9071cf66dfb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014266964736506831, guid: e92c5b4d23b950844ac2c9071cf66dfb, type: 3}
+      propertyPath: damage
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3000912514592065825, guid: e92c5b4d23b950844ac2c9071cf66dfb, type: 3}

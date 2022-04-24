@@ -49,6 +49,8 @@ namespace Player
             {
                 (AbstractItem p, int i) tup = pair.Value;
                 AbstractItem item = tup.p;
+                if (pair.Key == "Old Fashion Mustache") for (int i = 0; i < tup.i; i++) PlayerStats.Instance.Moustache();
+                Debug.Log(pair.Key);
                 uic.AddItem(item, tup.i);
             }
         }

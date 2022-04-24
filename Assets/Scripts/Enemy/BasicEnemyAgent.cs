@@ -46,7 +46,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private float awareTimer;
 
 
-    [NonSerialized] public float xpGift = 5;
+    [NonSerialized] public float xpGift = 2;
     public GameObject Detector => detector;
     public int PlayerLayer { get; } = 9;
 
