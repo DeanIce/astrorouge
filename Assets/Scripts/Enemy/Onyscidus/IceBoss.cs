@@ -54,6 +54,7 @@ public class IceBoss : MonoBehaviour
     public CapsuleCollider LeftClaw;
     public CapsuleCollider RightClaw;
     public BoxCollider RollCollider;
+    public CapsuleCollider HeadCollider;
 
     private void Awake()
     {
@@ -158,6 +159,10 @@ public class IceBoss : MonoBehaviour
     // Death
     IEnumerator DeathAnimation()
     {
+        HeadCollider.enabled = false;
+        LeftClaw.enabled = false;
+        RightClaw.enabled = false;
+
         animator.SetBool("Death", true);
         yield return new WaitForSeconds(2.333f);
         animator.SetBool("Dead", true);
