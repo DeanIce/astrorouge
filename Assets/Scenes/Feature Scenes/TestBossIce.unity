@@ -6837,7 +6837,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1519450461}
-  health: 40
+  portal: {fileID: 692339184}
+  xpGift: 150
+  health: 6
   movementSpeed: 2
   movementState: forward
   attackRange: 20
@@ -7143,7 +7145,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3333334, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

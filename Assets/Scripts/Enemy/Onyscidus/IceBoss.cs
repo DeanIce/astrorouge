@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Managers;
 
 public class IceBoss : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class IceBoss : MonoBehaviour
 
     // Omnipotence
     public GameObject player;
+    public GameObject portal;
+
+    public int xpGift = 150;
 
     // Status stuff
     private bool dying;
@@ -61,6 +65,7 @@ public class IceBoss : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // May need to be GetComponentInChildren
         animator = GetComponent<Animator>();
+        portal.SetActive(false);
         dying = false;
         inRange = false;
         attacking = false;
@@ -132,9 +137,30 @@ public class IceBoss : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    // death
+    public void Die()
     {
-        
+        if (!dying)
+        {
+            dying = true;
+            // Give XP for killing the enemy
+            PlayerStats.Instance.xp += xpGift;
+            EventManager.Instance.PlayerStatsUpdated();
+            EventManager.Instance.runStats.enemiesKilled++;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.enabled = false;
+            portal.SetActive(true);
+            
+            StartCoroutine(DeathAnimation());
+        }
+    }
+
+    // Death
+    IEnumerator DeathAnimation()
+    {
+        animator.SetBool("Death", true);
+        yield return new WaitForSeconds(2.333f);
+        animator.SetBool("Dead", true);
     }
 
     // FOV
@@ -199,16 +225,6 @@ public class IceBoss : MonoBehaviour
         {
            // Debug.Log("Left Range!");
             inRange = false;
-        }
-    }
-
-    // death
-    public void Die()
-    {
-        if (!dying)
-        {
-            dying = true;
-            StartCoroutine(DeathAnimation());
         }
     }
 
@@ -317,14 +333,6 @@ public class IceBoss : MonoBehaviour
         animator.SetBool("HitBack", true);
         yield return new WaitForSeconds(1);
         animator.SetBool("HitBack", false);
-    }
-
-    // Death
-    IEnumerator DeathAnimation()
-    {
-        animator.SetBool("Death", true);
-        yield return new WaitForSeconds(2.333f);
-        animator.SetBool("Death", false);
     }
 
     // Attacks
