@@ -12,7 +12,7 @@ public class SnakeEnemy : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (LevelSelect.Instance.requestedLevel + 1) + ((LevelSelect.Instance.requestedLevel + 1) / 2);
+        health *= 2 * (LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         Dying = false;
         animator = GetComponentInChildren<Animator>();

@@ -274,7 +274,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             float dmgAfterArmor = 0.0f;
             if (Random.value >= PlayerStats.Instance.dodgeChance)
             {
-                dmgAfterArmor = dmg - dmg * (PlayerStats.Instance.armor / 100);
+                dmgAfterArmor = dmg - dmg * ((float) PlayerStats.Instance.armor / 100f);
                 if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
             }
             else Debug.Log("Dodged Damage");

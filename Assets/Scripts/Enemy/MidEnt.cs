@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class MidEnt : BasicEnemyAgent
@@ -12,7 +12,7 @@ public class MidEnt : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1) + ((Managers.LevelSelect.Instance.requestedLevel + 1) / 2);
+        health *= 2 * (LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
