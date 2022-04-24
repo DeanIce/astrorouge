@@ -99,7 +99,7 @@ MonoBehaviour:
   - prefab: {fileID: 6613647429278394061, guid: d24e42757c92470428d9d5401924125d, type: 3}
     weight: 400
   - prefab: {fileID: 4444067496941640041, guid: 33c2bdb68fe6d724ba1acdf272b39b2f, type: 3}
-    weight: 100
+    weight: 200
   - prefab: {fileID: 5435767671005971193, guid: 4aa1d7b5b9bbe7649b922a39df6f21ca, type: 3}
     weight: 200
   - prefab: {fileID: 5152110194406794809, guid: 07988b9fe68f45642b00a7e5629f935d, type: 3}
@@ -133,7 +133,7 @@ MonoBehaviour:
   - prefab: {fileID: 1198560613905703191, guid: 7bb771a95325b0541a5e163df8435b7f, type: 3}
     weight: 400
   - prefab: {fileID: 2597083089174466677, guid: 1822e89996c9b4b4c8d88b3deb425446, type: 3}
-    weight: 400
+    weight: 0
   - prefab: {fileID: 8036634101774178134, guid: 67cbe55a282110e43b23b664e34c13fa, type: 3}
     weight: 200
   - prefab: {fileID: 6505046900647681934, guid: a2f8d6f8e55042e45af3c382b4fe63bb, type: 3}
@@ -143,9 +143,9 @@ MonoBehaviour:
   - prefab: {fileID: 5034184773048400813, guid: 8474da581466a6841ba360d8daa65460, type: 3}
     weight: 400
   - prefab: {fileID: 5252753581614522879, guid: d16dab037dba5ee4f85986a9a7dee0a8, type: 3}
-    weight: 600
+    weight: 0
   - prefab: {fileID: 4864774307642595874, guid: cf72cbbda1e14064d966fd00d09260c4, type: 3}
-    weight: 400
+    weight: 0
   - prefab: {fileID: 8417658323610540328, guid: 159b3be6edbd59343a1b5b47ea745dfd, type: 3}
     weight: 200
   - prefab: {fileID: 881073225584712901, guid: 76c33aac722a7664ea6a4023188b78e5, type: 3}
@@ -166,12 +166,12 @@ MonoBehaviour:
     weight: 200
   - prefab: {fileID: 428991938959509544, guid: 45da362e97f59a64597e82f546610b3c, type: 3}
     weight: 400
-  - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
-    weight: 100
   - prefab: {fileID: 9006083277569277750, guid: 50a8cb335533cf648ad00c40f9bd3c1c, type: 3}
     weight: 400
   - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
     weight: 200
+  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
+    weight: 4000
   - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
     weight: 4000
 --- !u!114 &1187498790012229965

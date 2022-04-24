@@ -296,10 +296,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private IEnumerator beginIFrames()
     {
         IframeActive = true;
-        Debug.Log("starting Iframes");
         yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.001f); // converted to ms
         IframeActive = false;
-        Debug.Log("Iframes over");
     }
 
     public void Die()
