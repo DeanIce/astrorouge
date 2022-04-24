@@ -12,7 +12,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="body" style="flex-grow: 1; flex-direction: row; width: auto;">
                 <ui:VisualElement name="Teir-lvl" style="width: 16%; justify-content: space-around;">
-                    <ui:Label text="Tier Level" display-tooltip-when-elided="true" name="Teir-header" class="upgrade-header" />
+                    <ui:Label text="Tier Level" display-tooltip-when-elided="true" name="header" class="upgrade-header" />
                     <ui:Label text="I" display-tooltip-when-elided="true" name="Teir-1" class="upgrade upgrade-tier" style="background-image: none;" />
                     <ui:Label text="II" display-tooltip-when-elided="true" name="Teir-2" class="upgrade upgrade-tier" style="background-image: none;" />
                     <ui:Label text="III" display-tooltip-when-elided="true" name="Teir-3" class="upgrade upgrade-tier" style="background-image: none;" />
@@ -20,7 +20,7 @@
                     <ui:Label text="V" display-tooltip-when-elided="true" name="Teir-5" class="upgrade upgrade-tier" style="background-image: none;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Health" style="width: 21%; justify-content: space-around;">
-                    <ui:Label text="Health" display-tooltip-when-elided="true" name="Health-header" class="upgrade-header" />
+                    <ui:Label text="Health" display-tooltip-when-elided="true" name="header" class="upgrade-header" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="health-t1" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="health-t2" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="health-t3" class="upgrade" />
@@ -28,7 +28,7 @@
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="health-t5" class="upgrade" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Movement" style="width: 21%; justify-content: space-around;">
-                    <ui:Label text="Mobility" display-tooltip-when-elided="true" name="Mobility-header" class="upgrade-header" />
+                    <ui:Label text="Mobility" display-tooltip-when-elided="true" name="header" class="upgrade-header" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="mobility-t1" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="mobility-t2" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="mobility-t3" class="upgrade" />
@@ -36,7 +36,7 @@
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="mobility-t5" class="upgrade" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Damage" style="width: 21%; justify-content: space-around;">
-                    <ui:Label text="Damage" display-tooltip-when-elided="true" name="Damage-header" class="upgrade-header" />
+                    <ui:Label text="Damage" display-tooltip-when-elided="true" name="header" class="upgrade-header" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="damage-t1" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="damage-t2" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="damage-t3" class="upgrade" />
@@ -44,7 +44,7 @@
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="damage-t5" class="upgrade" />
                 </ui:VisualElement>
                 <ui:VisualElement name="Elements" style="width: 21%; justify-content: space-around;">
-                    <ui:Label text="Elements" display-tooltip-when-elided="true" name="Elements-header" class="upgrade-header" />
+                    <ui:Label text="Elements" display-tooltip-when-elided="true" name="header" class="upgrade-header" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="elements-t1" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="elements-t2" class="upgrade" />
                     <ui:Button text="[Redacted]" display-tooltip-when-elided="true" name="elements-t3" class="upgrade" />

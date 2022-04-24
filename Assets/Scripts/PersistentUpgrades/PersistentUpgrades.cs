@@ -18,7 +18,7 @@ public class PersistentUpgrades
         "rangeBaseDamage",
         "maxHealth",
         "armor",
-        "baseMaxExtraJumps",
+        "maxExtraJumps",
     };
     public static readonly Dictionary<string, float> defaultStatUpgrades = new()
     {
@@ -43,12 +43,12 @@ public class PersistentUpgrades
         { "armor", 0f },
 
         // Movement Stats
-        { "baseMaxExtraJumps", 0f },
-        { "baseMovementSpeed", 0f },
-        { "baseSprintMultiplier", 0f },
+        { "maxExtraJumps", 0f },
+        { "movementSpeed", 0f },
+        { "sprintMultiplier", 0f },
 
         // Bullet Effect Chances
-        { "baseEffectChance", 0f },
+        { "effectChance", 0f },
     };
 
     public void ApplyStats(PlayerStats target)
@@ -74,19 +74,19 @@ public class PersistentUpgrades
         target.regenDelay += statUpgrades["regenDelay"];
         target.armor += (int)statUpgrades["armor"];
 
-        target.baseMaxExtraJumps += (int)statUpgrades["baseMaxExtraJumps"];
-        target.baseMovementSpeed += statUpgrades["baseMovementSpeed"];
-        target.baseSprintMultiplier += statUpgrades["baseSprintMultiplier"];
+        target.maxExtraJumps += (int)statUpgrades["maxExtraJumps"];
+        target.movementSpeed += statUpgrades["movementSpeed"];
+        target.sprintMultiplier += statUpgrades["sprintMultiplier"];
 
-        target.burnChance += statUpgrades["baseEffectChance"];
-        target.poisonChance += statUpgrades["baseEffectChance"];
-        target.lightningChance += statUpgrades["baseEffectChance"];
-        target.radioactiveChance += statUpgrades["baseEffectChance"];
-        target.smiteChance += statUpgrades["baseEffectChance"];
-        target.slowChance += statUpgrades["baseEffectChance"];
-        target.stunChance += statUpgrades["baseEffectChance"];
-        target.martyrdomChance += statUpgrades["baseEffectChance"];
-        target.igniteChance += statUpgrades["baseEffectChance"];
+        target.burnChance += statUpgrades["effectChance"];
+        target.poisonChance += statUpgrades["effectChance"];
+        target.lightningChance += statUpgrades["effectChance"];
+        target.radioactiveChance += statUpgrades["effectChance"];
+        target.smiteChance += statUpgrades["effectChance"];
+        target.slowChance += statUpgrades["effectChance"];
+        target.stunChance += statUpgrades["effectChance"];
+        target.martyrdomChance += statUpgrades["effectChance"];
+        target.igniteChance += statUpgrades["effectChance"];
     }
 
     public void AddStatUpgrade(string statName, float value)

@@ -126,37 +126,37 @@ public class PersistentUpgradeMenu : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement;
 
         healthT[0] = new(root, "health-t1", "+10 Base Health", "maxHealth", 10, 1);
-        healthT[1] = new(root, "health-t2", "+20 Base Health", "maxHealth", 20, 1);
-        healthT[2] = new(root, "health-t3", "+30 Base Health", "maxHealth", 30, 1);
-        healthT[3] = new(root, "health-t4", "+40 Base Health", "maxHealth", 40, 1);
-        healthT[4] = new(root, "health-t5", "+50 Base Health", "maxHealth", 50, 1);
+        healthT[1] = new(root, "health-t2", "+1 Armor", "armor", 1, 2);
+        healthT[2] = new(root, "health-t3", "+3 Health Regen", "healthRegen", 3, 3);
+        healthT[3] = new(root, "health-t4", "+20 Base Health", "maxHealth", 20, 4);
+        healthT[4] = new(root, "health-t5", "+2 Armor", "armor", 2, 5);
 
         for (int i = 0; i < healthT.Length - 1; i++)
             healthT[i].AddDependent(healthT[i + 1]);
 
-        mobilityT[0] = new(root, "mobility-t1", "+2 Movement Speed", "baseMovementSpeed", 2, 1);
-        mobilityT[1] = new(root, "mobility-t2", "+5% Sprint Multiplier", "baseSprintMultiplier", 0.05f, 1);
-        mobilityT[2] = new(root, "mobility-t3", "+1 Jump", "baseMaxExtraJumps", 1, 1);
-        mobilityT[3] = new(root, "mobility-t4", "+2 Movement Speed", "baseMovementSpeed", 2, 1);
-        mobilityT[4] = new(root, "mobility-t5", "+5% Sprint Multiplier", "baseSprintMultiplier", 0.05f, 1);
+        mobilityT[0] = new(root, "mobility-t1", "+1 Movement Speed", "movementSpeed", 1, 1);
+        mobilityT[1] = new(root, "mobility-t2", "+5% Sprint Multiplier", "sprintMultiplier", 0.05f, 2);
+        mobilityT[2] = new(root, "mobility-t3", "+1 Jump", "maxExtraJumps", 1, 3);
+        mobilityT[3] = new(root, "mobility-t4", "+2 Movement Speed", "movementSpeed", 2, 4);
+        mobilityT[4] = new(root, "mobility-t5", "+10% Sprint Multiplier", "sprintMultiplier", 0.1f, 5);
 
         for (int i = 0; i < mobilityT.Length - 1; i++)
             mobilityT[i].AddDependent(mobilityT[i + 1]);
 
         damageT[0] = new(root, "damage-t1", "+5 Base Melee Damage", "meleeBaseDamage", 5, 1);
-        damageT[1] = new(root, "damage-t2", "+5 Base Range Damage", "rangeBaseDamage", 5, 1);
-        damageT[2] = new(root, "damage-t3", "+2 Melee Attack Range", "meleeAttackRange", 2, 1);
-        damageT[3] = new(root, "damage-t4", "+5% Range Crit Chance", "rangeCritChance", 0.05f, 1);
-        damageT[4] = new(root, "damage-t5", "+10% Melee Crit Chance", "meleeCritChance", 0.05f, 1);
+        damageT[1] = new(root, "damage-t2", "+5 Base Range Damage", "rangeBaseDamage", 5, 2);
+        damageT[2] = new(root, "damage-t3", "+2 Melee Attack Range", "meleeAttackRange", 2, 3);
+        damageT[3] = new(root, "damage-t4", "+5% Range Crit Chance", "rangeCritChance", 0.05f, 4);
+        damageT[4] = new(root, "damage-t5", "+10% Melee Crit Chance", "meleeCritChance", 0.05f, 5);
 
         for (int i = 0; i < damageT.Length - 1; i++)
             damageT[i].AddDependent(damageT[i + 1]);
 
-        elementsT[0] = new(root, "elements-t1", "+1% Effect Chance", "baseEffectChance", 0.01f, 1);
-        elementsT[1] = new(root, "elements-t2", "+1% Effect Chance", "baseEffectChance", 0.01f, 1);
-        elementsT[2] = new(root, "elements-t3", "+1% Effect Chance", "baseEffectChance", 0.01f, 1);
-        elementsT[3] = new(root, "elements-t4", "+1% Effect Chance", "baseEffectChance", 0.01f, 1);
-        elementsT[4] = new(root, "elements-t5", "+1% Effect Chance", "baseEffectChance", 0.01f, 1);
+        elementsT[0] = new(root, "elements-t1", "+1% Effect Chance", "effectChance", 0.01f, 1);
+        elementsT[1] = new(root, "elements-t2", "+1% Effect Chance", "effectChance", 0.01f, 2);
+        elementsT[2] = new(root, "elements-t3", "+1% Effect Chance", "effectChance", 0.01f, 3);
+        elementsT[3] = new(root, "elements-t4", "+1% Effect Chance", "effectChance", 0.01f, 4);
+        elementsT[4] = new(root, "elements-t5", "+1% Effect Chance", "effectChance", 0.01f, 5);
 
         for (int i = 0; i < elementsT.Length - 1; i++)
             elementsT[i].AddDependent(elementsT[i + 1]);
