@@ -1629,7 +1629,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1653647653}
   lines:
-  - Test
+  - 'PA: Welcome soldier #1337 to routine training.'
+  - 'You: ...'
+  - 'PA: I am KORE-TANA, this ship''s personal AI assistant, you may address me as
+    KT.'
+  - 'You: That name sounds oddly familiar... You wouldn''t happen to be familiar
+    with Ha-'
+  - 'KT: -It has been 833 days since your last training session, assuming complete
+    degradation of skils...'
+  - 'KT: Basic training determined to be the best course of action.'
+  - 'You: ...'
+  - 'KT: Please proceed forward to the Science Lab using WASD to move, LCTRL to sprint,
+    and Mouse to look.'
+  - 'KT: If you are playing with some other key configuration, sorry my maker did
+    not make me smart enough to know.'
   textSpeed: 0
 --- !u!1001 &293746611
 PrefabInstance:
@@ -3635,7 +3648,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1418115064}
   lines:
-  - Test
+  - 'KT: Welcome to the Science Lab, here you will learn how to fight and use items
+    on the battlefield.'
+  - 'KT: Your suit is equipped with 4 means of attack: Missle, Laser, Grenade, and
+    Blade.'
+  - 'KT: Left-click to use your missle attack, a moderately fast moving projectile
+    with a low amount of sustained damage.'
+  - 'KT: Right-click to use your laser attack, a hitscan projectile with a high amount
+    of burst damage but a short range.'
+  - 'KT: Press Q to throw a grenade, a slow moving hard to aim projectile with high
+    damage and high cooldown.'
+  - 'KT: Lastly, press R to melee an enemy, a fast low damage alternative for close
+    range combat.'
+  - 'KT: Use these to kill the enemies before you now. Once dead, they will drop
+    a wide variety of items you can use to augment your suit.'
+  - 'KT: Hold E while hovering over said items to equip them. Item upgrades include
+    things such as: Speed, Damage, Elemental Affects, and Facial Hair.'
+  - 'You: Facial Hair???'
+  - 'KT: ...'
+  - 'KT: Please proceed to the Cargo Bay now to learn about gravity.'
   textSpeed: 0
 --- !u!114 &578139773
 MonoBehaviour:
@@ -3946,7 +3977,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 954189805}
   lines:
-  - Test
+  - 'KT: Welcome to the Cargo Bay, here you will learn about interplanetary travel.'
+  - 'KT: On the battlefield, you may encounter numerous planets in a cluster.'
+  - 'KT: Your suit is equipped with a gravity assist that will allow you to stick
+    to any planet in such cluster.'
+  - 'KT: As well as freely travel between them by tapping Space to jump from the
+    surface of one planet to another.'
+  - 'KT: Please be aware that some planets will be too far apart to do this.'
+  - 'KT: In such cases, seek alternative routes by jumping to other planets.'
+  - 'You: That sounds complicated...'
+  - 'KT: It was a lot of math. Use the cargo in front of you to practice switching
+    between planets now.'
+  - 'KT: Afterwards, proceed to the drop pods to go back to the menu.'
   textSpeed: 0
 --- !u!114 &624269827
 MonoBehaviour:
@@ -5183,11 +5225,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3945245728651143348, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1.2238223e-16
+      value: 7.687708e-24
       objectReference: {fileID: 0}
     - target: {fileID: 3945245728651143348, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -1.9669392e-17
+      value: 2.1469425e-24
       objectReference: {fileID: 0}
     - target: {fileID: 3945245728651143348, guid: fb672ae87a2cc014ab87d76a12a8fa9b, type: 3}
       propertyPath: m_LocalRotation.y
