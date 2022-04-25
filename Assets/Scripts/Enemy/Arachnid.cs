@@ -11,7 +11,7 @@ public class Arachnid : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (2 * LevelSelect.Instance.requestedLevel + 1);
+        health *= (3 * LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);
