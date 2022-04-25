@@ -8227,6 +8227,9 @@ MonoBehaviour:
   slamCollider: {fileID: 0}
   tongueCollider: {fileID: 0}
   ramCollider: {fileID: 0}
+  slamDamage: 50
+  tongueDamage: 25
+  ramDamage: 15
   expAmt: 100
 --- !u!195 &1841525786
 NavMeshAgent:

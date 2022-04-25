@@ -37,8 +37,15 @@ public class LavaBoss : MonoBehaviour
     public BoxCollider tongueCollider;
     public BoxCollider ramCollider;
 
+    // Attack Damage
+    private float damageToDo;
+    public float slamDamage;
+    public float tongueDamage;
+    public float ramDamage;
+
     // Misc
     public int expAmt;
+    private float distance;
 
     // Movement stuff
     private NavMeshAgent navMeshAgent;
@@ -56,6 +63,7 @@ public class LavaBoss : MonoBehaviour
         health = maxHealth;
         bossHealthBar.SetHealth(health, maxHealth);
         rb = GetComponent<Rigidbody>();
+        distance = Vector3.Distance(transform.position, player.transform.position);
 
         // May need to be GetComponentInChildren
         portal.SetActive(false);
@@ -67,6 +75,13 @@ public class LavaBoss : MonoBehaviour
 
     private void Update()
     {
+        // To prevent endless walking on top of
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= 25)
+        {
+            inRange = true;
+        }
+
         // Die?
         if (health < 0)
         {
@@ -76,17 +91,19 @@ public class LavaBoss : MonoBehaviour
         else
         {
             // Movement
-            if (InAttackRange())
-            {
-                Attack();
-            }
-            else if (!inRange)
+            if (!inRange && !attacking)
             {
                 animator.SetBool("Crawling", true);
                 navMeshAgent.isStopped = false;
                 navMeshAgent.destination = player.transform.position;
             }
-            else
+            else if (InAttackRange())
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("Crawling", false);
+                Attack();
+            }
+            else if (inRange && !attacking)
             {
                 navMeshAgent.isStopped = true;
                 animator.SetBool("Crawling", false);
@@ -136,15 +153,15 @@ public class LavaBoss : MonoBehaviour
         {
             attacking = true;
             float randomAttack = Random.value;
-            if (randomAttack < 0.25)
+            if (randomAttack < 0.25 && distance < 35)
             {
                 StartCoroutine(SlamAttack());
             }
-            else if (randomAttack >= 0.25 && randomAttack < 0.5)
+            else if (randomAttack >= 0.25 && randomAttack < 0.5 && distance < 50)
             {
                 StartCoroutine(TongueAttack());
             }
-            else if (randomAttack >= 0.5 && randomAttack < 0.75)
+            else if (randomAttack >= 0.5 && randomAttack < 0.75 && distance < 25)
             {
                 StartCoroutine(RamAttack());
             }
@@ -174,8 +191,9 @@ public class LavaBoss : MonoBehaviour
     private bool InAttackRange()
     {
         // TODO: Edit numbers
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        return distance >= 15 && distance <= 20;
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        print("Distance from player: " + distance);
+        return distance >= 10 && distance <= 60;
     }
 
     // Damage Taken
@@ -219,6 +237,7 @@ public class LavaBoss : MonoBehaviour
 
     private IEnumerator TongueAttack()
     {
+        damageToDo = tongueDamage;
         animator.SetBool("TongueAttacking", true);
         yield return new WaitForSeconds(5);
         animator.SetBool("TongueAttacking", false);
@@ -236,6 +255,7 @@ public class LavaBoss : MonoBehaviour
     private IEnumerator RamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
+        damageToDo = ramDamage;
         animator.SetBool("RamAttacking", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("RamAttacking", false);
@@ -246,6 +266,7 @@ public class LavaBoss : MonoBehaviour
     private IEnumerator SlamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
+        damageToDo = slamDamage;
         animator.SetBool("SlamAttacking", true);
         yield return new WaitForSeconds(3);
         animator.SetBool("SlamAttacking", false);
