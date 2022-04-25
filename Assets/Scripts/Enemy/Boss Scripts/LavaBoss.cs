@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using UI;
 using UnityEngine;
@@ -22,11 +23,17 @@ public class LavaBoss : MonoBehaviour
     private Animator animator;
     private bool attacking;
 
+    // Portal
+    public GameObject portal;
+
     // Status stuff
     private bool dying;
     private float health;
     private bool hunting;
     private bool inRange;
+
+    // Misc
+    public int expAmt;
 
     // Movement stuff
     private NavMeshAgent navMeshAgent;
@@ -44,7 +51,9 @@ public class LavaBoss : MonoBehaviour
         health = maxHealth;
         bossHealthBar.SetHealth(health, maxHealth);
         rb = GetComponent<Rigidbody>();
+
         // May need to be GetComponentInChildren
+        portal.SetActive(false);
         animator = GetComponent<Animator>();
         dying = false;
         inRange = false;
@@ -53,16 +62,26 @@ public class LavaBoss : MonoBehaviour
 
     private void Update()
     {
-        if (!inRange)
+        // Die?
+        if (health < 0)
         {
-            animator.SetBool("Crawling", true);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.destination = player.transform.position;
+            Die();
         }
+        // Else do everything else
         else
         {
-            navMeshAgent.isStopped = true;
-            animator.SetBool("Crawling", false);
+            // Movement
+            if (!inRange)
+            {
+                animator.SetBool("Crawling", true);
+                navMeshAgent.isStopped = false;
+                navMeshAgent.destination = player.transform.position;
+            }
+            else
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("Crawling", false);
+            }
         }
     }
 
@@ -92,11 +111,28 @@ public class LavaBoss : MonoBehaviour
         }
     }
 
+    public void TakeDmg(float dmg)
+    {
+        if (!dying)
+        {
+            health -= dmg;
+            bossHealthBar.SetHealth(health, maxHealth);
+            print("Health now: " + health);
+        }
+    }
+
     public void Die()
     {
         if (!dying)
         {
             dying = true;
+            PlayerStats.Instance.xp += expAmt;
+            EventManager.Instance.PlayerStatsUpdated();
+            EventManager.Instance.runStats.enemiesKilled++;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.enabled = false;
+            PersistentUpgradeManager.Instance.IncCurrency(1);
+            portal.SetActive(true);
             StartCoroutine(DeathAnimation());
         }
     }

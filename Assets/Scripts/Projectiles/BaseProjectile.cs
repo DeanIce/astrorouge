@@ -52,6 +52,7 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
         root.GetComponent<IPlayer>()?.TakeDmg(damage);
         root.GetComponent<Ingenalvus>()?.TakeDmg(damage);
         root.GetComponent<IceBoss>()?.TakeDmg(damage);
+        root.GetComponent<LavaBoss>()?.TakeDmg(damage);
 
         // target.GetComponent<IngenalvusCollider>()?.PassThroughDamage(damage);
 
