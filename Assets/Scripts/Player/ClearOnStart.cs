@@ -14,7 +14,7 @@ public class ClearOnStart : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 7f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
 
         foreach (Collider hitCollider in hitColliders)
         {
