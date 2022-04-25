@@ -31,11 +31,7 @@ namespace Gravity
         public override Vector3 GetGravity(Vector3 position)
         {
             // print(box.bounds);
-            if (box.bounds.Contains(position))
-            {
-                print("ree");
-                return Vector3.down * gravity * multiplier;
-            }
+            if (box.bounds.Contains(position)) return Vector3.down * gravity * multiplier;
 
             return Vector3.zero;
         }
