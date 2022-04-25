@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpikeDamage : MonoBehaviour
 {
     // private variables
-    private float spikeTimer = 5f;
+    private float spikeTimer = 15f;
     private float moveSpeed = 10f;
 
     // public variables
@@ -19,17 +17,17 @@ public class SpikeDamage : MonoBehaviour
 
     void Update() {
         spikeTimer -= Time.deltaTime;
-        // if (spikeTimer < 0) {
-        //     Destroy(gameObject);
-        // } else 
-        if (transform.position.y < 0) {
+        if (spikeTimer < 0) {
+            Destroy(gameObject);
+        } else if (transform.position.y < 0) {
             transform.position += transform.up * moveSpeed * Time.deltaTime;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-        {
-            // print("claw collider");
-            other.transform.root.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(damage);
-        }
+    private void OnTriggerEnter(Collider other) {
+        other.transform.root.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(damage);
+
+        var slow = new SlowEffect();
+        slow.ApplyEffect(other.transform.root.gameObject);
+    }
 }
