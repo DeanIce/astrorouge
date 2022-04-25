@@ -19,9 +19,10 @@ public class SpikeDamage : MonoBehaviour
 
     void Update() {
         spikeTimer -= Time.deltaTime;
-        if (spikeTimer < 0) {
-            Destroy(gameObject);
-        } else if (transform.position.y < 0) {
+        // if (spikeTimer < 0) {
+        //     Destroy(gameObject);
+        // } else 
+        if (transform.position.y < 0) {
             transform.position += transform.up * moveSpeed * Time.deltaTime;
         }
     }
