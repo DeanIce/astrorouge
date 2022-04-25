@@ -197,6 +197,9 @@ public class IceBoss : MonoBehaviour
             PlayerStats.Instance.xp += xpGift;
             EventManager.Instance.PlayerStatsUpdated();
             EventManager.Instance.runStats.enemiesKilled++;
+
+            PersistentUpgradeManager.Instance.IncCurrency(1);
+
             navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.enabled = false;
             portal.SetActive(true);
