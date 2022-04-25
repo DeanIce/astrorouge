@@ -118,4 +118,12 @@ public class RockEnemy : BasicEnemyAgent
         yield return new WaitForSecondsRealtime(5);
         started = true;
     }
+
+    public override void TakeDmg(float dmg, int type = 0, bool isCrit = false)
+    {
+        if (started)
+        {
+            base.TakeDmg(dmg, type);
+        }
+    }
 }
