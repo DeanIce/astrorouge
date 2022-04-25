@@ -184,6 +184,9 @@ public class StatusEffectManager : MonoBehaviour
             {
                 initSpeed = GetComponent<IEnemy>().getSpeed();
                 GetComponent<IEnemy>().setSpeed(initSpeed * 0.2f);
+            } else if (GetComponent<PlayerDefault>() != null) {
+                initSpeed = PlayerStats.Instance.movementSpeed;
+                PlayerStats.Instance.movementSpeed = initSpeed * 0.5f;
             }
 
             while (slowTickTimes.Count > 0)
@@ -198,6 +201,7 @@ public class StatusEffectManager : MonoBehaviour
             }
 
             if (GetComponent<IEnemy>() != null) GetComponent<IEnemy>().setSpeed(initSpeed);
+            if (GetComponent<PlayerDefault>() != null) PlayerStats.Instance.movementSpeed = initSpeed;
             SlowVFX.SetActive(false);
         }
     }
