@@ -422,22 +422,22 @@ public class IceBoss : MonoBehaviour
         RollCollider.isTrigger = true;
         animator.SetBool("Rolling", true);
 
-        // InvokeRepeating("SpawnSpikes", 0.1f, 1f);
+        InvokeRepeating("SpawnSpikes", 0.1f, 0.5f);
     }
 
     public void StopRolling()
     {
         rollTimer = rollTimerStart;
-        // CancelInvoke();
+        CancelInvoke();
         animator.SetBool("Rolling", false);
         RollCollider.isTrigger = false;
     }
 
     private void SpawnSpikes() {
         if (Random.value < 0.5) {
-            GameObject instance = Instantiate(spikes1, transform.position, transform.rotation);
+            GameObject instance = Instantiate(spikes1, transform.position - 2 * transform.forward + (Random.value) * 3 * transform.right, transform.rotation);
         } else {
-            GameObject instance = Instantiate(spikes2, transform.position, transform.rotation);
+            GameObject instance = Instantiate(spikes2, transform.position- 2 * transform.forward - (Random.value) * 3 * transform.right, transform.rotation);
         }
     }
 
