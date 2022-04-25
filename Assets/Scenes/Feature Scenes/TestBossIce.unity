@@ -6852,6 +6852,8 @@ MonoBehaviour:
   RightClaw: {fileID: 322867045}
   RollCollider: {fileID: 671834312}
   HeadCollider: {fileID: 199103809}
+  spikes1: {fileID: 7068260650126440697, guid: 0f1f08fe8f2863b4f9b6415064a72ba1, type: 3}
+  spikes2: {fileID: 2186420966543084576, guid: 79707011a8e944945a5ca0219f6d1c75, type: 3}
 --- !u!54 &1594675659
 Rigidbody:
   m_ObjectHideFlags: 0
