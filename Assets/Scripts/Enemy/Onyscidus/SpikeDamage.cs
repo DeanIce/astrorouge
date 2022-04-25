@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpikeDamage : MonoBehaviour
 {
     // private variables
-    private float spikeTimer = 15f;
+    private float spikeTimer = 30f;
     private float moveSpeed = 10f;
 
     // public variables
