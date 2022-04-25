@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 2540859453558072136}
   body: {fileID: 437602323152729064}
@@ -395,14 +396,6 @@ PrefabInstance:
     - target: {fileID: 883385773538139417, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}
       propertyPath: m_Name
       value: New_Ent
-      objectReference: {fileID: 0}
-    - target: {fileID: 1113965191434192280, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}
-      propertyPath: damage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1113965191434192280, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}
-      propertyPath: damage2
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 440cb1b28a1647542bc3142d3d904ec2, type: 3}

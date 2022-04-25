@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Frozen Bullets
-  itemDescription: Adds chance to slow and potentially freeze basic enemies
+  itemDescription: Adds 5% chance to slow enemies
   itemIcon: {fileID: 2800000, guid: 692e5cb404705704182370ecdb810512, type: 3}
 --- !u!1001 &1052837723772264312
 PrefabInstance:

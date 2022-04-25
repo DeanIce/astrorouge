@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 166538, guid: dc3c7ad2ab054db40bbeb54b23d1bc9d, type: 3}
       propertyPath: m_Name
-      value: WereWolf
+      value: AlphaBody
       objectReference: {fileID: 0}
     - target: {fileID: 431772, guid: dc3c7ad2ab054db40bbeb54b23d1bc9d, type: 3}
       propertyPath: m_RootOrder
@@ -64,20 +64,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 166538, guid: dc3c7ad2ab054db40bbeb54b23d1bc9d, type: 3}
   m_PrefabInstance: {fileID: 3640722530543202065}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5444211529661093409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3640722530543297947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 266be1ff46f1ef6448c421468b16795c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  damage2: 0
 --- !u!136 &1519395747316143947
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -92,3 +78,17 @@ CapsuleCollider:
   m_Height: 1.7457428
   m_Direction: 1
   m_Center: {x: 0, y: 0.86582184, z: 0.120075226}
+--- !u!114 &5444211529661093409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3640722530543297947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266be1ff46f1ef6448c421468b16795c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 7
+  damage2: 14
