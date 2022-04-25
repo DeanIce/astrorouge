@@ -12,7 +12,7 @@ public class Wolf : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= 2 * (LevelSelect.Instance.requestedLevel + 1);
+        health *= (2 * LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("moving", 1);
