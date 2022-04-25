@@ -219,7 +219,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
         iAmAlive = false;
         GetComponent<StatusEffectManager>().DeathEffects();
-        DropManager.Instance.SpawnItem(transform.position, transform.rotation);
+        DropManager.Instance.SpawnItem(transform.position + 2*transform.up, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         EventManager.Instance.runStats.enemiesKilled++;
         GetComponent<Collider>().enabled = false;
