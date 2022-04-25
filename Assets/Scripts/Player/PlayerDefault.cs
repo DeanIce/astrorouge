@@ -113,6 +113,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         // Gravity
         Vector3 sumForce = GravityManager.GetGravity(transform.position, out Vector3 upAxis);
+        print(sumForce);
 
         if (useGravity) rb.AddForce(sumForce * Time.deltaTime);
 

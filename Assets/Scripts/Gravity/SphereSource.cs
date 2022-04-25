@@ -15,9 +15,15 @@ namespace Gravity
             OnValidate();
         }
 
+        private void Start()
+        {
+            rb = GetComponentInChildren<Rigidbody>();
+            if (rb == null) rb = GetComponent<Rigidbody>();
+        }
+
         private void OnDrawGizmos()
         {
-            var p = transform.position;
+            Vector3 p = transform.position;
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(p, outerRadius);
             if (outerFalloffRadius > outerRadius)
@@ -36,11 +42,11 @@ namespace Gravity
 
         public override Vector3 GetGravity(Vector3 position)
         {
-            var vector = transform.position - position;
-            var distance = vector.magnitude;
+            Vector3 vector = transform.position - position;
+            float distance = vector.magnitude;
             if (distance > outerFalloffRadius) return Vector3.zero;
 
-            var g = gravity / distance;
+            float g = gravity / distance;
             if (distance > outerRadius) g *= 1f - (distance - outerRadius) * outerFalloffFactor;
 
             var m = 1.0f;
