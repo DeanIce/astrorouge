@@ -214,13 +214,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 7096893442354059204}
   body: {fileID: 2025109476969112669}
   attackRange: 10
   mouth: {fileID: 2025109476969112673}
-  poisonChance: 0.5
-  projSpeed: 5
+  poisonChance: 0.7
+  projSpeed: 8
 --- !u!114 &1890924933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,10 +272,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 9127147434587903063}
   StunVFX: {fileID: 4093835323849274455}
   SlowVFX: {fileID: 4730899352415202655}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0

@@ -19,8 +19,8 @@ public class EventDamage : MonoBehaviour
         body = enemy.Body;
         attackRange = enemy.AttackRange;
 
-        damage *= (Managers.LevelSelect.Instance.requestedLevel + 1);
-        damage2 *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        damage *= (Managers.LevelSelect.Instance.requestedLevel + 1) + ((Managers.LevelSelect.Instance.requestedLevel + 1) / 2);
+        damage2 *= (Managers.LevelSelect.Instance.requestedLevel + 1) + ((Managers.LevelSelect.Instance.requestedLevel + 1) / 2);
     }
 
     public void DoDamage()

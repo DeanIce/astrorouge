@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
 
 public class FlowerEnemy : BasicEnemyAgent
@@ -7,7 +8,7 @@ public class FlowerEnemy : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= (3 * LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         animator.SetInteger("battle", 1);

@@ -2,6 +2,6 @@ public class Item_SuperComputerChip : AbstractItem
 {
     public override void ApplyStats()
     {
-        PlayerStats.Instance.dashRechargeRate *= (float) -1.05; // 10% decrease
+        PlayerStats.Instance.dashRechargeRate *= (float) 0.95; // 5% decrease
     }
 }

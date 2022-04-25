@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 126500, guid: df58cfdb8b2a71e4b914501a97c96bc9, type: 3}
       propertyPath: m_Name
-      value: wolf
+      value: WolfBody
       objectReference: {fileID: 0}
     - target: {fileID: 412830, guid: df58cfdb8b2a71e4b914501a97c96bc9, type: 3}
       propertyPath: m_RootOrder
@@ -90,5 +90,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266be1ff46f1ef6448c421468b16795c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 7
   damage2: 0

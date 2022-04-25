@@ -61,6 +61,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Rigidbody rb;
     private float timeOfLastDamage;
     protected internal bool useGravity = true;
+    private bool IframeActive = false;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
@@ -266,25 +267,40 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         IsSprinting = !IsSprinting;
     }
 
-    public void TakeDmg(float dmg, int type)
-    {
-        TakeDmg(dmg);
-    }
-
-    public void TakeDmg(float dmg)
+    public void TakeDmg(float dmg, int type = 0, bool isCrit = false)
     {
         timeOfLastDamage = Time.time;
-        animator.SetTrigger("takeDamage");
-        // Temp, add damage negation and other maths here later.
-        PlayerStats.Instance.currentHealth -= dmg;
-        if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmg;
-        //Doesn't actually matter once we implement game over
-        if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+        if (!IframeActive)
+        {
+            animator.SetTrigger("takeDamage");
+            // Temp, add damage negation and other maths here later.
+            float dmgAfterArmor = 0.0f;
+            if (Random.value >= PlayerStats.Instance.dodgeChance)
+            {
+                dmgAfterArmor = dmg - dmg * ((float) PlayerStats.Instance.armor / 100f);
+                if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
+            }
+            else Debug.Log("Dodged Damage");
+
+            PlayerStats.Instance.currentHealth -= dmgAfterArmor;
+            if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
+            //Doesn't actually matter once we implement game over
+            if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+
+            StartCoroutine(beginIFrames());
+        } //else { Debug.Log("got hit while invincible"); }
 
         EventManager.Instance.PlayerStatsUpdated();
         EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth) /
                                             PlayerStats.Instance.maxHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
+    }
+
+    private IEnumerator beginIFrames()
+    {
+        IframeActive = true;
+        yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.001f); // converted to ms
+        IframeActive = false;
     }
 
     public void Die()
@@ -418,7 +434,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             projectile,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult,
-            3f); //TODO (Jared): Set grenade blast radius
+            3f * PlayerStats.Instance.rangeGrenadeSizeMultiplier);
     }
 
     private IEnumerator InstantaneousAttack(float attackDelay)

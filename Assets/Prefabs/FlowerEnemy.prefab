@@ -210,7 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420b92471deae324893ad9539bc990d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 25
+  maxHealth: 0
   movementSpeed: 1.2
   detector: {fileID: 8668404082258620774}
   body: {fileID: 611669422201212586}
@@ -236,10 +237,6 @@ MonoBehaviour:
   IgniteVFX: {fileID: 8269615855424746397}
   StunVFX: {fileID: 2639979662733119842}
   SlowVFX: {fileID: 5606471434628500117}
-  burnDamage: 5
-  poisonDamage: 10
-  lightningDamage: 50
-  radDamage: 2
   smiteDamage: 3.4028235e+38
   martyrdom: 0
   ignite: 0

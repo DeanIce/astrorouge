@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
 
 public class RockEnemy : BasicEnemyAgent
@@ -9,7 +10,7 @@ public class RockEnemy : BasicEnemyAgent
 
     public override void Start()
     {
-        health *= (Managers.LevelSelect.Instance.requestedLevel + 1);
+        health *= (3 * LevelSelect.Instance.requestedLevel + 1);
         maxHealth = health;
         animator = GetComponentInChildren<Animator>();
         Dying = false;
@@ -116,5 +117,13 @@ public class RockEnemy : BasicEnemyAgent
         animator.SetBool("rubbleToIdle", true);
         yield return new WaitForSecondsRealtime(5);
         started = true;
+    }
+
+    public override void TakeDmg(float dmg, int type = 0, bool isCrit = false)
+    {
+        if (started)
+        {
+            base.TakeDmg(dmg, type);
+        }
     }
 }

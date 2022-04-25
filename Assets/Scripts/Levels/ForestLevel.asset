@@ -111,9 +111,9 @@ MonoBehaviour:
     ratio: 0.608
     scale: {x: 1, y: 1, z: 1}
     weightedRatio: 0.41416895
-  numPlanets: {x: 2, y: 4}
+  numPlanets: {x: 3, y: 4}
   scale: {x: 10.39, y: 24.384045}
-  totalNumEnemies: {x: 112, y: 152}
+  totalNumEnemies: {x: 125, y: 150}
   totalNumProps: {x: 806, y: 1222}
   levelMusic: {fileID: 8300000, guid: 0d22c57f6667549d0bfd81a88382fbc8, type: 3}
   gravityHeight: 5

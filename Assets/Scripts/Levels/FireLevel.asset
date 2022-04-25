@@ -65,7 +65,7 @@ MonoBehaviour:
     weightedRatio: 0.31612003
   numPlanets: {x: 3, y: 4}
   scale: {x: 16.446655, y: 24.66}
-  totalNumEnemies: {x: 224, y: 235}
+  totalNumEnemies: {x: 175, y: 200}
   totalNumProps: {x: 800, y: 1000}
   levelMusic: {fileID: 8300000, guid: 301908ce092b54a1ab059af6f2e2a728, type: 3}
   gravityHeight: 5
