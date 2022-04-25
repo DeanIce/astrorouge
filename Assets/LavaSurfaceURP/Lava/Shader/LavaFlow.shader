@@ -9,6 +9,7 @@
 		_PrimaryFlowSpeed ("Primary Flow Speed", Range(0,5)) = .6
 		_SecondaryFlowSpeed ("Secondary Flow Speed", Range(0,5)) = 1.9
 		_Test ("Test", Range(0,50)) = 1.9
+		_IntensityScaling ("Intensity Scaling", Range(0,10)) = 1.4
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -20,6 +21,7 @@
 
 			sampler2D _NoiseTex, _MainTex;
 			float4 _MainTex_ST, _Color;
+			float _IntensityScaling;
 			half _Scale, _Disp, _NoiseIntensity, _PrimaryFlowSpeed, _SecondaryFlowSpeed, _Test;
 
 			struct v2f
@@ -65,7 +67,7 @@
 					ret += (sin(noise(p) * _NoiseIntensity) * 0.5 + 0.5) / z;   // add noise octave
 
 					p = lerp(bp, p, 0.77);   // blending displaced system with base system
-					z *= 1.4;   // intensity scaling
+					z *= _IntensityScaling;   // intensity scaling
 					p *= 2.0;   // octave scaling
 					bp *= _Test;
 				}
