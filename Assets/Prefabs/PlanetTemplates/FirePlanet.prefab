@@ -560,6 +560,7 @@ MonoBehaviour:
       gain: 0.8
       verticalShift: 0.09
       peakSmoothing: 1
+      offset: {x: 0, y: 0, z: 0}
   shader:
     gradient:
       serializedVersion: 2

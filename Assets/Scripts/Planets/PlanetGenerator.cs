@@ -83,7 +83,7 @@ namespace Planets
 
         private void Update()
         {
-            var requestPlanets = false;
+            var requestPlanets = true;
             if (InEditMode)
             {
                 if (requestPlanets)
@@ -516,9 +516,7 @@ namespace Planets
             shaderSettingsUpdated = true;
         }
 
-        private bool CanGenerateMesh()
-        {
-            return ComputeHelper.CanRunEditModeCompute && shape != null && shape.heightMapCompute;
-        }
+        private bool CanGenerateMesh() =>
+            ComputeHelper.CanRunEditModeCompute && shape != null && shape.heightMapCompute;
     }
 }

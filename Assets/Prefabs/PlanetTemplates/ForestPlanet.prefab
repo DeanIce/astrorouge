@@ -106,10 +106,11 @@ MonoBehaviour:
       gain: 0.73
       verticalShift: 0.009
       peakSmoothing: 1
+      offset: {x: 0, y: 0, z: 0}
   shader:
     gradient:
       serializedVersion: 2
-      key0: {r: 0.38823533, g: 0.36078432, b: 0.14509805, a: 1}
+      key0: {r: 0.3207547, g: 0.2918858, b: 0.06505874, a: 1}
       key1: {r: 0.8962264, g: 0.8088852, b: 0.46079564, a: 1}
       key2: {r: 0.10484158, g: 0.7169812, b: 0.19733422, a: 1}
       key3: {r: 0.09965875, g: 0.5188679, b: 0.056292284, a: 0}
@@ -117,7 +118,7 @@ MonoBehaviour:
       key5: {r: 0.4056604, g: 0.35495284, b: 0.3042453, a: 0}
       key6: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 4241
       ctime1: 9059
       ctime2: 15227
       ctime3: 29876
@@ -530,7 +531,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a2d4b4d34559ab4ea12ac61613920e1, type: 2}
+  - {fileID: 2100000, guid: 19ac4fcfcf42b4344a6c7d97a5cd61fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -560,7 +561,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6425278168000284536}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
