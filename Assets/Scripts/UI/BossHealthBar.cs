@@ -11,10 +11,12 @@ namespace UI
 
         private void Start()
         {
+            print("start");
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             healthBar = root.Q<VisualElement>("Health_Bar_Fill");
             healthBarText = root.Q<TextElement>("HealthText");
             healthBarCorner = root.Q<VisualElement>("Health_Bar_Fill_Corner");
+            print(healthBarText);
         }
 
 
@@ -23,7 +25,7 @@ namespace UI
             if (hp < 0) hp = 0;
 
             hp = Mathf.Round(hp);
-            healthBarText.text = hp + " / " + maxHealth;
+            if (healthBarText != null) healthBarText.text = hp + " / " + maxHealth;
             float percentRemaining = hp / maxHealth * 100;
             //Temporary Corner of HUD fix
             if (percentRemaining <= 3)
@@ -32,7 +34,7 @@ namespace UI
                 percentRemaining = 3;
             }
 
-            healthBar.style.width = new StyleLength(Length.Percent(percentRemaining - 3));
+            if (healthBar != null) healthBar.style.width = new StyleLength(Length.Percent(percentRemaining - 3));
         }
     }
 }

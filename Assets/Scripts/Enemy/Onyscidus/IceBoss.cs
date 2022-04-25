@@ -1,8 +1,8 @@
 using System.Collections;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.AI;
-using Managers;
 
 public class IceBoss : MonoBehaviour
 {
@@ -70,6 +70,7 @@ public class IceBoss : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        bossHealthBar.SetHealth(health, maxHealth);
         rb = GetComponent<Rigidbody>();
         // May need to be GetComponentInChildren
         animator = GetComponent<Animator>();
@@ -83,11 +84,12 @@ public class IceBoss : MonoBehaviour
         LeftClaw.isTrigger = false;
         RightClaw.isTrigger = false;
         RollCollider.isTrigger = false;
-        bossHealthBar.SetHealth(health, maxHealth);
     }
 
     private void Update()
     {
+        bossHealthBar.SetHealth(health, maxHealth);
+
         if (health < 0)
             Die();
         else
@@ -158,6 +160,28 @@ public class IceBoss : MonoBehaviour
     {
     }
 
+    // For detecting if the player is within a reasonable attacking range
+    private void OnTriggerEnter(Collider other)
+    {
+        // Convention: Player layer is 9
+        if (other.gameObject.layer == 9)
+        {
+            // Debug.Log("In Range!");
+            inRange = true;
+        }
+    }
+
+    // For detecting if the player leaves the reasonable attacking range
+    private void OnTriggerExit(Collider other)
+    {
+        // Convention: Player layer is 9
+        if (other.gameObject.layer == 9)
+        {
+            // Debug.Log("Left Range!");
+            inRange = false;
+        }
+    }
+
     // death
     public void Die()
     {
@@ -171,13 +195,13 @@ public class IceBoss : MonoBehaviour
             navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.enabled = false;
             portal.SetActive(true);
-            
+
             StartCoroutine(DeathAnimation());
         }
     }
 
     // Death
-    IEnumerator DeathAnimation()
+    private IEnumerator DeathAnimation()
     {
         HeadCollider.enabled = false;
         LeftClaw.enabled = false;
@@ -240,30 +264,10 @@ public class IceBoss : MonoBehaviour
         return distance <= 22 && distance >= 18;
     }
 
-    // For detecting if the player is within a reasonable attacking range
-    void OnTriggerEnter(Collider other)
+    public void TakeDmg(float dmg)
     {
-        // Convention: Player layer is 9
-        if (other.gameObject.layer == 9)
+        if (!dying)
         {
-            // Debug.Log("In Range!");
-            inRange = true;
-        }
-    }
-
-    // For detecting if the player leaves the reasonable attacking range
-    private void OnTriggerExit(Collider other)
-    {
-        // Convention: Player layer is 9
-        if (other.gameObject.layer == 9)
-        {
-           // Debug.Log("Left Range!");
-            inRange = false;
-        }
-    }
-
-    public void TakeDmg(float dmg) {
-        if (!dying) {
             health -= dmg;
             bossHealthBar.SetHealth(health, maxHealth);
             Flinch();
@@ -372,13 +376,6 @@ public class IceBoss : MonoBehaviour
         animator.SetBool("HitBack", false);
     }
 
-    // Death
-    private IEnumerator DeathAnimation()
-    {
-        animator.SetBool("Death", true);
-        yield return new WaitForSeconds(2.333f);
-        animator.SetBool("Death", false);
-    }
 
     // Attacks
     private IEnumerator JumpAttack()
