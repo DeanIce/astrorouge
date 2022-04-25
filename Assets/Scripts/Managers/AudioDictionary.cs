@@ -96,6 +96,7 @@ public class AudioDictionary : MonoBehaviour
         menuOpen = (AudioClip)Resources.Load("Audio/Sound Effects/Menu-Open");
         menuSelect = (AudioClip)Resources.Load("Audio/Sound Effects/Select-MenuOption");
 
+        /* ====== THESE ARE APPLIED IN LEVEL SCENE/ SCRIPTABLE OBJECTS ====== NOT WORTH MOVING RIGHT NOW
         musicLevel1 = (AudioClip)Resources.Load("Audio/Music/Level 1 Combat Theme");
         musicLevel2 = (AudioClip)Resources.Load("Audio/Music/Level 2 Combat Theme");
         musicLevel3 = (AudioClip)Resources.Load("Audio/Music/Level 3 Combat Theme");
@@ -104,6 +105,7 @@ public class AudioDictionary : MonoBehaviour
         musicBoss3 = (AudioClip)Resources.Load("Audio/Music/Boss 3 Theme LOOP");
         musicMainMenu = (AudioClip)Resources.Load("Audio/Music/MainMenuMusicV3");
         musicCutscene = (AudioClip)Resources.Load("Audio/Music/Cutscene Music");
+        */
 
         MakeLists();
     }
@@ -115,6 +117,15 @@ public class AudioDictionary : MonoBehaviour
 
     public void MakeLists()
     {
+        explosions = new List<AudioClip>();
+        entAttacks = new List<AudioClip>();
+        growls = new List<AudioClip>();
+        longGrowls = new List<AudioClip>();
+        shortGrowls = new List<AudioClip>();
+        insectScreeches = new List<AudioClip>();
+        golemAttacks = new List<AudioClip>();
+        playerTakeDamage = new List<AudioClip>();
+
         explosions.Add(explosion1);
         explosions.Add(explosion2);
         explosions.Add(explosion3);
@@ -188,16 +199,16 @@ public class AudioDictionary : MonoBehaviour
 
     public AudioClip RandomInsectScreech()
     {
-        return explosions[RandomValue(explosions.Count)];
+        return insectScreeches[RandomValue(insectScreeches.Count)];
     }
 
     public AudioClip RandomGolemAttack()
     {
-        return explosions[RandomValue(explosions.Count)];
+        return golemAttacks[RandomValue(golemAttacks.Count)];
     }
 
     public AudioClip RandomPlayerTakeDamage()
     {
-        return explosions[RandomValue(explosions.Count)];
+        return playerTakeDamage[RandomValue(playerTakeDamage.Count)];
     }
 }
