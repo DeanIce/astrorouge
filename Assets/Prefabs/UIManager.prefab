@@ -174,6 +174,8 @@ GameObject:
   - component: {fileID: 2425821241769339370}
   - component: {fileID: 1272630956505383265}
   - component: {fileID: 5849335948352391829}
+  - component: {fileID: 2078975518}
+  - component: {fileID: 1704925244351638633}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -266,10 +268,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    displayMode: Fullscreen
-    fov: 60
-    resolution: TODO
-    screenShake: 1
     volumeGame: 1
-    volumeMaster: 1
     volumeMusic: 1
+    msaa: 4
+    lookSensitivity: 1
+--- !u!114 &2078975518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543091563571336382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18d745f714f4b44cb1376c3c2cfe1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1Icon: {fileID: 2800000, guid: 7f4776d0f79cc4926b32cede06142fa2, type: 3}
+  ability2Icon: {fileID: 2800000, guid: 5931b0470f8f94a5aa827787a39b3f35, type: 3}
+  ability3Icon: {fileID: 2800000, guid: 77ea13923e1074d0e928e45176023ba0, type: 3}
+  ability4Icon: {fileID: 0}
+--- !u!114 &1704925244351638633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543091563571336382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18d745f714f4b44cb1376c3c2cfe1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability1Icon: {fileID: 2800000, guid: 7f4776d0f79cc4926b32cede06142fa2, type: 3}
+  ability2Icon: {fileID: 2800000, guid: 5931b0470f8f94a5aa827787a39b3f35, type: 3}
+  ability3Icon: {fileID: 2800000, guid: 77ea13923e1074d0e928e45176023ba0, type: 3}
+  ability4Icon: {fileID: 2800000, guid: 3e724aaba4bca9a49b423b16fa45bd44, type: 3}
