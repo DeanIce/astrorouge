@@ -14,15 +14,19 @@ public class ClearOnStart : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 7f);
 
         foreach (Collider hitCollider in hitColliders)
         {
-            Debug.Log(hitCollider.transform.root.name);
-            if (hitCollider.transform.root.CompareTag("enemy") || hitCollider.transform.root.CompareTag("Prop"))
+            if (hitCollider.transform.root.CompareTag("enemy"))
             {
                 Debug.Log("Destroying: " + hitCollider.transform.root.gameObject.name);
                 Destroy(hitCollider.transform.root.gameObject);
+            }
+            else if (hitCollider.transform.gameObject.CompareTag("Prop"))
+            {
+                Debug.Log("Destroying: " + hitCollider.transform.gameObject.name);
+                Destroy(hitCollider.transform.gameObject);
             }
         }
     }
