@@ -6892,6 +6892,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 236be3f531e16b0408e090d8ce0794b7, type: 3}
+--- !u!1 &1568936521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5274238539530186438, guid: 84e799cbded21504d8deffddbf0f8bcb, type: 3}
+  m_PrefabInstance: {fileID: 1841525779}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1568936524
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568936521}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!4 &1578409901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4304446898657832, guid: 63f612186130a2943a9cd95acbd8a566, type: 3}
@@ -8230,6 +8249,8 @@ MonoBehaviour:
   slamDamage: 50
   tongueDamage: 25
   ramDamage: 15
+  slamEffect: {fileID: 0}
+  fireball: {fileID: 1208781713066404, guid: ef76d01aa0119ad42a5466aa6ae47bfb, type: 3}
   expAmt: 100
 --- !u!195 &1841525786
 NavMeshAgent:

@@ -31,6 +31,7 @@ public class LavaBoss : MonoBehaviour
     private float health;
     private bool hunting;
     private bool inRange;
+    private bool flinching;
 
     // Attack Colliders
     public CapsuleCollider slamCollider;
@@ -42,6 +43,10 @@ public class LavaBoss : MonoBehaviour
     public float slamDamage;
     public float tongueDamage;
     public float ramDamage;
+
+    // Attack fx
+    public GameObject slamEffect;
+    public GameObject fireball;
 
     // Misc
     public int expAmt;
@@ -80,6 +85,12 @@ public class LavaBoss : MonoBehaviour
         if (distance <= 25)
         {
             inRange = true;
+        }
+
+        // Flinching
+        if (health < health / 50)
+        {
+            // await
         }
 
         // Die?
@@ -155,18 +166,22 @@ public class LavaBoss : MonoBehaviour
             float randomAttack = Random.value;
             if (randomAttack < 0.25 && distance < 35)
             {
-                StartCoroutine(SlamAttack());
+                print("Roar then slam");
+                StartCoroutine(Roar(1));
             }
-            else if (randomAttack >= 0.25 && randomAttack < 0.5 && distance < 50)
+            else if (randomAttack >= 0.25 && randomAttack < 0.5 && distance < 60)
             {
+                print("tongue");
                 StartCoroutine(TongueAttack());
             }
-            else if (randomAttack >= 0.5 && randomAttack < 0.75 && distance < 25)
+            else if (randomAttack >= 0.5 && randomAttack < 0.85 && distance < 25)
             {
-                StartCoroutine(RamAttack());
+                print("Roar then ram");
+                StartCoroutine(Roar(2));
             }
             else
             {
+                print("Horn");
                 StartCoroutine(HornAttack());
             }
         }
@@ -192,8 +207,16 @@ public class LavaBoss : MonoBehaviour
     {
         // TODO: Edit numbers
         distance = Vector3.Distance(transform.position, player.transform.position);
-        print("Distance from player: " + distance);
-        return distance >= 10 && distance <= 60;
+        //print("Distance from player: " + distance);
+        return distance >= 10 && distance <= 70;
+    }
+
+    public void SpawnFireball()
+    {
+        Vector3 newPos = transform.position + new Vector3(5f, 12f, 0f);
+        var temp = ProjectileFactory.Instance.CreateBasicProjectile(newPos, Vector3.Normalize(player.transform.position - newPos) * 50f, 
+                   LayerMask.GetMask("Player", "Ground"), 10, 15f);
+        ProjectileFactory.Instance.SetSkin(temp, fireball);
     }
 
     // Damage Taken
@@ -228,26 +251,37 @@ public class LavaBoss : MonoBehaviour
     }
 
     // Attacks
-    private IEnumerator Roar()
+    private IEnumerator Roar(int selection)
     {
         // Don't set false here, instead set false in followup attacks
         animator.SetBool("Roaring", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5.29f);
+        if (selection == 1)
+        {
+            StartCoroutine(SlamAttack());
+        }
+        else if (selection == 2)
+        {
+            StartCoroutine(RamAttack());
+        }
     }
 
     private IEnumerator TongueAttack()
     {
         damageToDo = tongueDamage;
         animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(5.5f);
         animator.SetBool("TongueAttacking", false);
         attacking = false;
     }
 
     private IEnumerator HornAttack()
     {
+        // TODO: Spawn fireball
         animator.SetBool("HornAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.50f);
+        SpawnFireball();
+        yield return new WaitForSeconds(1.59f);
         animator.SetBool("HornAttacking", false);
         attacking = false;
     }
@@ -257,7 +291,7 @@ public class LavaBoss : MonoBehaviour
         // Setting roaring false here since we come from roaring and need it to be true to attack
         damageToDo = ramDamage;
         animator.SetBool("RamAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3.05f);
         animator.SetBool("RamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
@@ -268,7 +302,7 @@ public class LavaBoss : MonoBehaviour
         // Setting roaring false here since we come from roaring and need it to be true to attack
         damageToDo = slamDamage;
         animator.SetBool("SlamAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4.09f);
         animator.SetBool("SlamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
