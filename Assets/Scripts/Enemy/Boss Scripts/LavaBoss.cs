@@ -32,6 +32,11 @@ public class LavaBoss : MonoBehaviour
     private bool hunting;
     private bool inRange;
 
+    // Attack Colliders
+    public CapsuleCollider slamCollider;
+    public BoxCollider tongueCollider;
+    public BoxCollider ramCollider;
+
     // Misc
     public int expAmt;
 
@@ -71,7 +76,11 @@ public class LavaBoss : MonoBehaviour
         else
         {
             // Movement
-            if (!inRange)
+            if (InAttackRange())
+            {
+                Attack();
+            }
+            else if (!inRange)
             {
                 animator.SetBool("Crawling", true);
                 navMeshAgent.isStopped = false;
@@ -121,6 +130,31 @@ public class LavaBoss : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        if (!attacking)
+        {
+            attacking = true;
+            float randomAttack = Random.value;
+            if (randomAttack < 0.25)
+            {
+                StartCoroutine(SlamAttack());
+            }
+            else if (randomAttack >= 0.25 && randomAttack < 0.5)
+            {
+                StartCoroutine(TongueAttack());
+            }
+            else if (randomAttack >= 0.5 && randomAttack < 0.75)
+            {
+                StartCoroutine(RamAttack());
+            }
+            else
+            {
+                StartCoroutine(HornAttack());
+            }
+        }
+    }
+
     public void Die()
     {
         if (!dying)
@@ -131,14 +165,18 @@ public class LavaBoss : MonoBehaviour
             EventManager.Instance.runStats.enemiesKilled++;
             navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.enabled = false;
-            PersistentUpgradeManager.Instance.IncCurrency(1);
+            PersistentUpgradeManager.Instance.IncCurrency(1); // Assuming we are first boss
             portal.SetActive(true);
             StartCoroutine(DeathAnimation());
         }
     }
 
-    // Movement
-    // IEnums for crawl/rotate?
+    private bool InAttackRange()
+    {
+        // TODO: Edit numbers
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        return distance >= 15 && distance <= 20;
+    }
 
     // Damage Taken
     // TODO: Alter timings to match animation speeds
