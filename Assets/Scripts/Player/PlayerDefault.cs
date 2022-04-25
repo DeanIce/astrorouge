@@ -1,6 +1,7 @@
 using System.Collections;
 using Gravity;
 using Managers;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,6 +38,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float specialActionProcChance = 0.7f;
     [SerializeField] private float specialActionCooldown = 8f;
 
+    [SerializeField] private float utilityActionDelay = 0.2f;
+    [SerializeField] private float utilityActionCooldown = 4f;
+    [SerializeField] private float utilityActionDuration = 0.5f;
+
     [SerializeField] private float meleeAttackProcChance = 2f;
 
     // Misc values
@@ -59,10 +64,12 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Public Getters
     public bool IsSprinting { get; private set; }
+    public bool IsDashing { get; private set; }
     public float PrimaryAttackDelay { get; private set; }
     public float SecondaryAttackDelay { get; private set; }
     public float MeleeAttackDelay { get; private set; }
     public float SpecialActionDelay { get; private set; }
+    public float UtilityActionDelay { get; private set; }
 
     private void Start()
     {
@@ -87,6 +94,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
         MeleeAttackDelay = Decrement(MeleeAttackDelay);
         SpecialActionDelay = Decrement(SpecialActionDelay);
+        UtilityActionDelay = Decrement(UtilityActionDelay);
         globalAttackDealy = Decrement(globalAttackDealy);
 
         if (globalAttackDealy <= 0)
@@ -176,7 +184,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.SecondaryAttack.Enable();
         playerInputMap.MeleeAttack.performed += MeleeAttack;
         playerInputMap.MeleeAttack.Enable();
-        //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
+        playerInputMap.UtilityAction.performed += UtilityAction; 
         playerInputMap.UtilityAction.Enable();
         playerInputMap.SpecialAction.performed += SpecialAction;
         playerInputMap.SpecialAction.Enable();
@@ -206,7 +214,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.MeleeAttack.Disable();
         playerInputMap.MeleeAttack.performed -= MeleeAttack;
         playerInputMap.UtilityAction.Disable();
-        //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
+        playerInputMap.UtilityAction.performed -= UtilityAction;
         playerInputMap.SpecialAction.Disable();
         playerInputMap.SpecialAction.performed -= SpecialAction;
     }
@@ -232,7 +240,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleMoveAnimation(direction);
 
         Vector3 movement = direction.x * transform.right + direction.y * transform.forward;
-        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1)* (IsDashing ? 5 : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
     }
 
@@ -313,7 +321,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (MeleeAttackDelay > 0 || globalAttackDealy > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
-
+        EventManager.Instance.MeleeUsed(MeleeAttackDelay);
         animator.SetTrigger("meleeAttack");
         _ = StartCoroutine(InstantaneousAttack(0.5f));
     }
@@ -325,6 +333,23 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         EventManager.Instance.SpecialUsed(specialActionCooldown);
         _ = StartCoroutine(LobAttack());
+    }
+
+    private void UtilityAction(InputAction.CallbackContext obj)
+    {
+        if (UtilityActionDelay > 0 || globalAttackDealy > 0) return;
+        UtilityActionDelay = utilityActionCooldown;
+
+        EventManager.Instance.UtilityUsed(utilityActionCooldown);
+        _ = StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        IsDashing = true;
+        globalAttackDealy = utilityActionDuration + 0.2f;
+        yield return new WaitForSeconds(utilityActionDelay);
+        IsDashing = false;
     }
 
     private void ProjectileAttack()
