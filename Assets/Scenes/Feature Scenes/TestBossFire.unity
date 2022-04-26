@@ -9190,8 +9190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossHealthBar: {fileID: 1209660857}
   player: {fileID: 1659842845}
-  maxHealth: 50
-  movementSpeed: 5
+  maxHealth: 500
+  movementSpeed: 8
   portal: {fileID: 692339184}
   tongueDamageScript: {fileID: 1206193681}
   ramDamageScript: {fileID: 784361129}
