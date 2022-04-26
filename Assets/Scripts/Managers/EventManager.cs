@@ -168,6 +168,7 @@ namespace Managers
 
         private void resetInternalState()
         {
+            GetComponent<MoustacheEnabler>().ResetValues();
             LevelSelect.Instance.requestedLevel = 0;
             runStats = new RunStats();
             PlayerStats.Instance.SetDefaultValues();
