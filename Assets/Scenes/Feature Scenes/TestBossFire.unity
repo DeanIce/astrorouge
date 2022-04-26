@@ -3264,6 +3264,7 @@ GameObject:
   - component: {fileID: 784361128}
   - component: {fileID: 784361127}
   - component: {fileID: 784361126}
+  - component: {fileID: 784361129}
   m_Layer: 0
   m_Name: RamRange
   m_TagString: Untagged
@@ -3349,6 +3350,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784361124}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &784361129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784361124}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32179217adeef3b469289135ef301d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 0
+  ticDelay: 0
 --- !u!1001 &787901343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4722,13 +4737,14 @@ GameObject:
   - component: {fileID: 1120244680}
   - component: {fileID: 1120244679}
   - component: {fileID: 1120244678}
+  - component: {fileID: 1120244681}
   m_Layer: 0
   m_Name: SlamRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1120244677
 Transform:
   m_ObjectHideFlags: 0
@@ -4808,6 +4824,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1120244676}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1120244681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120244676}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32179217adeef3b469289135ef301d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 0
+  ticDelay: 0
 --- !u!1001 &1134817294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5198,6 +5228,7 @@ GameObject:
   - component: {fileID: 1206193680}
   - component: {fileID: 1206193679}
   - component: {fileID: 1206193678}
+  - component: {fileID: 1206193681}
   m_Layer: 0
   m_Name: TongueRange
   m_TagString: Untagged
@@ -5283,6 +5314,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206193676}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1206193681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206193676}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32179217adeef3b469289135ef301d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 25
+  ticDelay: 0.16
 --- !u!1001 &1209660856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8243,9 +8288,9 @@ MonoBehaviour:
   maxHealth: 50
   movementSpeed: 5
   portal: {fileID: 692339184}
-  slamCollider: {fileID: 0}
-  tongueCollider: {fileID: 0}
-  ramCollider: {fileID: 0}
+  tongueDamageScript: {fileID: 1206193681}
+  ramDamageScript: {fileID: 784361129}
+  slamDamageScript: {fileID: 1120244681}
   slamDamage: 50
   tongueDamage: 25
   ramDamage: 15

@@ -34,9 +34,9 @@ public class LavaBoss : MonoBehaviour
     private bool flinching;
 
     // Attack Colliders
-    public CapsuleCollider slamCollider;
-    public BoxCollider tongueCollider;
-    public BoxCollider ramCollider;
+    public MonoBehaviour tongueDamageScript;
+    public MonoBehaviour ramDamageScript;
+    public MonoBehaviour slamDamageScript;
 
     // Attack Damage
     private float damageToDo;
@@ -76,6 +76,7 @@ public class LavaBoss : MonoBehaviour
         dying = false;
         inRange = false;
         attacking = false;
+
     }
 
     private void Update()
@@ -163,7 +164,7 @@ public class LavaBoss : MonoBehaviour
         if (!attacking)
         {
             attacking = true;
-            float randomAttack = Random.value;
+            float randomAttack = 0.3f;
             if (randomAttack < 0.25 && distance < 35)
             {
                 print("Roar then slam");
@@ -229,7 +230,7 @@ public class LavaBoss : MonoBehaviour
         var temp = ProjectileFactory.Instance.CreateBasicProjectile(newPos, Vector3.Normalize(player.transform.position - newPos) * 50f, 
                    LayerMask.GetMask("Player"), 10, 15f);
         ProjectileFactory.Instance.SetSkin(temp, fireball);
-        temp.transform.localScale *= 5f;
+        temp.transform.localScale *= 3f;
     }
 
     // Damage Taken
@@ -283,7 +284,11 @@ public class LavaBoss : MonoBehaviour
     {
         damageToDo = tongueDamage;
         animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(5.5f);
+        yield return new WaitForSeconds(5.05f);
+        tongueDamageScript.enabled = true;
+        yield return new WaitForSeconds(0.15f);
+        tongueDamageScript.enabled = false;
+        yield return new WaitForSeconds(0.30f);
         animator.SetBool("TongueAttacking", false);
         attacking = false;
     }
