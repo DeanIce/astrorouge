@@ -151,6 +151,7 @@ public class LavaBoss : MonoBehaviour
 
     public void TakeDmg(float dmg)
     {
+        print("Health now: " + health);
         if (!dying)
         {
             health -= dmg;
@@ -201,6 +202,7 @@ public class LavaBoss : MonoBehaviour
             PersistentUpgradeManager.Instance.IncCurrency(1); // Assuming we are first boss
             portal.SetActive(true);
             StartCoroutine(DeathAnimation());
+            Destroy(this); // Destroy just script, leave body
         }
     }
 
