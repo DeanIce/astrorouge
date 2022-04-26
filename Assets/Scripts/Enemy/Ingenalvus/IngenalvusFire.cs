@@ -28,7 +28,7 @@ namespace Enemy.Ingenalvus
 
         private void OnTriggerExit(Collider other)
         {
-            other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(3);
+            other.gameObject.GetComponent<StatusEffectManager>()?.ApplyBurn(3);
         }
 
         public void Show()
