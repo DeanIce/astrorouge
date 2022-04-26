@@ -376,6 +376,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         UtilityActionDelay = utilityActionCooldown;
 
         EventManager.Instance.UtilityUsed(utilityActionCooldown);
+        AudioManager.Instance.PlayDashWhoosh();
         _ = StartCoroutine(Dash());
     }
 

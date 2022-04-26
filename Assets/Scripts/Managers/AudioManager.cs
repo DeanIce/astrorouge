@@ -248,7 +248,10 @@ namespace Managers
         {
             PlaySFX(audioDictionary.dodgeSqueak);
         }
-
+        public void PlayDashWhoosh()
+        {
+            PlaySFX(audioDictionary.RandomDash());
+        }
         // UI and Level-Related Sounds
         public void PlayMenuHover()
         {
