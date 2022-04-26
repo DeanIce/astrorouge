@@ -1,7 +1,6 @@
 using System.Collections;
 using Gravity;
 using Managers;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +8,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
-    private const float decreasePerSecond = 60f;
-    private const float increasePerSecond = 60f;
-    private const float maxSpread = 30f;
-    private const float minSpread = 1f;
+    private const float inaccuracyPerSecond = 10f;
+    private const float maxInaccuracy = 1.5f;
+    private const float maxSpread = 40f;
 
     // Inspector set-able references
     [SerializeField] private GameObject followTarget;
@@ -22,8 +20,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Inspector set-able values
     [SerializeField] public float sensitivity = 0.2f;
-    [SerializeField] private float spread = 1.0f;
-
+    [SerializeField] private float baseSpread = 0.1f;
+    [SerializeField] private float currentSpread = 1.0f;
+    [SerializeField] private float sprintSpread = 0f;
     // Attack values
     [SerializeField] private float primaryAttackProcChance = 1f;
 
@@ -71,6 +70,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     public float MeleeAttackDelay { get; private set; }
     public float SpecialActionDelay { get; private set; }
     public float UtilityActionDelay { get; private set; }
+    public float CurrentSpread { get; private set; }
 
     private void Start()
     {
@@ -97,11 +97,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         SpecialActionDelay = Decrement(SpecialActionDelay);
         UtilityActionDelay = Decrement(UtilityActionDelay);
         globalAttackDealy = Decrement(globalAttackDealy);
+        CurrentSpread = Decrement(CurrentSpread);
 
         if (globalAttackDealy <= 0)
         {
             if (isPrimaryAttacking && PrimaryAttackDelay < 0)
             {
+                CurrentSpread = CurrentSpread + (inaccuracyPerSecond * Time.deltaTime);
+                CurrentSpread = Mathf.Clamp(CurrentSpread, baseSpread, maxInaccuracy);
                 ProjectileAttack();
                 PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
             }
@@ -151,12 +154,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+
+        crosshairSpread = maxSpread * (CurrentSpread / maxInaccuracy);
+
         if (IsSprinting)
-            crosshairSpread += increasePerSecond * Time.deltaTime;
+            sprintSpread += 60f * Time.deltaTime;
         else
-            crosshairSpread -= decreasePerSecond * Time.deltaTime;
-        crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
-        EventManager.Instance.CrosshairSpread(crosshairSpread);
+            sprintSpread -= 60f * Time.deltaTime;
+
+        sprintSpread = Mathf.Clamp(sprintSpread, 0f, 20f);
+
+        EventManager.Instance.CrosshairSpread(crosshairSpread+sprintSpread);
     }
 
     private void OnEnable()
@@ -378,7 +386,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     {
         GameObject projectile = ProjectileFactory.Instance.CreateBasicProjectile(
             fireLocation.transform.position,
-            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(CurrentSpread),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
@@ -458,9 +466,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleEffects(projectile, meleeAttackProcChance);
     }
 
-    private Vector3 AttackVector()
+    private Vector3 AttackVector(float bulletSpread = 0)
     {
-        float bulletSpread = IsSprinting ? spread + 1.5f : spread;
+        bulletSpread = IsSprinting ? bulletSpread + 1.0f : bulletSpread;
 
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
