@@ -34,9 +34,9 @@ public class LavaBoss : MonoBehaviour
     private bool flinching;
 
     // Attack Colliders
-    public MonoBehaviour tongueDamageScript;
-    public MonoBehaviour ramDamageScript;
-    public MonoBehaviour slamDamageScript;
+    public DamageOnenter tongueDamageScript;
+    public DamageOnenter ramDamageScript;
+    public DamageOnenter slamDamageScript;
 
     // Attack Damage
     private float damageToDo;
@@ -233,6 +233,15 @@ public class LavaBoss : MonoBehaviour
         temp.transform.localScale *= 3f;
     }
 
+    public void EnableTongueHit()
+    {
+        tongueDamageScript.EnableDoShit();
+    }
+    public void DisableTongueHit()
+    {
+        tongueDamageScript.DisableDoShit();
+    }
+
     // Damage Taken
     // TODO: Alter timings to match animation speeds
     private IEnumerator DamageLevel1()
@@ -284,11 +293,7 @@ public class LavaBoss : MonoBehaviour
     {
         damageToDo = tongueDamage;
         animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(5.05f);
-        tongueDamageScript.enabled = true;
-        yield return new WaitForSeconds(0.15f);
-        tongueDamageScript.enabled = false;
-        yield return new WaitForSeconds(0.30f);
+        yield return new WaitForSeconds(2f);
         animator.SetBool("TongueAttacking", false);
         attacking = false;
     }

@@ -8,6 +8,7 @@ public class DamageOnenter : MonoBehaviour
     public float ticDelay;
 
     private float lastDmg = 0;
+    private bool doShit = false;
 
     private void Start()
     {
@@ -17,16 +18,21 @@ public class DamageOnenter : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var temp = other.transform.root.gameObject.GetComponent<PlayerDefault>();
-        if (Time.time - lastDmg > ticDelay && temp != null)
+        if (temp != null && doShit)
         {
-            print($"dmg: {dmg}, lastDmg: {lastDmg}, Time-lastDmg: {Time.time - lastDmg}, enabled: {enabled}");
-        }
-        if (temp != null && Time.time - lastDmg > ticDelay && enabled)
-        {
-            print("test");
             temp.TakeDmg(dmg);
-            lastDmg = Time.time;
+            doShit = false;
         }
+    }
+
+    public void EnableDoShit()
+    {
+        doShit = true;
+    }
+
+    public void DisableDoShit()
+    {
+        doShit = false;
     }
 
 }
