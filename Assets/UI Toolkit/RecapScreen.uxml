@@ -1,57 +1,33 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/font.uss?fileID=7433441132597879392&amp;guid=3497715282aa3064582d6e2a74bc706b&amp;type=3#font" />
-    <ui:VisualElement name="All" style="height: 100%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; opacity: 0;">
-        <ui:VisualElement name="Top" style="margin-bottom: 0; flex-direction: row; justify-content: space-between; padding-left: 62px; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_BarFrame_Top03_White.png?fileID=2800000&amp;guid=91ec1ccd43037cf4d82633ca73e0bbbb&amp;type=3#Frame_BarFrame_Top03_White&apos;); -unity-background-image-tint-color: rgb(65, 119, 212); margin-left: 0; margin-right: 0; margin-top: 0; padding-right: 12px; padding-top: 12px; padding-bottom: 12px;">
-            <ui:Label text="Defeat!" display-tooltip-when-elided="true" name="Title" class="font" style="font-size: 41px;" />
-            <ui:Label text="&lt;quip&gt;" display-tooltip-when-elided="true" name="quip" style="font-size: 17px; -unity-text-align: upper-right; width: 30%; white-space: normal;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="Split" style="flex-direction: row; justify-content: space-between; align-items: stretch; width: 100%; height: 100%; padding-left: 45px; padding-right: 45px; padding-top: 45px; padding-bottom: 45px;">
-            <ui:VisualElement name="Left" style="width: 100%; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Popup/Popup_Frame03_Navy.png?fileID=2800000&amp;guid=bd0e6a39a0e67974f85d3107721356c1&amp;type=3#Popup_Frame03_Navy&apos;); -unity-slice-left: 26; -unity-slice-top: 93; -unity-slice-right: 23; -unity-slice-bottom: 93;">
-                <ui:Label text="Stats" display-tooltip-when-elided="true" style="-unity-text-align: upper-left; font-size: 30px; background-image: none; -unity-slice-left: 90; -unity-slice-top: 0; -unity-slice-right: 90; -unity-slice-bottom: 0; margin-top: 25px; align-items: auto; width: 100%; color: rgb(255, 255, 255); padding-left: 75px; -unity-font-style: normal;" />
-                <ui:ScrollView vertical-scroller-visibility="Hidden" name="ScrollView2" style="padding-left: 30px; padding-right: 32px; padding-top: 16px; height: 85%; padding-bottom: 0;" />
+    <ui:VisualElement name="RecapUI" style="width: 100%; height: 100%; position: absolute; flex-direction: row; opacity: 1; background-color: rgb(26, 27, 31); color: rgb(255, 255, 255); display: flex;">
+        <ui:VisualElement name="LeftPanel" style="padding-left: 12px; padding-right: 12px; padding-top: 12px; padding-bottom: 12px; flex-grow: 1;">
+            <ui:VisualElement name="StatsView" class="noodle-stats-view">
+                <ui:Label text="STATS" display-tooltip-when-elided="true" class="noodle-stats-header" />
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" name="ScrollView" vertical-scroller-visibility="Hidden" style="padding-left: 0; margin-left: 13px; margin-right: 13px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="Right" style="width: 100%; padding-left: 103px; padding-right: 103px; padding-top: 103px; padding-bottom: 103px;">
-                <ui:Button text="Retry" display-tooltip-when-elided="true" style="background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Button_Demo/Btn_TextButton_Square01_Blue.Png?fileID=2800000&amp;guid=fe6ddc2a0eb1dd84cbacfa8fa6929bcb&amp;type=3#Btn_TextButton_Square01_Blue&apos;); -unity-slice-left: 53; -unity-slice-top: 2; -unity-slice-right: 59; -unity-slice-bottom: 0; height: 103px; font-size: 27px; color: rgb(255, 255, 255); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
-                <ui:Button text="Menu" display-tooltip-when-elided="true" style="background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Button_Demo/Btn_TextButton_Square01_Blue.Png?fileID=2800000&amp;guid=fe6ddc2a0eb1dd84cbacfa8fa6929bcb&amp;type=3#Btn_TextButton_Square01_Blue&apos;); -unity-slice-left: 53; -unity-slice-top: 2; -unity-slice-right: 59; -unity-slice-bottom: 0; height: 103px; font-size: 27px; color: rgb(255, 255, 255); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; margin-top: -10px; margin-bottom: 0;" />
-                <ui:Button text="Exit" display-tooltip-when-elided="true" style="background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Button_Demo/Btn_TextButton_Square01_Blue.Png?fileID=2800000&amp;guid=fe6ddc2a0eb1dd84cbacfa8fa6929bcb&amp;type=3#Btn_TextButton_Square01_Blue&apos;); -unity-slice-left: 53; -unity-slice-top: 2; -unity-slice-right: 59; -unity-slice-bottom: 0; height: 103px; font-size: 27px; color: rgb(255, 255, 255); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; margin-top: -10px; margin-bottom: 0;" />
+            <ui:VisualElement name="PickupsView" class="noodle-stats-view">
+                <ui:Label text="PICKUPS" display-tooltip-when-elided="true" class="noodle-stats-header" />
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" name="ScrollViewItems" vertical-scroller-visibility="Hidden" style="padding-left: 0; margin-left: 13px; margin-right: 13px;" />
             </ui:VisualElement>
         </ui:VisualElement>
-    </ui:VisualElement>
-    <ui:VisualElement name="RecapUI" style="width: 100%; height: 100%; position: absolute; flex-direction: row; opacity: 1; background-color: rgb(26, 27, 31); color: rgb(255, 255, 255);">
-        <ui:VisualElement name="LeftPanel" style="width: 38%; padding-left: 12px; padding-right: 12px; padding-top: 12px; padding-bottom: 12px;">
-            <ui:VisualElement class="noodle-header">
-                <ui:Label text="CONTROL INTERFACE" display-tooltip-when-elided="true" enable-rich-text="true" />
+        <ui:VisualElement name="RightPanel" style="padding-left: 12px; padding-right: 12px; padding-top: 19px; padding-bottom: 12px;">
+            <ui:VisualElement name="DeathCam" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; border-left-color: rgb(0, 128, 22); border-right-color: rgb(0, 128, 22); border-top-color: rgb(0, 128, 22); border-bottom-color: rgb(0, 128, 22); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; margin-bottom: 12px; -unity-slice-left: 108; -unity-slice-right: 109; -unity-slice-top: 61; -unity-slice-bottom: 61; height: 810px; width: 1440px;">
+                <ui:VisualElement name="DeathCamTexture" style="height: 100%; position: relative; width: 100%; flex-shrink: 0; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Placeholder.png?fileID=2800000&amp;guid=87dd76bdfb67bde4c828cd0ac3fc1415&amp;type=3#Placeholder&apos;); -unity-background-scale-mode: scale-and-crop;" />
+                <ui:VisualElement name="VisualElement" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_ItemFrame08_n_White2.png?fileID=2800000&amp;guid=5464f83ce3f2d02499bc73f4b83b260b&amp;type=3#Frame_ItemFrame08_n_White2&apos;); opacity: 1; -unity-slice-left: 140; -unity-slice-top: 61; -unity-slice-right: 140; -unity-slice-bottom: 61; -unity-background-image-tint-color: rgb(38, 89, 154); flex-shrink: 0; top: -100%;" />
+                <ui:Label text="FAILURE" display-tooltip-when-elided="true" name="EndMessage" style="position: absolute; left: auto; top: auto; font-size: 108px; justify-content: center; align-items: center; width: 100%; height: 100%; -unity-text-align: middle-center; color: rgb(255, 0, 0); -unity-text-outline-width: 2px; text-shadow: 0 0 5px rgb(0, 0, 0); display: none;" />
             </ui:VisualElement>
-            <ui:GroupBox style="justify-content: center; height: 90%;">
-                <ui:Button text="RETRY" display-tooltip-when-elided="true" name="RetryButton" class="noodle-button" style="font-size: 59px; height: 33%;">
+            <ui:GroupBox style="justify-content: center; flex-direction: row;">
+                <ui:Button text="RETRY" display-tooltip-when-elided="true" name="RetryButton" class="noodle-button" style="font-size: 59px;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_Auto_White.png?fileID=2800000&amp;guid=b28587a20afbcc048be20b8a96ff0a3e&amp;type=3#Icon_PictoIcon_Auto_White&apos;); width: 45px; height: 45px;" />
                 </ui:Button>
-                <ui:Button text="EXIT" display-tooltip-when-elided="true" name="ExitButton" class="noodle-button" style="font-size: 59px; height: 33%;">
+                <ui:Button text="EXIT" display-tooltip-when-elided="true" name="ExitButton" class="noodle-button" style="font-size: 59px;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_Close_White.png?fileID=2800000&amp;guid=e4b7042159a6a2342a3af6b2a3357a8d&amp;type=3#Icon_PictoIcon_Close_White&apos;); width: 35px; height: 35px;" />
                 </ui:Button>
-                <ui:Button text="MENU" display-tooltip-when-elided="true" name="MenuButton" class="noodle-button" style="font-size: 59px; justify-content: center; height: 33%;">
+                <ui:Button text="MENU" display-tooltip-when-elided="true" name="MenuButton" class="noodle-button" style="font-size: 59px; justify-content: center;">
                     <ui:VisualElement style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Icon_PictoIcon_3Lines_White.png?fileID=2800000&amp;guid=be1541afdd9e69748b85ed313b057090&amp;type=3#Icon_PictoIcon_3Lines_White&apos;); width: 35px; height: 35px; justify-content: flex-start; align-items: auto;" />
                 </ui:Button>
             </ui:GroupBox>
-        </ui:VisualElement>
-        <ui:VisualElement name="RightPanel" style="flex-grow: 1; padding-left: 12px; padding-right: 12px; padding-top: 12px; padding-bottom: 12px;">
-            <ui:VisualElement class="noodle-header">
-                <ui:Label text="SITUATION READOUT" display-tooltip-when-elided="true" />
-            </ui:VisualElement>
-            <ui:VisualElement name="DeathCam" style="flex-grow: 1; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; border-left-color: rgb(0, 128, 22); border-right-color: rgb(0, 128, 22); border-top-color: rgb(0, 128, 22); border-bottom-color: rgb(0, 128, 22); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-image: none; margin-bottom: 12px; -unity-slice-left: 108; -unity-slice-right: 109; -unity-slice-top: 61; -unity-slice-bottom: 61; -unity-background-image-tint-color: rgb(0, 128, 22);">
-                <ui:VisualElement style="height: 100%; position: relative; width: 100%; flex-shrink: 0; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Placeholder.png?fileID=2800000&amp;guid=87dd76bdfb67bde4c828cd0ac3fc1415&amp;type=3#Placeholder&apos;); -unity-background-image-tint-color: rgb(243, 56, 99);" />
-                <ui:VisualElement name="VisualElement" style="width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_ItemFrame08_n_White2.png?fileID=2800000&amp;guid=5464f83ce3f2d02499bc73f4b83b260b&amp;type=3#Frame_ItemFrame08_n_White2&apos;); opacity: 1; -unity-slice-left: 140; -unity-slice-top: 61; -unity-slice-right: 140; -unity-slice-bottom: 61; -unity-background-image-tint-color: rgb(38, 89, 154); flex-shrink: 0; top: -100%;" />
-                <ui:Label text="FAILURE" display-tooltip-when-elided="true" name="EndMessage" style="position: absolute; left: auto; top: auto; font-size: 108px; justify-content: center; align-items: center; width: 100%; height: 100%; -unity-text-align: middle-center; color: rgba(255, 0, 0, 255); -unity-text-outline-width: 2px; text-shadow: 0 0 5px rgba(0, 0, 0, 255);" />
-            </ui:VisualElement>
-            <ui:VisualElement name="Stats" style="flex-direction: row; height: 50%; margin-left: -12px; margin-right: -12px;">
-                <ui:VisualElement name="StatsView" class="noodle-stats-view">
-                    <ui:Label text="STATS" display-tooltip-when-elided="true" class="noodle-stats-header" />
-                    <ui:ScrollView horizontal-scroller-visibility="Hidden" name="ScrollView" vertical-scroller-visibility="Hidden" style="padding-left: 0; margin-left: 13px; margin-right: 13px;" />
-                </ui:VisualElement>
-                <ui:VisualElement name="PickupsView" class="noodle-stats-view" style="flex-grow: 0; width: 50%;">
-                    <ui:Label text="PICKUPS" display-tooltip-when-elided="true" class="noodle-stats-header" />
-                </ui:VisualElement>
-            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

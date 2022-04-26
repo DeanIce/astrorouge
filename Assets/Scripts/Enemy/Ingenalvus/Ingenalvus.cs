@@ -81,6 +81,7 @@ namespace Enemy.Ingenalvus
         {
             if (mode == Mode.AcceptingDamage)
             {
+                bossHealthBar.SetHealth(health, stageHealth);
                 Vector3 position = player.transform.position;
                 float dist = Vector3.Distance(transform.position, position);
                 agent.SetDestination(position);
@@ -102,7 +103,6 @@ namespace Enemy.Ingenalvus
             if (mode == Mode.AcceptingDamage)
             {
                 health -= dmg;
-                bossHealthBar.SetHealth(health, stageHealth);
                 if (health <= 0f)
                 {
                     mode = Mode.WeakPoints;

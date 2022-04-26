@@ -63,7 +63,7 @@ namespace Managers
                 StartCoroutine(LoadLevel());
             }
 
-            if (hudUI != null) hudUI.UpdateProgressMessage($"{progress} : {Time.frameCount}");
+            if (hudUI != null) hudUI.UpdateProgressMessage(progress);
 
 
             if (enemies != null) enemies.RemoveAll(item => item == null);
@@ -94,20 +94,20 @@ namespace Managers
 
 
             // Do the hard work
-            SetProgress("Setup simulation space.");
+            SetProgress("Setup simulation space");
             yield return null;
             GameObject root = GetOrCreate();
             CurrentLevel.Setup(rng, timer);
 
-            SetProgress("Simulate planet positions.");
+            SetProgress("Simulate planet positions");
             yield return null;
             CurrentLevel.DropBalls(ballDropper, timer);
 
-            SetProgress("Generate planet meshes.");
+            SetProgress("Generate planet meshes");
             yield return null;
             CurrentLevel.GeneratePlanetMeshes(root, timer);
 
-            SetProgress("Spawn props.");
+            SetProgress("Spawn props");
             yield return null;
             CurrentLevel.SpawnProps(rng, timer);
 
@@ -136,7 +136,7 @@ namespace Managers
             enemies = CurrentLevel.state.enemiesSpawned;
 
 
-            SetProgress("Load level.");
+            SetProgress("Load level");
             yield return null;
             // And load in the new level
             CurrentLevel.Load(root, rng);

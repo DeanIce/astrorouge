@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 64998602095977906}
   m_Layer: 6
   m_Name: SM_Env_Rock_023_Snow
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

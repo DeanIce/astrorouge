@@ -79,6 +79,7 @@
     font-size: 44px;
     -unity-text-align: middle-center;
     justify-content: center;
+    flex-grow: 1;
 }
 
 .noodle-button:hover {
@@ -88,8 +89,7 @@
 }
 
 .noodle-stats-view {
-    flex-grow: 0;
-    width: 50%;
+    flex-grow: 1;
     background-image: url('project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Frame_CardFrame02_Blue1.png?fileID=2800000&guid=095065f788df062498b0ffc05d090a2c&type=3#Frame_CardFrame02_Blue1');
     -unity-background-image-tint-color: rgb(255, 255, 255);
     -unity-slice-left: 33;
