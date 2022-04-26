@@ -28,8 +28,8 @@ namespace Gravity
 
         public static Vector3 GetGravity(Vector3 position)
         {
-            var g = Vector3.zero;
-            foreach (var t in sources)
+            Vector3 g = Vector3.zero;
+            foreach (Source t in sources)
             {
                 g += t.GetGravity(position);
             }
@@ -39,8 +39,8 @@ namespace Gravity
 
         public static Vector3 GetGravity(Vector3 position, out Vector3 upAxis)
         {
-            var g = Vector3.zero;
-            foreach (var t in sources)
+            Vector3 g = Vector3.zero;
+            foreach (Source t in sources)
             {
                 g += t.GetGravity(position);
             }
@@ -53,8 +53,8 @@ namespace Gravity
 
         public static Vector3 GetUpAxis(Vector3 position)
         {
-            var g = Vector3.zero;
-            foreach (var t in sources)
+            Vector3 g = Vector3.zero;
+            foreach (Source t in sources)
             {
                 g += t.GetGravity(position);
             }

@@ -15,7 +15,6 @@ namespace Player
         [SerializeField] private RectTransform pickupImageRoot;
         [SerializeField] private Image pickupProgressImage;
         [SerializeField] private TextMeshProUGUI itemNameText;
-        [SerializeField] private AudioClip pickUpSoundEffect;
 
         private float currentPickupTimerElapsed;
         private Inventory inventory;
@@ -131,7 +130,7 @@ namespace Player
 
             itemBeingPickedUp.ApplyStats();
             EventManager.Instance.runStats.itemsCollected.Add(itemBeingPickedUp.itemName);
-            AudioManager.Instance.PlaySFX(pickUpSoundEffect, 0.2f);
+            AudioManager.Instance.PlayPickUpItem();
             EventManager.Instance.ItemAcquired(itemBeingPickedUp);
             // Needed to update health bar when health buff items are picked up
             EventManager.Instance.PlayerStatsUpdated();

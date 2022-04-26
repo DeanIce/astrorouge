@@ -80,7 +80,7 @@ namespace UI
 
         private void ApplyCurrentSettings()
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
+            AudioManager.Instance.PlayMenuSelect();
             EventManager.Instance.UpdateSettings(settings, UserSettings.SAVE_FILE);
 
             // Update screen settings

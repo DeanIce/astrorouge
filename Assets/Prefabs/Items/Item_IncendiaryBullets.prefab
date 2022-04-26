@@ -149,5 +149,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Incendiary Bullets
-  itemDescription: Adds chance to set the enemy ablaze
+  itemDescription: Adds 5% chance to set the enemy on fire
   itemIcon: {fileID: 2800000, guid: e1ddd8e7e31e645409b2ad9f98b3c8ee, type: 3}

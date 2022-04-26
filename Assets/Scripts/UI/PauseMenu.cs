@@ -72,7 +72,7 @@ namespace UI
             pauseMenu.SetEnabled(true);
             // settingsMenu.SetEnabled(true);
             pauseMenu.style.display = DisplayStyle.Flex;
-            AudioManager.Instance.PlaySFX(openMenuSoundEffect);
+            AudioManager.Instance.PlayMenuOpen();
         }
 
         private void PlayGame()
@@ -94,27 +94,27 @@ namespace UI
 
         private void ContinueButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(closeMenuSoundEffect);
+            AudioManager.Instance.PlayMenuClose();
             EventManager.Instance.Play();
         }
 
 
         private void SettingsButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             settingsMenu.style.display = DisplayStyle.Flex;
             settingsOpen = true;
         }
 
         private void MainMenuButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             EventManager.Instance.Menu();
         }
 
         private void BackButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             settingsMenu.style.display = DisplayStyle.None;
             pauseMenu.style.display = DisplayStyle.Flex;
             settingsOpen = false;
@@ -122,7 +122,7 @@ namespace UI
 
         private void PlaySound(MouseEnterEvent ev)
         {
-            AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
+            AudioManager.Instance.PlayMenuHover();
         }
     }
 }

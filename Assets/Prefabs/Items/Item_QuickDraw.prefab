@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Quick Draw
-  itemDescription: Decreases projectile delay by 2.5%
+  itemDescription: Increase rate of fire by 2.5% of base rate
   itemIcon: {fileID: 2800000, guid: f7646240d08994848a408c44834af2b3, type: 3}
 --- !u!1001 &3410264111113274678
 PrefabInstance:

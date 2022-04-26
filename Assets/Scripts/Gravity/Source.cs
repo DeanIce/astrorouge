@@ -6,11 +6,6 @@ namespace Gravity
     {
         protected Rigidbody rb;
 
-        private void Start()
-        {
-            rb = GetComponentInChildren<Rigidbody>();
-            if (rb == null) rb = GetComponent<Rigidbody>();
-        }
 
         private void OnEnable()
         {
@@ -22,9 +17,6 @@ namespace Gravity
             GravityManager.Unregister(this);
         }
 
-        public virtual Vector3 GetGravity(Vector3 position)
-        {
-            return Physics.gravity;
-        }
+        public virtual Vector3 GetGravity(Vector3 position) => Physics.gravity;
     }
 }

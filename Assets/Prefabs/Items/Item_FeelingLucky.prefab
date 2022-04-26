@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Party Gift
-  itemDescription: Contains 3 random items
+  itemDescription: Contains 2 random items
   itemIcon: {fileID: 2800000, guid: 5aedb85f6069f6d4b93f315c6783df4f, type: 3}
 --- !u!4 &7352256033103147327 stripped
 Transform:

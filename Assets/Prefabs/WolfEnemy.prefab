@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3746f92828565c24eb5afef90ba2456a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 75
   maxHealth: 0
   movementSpeed: 1
   detector: {fileID: 8786360853359569384}
@@ -477,10 +477,6 @@ PrefabInstance:
     - target: {fileID: 1565351340849744835, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
       propertyPath: m_Name
       value: WolfBody
-      objectReference: {fileID: 0}
-    - target: {fileID: 6521004445743518666, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
-      propertyPath: damage
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9107407462187973062, guid: 2909c3b5da1483340a6fe14911ad01bd, type: 3}
       propertyPath: m_Enabled

@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Zeus' Favorite
-  itemDescription: Adds chance to have enemy struck by lightning
+  itemDescription: Adds 5% chance to have enemy struck by lightning
   itemIcon: {fileID: 2800000, guid: 79366abd4d7553946a526f3fbda04723, type: 3}
 --- !u!4 &6513492183265041460 stripped
 Transform:

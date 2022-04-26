@@ -39,7 +39,7 @@ namespace UI
 
         private void EventResponse(AbstractItem item)
         {
-            print(item.itemName);
+            //print(item.itemName);
             TemplateContainer el = notification.Instantiate();
             el.Q<Label>("itemName").text = item.itemName;
             el.Q<Label>("itemDescription").text = item.itemDescription;

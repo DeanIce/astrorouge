@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1653012915}
   m_Layer: 9
   m_Name: CameraTarget
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 1069404903643170005}
   m_Layer: 10
   m_Name: MeleeWeapon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 579053813496626924}
   m_Layer: 9
   m_Name: GroundCheck
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 4042041068901040503}
   m_Layer: 9
   m_Name: PlayerDefault
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,6 +206,7 @@ Transform:
   - {fileID: 6526573759726795435}
   - {fileID: 5507209301405331686}
   - {fileID: 3892034455363953570}
+  - {fileID: 1535991918854163761}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -237,6 +238,9 @@ MonoBehaviour:
   specialActionDamageMult: 24
   specialActionProcChance: 0.7
   specialActionCooldown: 8
+  utilityActionDelay: 0.2
+  utilityActionCooldown: 4
+  utilityActionDuration: 0.5
   meleeAttackProcChance: 2
 --- !u!54 &579053813939167214
 Rigidbody:
@@ -326,6 +330,89 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSoundEffect: {fileID: 8300000, guid: 63361b228073b43b0a8142c9918bc934, type: 3}
+--- !u!1 &2893686673109489974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535991918854163761}
+  - component: {fileID: 8568665390496060548}
+  - component: {fileID: 1005898219723373139}
+  m_Layer: 9
+  m_Name: Sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1535991918854163761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2893686673109489974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 579053813939167121}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8568665390496060548
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2893686673109489974}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1005898219723373139
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2893686673109489974}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ef5040a673b9124479a33e5c0a544949, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4212898728200072231
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +427,7 @@ GameObject:
   - component: {fileID: 6005080015389554002}
   m_Layer: 9
   m_Name: PickupPrompt
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -440,7 +527,7 @@ GameObject:
   - component: {fileID: 3804355011993965387}
   m_Layer: 10
   m_Name: RangedWeapon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -523,7 +610,7 @@ GameObject:
   - component: {fileID: 9208370592823053500}
   m_Layer: 9
   m_Name: TempText
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -658,7 +745,7 @@ GameObject:
   - component: {fileID: 5192949915878938503}
   m_Layer: 9
   m_Name: ImageProgress
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -734,7 +821,7 @@ GameObject:
   - component: {fileID: 1211838718521948076}
   m_Layer: 9
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -810,7 +897,7 @@ GameObject:
   - component: {fileID: 3892034455363953570}
   m_Layer: 0
   m_Name: FireLocation
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1069,6 +1156,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -18.423
       objectReference: {fileID: 0}
+    - target: {fileID: 64331012526279994, guid: d0838917cb453dc4cad3e49b1be3f4b4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0838917cb453dc4cad3e49b1be3f4b4, type: 3}
 --- !u!1001 &4468444187680312348
@@ -1183,6 +1274,10 @@ PrefabInstance:
     - target: {fileID: 1915102008071246, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
       propertyPath: m_Name
       value: Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915102008071246, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4724872944711514, guid: 0ad0eab167bb2974ab38b6df07f8d458, type: 3}
       propertyPath: m_RootOrder
