@@ -329,7 +329,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
         // Todo: Initialize new script to handle death, remove this script from player.
         GetComponent<HandleDeath>().enabled = true;
-        GetComponent<PlayerDefault>().enabled = false;
+        //GetComponent<PlayerDefault>().enabled = false;
     }
 
     private void PauseGame(InputAction.CallbackContext obj)
