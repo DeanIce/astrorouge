@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MoustacheEnabler : MonoBehaviour
 {
-    private bool mousEnabled;
-    private Vector3 scale;
+    public bool mousEnabled;
+    public Vector3 scale;
 
     public static GameObject moustache;
     public static bool needsApply;
@@ -12,7 +12,6 @@ public class MoustacheEnabler : MonoBehaviour
     private void Start()
     {
         ResetValues();
-        EventManager.Instance.playGame += ResetValues;
         PlayerStats.Instance.MoustacheEnable += ManageMoustache;
     }
 
@@ -27,7 +26,6 @@ public class MoustacheEnabler : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.Instance.playGame -= ResetValues;
         PlayerStats.Instance.MoustacheEnable -= ManageMoustache;
     }
 
