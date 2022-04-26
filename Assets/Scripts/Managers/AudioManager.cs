@@ -244,6 +244,10 @@ namespace Managers
         {
             PlaySFX(audioDictionary.RandomExplosion());
         }
+        public void PlayDodgeSqueak()
+        {
+            PlaySFX(audioDictionary.dodgeSqueak);
+        }
 
         // UI and Level-Related Sounds
         public void PlayMenuHover()

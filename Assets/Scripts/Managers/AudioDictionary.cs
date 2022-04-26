@@ -22,6 +22,7 @@ public class AudioDictionary : MonoBehaviour
     public AudioClip takeDamage1, takeDamage2, takeDamage3, takeDamage4, takeDamage5;
     public AudioClip playerLevelUp, playerDeath, pickUpItem;
     public AudioClip menuHover, menuOpen, menuClose, menuSelect;
+    public AudioClip dodgeSqueak;
 
     // Game Music
     public AudioClip musicLevel1, musicLevel2, musicLevel3;
@@ -86,6 +87,8 @@ public class AudioDictionary : MonoBehaviour
         takeDamage3 = (AudioClip)Resources.Load("Audio/Sound Effects/Hit3");
         takeDamage4 = (AudioClip)Resources.Load("Audio/Sound Effects/Hit4");
         takeDamage5 = (AudioClip)Resources.Load("Audio/Sound Effects/Hit5");
+
+        dodgeSqueak = (AudioClip)Resources.Load("Audio/Sound Effects/Squeak");
 
         playerLevelUp = (AudioClip)Resources.Load("Audio/Sound Effects/LevelUp");
         playerDeath = (AudioClip)Resources.Load("Audio/Sound Effects/Death Sound");
