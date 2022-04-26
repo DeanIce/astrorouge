@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Stylesheets/font.uss?fileID=7433441132597879392&amp;guid=3497715282aa3064582d6e2a74bc706b&amp;type=3#font" />
     <ui:VisualElement style="align-items: center;">
         <ui:VisualElement name="HealthBar" style="width: 39%; height: 38px; margin-top: 20px;">
             <ui:VisualElement name="Bar_Border" style="background-image: url(&apos;project://database/Assets/Imported/GUI%20PRO%20Kit%20-%20Sci-Fi/Sprite/Component/Sliders_Demo/Slider06_Color2_FillArea.png?fileID=21300000&amp;guid=ae13c54449ca6449f957fd3e3bc84d2a&amp;type=3#Slider06_Color2_FillArea&apos;); background-color: rgba(56, 56, 56, 0); -unity-background-image-tint-color: rgb(0, 0, 0); height: 100%; width: 100%; justify-content: center; align-items: center; overflow: visible;">
@@ -8,6 +9,16 @@
                     <ui:Label text="85 / 100" display-tooltip-when-elided="true" name="HealthText" style="position: absolute; left: 50%; -unity-text-align: middle-center; align-items: center; justify-content: center; height: auto; width: auto; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; top: 4px; color: rgb(252, 252, 252); -unity-font-style: bold;" />
                 </ui:VisualElement>
             </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement style="justify-content: space-around; flex-direction: row;">
+        <ui:VisualElement style="flex-direction: row; margin-top: 0;">
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
+            <ui:VisualElement name="weakPoint" class="weakPoint" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

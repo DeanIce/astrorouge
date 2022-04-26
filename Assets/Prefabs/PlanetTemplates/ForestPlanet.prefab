@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a4480140d6af459132fdfcffac0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 7
+  scale: 20
   resolutionSettings:
     lod0: 300
     lod1: 100
@@ -76,24 +76,24 @@ MonoBehaviour:
     perturbStrength: 0.75
     seed: 0
     testParams: {x: 0, y: 0, z: 0, w: 0}
-    oceanDepthMultiplier: 7.67
-    oceanFloorDepth: 0.18
-    oceanFloorSmoothing: 0.79
-    mountainBlend: 1.16
+    oceanDepthMultiplier: 2.88
+    oceanFloorDepth: 0.78
+    oceanFloorSmoothing: 1.01
+    mountainBlend: 0
     continentNoise:
       numLayers: 6
       lacunarity: 1.83
       persistence: 0.5
-      scale: 1.72
-      elevation: 2.94
+      scale: 1.47
+      elevation: 3.33
       verticalShift: 0.25
       offset: {x: 0, y: 0, z: 0}
     maskNoise:
       numLayers: 3
       lacunarity: 1.66
       persistence: 0.55
-      scale: 1.09
-      elevation: 1
+      scale: 1
+      elevation: 0
       verticalShift: 0.02
       offset: {x: 0, y: 0, z: 0}
     ridgeNoise:
@@ -101,29 +101,30 @@ MonoBehaviour:
       lacunarity: 4
       persistence: 0.5
       scale: -1.38
-      power: 2.02
-      elevation: 2.49
+      power: 1
+      elevation: 1.78
       gain: 0.73
       verticalShift: 0.009
       peakSmoothing: 1
+      offset: {x: 0, y: 0, z: 0}
   shader:
     gradient:
       serializedVersion: 2
-      key0: {r: 0.38823533, g: 0.36078432, b: 0.14509805, a: 1}
-      key1: {r: 0.8962264, g: 0.8088852, b: 0.46079564, a: 1}
-      key2: {r: 0.10484158, g: 0.7169812, b: 0.19733422, a: 1}
-      key3: {r: 0.09965875, g: 0.5188679, b: 0.056292284, a: 0}
-      key4: {r: 0.3773585, g: 0.24632673, b: 0.115699545, a: 0}
+      key0: {r: 0.764151, g: 0.7564677, b: 0.47218764, a: 1}
+      key1: {r: 0.07164471, g: 0.4339623, b: 0.12506333, a: 1}
+      key2: {r: 0.09965875, g: 0.5188679, b: 0.056292284, a: 1}
+      key3: {r: 0.061683517, g: 0.24528301, b: 0.042808827, a: 0}
+      key4: {r: 0.061683517, g: 0.24528301, b: 0.042808827, a: 0}
       key5: {r: 0.4056604, g: 0.35495284, b: 0.3042453, a: 0}
-      key6: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+      key6: {r: 0.4056604, g: 0.35495284, b: 0.3042453, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 9059
-      ctime2: 15227
-      ctime3: 29876
-      ctime4: 55127
+      ctime0: 19082
+      ctime1: 28142
+      ctime2: 32575
+      ctime3: 40670
+      ctime4: 62066
       ctime5: 63800
-      ctime6: 65150
+      ctime6: 63800
       ctime7: 0
       atime0: 0
       atime1: 65535
@@ -134,12 +135,12 @@ MonoBehaviour:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 6
+      m_NumColorKeys: 4
       m_NumAlphaKeys: 2
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 77009afb73171814faab2d4db25bfd92, type: 2}
   terrainMesh: {fileID: 2476902321210530846}
-  heightMinMax: {x: 0.984394, y: 1.0656286}
+  heightMinMax: {x: 0.9732749, y: 1.0677496}
   key: 0
 --- !u!1 &2476902321210530846
 GameObject:
@@ -168,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 2476902321210530846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2476902322036639597}
@@ -496,7 +497,7 @@ Transform:
   m_GameObject: {fileID: 6425278168000284536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 14, y: 14, z: 14}
+  m_LocalScale: {x: 40, y: 40, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1251312370072326729}
@@ -530,7 +531,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a2d4b4d34559ab4ea12ac61613920e1, type: 2}
+  - {fileID: 2100000, guid: 19ac4fcfcf42b4344a6c7d97a5cd61fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -560,7 +561,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6425278168000284536}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

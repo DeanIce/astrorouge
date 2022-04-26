@@ -146,7 +146,7 @@ namespace Levels
 
                 // The player should spawn at the lowest planet
                 if (state.points[i] == Vector3.zero)
-                    state.playerPosition = Vector3.right * (state.radii[i] - gravityHeight + 4f);
+                    state.playerPosition = Vector3.right * (state.radii[i] - gravityHeight + 5f);
 
                 // disable for now
                 planet.SetActive(false);

@@ -61,7 +61,7 @@ namespace Managers
         public event Action<AbstractItem> itemAcquired;
 
 
-        public event Action<float> crosshairSpread, playerDamaged, specialUsed, meleeUsed, secondaryUsed;
+        public event Action<float> crosshairSpread, playerDamaged, specialUsed, meleeUsed, secondaryUsed, utilityUsed;
 
         public void PlanetCleared()
         {
@@ -76,6 +76,11 @@ namespace Managers
         public void SpecialUsed(float a)
         {
             specialUsed?.Invoke(a);
+        }
+
+        public void UtilityUsed(float a)
+        {
+            utilityUsed?.Invoke(a);
         }
 
         public void MeleeUsed(float a)

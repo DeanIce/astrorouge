@@ -8,8 +8,6 @@ namespace UI
     public class MainMenu : MonoBehaviour
     {
         public AudioClip mainMenuMusic;
-        public AudioClip buttonPressSoundEffect;
-        public AudioClip buttonHoverSoundEffect;
         public float scrollSpeed = .5f;
 
         public float scrollAmount = 1000;
@@ -138,14 +136,14 @@ Todo: add assets here... names not links
 
         private void NewGameButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             AudioManager.Instance.FadeOut();
             EventManager.Instance.Play();
         }
 
         private void SettingsButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             settingsMenu.style.display = DisplayStyle.Flex;
             mainMenu.style.display = DisplayStyle.None;
             aboutMenu.style.display = DisplayStyle.None;
@@ -153,7 +151,7 @@ Todo: add assets here... names not links
 
         private void AboutButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             settingsMenu.style.display = DisplayStyle.None;
             mainMenu.style.display = DisplayStyle.None;
             aboutMenu.style.display = DisplayStyle.Flex;
@@ -162,13 +160,13 @@ Todo: add assets here... names not links
 
         private void QuitButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             EventManager.Instance.Exit();
         }
 
         private void BackButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             settingsMenu.style.display = DisplayStyle.None;
             mainMenu.style.display = DisplayStyle.Flex;
             aboutMenu.style.display = DisplayStyle.None;
@@ -177,14 +175,14 @@ Todo: add assets here... names not links
 
         private void UpgradeButtonPressed()
         {
-            AudioManager.Instance.PlaySFX(buttonPressSoundEffect);
+            AudioManager.Instance.PlayMenuSelect();
             //AudioManager.Instance.FadeOut();
             EventManager.Instance.UpgradeMenu();
         }
 
         private void PlaySound(MouseEnterEvent ev)
         {
-            AudioManager.Instance.PlaySFX(buttonHoverSoundEffect);
+            AudioManager.Instance.PlayMenuHover();
         }
     }
 }

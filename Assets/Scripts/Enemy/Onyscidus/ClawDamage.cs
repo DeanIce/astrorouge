@@ -16,6 +16,12 @@ public class ClawDamage : MonoBehaviour
         private void OnTriggerEnter(Collider other)
         {
             // print("claw collider");
-            other.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(oni.attackDamage);
+            other.transform.root.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(oni.attackDamage);
+
+            // chance for slow effect
+            if (Random.value < 0.3) {
+                var slow = new SlowEffect();
+                slow.ApplyEffect(other.transform.root.gameObject);
+            }
         }
     }

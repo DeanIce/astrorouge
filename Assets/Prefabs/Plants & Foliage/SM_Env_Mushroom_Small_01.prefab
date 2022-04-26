@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 64140215374831790}
   m_Layer: 0
   m_Name: SM_Env_Mushroom_Small_01
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

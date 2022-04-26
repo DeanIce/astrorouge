@@ -144,6 +144,8 @@ namespace Managers
 
             player.transform.position = newPlayerPos;
 
+            //wait for the level to load a little more
+            yield return new WaitForSeconds(1.5f);
 
             hudUI.HideProgressMessage();
             yield return default;

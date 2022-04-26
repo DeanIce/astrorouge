@@ -8,10 +8,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 {
     // Constants
     private const float groundDistance = 0.1f;
-    private const float decreasePerSecond = 60f;
-    private const float increasePerSecond = 60f;
-    private const float maxSpread = 30f;
-    private const float minSpread = 1f;
+    private const float inaccuracyPerSecond = 10f;
+    private const float maxInaccuracy = 1.5f;
+    private const float maxSpread = 40f;
 
     // Inspector set-able references
     [SerializeField] private GameObject followTarget;
@@ -21,8 +20,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     // Inspector set-able values
     [SerializeField] public float sensitivity = 0.2f;
-    [SerializeField] private float spread = 1.0f;
-
+    [SerializeField] private float baseSpread = 0.1f;
+    [SerializeField] private float currentSpread = 1.0f;
+    [SerializeField] private float sprintSpread = 0f;
     // Attack values
     [SerializeField] private float primaryAttackProcChance = 1f;
 
@@ -36,6 +36,10 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     [SerializeField] private float specialActionDamageMult = 24f;
     [SerializeField] private float specialActionProcChance = 0.7f;
     [SerializeField] private float specialActionCooldown = 8f;
+
+    [SerializeField] private float utilityActionDelay = 0.2f;
+    [SerializeField] private float utilityActionCooldown = 4f;
+    [SerializeField] private float utilityActionDuration = 0.5f;
 
     [SerializeField] private float meleeAttackProcChance = 2f;
 
@@ -56,13 +60,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
     private Rigidbody rb;
     private float timeOfLastDamage;
     protected internal bool useGravity = true;
+    private bool IframeActive = false;
 
     // Public Getters
     public bool IsSprinting { get; private set; }
+    public bool IsDashing { get; private set; }
     public float PrimaryAttackDelay { get; private set; }
     public float SecondaryAttackDelay { get; private set; }
     public float MeleeAttackDelay { get; private set; }
     public float SpecialActionDelay { get; private set; }
+    public float UtilityActionDelay { get; private set; }
+    public float CurrentSpread { get; private set; }
 
     private void Start()
     {
@@ -87,12 +95,16 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         SecondaryAttackDelay = Decrement(SecondaryAttackDelay);
         MeleeAttackDelay = Decrement(MeleeAttackDelay);
         SpecialActionDelay = Decrement(SpecialActionDelay);
+        UtilityActionDelay = Decrement(UtilityActionDelay);
         globalAttackDealy = Decrement(globalAttackDealy);
+        CurrentSpread = Decrement(CurrentSpread);
 
         if (globalAttackDealy <= 0)
         {
             if (isPrimaryAttacking && PrimaryAttackDelay < 0)
             {
+                CurrentSpread = CurrentSpread + (inaccuracyPerSecond * Time.deltaTime);
+                CurrentSpread = Mathf.Clamp(CurrentSpread, baseSpread, maxInaccuracy);
                 ProjectileAttack();
                 PrimaryAttackDelay = PlayerStats.Instance.rangeAttackDelay;
             }
@@ -142,12 +154,17 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         // Apply rotation
         rb.MoveRotation(Quaternion.FromToRotation(transform.up, upAxis) *
                         Quaternion.FromToRotation(transform.forward, lookAt) * transform.rotation);
+
+        crosshairSpread = maxSpread * (CurrentSpread / maxInaccuracy);
+
         if (IsSprinting)
-            crosshairSpread += increasePerSecond * Time.deltaTime;
+            sprintSpread += 60f * Time.deltaTime;
         else
-            crosshairSpread -= decreasePerSecond * Time.deltaTime;
-        crosshairSpread = Mathf.Clamp(crosshairSpread, minSpread, maxSpread);
-        EventManager.Instance.CrosshairSpread(crosshairSpread);
+            sprintSpread -= 60f * Time.deltaTime;
+
+        sprintSpread = Mathf.Clamp(sprintSpread, 0f, 20f);
+
+        EventManager.Instance.CrosshairSpread(crosshairSpread+sprintSpread);
     }
 
     private void OnEnable()
@@ -176,7 +193,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.SecondaryAttack.Enable();
         playerInputMap.MeleeAttack.performed += MeleeAttack;
         playerInputMap.MeleeAttack.Enable();
-        //playerInputMap.UtilityAction.performed += HitscanAttack; //TODO: Make Dash go here
+        playerInputMap.UtilityAction.performed += UtilityAction; 
         playerInputMap.UtilityAction.Enable();
         playerInputMap.SpecialAction.performed += SpecialAction;
         playerInputMap.SpecialAction.Enable();
@@ -206,7 +223,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         playerInputMap.MeleeAttack.Disable();
         playerInputMap.MeleeAttack.performed -= MeleeAttack;
         playerInputMap.UtilityAction.Disable();
-        //playerInputMap.UtilityAction.performed -= HitscanAttack; //TODO: Make Dash go here
+        playerInputMap.UtilityAction.performed -= UtilityAction;
         playerInputMap.SpecialAction.Disable();
         playerInputMap.SpecialAction.performed -= SpecialAction;
     }
@@ -232,7 +249,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleMoveAnimation(direction);
 
         Vector3 movement = direction.x * transform.right + direction.y * transform.forward;
-        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1) * PlayerStats.Instance.movementSpeed *
+        return (IsSprinting ? PlayerStats.Instance.sprintMultiplier : 1)* (IsDashing ? 5 : 1) * PlayerStats.Instance.movementSpeed *
                Time.deltaTime * movement.normalized;
     }
 
@@ -258,25 +275,47 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         IsSprinting = !IsSprinting;
     }
 
-    public void TakeDmg(float dmg, int type)
+    public void TakeDmg(float dmg, int type = 0, bool isCrit = false)
     {
-        TakeDmg(dmg);
-    }
-
-    public void TakeDmg(float dmg)
-    {
+        AudioManager.Instance.PlayPlayerTakeDamage();
         timeOfLastDamage = Time.time;
-        animator.SetTrigger("takeDamage");
-        // Temp, add damage negation and other maths here later.
-        PlayerStats.Instance.currentHealth -= dmg;
-        if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmg;
-        //Doesn't actually matter once we implement game over
-        if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+        if (!IframeActive)
+        {
+            //Debug.Log($"");
+
+            animator.SetTrigger("takeDamage");
+            // Temp, add damage negation and other maths here later.
+            float dmgAfterArmor = 0.0f;
+            if (Random.value >= PlayerStats.Instance.dodgeChance)
+            {
+                dmgAfterArmor = dmg - dmg * ((float) PlayerStats.Instance.armor / 100f);
+                if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
+            }
+            else Debug.Log("Dodged Damage");
+
+            PlayerStats.Instance.currentHealth -= dmgAfterArmor;
+            EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
+
+            if (PlayerStats.Instance.currentHealth < 0)
+            {
+                EventManager.Instance.runStats.damageTaken += PlayerStats.Instance.currentHealth;
+                PlayerStats.Instance.currentHealth = 0f;
+            }
+
+            StartCoroutine(beginIFrames());
+        } //else { Debug.Log("got hit while invincible"); }
 
         EventManager.Instance.PlayerStatsUpdated();
         EventManager.Instance.PlayerDamaged((PlayerStats.Instance.maxHealth - PlayerStats.Instance.currentHealth) /
                                             PlayerStats.Instance.maxHealth);
         if (PlayerStats.Instance.currentHealth <= 0f) Die();
+    }
+
+    private IEnumerator beginIFrames()
+    {
+        IframeActive = true;
+        yield return new WaitForSeconds(PlayerStats.Instance.invincibilityDuration * 0.001f); // converted to ms
+        IframeActive = false;
     }
 
     public void Die()
@@ -313,7 +352,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         if (MeleeAttackDelay > 0 || globalAttackDealy > 0) return;
         MeleeAttackDelay = PlayerStats.Instance.meleeAttackDelay;
 
-
+        EventManager.Instance.MeleeUsed(MeleeAttackDelay);
         animator.SetTrigger("meleeAttack");
         _ = StartCoroutine(InstantaneousAttack(0.5f));
     }
@@ -327,16 +366,33 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         _ = StartCoroutine(LobAttack());
     }
 
+    private void UtilityAction(InputAction.CallbackContext obj)
+    {
+        if (UtilityActionDelay > 0 || globalAttackDealy > 0) return;
+        UtilityActionDelay = utilityActionCooldown;
+
+        EventManager.Instance.UtilityUsed(utilityActionCooldown);
+        _ = StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        IsDashing = true;
+        globalAttackDealy = utilityActionDuration + 0.2f;
+        yield return new WaitForSeconds(utilityActionDelay);
+        IsDashing = false;
+    }
+
     private void ProjectileAttack()
     {
         GameObject projectile = ProjectileFactory.Instance.CreateBasicProjectile(
             fireLocation.transform.position,
-            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(),
+            PlayerStats.Instance.rangeProjectileSpeed * AttackVector(CurrentSpread),
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
         HandleEffects(projectile, primaryAttackProcChance);
-        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
+        AudioManager.Instance.PlayShootBlaster();
     }
 
     private void BeamAttack()
@@ -356,7 +412,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             beamDamage,
             PlayerStats.Instance.rangeProjectileRange);
         HandleEffects(projectile, secondaryAttackProcChance / tickCount);
-        AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
+        AudioManager.Instance.PlayShootBeam();
     }
 
     /*private void HitscanAttack(InputAction.CallbackContext obj)
@@ -393,7 +449,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             projectile,
             LayerMask.GetMask("Enemy", "Ground"),
             PlayerStats.Instance.GetRangeDamage() * specialActionDamageMult,
-            3f); //TODO (Jared): Set grenade blast radius
+            3f * PlayerStats.Instance.rangeGrenadeSizeMultiplier);
     }
 
     private IEnumerator InstantaneousAttack(float attackDelay)
@@ -411,9 +467,9 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         HandleEffects(projectile, meleeAttackProcChance);
     }
 
-    private Vector3 AttackVector()
+    private Vector3 AttackVector(float bulletSpread = 0)
     {
-        float bulletSpread = IsSprinting ? spread + 1.5f : spread;
+        bulletSpread = IsSprinting ? bulletSpread + 1.0f : bulletSpread;
 
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);

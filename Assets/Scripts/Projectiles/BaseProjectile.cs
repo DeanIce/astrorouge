@@ -33,12 +33,7 @@ public abstract class BaseProjectile : MonoBehaviour, IProjectile
         return deltaTime * velocity;
     }
 
-    public virtual void TakeDmg(float incDamage)
-    {
-        currHealth -= incDamage;
-    }
-
-    public virtual void TakeDmg(float incDamage, int type)
+    public virtual void TakeDmg(float incDamage, int type = 0, bool isCrit = false)
     {
         currHealth -= incDamage;
     }

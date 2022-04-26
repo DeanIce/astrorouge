@@ -318,13 +318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    displayMode: Fullscreen
-    fov: 60
-    resolution: TODO
-    screenShake: 1
     volumeGame: 1
-    volumeMaster: 1
     volumeMusic: 1
+    msaa: 4
+    lookSensitivity: 1
 --- !u!1 &1036262569
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +614,10 @@ PrefabInstance:
     - target: {fileID: 3690277151325147707, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6854432826354650640, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
+      propertyPath: drops.Array.size
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 7689409263527498331, guid: 9c06a63fb7b774d4a820a918ad9292da, type: 3}
       propertyPath: m_RootOrder

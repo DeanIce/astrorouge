@@ -11,7 +11,7 @@ namespace UI
         private Button buttonExit;
         private Button buttonMenu;
         private Button buttonRetry;
-        private Label quip;
+        //private Label quip;
         private ScrollView scrollView;
         public AudioClip recapMusic;
 
@@ -20,9 +20,9 @@ namespace UI
             var root = GetComponent<UIDocument>().rootVisualElement;
             AudioManager.Instance.PlayMusicWithCrossfade(recapMusic);
 
-            quip = root.Q<Label>("TerminalContent");
-            var (quote, _) = Quotes.Get();
-            quip.text += $"\"{quote}\"";
+            //quip = root.Q<Label>("TerminalContent");
+            //var (quote, _) = Quotes.Get();
+            //quip.text += $"\"{quote}\"";
 
             scrollView = root.Q<ScrollView>("ScrollView");
 
@@ -50,12 +50,11 @@ namespace UI
             return new WaitForSeconds(1);
         }
 
-
         private IEnumerator AddAllStats()
         {
-            var runStats = EventManager.Instance.runStats;
-            yield return AddStat("Damage Dealt", runStats.damageDealt);
-            yield return AddStat("Damage Taken", runStats.damageTaken);
+            var runStats = EventManager.Instance.runStats;            
+            yield return AddStat("Damage Dealt", Mathf.RoundToInt(runStats.damageDealt));
+            yield return AddStat("Damage Taken", Mathf.RoundToInt(runStats.damageTaken));
             yield return AddStat("Enemies Killed", runStats.enemiesKilled);
             yield return AddStat("Items Collected", runStats.itemsCollected.Count);
         }

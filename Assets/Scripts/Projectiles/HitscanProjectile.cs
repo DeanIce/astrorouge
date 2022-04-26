@@ -34,7 +34,7 @@ public class HitscanProjectile : BaseProjectile
     }
 
     public override Vector3 Displacement(float deltaTime) => Vector3.zero;
-    public override void TakeDmg(float incDamage) { }
+    public override void TakeDmg(float incDamage, int type = 0, bool isCrit = false) { }
 
     public override void Die()
     {
