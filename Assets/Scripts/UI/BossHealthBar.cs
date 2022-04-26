@@ -5,9 +5,13 @@ namespace UI
 {
     public class BossHealthBar : MonoBehaviour
     {
+        public bool showWeakPoints;
         private VisualElement healthBar;
         private VisualElement healthBarCorner;
         private TextElement healthBarText;
+
+        private int weakPointIndex;
+        private VisualElement[] weakPoints;
 
         private void Start()
         {
@@ -16,9 +20,25 @@ namespace UI
             healthBar = root.Q<VisualElement>("Health_Bar_Fill");
             healthBarText = root.Q<TextElement>("HealthText");
             healthBarCorner = root.Q<VisualElement>("Health_Bar_Fill_Corner");
-            print(healthBarText);
+            UQueryBuilder<VisualElement> w = root.Query<VisualElement>("weakPoint", "weakPoint");
+            weakPoints = w.ToList().ToArray();
+            weakPointIndex = 1;
+
+            if (!showWeakPoints)
+            {
+                foreach (VisualElement visualElement in weakPoints)
+                {
+                    visualElement.RemoveFromHierarchy();
+                }
+            }
         }
 
+
+        public void RemoveWeakPoint()
+        {
+            weakPoints[^weakPointIndex].style.unityBackgroundImageTintColor = new StyleColor(Color.gray);
+            weakPointIndex++;
+        }
 
         public void SetHealth(float hp, float maxHealth)
         {

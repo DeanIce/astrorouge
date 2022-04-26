@@ -4,7 +4,7 @@ namespace Levels
 {
     public class Lava : MonoBehaviour
     {
-        public float delay = 1.0f;
+        public float delay = 2.0f;
 
         private bool running;
         private float timer;
@@ -19,23 +19,27 @@ namespace Levels
             if (running) timer -= Time.deltaTime;
         }
 
-        private void OnCollisionEnter(Collision collision)
+
+        private void OnTriggerEnter(Collider other)
         {
-            running = true;
+            if (other.gameObject.name == "PlayerDefault") running = true;
         }
 
-        private void OnCollisionExit(Collision collision)
+        private void OnTriggerExit(Collider other)
         {
-            timer = 1.0f;
-            running = false;
-        }
-
-        private void OnCollisionStay(Collision collisionInfo)
-        {
-            if (collisionInfo.gameObject.name == "PlayerDefault" && timer <= 0)
+            if (other.gameObject.name == "PlayerDefault")
             {
-                var sem = collisionInfo.gameObject.GetComponent<StatusEffectManager>();
-                sem.ApplyBurn(3);
+                timer = 1.0f;
+                running = false;
+            }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.name == "PlayerDefault" && timer <= 0)
+            {
+                var sem = other.gameObject.GetComponent<StatusEffectManager>();
+                sem.ApplyBurn(2);
             }
         }
     }

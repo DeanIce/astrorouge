@@ -7493,7 +7493,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488296787}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 14
   m_Height: 7
@@ -30224,8 +30224,8 @@ MonoBehaviour:
   fireParticles: {fileID: 1660056133}
   animator: {fileID: 0}
   smashParticles: {fileID: 1159971863399777}
-  smashPointLeft: {fileID: 1782454374}
-  smashPointRight: {fileID: 2123002558}
+  footLeftFront: {fileID: 1782454374}
+  footRightFront: {fileID: 2123002558}
   smashDamageLeft: {fileID: 1000040904}
   smashDamageRight: {fileID: 488296790}
 --- !u!4 &1875346250 stripped
@@ -34624,6 +34624,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4189780620095420295, guid: 2e1053d5813107744b2d4dfa81e3d94f, type: 3}
+      propertyPath: showWeakPoints
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4189780620095420296, guid: 2e1053d5813107744b2d4dfa81e3d94f, type: 3}
       propertyPath: m_Name
       value: BossHealthBar

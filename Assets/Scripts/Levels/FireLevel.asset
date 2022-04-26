@@ -15,58 +15,98 @@ MonoBehaviour:
   clusterAssets: []
   environmentAssets:
   - prefab: {fileID: 195212, guid: 4e5d9824dc45f724690777e573f84304, type: 3}
-    ratio: 0.292
+    ratio: 0.042
     scale: {x: 10, y: 10, z: 10}
-    weightedRatio: 0.06731213
+    weightedRatio: 0.005752636
   - prefab: {fileID: 170590, guid: 75ed778f1e82b1a4c91b1332d1f793ea, type: 3}
-    ratio: 0.247
+    ratio: 0.027
     scale: {x: 8, y: 8, z: 8}
-    weightedRatio: 0.05693868
+    weightedRatio: 0.0036981234
   - prefab: {fileID: 168602, guid: 3e0f6b0ee51e6eb42a731a26210989b9, type: 3}
     ratio: 1
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.230521
+    weightedRatio: 0.13696752
   - prefab: {fileID: 122892, guid: 20002ad77119e9849a8815f85c128ba3, type: 3}
-    ratio: 0.138
-    scale: {x: 2, y: 2, z: 2}
-    weightedRatio: 0.031811897
+    ratio: 0.077
+    scale: {x: 1, y: 1, z: 1}
+    weightedRatio: 0.0105465
   - prefab: {fileID: 190932, guid: 20e0bf298681fcd4693097c822277593, type: 3}
-    ratio: 0.152
-    scale: {x: 2, y: 2, z: 2}
-    weightedRatio: 0.03503919
+    ratio: 0.047
+    scale: {x: 1, y: 1, z: 1}
+    weightedRatio: 0.0064374735
   - prefab: {fileID: 158038, guid: b9cff604e7a459c4581b58993fc28f1d, type: 3}
     ratio: 1
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.230521
+    weightedRatio: 0.13696752
   - prefab: {fileID: 121492, guid: 2dc72da8b5d1d5e42b5be6a6f0c2c4d4, type: 3}
     ratio: 0.936
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.21576764
+    weightedRatio: 0.1282016
   - prefab: {fileID: 1248725024203876, guid: 55c83fbc4be6adc40838f0f47a64bc97, type: 3}
-    ratio: 0.573
+    ratio: 0.143
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.13208853
+    weightedRatio: 0.019586358
+  - prefab: {fileID: 130514, guid: 3bb5571f612e6d14d82b7a56913e82af, type: 3}
+    ratio: 0.899
+    scale: {x: 1, y: 1, z: 1}
+    weightedRatio: 0.12313381
+  - prefab: {fileID: 121492, guid: 2dc72da8b5d1d5e42b5be6a6f0c2c4d4, type: 3}
+    ratio: 0.899
+    scale: {x: 1, y: 1, z: 1}
+    weightedRatio: 0.12313381
+  - prefab: {fileID: 185154, guid: bd797f8b461dda044840c3a0bd197fe7, type: 3}
+    ratio: 0.349
+    scale: {x: 1, y: 1, z: 1}
+    weightedRatio: 0.04780167
+  - prefab: {fileID: 153826, guid: 8c3c19c34c678744485079676334c608, type: 3}
+    ratio: 0.086
+    scale: {x: 0.1, y: 0.1, z: 0.1}
+    weightedRatio: 0.011779208
+  - prefab: {fileID: 191868, guid: 56d3744b770c01044ad1bb2b6fdd65ce, type: 3}
+    ratio: 0.258
+    scale: {x: 0.1, y: 0.1, z: 0.1}
+    weightedRatio: 0.03533762
+  - prefab: {fileID: 145742, guid: 52c6ffa15558342449409fa54ffb9000, type: 3}
+    ratio: 0.401
+    scale: {x: 0.1, y: 0.1, z: 0.1}
+    weightedRatio: 0.054923978
+  - prefab: {fileID: 145742, guid: 52c6ffa15558342449409fa54ffb9000, type: 3}
+    ratio: 0.138
+    scale: {x: 0.2, y: 0.2, z: 0.2}
+    weightedRatio: 0.018901518
+  - prefab: {fileID: 1565418543010588, guid: 5a918ff39dacf9440b417568f0ffd42c, type: 3}
+    ratio: 0.138
+    scale: {x: 0.3, y: 0.3, z: 0.3}
+    weightedRatio: 0.018901518
+  - prefab: {fileID: 1626720542467046, guid: 3374ec66ff7ddc44fb0c6d239b29275f, type: 3}
+    ratio: 0.349
+    scale: {x: 0.1, y: 0.1, z: 0.1}
+    weightedRatio: 0.04780167
+  - prefab: {fileID: 1133830196517026, guid: 2a4503883d5001b488590305c2e38787, type: 3}
+    ratio: 0.512
+    scale: {x: 0.1, y: 0.1, z: 0.1}
+    weightedRatio: 0.070127375
   enemyAssets:
   - prefab: {fileID: 1743840420767579991, guid: 80502c498e7a5eb4e9cb6b535dffa32b, type: 3}
-    ratio: 1
+    ratio: 0.179
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.34891832
+    weightedRatio: 0.16528164
   - prefab: {fileID: 6092937446732967473, guid: d8120586cc9acf84db9b0e5cedf5904e, type: 3}
-    ratio: 0.109
+    ratio: 0.084
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.038032096
+    weightedRatio: 0.07756233
   - prefab: {fileID: 6876643510276138002, guid: 72847cb29d96a024b8074d1cbc41b42c, type: 3}
-    ratio: 0.851
+    ratio: 0.39
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.2969295
+    weightedRatio: 0.36011082
   - prefab: {fileID: 7964091094029442610, guid: 0d93c61bfe868b545bf6b0bfae0e22b2, type: 3}
-    ratio: 0.906
+    ratio: 0.43
     scale: {x: 1, y: 1, z: 1}
-    weightedRatio: 0.31612003
-  numPlanets: {x: 3, y: 4}
-  scale: {x: 16.446655, y: 24.66}
-  totalNumEnemies: {x: 175, y: 200}
-  totalNumProps: {x: 800, y: 1000}
+    weightedRatio: 0.39704528
+  numPlanets: {x: 3, y: 5}
+  scale: {x: 29.371857, y: 34.75}
+  totalNumEnemies: {x: 153, y: 187}
+  totalNumProps: {x: 2567, y: 3051}
   levelMusic: {fileID: 8300000, guid: 301908ce092b54a1ab059af6f2e2a728, type: 3}
   gravityHeight: 5
   falloffHeight: 3

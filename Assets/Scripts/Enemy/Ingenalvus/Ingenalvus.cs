@@ -155,6 +155,7 @@ namespace Enemy.Ingenalvus
         public void DestroyWeakPoint(IngenalvusCollider ic)
         {
             print($"Weak point {ic.gameObject.name} destroyed.");
+            bossHealthBar.RemoveWeakPoint();
 
             ic.gameObject.SetActive(false);
             weakPointsRemaining--;
