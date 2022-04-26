@@ -12,7 +12,7 @@ public class ClearOnStart : MonoBehaviour
 
     private IEnumerator clearArea()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 7f);
 
