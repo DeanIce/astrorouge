@@ -272,6 +272,8 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         timeOfLastDamage = Time.time;
         if (!IframeActive)
         {
+            //Debug.Log($"");
+
             animator.SetTrigger("takeDamage");
             // Temp, add damage negation and other maths here later.
             float dmgAfterArmor = 0.0f;
@@ -283,9 +285,13 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             else Debug.Log("Dodged Damage");
 
             PlayerStats.Instance.currentHealth -= dmgAfterArmor;
-            if (PlayerStats.Instance.currentHealth > 0) EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
-            //Doesn't actually matter once we implement game over
-            if (PlayerStats.Instance.currentHealth < 0) PlayerStats.Instance.currentHealth = 0;
+            EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
+
+            if (PlayerStats.Instance.currentHealth < 0)
+            {
+                EventManager.Instance.runStats.damageTaken += PlayerStats.Instance.currentHealth;
+                PlayerStats.Instance.currentHealth = 0f;
+            }
 
             StartCoroutine(beginIFrames());
         } //else { Debug.Log("got hit while invincible"); }
