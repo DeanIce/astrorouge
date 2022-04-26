@@ -46,7 +46,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
     private float awareTimer;
 
 
-    [NonSerialized] public float xpGift = 5;
+    [NonSerialized] public float xpGift = 2;
     public GameObject Detector => detector;
     public int PlayerLayer { get; } = 9;
 
@@ -187,31 +187,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
         }
     }
 
-    public void TakeDmg(float dmg)
-    {
-        if (!Dying)
-        {
-            EventManager.Instance.runStats.damageDealt += dmg;
-            // Temp, add damage negation and other maths here later.
-            health -= dmg;
-            gameObject.GetComponent<HealthBarUI>().SetHealth(health, maxHealth);
-            // make damage popup TODO:: change the "false" to when this is a critical hit.
-            // I think this would require adding a parameter and passing the
-            // critical hit chance, or whenever the crit is defined.
-            DamagePopupUI.Create(transform, transform.rotation, (int) dmg, 0);
-            EventManager.Instance.EnemyDamaged();
-
-            if (Wandering)
-            {
-                awareTimer = 2f;
-            }
-
-
-            if (health <= 0f && iAmAlive) Die();
-        }
-    }
-
-    public void TakeDmg(float dmg, int type)
+    public virtual void TakeDmg(float dmg, int type = 0, bool isCrit = false)
     {
         if (!Dying)
         {
@@ -243,7 +219,7 @@ public class BasicEnemyAgent : MonoBehaviour, IEnemy
 
         iAmAlive = false;
         GetComponent<StatusEffectManager>().DeathEffects();
-        DropManager.Instance.SpawnItem(transform.position, transform.rotation);
+        DropManager.Instance.SpawnItem(transform.position + 2*transform.up, transform.rotation);
         gameObject.GetComponent<HealthBarUI>().HideHealth();
         EventManager.Instance.runStats.enemiesKilled++;
         GetComponent<Collider>().enabled = false;

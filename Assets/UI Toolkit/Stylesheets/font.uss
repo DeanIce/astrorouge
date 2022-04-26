@@ -84,6 +84,7 @@
 .noodle-button:hover {
     opacity: 0.8;
     justify-content: center;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.38);
 }
 
 .noodle-stats-view {

@@ -97,7 +97,7 @@ MonoBehaviour:
   logEvents: 0
   drops:
   - prefab: {fileID: 6613647429278394061, guid: d24e42757c92470428d9d5401924125d, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 4444067496941640041, guid: 33c2bdb68fe6d724ba1acdf272b39b2f, type: 3}
     weight: 200
   - prefab: {fileID: 5435767671005971193, guid: 4aa1d7b5b9bbe7649b922a39df6f21ca, type: 3}
@@ -105,59 +105,59 @@ MonoBehaviour:
   - prefab: {fileID: 5152110194406794809, guid: 07988b9fe68f45642b00a7e5629f935d, type: 3}
     weight: 200
   - prefab: {fileID: 2632859496016104112, guid: 561f38505cd0dcd4fa2611b4aafa360c, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 8188526159941083305, guid: 859c5fbba51fd9143838a57945c3e605, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 7194933870638587990, guid: f01e74cd37e2a814ca30cd06324efa9d, type: 3}
-    weight: 200
+    weight: 0
   - prefab: {fileID: 8287094320205749863, guid: f3323fb8358fcb545b7bcda765457146, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 5932824682489355682, guid: 0012ec9a5ad0b404686c8fbfda9a7431, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 2308837559076178149, guid: 69313de3e33564a4fadcc16f23f2b094, type: 3}
     weight: 200
   - prefab: {fileID: 859420143151086843, guid: 77cd243071e411b469b6831317fbdf63, type: 3}
     weight: 200
   - prefab: {fileID: 7001578233619711473, guid: 79326ae4d7f23a1409be6b1506b2fa59, type: 3}
-    weight: 200
+    weight: 100
   - prefab: {fileID: 6293830873215829156, guid: 59de7d120431e614e8edde9b67a56791, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 7992705381474194298, guid: b8d0743ea59537e49bc7cd55a204ac19, type: 3}
     weight: 200
   - prefab: {fileID: 8323041849605908205, guid: 7fd111699bbe2694db60e3073fa92455, type: 3}
-    weight: 200
+    weight: 500
   - prefab: {fileID: 5352292620127307699, guid: af2fd81ff98693c43b8ce5e83c6c859f, type: 3}
-    weight: 200
+    weight: 100
   - prefab: {fileID: 2667653483312616089, guid: 739a415ceb5456641b05e8353f3126f8, type: 3}
     weight: 200
   - prefab: {fileID: 1198560613905703191, guid: 7bb771a95325b0541a5e163df8435b7f, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 2597083089174466677, guid: 1822e89996c9b4b4c8d88b3deb425446, type: 3}
-    weight: 200
+    weight: 0
   - prefab: {fileID: 8036634101774178134, guid: 67cbe55a282110e43b23b664e34c13fa, type: 3}
     weight: 200
   - prefab: {fileID: 6505046900647681934, guid: a2f8d6f8e55042e45af3c382b4fe63bb, type: 3}
-    weight: 200
+    weight: 500
   - prefab: {fileID: 1740883371895607522, guid: b4b49a87aa26e0e42bd9472ae2fdf696, type: 3}
-    weight: 200
+    weight: 500
   - prefab: {fileID: 5034184773048400813, guid: 8474da581466a6841ba360d8daa65460, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 5252753581614522879, guid: d16dab037dba5ee4f85986a9a7dee0a8, type: 3}
-    weight: 200
+    weight: 0
   - prefab: {fileID: 4864774307642595874, guid: cf72cbbda1e14064d966fd00d09260c4, type: 3}
-    weight: 200
+    weight: 0
   - prefab: {fileID: 8417658323610540328, guid: 159b3be6edbd59343a1b5b47ea745dfd, type: 3}
     weight: 200
   - prefab: {fileID: 881073225584712901, guid: 76c33aac722a7664ea6a4023188b78e5, type: 3}
     weight: 200
   - prefab: {fileID: 6361631981022406387, guid: e9ab39f3e7bbf6846a280fbf95afbe5b, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 2507919784246259601, guid: a7a5c4dc8ac5189428a64ecb9d8df66a, type: 3}
     weight: 200
   - prefab: {fileID: 4063987857298518606, guid: a85528641df61c040b6454828540ac6c, type: 3}
     weight: 200
   - prefab: {fileID: 6823544358182185435, guid: 576833da5b78e59449af1d41e11156ae, type: 3}
-    weight: 200
+    weight: 400
   - prefab: {fileID: 1828068517063726160, guid: d3a1633b6c918a947beb2e53648d9c75, type: 3}
     weight: 200
   - prefab: {fileID: 2667361726421266898, guid: 4523ffea72538cc4389d8c15c8ea3529, type: 3}
@@ -165,11 +165,15 @@ MonoBehaviour:
   - prefab: {fileID: 5757593362117652259, guid: 2aab0a054b7473446985a09bce63b62a, type: 3}
     weight: 200
   - prefab: {fileID: 428991938959509544, guid: 45da362e97f59a64597e82f546610b3c, type: 3}
-    weight: 200
-  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
-    weight: 2000
+    weight: 400
+  - prefab: {fileID: 9006083277569277750, guid: 50a8cb335533cf648ad00c40f9bd3c1c, type: 3}
+    weight: 400
   - prefab: {fileID: 291265189672214341, guid: 75c6817be0e025c4592e657142fe5333, type: 3}
     weight: 200
+  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
+    weight: 4000
+  - prefab: {fileID: 8516694396473341225, guid: d5f9bda96fbe5224895eeebf891af018, type: 3}
+    weight: 4000
 --- !u!114 &1187498790012229965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +194,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8228096c239e4a84e8e306f5b7285a25, type: 2}
   player: {fileID: 0}
   ballDropper: {fileID: 1421862117859555043}
-  debug: []
+  hudUI: {fileID: 0}
 --- !u!114 &8027408832269683781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,12 +267,12 @@ MonoBehaviour:
   baseRangeProjectileRange: 20
   baseRangeProjectileSpeed: 25
   baseRangeGrenadeSizeMultiplier: 1
-  baseMaxHealth: 100
-  baseHealthRegen: 2
+  baseMaxHealth: 50
+  baseHealthRegen: 5
   baseRegenDelay: 10
-  baseArmor: 1
+  baseArmor: 0
   baseDodgeChance: 0
-  baseInvincibilityDuration: 1
+  baseInvincibilityDuration: 175
   baseMaxExtraJumps: 2
   baseJumpForce: 16
   baseExtraJumpDampaner: 0.8

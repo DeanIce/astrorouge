@@ -149,6 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Gravitational Pull
-  itemDescription: Decreases gravitational effect by 1% and increases jump power
-    by 1%
+  itemDescription: Decreases gravitational effect by 2% and increases jump power
+    by 2%
   itemIcon: {fileID: 2800000, guid: ee54c9f1ce5e1b5469f4891e55f08470, type: 3}

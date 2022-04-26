@@ -38,6 +38,9 @@ public class IceBoss : MonoBehaviour
     public CapsuleCollider RightClaw;
     public BoxCollider RollCollider;
     public CapsuleCollider HeadCollider;
+
+    public GameObject spikes1;
+    public GameObject spikes2;
     private readonly float crawlForwardAngle = 10f;
     private readonly float crawlLeftRightAngle = 20f;
 
@@ -151,7 +154,9 @@ public class IceBoss : MonoBehaviour
             else
             {
                 rollTimer -= Time.deltaTime;
-                if (rollTimer < 0) StopRolling();
+                if (rollTimer < 0) {
+                    StopRolling();
+                }
             }
         }
     }
@@ -192,6 +197,9 @@ public class IceBoss : MonoBehaviour
             PlayerStats.Instance.xp += xpGift;
             EventManager.Instance.PlayerStatsUpdated();
             EventManager.Instance.runStats.enemiesKilled++;
+
+            PersistentUpgradeManager.Instance.IncCurrency(1);
+
             navMeshAgent.velocity = Vector3.zero;
             navMeshAgent.enabled = false;
             portal.SetActive(true);
@@ -324,13 +332,6 @@ public class IceBoss : MonoBehaviour
         }
     }
 
-    public void StopRolling()
-    {
-        rollTimer = rollTimerStart;
-        animator.SetBool("Rolling", false);
-        RollCollider.isTrigger = false;
-    }
-
     // normal attacking
     private void Attack()
     {
@@ -423,6 +424,24 @@ public class IceBoss : MonoBehaviour
         attackDamage = damage2;
         RollCollider.isTrigger = true;
         animator.SetBool("Rolling", true);
+
+        InvokeRepeating("SpawnSpikes", 0.1f, 0.5f);
+    }
+
+    public void StopRolling()
+    {
+        rollTimer = rollTimerStart;
+        CancelInvoke();
+        animator.SetBool("Rolling", false);
+        RollCollider.isTrigger = false;
+    }
+
+    private void SpawnSpikes() {
+        if (Random.value < 0.5) {
+            GameObject instance = Instantiate(spikes1, transform.position - 2 * transform.forward + (Random.value) * 3 * transform.right, transform.rotation);
+        } else {
+            GameObject instance = Instantiate(spikes2, transform.position- 2 * transform.forward - (Random.value) * 3 * transform.right, transform.rotation);
+        }
     }
 
     // Attack Colliders

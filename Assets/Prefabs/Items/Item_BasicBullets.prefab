@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Basic Bullets
-  itemDescription: Increase projectile damage by 5%
+  itemDescription: Increase projectile range by 5%
   itemIcon: {fileID: 2800000, guid: 8e61ef7f793b5bf4487d3b6cf2db08ee, type: 3}
 --- !u!4 &6894661497182254867 stripped
 Transform:

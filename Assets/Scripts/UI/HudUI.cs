@@ -1,17 +1,14 @@
 using Managers;
 using UnityEngine;
 using UnityEngine.UIElements;
+using DG.Tweening;
 
 namespace UI
 {
     public class HudUI : MonoBehaviour
     {
         private readonly float crosshairSize = 60;
-
-
         private readonly float hitmarkerScreenDuration = 0.2f;
-
-
         private VisualElement crosshair;
 
         private VisualElement expBar;
