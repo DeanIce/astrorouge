@@ -227,7 +227,9 @@ MonoBehaviour:
   attack1SoundEffect: {fileID: 8300000, guid: 81005272b7da49c4eba6565a2310f9e6, type: 3}
   attack2SoundEffect: {fileID: 8300000, guid: 1e673772a4c71ba4bb4a474a838577af, type: 3}
   sensitivity: 0.2
-  spread: 0.3
+  baseSpread: 0.1
+  currentSpread: 1
+  sprintSpread: 0
   primaryAttackProcChance: 1
   secondaryAttackDuration: 0.2
   secondaryAttackTickTime: 0.02
@@ -292,7 +294,6 @@ MonoBehaviour:
   pickupImageRoot: {fileID: 7475313958377153072}
   pickupProgressImage: {fileID: 5192949915878938503}
   itemNameText: {fileID: 9208370592823053500}
-  pickUpSoundEffect: {fileID: 8300000, guid: 7af46ff86ef64c845b82ad54ff910a7f, type: 3}
 --- !u!114 &3798061513029287840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e434e776eeabcc419b608ea39d1c203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSoundEffect: {fileID: 8300000, guid: 63361b228073b43b0a8142c9918bc934, type: 3}
 --- !u!1 &2893686673109489974
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1943213487379596, guid: 1e89bd08fc2f0f74295e21325105d27a, type: 3}
   m_PrefabInstance: {fileID: 120842313972927902}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4567329129875752532
+--- !u!114 &8512619660057447724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 120390089843022098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0f746319fe432442ab92789ff1f4510, type: 3}
+  m_Script: {fileID: 11500000, guid: 6adcb9defb488f243b25bbf73fc5174c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &422310860916829129

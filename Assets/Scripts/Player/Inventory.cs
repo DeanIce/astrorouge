@@ -42,6 +42,13 @@ namespace Player
             }
         }
 
+        public int GetItemCount(AbstractItem item)
+        {
+            if (!HasItem(item)) return 0;
+
+            return EventManager.Instance.inventory[item.itemName].Item2;
+        }
+
         public void RebuildInventory()
         {
             Dictionary<string, (AbstractItem, int)> inventory = EventManager.Instance.inventory;
