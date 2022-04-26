@@ -5,12 +5,11 @@ using Managers;
 
 public class HandleDeath : MonoBehaviour
 {
-    [SerializeField] private AudioClip deathSoundEffect;
     void Start()
     {
         Debug.Log("Death Script Enabled");
 
-        AudioManager.Instance.PlaySFX(deathSoundEffect);
+        AudioManager.Instance.PlayDeathSound();
         StartCoroutine(StartRecap());
 
 

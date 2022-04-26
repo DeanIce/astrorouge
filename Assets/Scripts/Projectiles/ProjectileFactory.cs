@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -95,6 +96,7 @@ public class ProjectileFactory : MonoBehaviour
 
     public GameObject CreateExplosionProjectile(Vector3 position, Quaternion orientation, LayerMask collidesWith, float damage, float blastRadius)
     {
+        AudioManager.Instance.PlayExplosion();
         GameObject newProjectile = Instantiate(explosionProjectile);
         newProjectile.transform.parent = transform;
         newProjectile.GetComponent<InstantaneousProjectile>()

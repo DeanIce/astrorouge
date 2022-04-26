@@ -217,8 +217,8 @@ public class PlayerStats : ManagerSingleton<PlayerStats>
 
     public void LevelUp()
     {
-        AudioManager.Instance.PlaySFX(levelUpSound, 5);
-        maxHealth = (int) (maxHealth * 1.1f);
+        AudioManager.Instance.PlayLevelUp();
+        maxHealth = (int) (maxHealth * 1.2f);
         meleeBaseDamage = (int) (meleeBaseDamage * 1.5f);
         rangeBaseDamage = (int) (rangeBaseDamage * 1.5f);
     }

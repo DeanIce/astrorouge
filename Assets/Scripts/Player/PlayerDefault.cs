@@ -277,6 +277,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
 
     public void TakeDmg(float dmg, int type = 0, bool isCrit = false)
     {
+        AudioManager.Instance.PlayPlayerTakeDamage();
         timeOfLastDamage = Time.time;
         if (!IframeActive)
         {
@@ -391,7 +392,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             PlayerStats.Instance.rangeProjectileRange / PlayerStats.Instance.rangeProjectileSpeed,
             PlayerStats.Instance.GetRangeDamage());
         HandleEffects(projectile, primaryAttackProcChance);
-        AudioManager.Instance.PlaySFX(attack1SoundEffect, 0.1f);
+        AudioManager.Instance.PlayShootBlaster();
     }
 
     private void BeamAttack()
@@ -411,7 +412,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             beamDamage,
             PlayerStats.Instance.rangeProjectileRange);
         HandleEffects(projectile, secondaryAttackProcChance / tickCount);
-        AudioManager.Instance.PlaySFX(attack2SoundEffect, 0.3f);
+        AudioManager.Instance.PlayShootBeam();
     }
 
     /*private void HitscanAttack(InputAction.CallbackContext obj)

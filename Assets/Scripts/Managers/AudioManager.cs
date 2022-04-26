@@ -13,7 +13,7 @@ namespace Managers
     /// </summary>
     public class AudioManager : ManagerSingleton<AudioManager>
     {
-        public AudioClip buttonClick;
+        private AudioDictionary audioDictionary;
 
         // Determines which music source is playing. If true, music1 is playing, if false, music2 is playing.
         private bool currentMusicSource;
@@ -26,6 +26,10 @@ namespace Managers
 
         private void Start()
         {
+            // Construct dictionary, and load resources.
+            audioDictionary = new AudioDictionary();
+            audioDictionary.LoadSounds();
+
             // Construct audio sources with references.
             music1 = gameObject.AddComponent<AudioSource>();
             music2 = gameObject.AddComponent<AudioSource>();
@@ -63,7 +67,6 @@ namespace Managers
             AudioSource activeMusic = currentMusicSource ? music1 : music2;
 
             activeMusic.clip = musicClip;
-            activeMusic.volume = 1;
             activeMusic.Play();
         }
 
@@ -208,6 +211,86 @@ namespace Managers
                 music1.mute = music2.mute = sfx.mute = isMuted = true;
             else
                 music1.mute = music2.mute = sfx.mute = isMuted = false;
+        }
+
+        // ========= AUDIO METHODS for DICTIONARY ========= 
+        
+        // Player-Related Sounds 
+        public void PlayDeathSound()
+        {
+            PlaySFX(audioDictionary.playerDeath);
+        }
+        public void PlayPlayerTakeDamage()
+        {
+            PlaySFX(audioDictionary.RandomPlayerTakeDamage(), 0.5f);
+        }
+        public void PlayLevelUp()
+        {
+            PlaySFX(audioDictionary.playerLevelUp, 5.0f);
+        }
+        public void PlayPickUpItem()
+        {
+            PlaySFX(audioDictionary.pickUpItem, 0.2f);
+        }
+        public void PlayShootBlaster()
+        {
+            PlaySFX(audioDictionary.blaster6, 0.1f);
+        }
+        public void PlayShootBeam()
+        {
+            PlaySFX(audioDictionary.blaster8, 0.3f);
+        }
+        public void PlayExplosion()
+        {
+            PlaySFX(audioDictionary.RandomExplosion());
+        }
+
+        // UI and Level-Related Sounds
+        public void PlayMenuHover()
+        {
+            PlaySFX(audioDictionary.menuHover);
+        }
+        public void PlayMenuOpen()
+        {
+            PlaySFX(audioDictionary.menuOpen);
+        }
+        public void PlayMenuClose()
+        {
+            PlaySFX(audioDictionary.menuClose);
+        }
+        public void PlayMenuSelect()
+        {
+            PlaySFX(audioDictionary.menuSelect);
+        }
+        public void PlayMainMenuMusic()
+        {
+            PlayMusicWithCrossfade(audioDictionary.musicMainMenu);
+        }
+
+        // The next few sounds have to do with enemies, and likely should be played via animation event.
+        public void PlayEntAttack()
+        {
+            PlaySFX(audioDictionary.RandomEntAttack());
+        }
+        public void PlayGrowl()
+        {
+            PlaySFX(audioDictionary.RandomGrowl());
+        }
+        public void PlayLongGrowl()
+        {
+            PlaySFX(audioDictionary.RandomLongGrowl());
+        }
+        public void PlayShortGrowl()
+        {
+            PlaySFX(audioDictionary.RandomShortGrowl());
+        }
+        public void PlayInsectScreech()
+        {
+            PlaySFX(audioDictionary.RandomInsectScreech());
+        }
+        public void PlayGolemAttack()
+        {
+            PlaySFX(audioDictionary.RandomGolemAttack());
         }
     }
 }
