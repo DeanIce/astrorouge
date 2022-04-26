@@ -213,10 +213,16 @@ namespace Managers
                 music1.mute = music2.mute = sfx.mute = isMuted = false;
         }
 
-        // AUDIO METHODS for DICTIONARY
+        // ========= AUDIO METHODS for DICTIONARY ========= 
+        
+        // Player-Related Sounds 
         public void PlayDeathSound()
         {
             PlaySFX(audioDictionary.playerDeath);
+        }
+        public void PlayPlayerTakeDamage()
+        {
+            PlaySFX(audioDictionary.RandomPlayerTakeDamage(), 0.5f);
         }
         public void PlayLevelUp()
         {
@@ -234,6 +240,12 @@ namespace Managers
         {
             PlaySFX(audioDictionary.blaster8, 0.3f);
         }
+        public void PlayExplosion()
+        {
+            PlaySFX(audioDictionary.RandomExplosion());
+        }
+
+        // UI and Level-Related Sounds
         public void PlayMenuHover()
         {
             PlaySFX(audioDictionary.menuHover);
@@ -250,10 +262,12 @@ namespace Managers
         {
             PlaySFX(audioDictionary.menuSelect);
         }
-        public void PlayExplosion()
+        public void PlayMainMenuMusic()
         {
-            PlaySFX(audioDictionary.RandomExplosion());
+            PlayMusicWithCrossfade(audioDictionary.musicMainMenu);
         }
+
+        // The next few sounds have to do with enemies, and likely should be played via animation event.
         public void PlayEntAttack()
         {
             PlaySFX(audioDictionary.RandomEntAttack());
@@ -274,18 +288,9 @@ namespace Managers
         {
             PlaySFX(audioDictionary.RandomInsectScreech());
         }
-        public void PlayPlayerTakeDamage()
-        {
-            print("DAMAGE");
-            PlaySFX(audioDictionary.RandomPlayerTakeDamage(), 0.5f);
-        }
         public void PlayGolemAttack()
         {
             PlaySFX(audioDictionary.RandomGolemAttack());
-        }
-        public void PlayMainMenuMusic()
-        {
-            PlayMusicWithCrossfade(audioDictionary.musicMainMenu);
         }
     }
 }
