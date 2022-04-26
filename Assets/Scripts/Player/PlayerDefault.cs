@@ -288,10 +288,14 @@ public class PlayerDefault : MonoBehaviour, IPlayer
             float dmgAfterArmor = 0.0f;
             if (Random.value >= PlayerStats.Instance.dodgeChance)
             {
-                dmgAfterArmor = dmg - dmg * ((float) PlayerStats.Instance.armor / 100f);
+                dmgAfterArmor = dmg - dmg * ((float)PlayerStats.Instance.armor / 100f);
                 if (dmgAfterArmor <= 0.0f) dmgAfterArmor = 1f;
             }
-            else Debug.Log("Dodged Damage");
+            else
+            {
+                AudioManager.Instance.PlayDodgeSqueak();
+                Debug.Log("Dodged Damage");
+            }
 
             PlayerStats.Instance.currentHealth -= dmgAfterArmor;
             EventManager.Instance.runStats.damageTaken += dmgAfterArmor;
@@ -372,6 +376,7 @@ public class PlayerDefault : MonoBehaviour, IPlayer
         UtilityActionDelay = utilityActionCooldown;
 
         EventManager.Instance.UtilityUsed(utilityActionCooldown);
+        AudioManager.Instance.PlayDashWhoosh();
         _ = StartCoroutine(Dash());
     }
 

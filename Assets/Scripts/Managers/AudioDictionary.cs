@@ -22,6 +22,8 @@ public class AudioDictionary : MonoBehaviour
     public AudioClip takeDamage1, takeDamage2, takeDamage3, takeDamage4, takeDamage5;
     public AudioClip playerLevelUp, playerDeath, pickUpItem;
     public AudioClip menuHover, menuOpen, menuClose, menuSelect;
+    public AudioClip dodgeSqueak;
+    public AudioClip dash1, dash2, dash3, dash4;
 
     // Game Music
     public AudioClip musicLevel1, musicLevel2, musicLevel3;
@@ -36,6 +38,7 @@ public class AudioDictionary : MonoBehaviour
     private List<AudioClip> insectScreeches;
     private List<AudioClip> golemAttacks;
     private List<AudioClip> playerTakeDamage;
+    private List<AudioClip> dashes;
 
     public void LoadSounds()
     {
@@ -87,6 +90,12 @@ public class AudioDictionary : MonoBehaviour
         takeDamage4 = (AudioClip)Resources.Load("Audio/Sound Effects/Hit4");
         takeDamage5 = (AudioClip)Resources.Load("Audio/Sound Effects/Hit5");
 
+        dodgeSqueak = (AudioClip)Resources.Load("Audio/Sound Effects/Squeak");
+        dash1 = (AudioClip)Resources.Load("Audio/Sound Effects/Dash1");
+        dash2 = (AudioClip)Resources.Load("Audio/Sound Effects/Dash2");
+        dash3 = (AudioClip)Resources.Load("Audio/Sound Effects/Dash3");
+        dash4 = (AudioClip)Resources.Load("Audio/Sound Effects/Dash4");
+
         playerLevelUp = (AudioClip)Resources.Load("Audio/Sound Effects/LevelUp");
         playerDeath = (AudioClip)Resources.Load("Audio/Sound Effects/Death Sound");
         pickUpItem = (AudioClip)Resources.Load("Audio/Sound Effects/Pickup-Item");
@@ -124,6 +133,7 @@ public class AudioDictionary : MonoBehaviour
         shortGrowls = new List<AudioClip>();
         insectScreeches = new List<AudioClip>();
         golemAttacks = new List<AudioClip>();
+        dashes = new List<AudioClip>();
         playerTakeDamage = new List<AudioClip>();
 
         explosions.Add(explosion1);
@@ -164,6 +174,11 @@ public class AudioDictionary : MonoBehaviour
         golemAttacks.Add(golemAttack2);
         golemAttacks.Add(golemAttack3);
         golemAttacks.Add(golemAttack4);
+
+        dashes.Add(dash1);
+        dashes.Add(dash2);
+        dashes.Add(dash3);
+        dashes.Add(dash4);
 
         playerTakeDamage.Add(takeDamage1);
         playerTakeDamage.Add(takeDamage2);
@@ -210,5 +225,10 @@ public class AudioDictionary : MonoBehaviour
     public AudioClip RandomPlayerTakeDamage()
     {
         return playerTakeDamage[RandomValue(playerTakeDamage.Count)];
+    }
+
+    public AudioClip RandomDash()
+    {
+        return dashes[RandomValue(dashes.Count)];
     }
 }
