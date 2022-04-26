@@ -4728,7 +4728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1120244677
 Transform:
   m_ObjectHideFlags: 0
@@ -8249,7 +8249,7 @@ MonoBehaviour:
   slamDamage: 50
   tongueDamage: 25
   ramDamage: 15
-  slamEffect: {fileID: 0}
+  slamEffect: {fileID: 1159970587636746, guid: 745a405f36ffd2b4789eb1b83f1b1e22, type: 3}
   fireball: {fileID: 1208781713066404, guid: ef76d01aa0119ad42a5466aa6ae47bfb, type: 3}
   expAmt: 100
 --- !u!195 &1841525786

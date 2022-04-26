@@ -211,12 +211,25 @@ public class LavaBoss : MonoBehaviour
         return distance >= 10 && distance <= 70;
     }
 
+    public GameObject SpawnSlamEffects()
+    {
+        Vector3 newPos = transform.position + new Vector3(0f, 0f, 0f);
+        GameObject slamObject = Instantiate(slamEffect, newPos, transform.rotation);
+        return slamObject;
+    }
+
+    public void DestroySlamObject(GameObject slam)
+    {
+        Destroy(slam);
+    }
+
     public void SpawnFireball()
     {
         Vector3 newPos = transform.position + new Vector3(5f, 12f, 0f);
         var temp = ProjectileFactory.Instance.CreateBasicProjectile(newPos, Vector3.Normalize(player.transform.position - newPos) * 50f, 
-                   LayerMask.GetMask("Player", "Ground"), 10, 15f);
+                   LayerMask.GetMask("Player"), 10, 15f);
         ProjectileFactory.Instance.SetSkin(temp, fireball);
+        temp.transform.localScale *= 5f;
     }
 
     // Damage Taken
@@ -302,7 +315,10 @@ public class LavaBoss : MonoBehaviour
         // Setting roaring false here since we come from roaring and need it to be true to attack
         damageToDo = slamDamage;
         animator.SetBool("SlamAttacking", true);
-        yield return new WaitForSeconds(4.09f);
+        yield return new WaitForSeconds(2.09f);
+        GameObject slam = SpawnSlamEffects();
+        yield return new WaitForSeconds(2.00f);
+        DestroySlamObject(slam);
         animator.SetBool("SlamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
