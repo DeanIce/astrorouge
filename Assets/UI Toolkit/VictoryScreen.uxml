@@ -50,6 +50,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="PickupsView" class="noodle-stats-view" style="flex-grow: 0; width: 50%;">
                     <ui:Label text="PICKUPS" display-tooltip-when-elided="true" class="noodle-stats-header" />
+                    <ui:ScrollView horizontal-scroller-visibility="Hidden" name="ScrollView" vertical-scroller-visibility="Hidden" style="padding-left: 0; margin-left: 13px; margin-right: 13px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

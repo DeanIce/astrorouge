@@ -8,9 +8,9 @@ namespace UI
     public class MainMenu : MonoBehaviour
     {
         public AudioClip mainMenuMusic;
-        public float scrollSpeed = .5f;
+        public float scrollSpeed = .3f;
 
-        public float scrollAmount = 1000;
+        public float scrollAmount = 5000;
 
         private readonly string creditsText = @"
 Created at The Ohio State University in the CSE 5912 Capstone.
@@ -29,15 +29,23 @@ Jared Zins
 Professor Roger Crawfis
 
 
-<size=32>TESTERS</size>
+<size=32>RESOURCES</size>
 
-Todo: add tester names here
-
+Sebastian Lague
+StackOverflow
 
 
 <size=32>ASSETS</size>
 
-Todo: add assets here... names not links
+IGNITECODERS Simple Water Shader URP
+Low Poly Monster Bundle
+qq.d.y Lava Surface URP
+SCI FI CHARACTERS MEGA PACK VOL 1
+SCI FI CHARACTERS MEGA PACK VOL 2
+Synty POLYGON Icons Pack
+Synty POLYGON Particle FX Pack
+Synty POLYGON Sci-Fi Worlds Pack
+Synty POLYGON Sci-Fi Space Pack
 
 
 2022
@@ -55,7 +63,6 @@ Todo: add assets here... names not links
 
         private Button newGameButton;
         private Button quitButton;
-        private Button upgradeButton;
 
         private bool scrolling;
 
@@ -64,6 +71,7 @@ Todo: add assets here... names not links
 
         private VisualElement settingsMenu;
         private Button tutorialButton;
+        private Button upgradeButton;
 
         private void Start()
         {
@@ -133,6 +141,7 @@ Todo: add assets here... names not links
                 scrolling = false;
             }
         }
+
 
         private void NewGameButtonPressed()
         {
