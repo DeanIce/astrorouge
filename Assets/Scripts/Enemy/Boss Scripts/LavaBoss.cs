@@ -1,3 +1,4 @@
+using Managers;
 using System.Collections;
 using UI;
 using UnityEngine;
@@ -22,11 +23,34 @@ public class LavaBoss : MonoBehaviour
     private Animator animator;
     private bool attacking;
 
+    // Portal
+    public GameObject portal;
+
     // Status stuff
     private bool dying;
     private float health;
     private bool hunting;
     private bool inRange;
+    private bool flinching;
+
+    // Attack Colliders
+    public DamageOnenter tongueDamageScript;
+    public DamageOnenter ramDamageScript;
+    public DamageOnenter slamDamageScript;
+
+    // Attack Damage
+    private float damageToDo;
+    public float slamDamage;
+    public float tongueDamage;
+    public float ramDamage;
+
+    // Attack fx
+    public GameObject slamEffect;
+    public GameObject fireball;
+
+    // Misc
+    public int expAmt;
+    private float distance;
 
     // Movement stuff
     private NavMeshAgent navMeshAgent;
@@ -44,25 +68,58 @@ public class LavaBoss : MonoBehaviour
         health = maxHealth;
         bossHealthBar.SetHealth(health, maxHealth);
         rb = GetComponent<Rigidbody>();
+        distance = Vector3.Distance(transform.position, player.transform.position);
+
         // May need to be GetComponentInChildren
+        portal.SetActive(false);
         animator = GetComponent<Animator>();
         dying = false;
         inRange = false;
         attacking = false;
+
     }
 
     private void Update()
     {
-        if (!inRange)
+        // To prevent endless walking on top of
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        if (distance <= 25)
         {
-            animator.SetBool("Crawling", true);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.destination = player.transform.position;
+            inRange = true;
         }
+
+        // Flinching
+        if (health < health / 50)
+        {
+            // await
+        }
+
+        // Die?
+        if (health < 0)
+        {
+            Die();
+        }
+        // Else do everything else
         else
         {
-            navMeshAgent.isStopped = true;
-            animator.SetBool("Crawling", false);
+            // Movement
+            if (!inRange && !attacking)
+            {
+                animator.SetBool("Crawling", true);
+                navMeshAgent.isStopped = false;
+                navMeshAgent.destination = player.transform.position;
+            }
+            else if (InAttackRange())
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("Crawling", false);
+                Attack();
+            }
+            else if (inRange && !attacking)
+            {
+                navMeshAgent.isStopped = true;
+                animator.SetBool("Crawling", false);
+            }
         }
     }
 
@@ -92,17 +149,117 @@ public class LavaBoss : MonoBehaviour
         }
     }
 
+    public void TakeDmg(float dmg)
+    {
+        print("Health now: " + health);
+        if (!dying)
+        {
+            health -= dmg;
+            bossHealthBar.SetHealth(health, maxHealth);
+            print("Health now: " + health);
+        }
+    }
+
+    public void Attack()
+    {
+        if (!attacking)
+        {
+            attacking = true;
+            float randomAttack = Random.value;
+            if (randomAttack < 0.25 && distance < 35)
+            {
+                print("Roar then slam");
+                StartCoroutine(Roar(1));
+            }
+            else if (randomAttack >= 0.25 && randomAttack < 0.5 && distance < 60)
+            {
+                print("tongue");
+                StartCoroutine(TongueAttack());
+            }
+            else if (randomAttack >= 0.5 && randomAttack < 0.85 && distance < 25)
+            {
+                print("Roar then ram");
+                StartCoroutine(Roar(2));
+            }
+            else
+            {
+                print("Horn");
+                StartCoroutine(HornAttack());
+            }
+        }
+    }
+
     public void Die()
     {
         if (!dying)
         {
             dying = true;
+            PlayerStats.Instance.xp += expAmt;
+            EventManager.Instance.PlayerStatsUpdated();
+            EventManager.Instance.runStats.enemiesKilled++;
+            navMeshAgent.velocity = Vector3.zero;
+            navMeshAgent.enabled = false;
+            PersistentUpgradeManager.Instance.IncCurrency(1); // Assuming we are first boss
+            portal.SetActive(true);
             StartCoroutine(DeathAnimation());
+            Destroy(this); // Destroy just script, leave body
         }
     }
 
-    // Movement
-    // IEnums for crawl/rotate?
+    private bool InAttackRange()
+    {
+        // TODO: Edit numbers
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        //print("Distance from player: " + distance);
+        return distance >= 10 && distance <= 70;
+    }
+
+    public GameObject SpawnSlamEffects()
+    {
+        Vector3 newPos = transform.position + new Vector3(0f, 0f, 0f);
+        GameObject slamObject = Instantiate(slamEffect, newPos, transform.rotation);
+        return slamObject;
+    }
+
+    public void DestroySlamObject(GameObject slam)
+    {
+        Destroy(slam);
+    }
+
+    public void SpawnFireball()
+    {
+        Vector3 newPos = transform.position + new Vector3(5f, 12f, 0f);
+        var temp = ProjectileFactory.Instance.CreateBasicProjectile(newPos, Vector3.Normalize(player.transform.position - newPos) * 50f, 
+                   LayerMask.GetMask("Player"), 10, 15f);
+        ProjectileFactory.Instance.SetSkin(temp, fireball);
+        temp.transform.localScale *= 3f;
+    }
+
+    public void EnableTongueHit()
+    {
+        tongueDamageScript.EnableDoShit();
+    }
+    public void DisableTongueHit()
+    {
+        tongueDamageScript.DisableDoShit();
+    }
+
+    public void EnableRamHit()
+    {
+        ramDamageScript.EnableDoShit();
+    }
+    public void DisableRamHit()
+    {
+        ramDamageScript.DisableDoShit();
+    }
+    public void EnableSlamHit()
+    {
+        slamDamageScript.EnableDoShit();
+    }
+    public void DisableSlamHit()
+    {
+        slamDamageScript.DisableDoShit();
+    }
 
     // Damage Taken
     // TODO: Alter timings to match animation speeds
@@ -136,25 +293,37 @@ public class LavaBoss : MonoBehaviour
     }
 
     // Attacks
-    private IEnumerator Roar()
+    private IEnumerator Roar(int selection)
     {
         // Don't set false here, instead set false in followup attacks
         animator.SetBool("Roaring", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5.29f);
+        if (selection == 1)
+        {
+            StartCoroutine(SlamAttack());
+        }
+        else if (selection == 2)
+        {
+            StartCoroutine(RamAttack());
+        }
     }
 
     private IEnumerator TongueAttack()
     {
+        damageToDo = tongueDamage;
         animator.SetBool("TongueAttacking", true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2f);
         animator.SetBool("TongueAttacking", false);
         attacking = false;
     }
 
     private IEnumerator HornAttack()
     {
+        // TODO: Spawn fireball
         animator.SetBool("HornAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.50f);
+        SpawnFireball();
+        yield return new WaitForSeconds(1.59f);
         animator.SetBool("HornAttacking", false);
         attacking = false;
     }
@@ -162,8 +331,9 @@ public class LavaBoss : MonoBehaviour
     private IEnumerator RamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
+        damageToDo = ramDamage;
         animator.SetBool("RamAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3.05f);
         animator.SetBool("RamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
@@ -172,8 +342,12 @@ public class LavaBoss : MonoBehaviour
     private IEnumerator SlamAttack()
     {
         // Setting roaring false here since we come from roaring and need it to be true to attack
+        damageToDo = slamDamage;
         animator.SetBool("SlamAttacking", true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2.09f);
+        GameObject slam = SpawnSlamEffects();
+        yield return new WaitForSeconds(2.00f);
+        DestroySlamObject(slam);
         animator.SetBool("SlamAttacking", false);
         animator.SetBool("Roaring", false);
         attacking = false;
