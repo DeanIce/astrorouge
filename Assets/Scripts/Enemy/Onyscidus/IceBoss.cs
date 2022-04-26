@@ -425,13 +425,13 @@ public class IceBoss : MonoBehaviour
         RollCollider.isTrigger = true;
         animator.SetBool("Rolling", true);
 
-        InvokeRepeating("SpawnSpikes", 0.1f, 0.5f);
+        // InvokeRepeating("SpawnSpikes", 0.1f, 0.5f);
     }
 
     public void StopRolling()
     {
         rollTimer = rollTimerStart;
-        CancelInvoke();
+        // CancelInvoke();
         animator.SetBool("Rolling", false);
         RollCollider.isTrigger = false;
     }
