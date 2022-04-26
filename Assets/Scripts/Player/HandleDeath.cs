@@ -12,7 +12,8 @@ public class HandleDeath : MonoBehaviour
         AudioManager.Instance.PlayDeathSound();
         StartCoroutine(StartRecap());
 
-
+        GetComponent<PlayerDefault>().enabled = false;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         // TODO: Handle everything that happens after death.
     }
 
