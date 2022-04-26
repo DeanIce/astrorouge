@@ -9190,7 +9190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossHealthBar: {fileID: 1209660857}
   player: {fileID: 1659842845}
-  maxHealth: 500
+  maxHealth: 1000
   movementSpeed: 8
   portal: {fileID: 692339184}
   tongueDamageScript: {fileID: 1206193681}
