@@ -14,6 +14,10 @@ namespace UI
         private Button buttonMenu;
 
         private Button buttonRetry;
+
+        private VisualElement deathCam;
+        private VisualElement deathCamTexture;
+
         private ScrollView scrollViewItems;
 
         //private Label quip;
@@ -30,6 +34,9 @@ namespace UI
 
             scrollViewStats = root.Q<ScrollView>("ScrollView");
             scrollViewItems = root.Q<ScrollView>("ScrollViewItems");
+            deathCam = root.Q<VisualElement>("DeathCam");
+            deathCamTexture = root.Q<VisualElement>("DeathCamTexture");
+            deathCamTexture.style.backgroundImage = new StyleBackground(EventManager.Instance.deathCam);
 
             buttonMenu = root.Q<Button>("MenuButton");
             buttonExit = root.Q<Button>("ExitButton");

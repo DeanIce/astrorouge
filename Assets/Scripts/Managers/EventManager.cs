@@ -16,6 +16,8 @@ namespace Managers
 
         public string scenePlay;
 
+        public Texture2D deathCam;
+
         public readonly Dictionary<string, (AbstractItem, int)> inventory = new();
 
         private UserSettings _user;
@@ -197,6 +199,7 @@ namespace Managers
 
         public void Recap()
         {
+            print(deathCam);
             LOG("request recap");
             mode = Mode.Recap;
             InputManager.ToggleActionMap(InputManager.inputActions.PauseMenu);
