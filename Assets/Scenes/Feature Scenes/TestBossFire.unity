@@ -3362,8 +3362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32179217adeef3b469289135ef301d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 0
-  ticDelay: 0
+  dmg: 30
+  ticDelay: 0.15
 --- !u!1001 &787901343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4836,8 +4836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32179217adeef3b469289135ef301d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 0
-  ticDelay: 0
+  dmg: 50
+  ticDelay: 0.15
 --- !u!1001 &1134817294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9194,7 +9194,7 @@ MonoBehaviour:
   movementSpeed: 5
   portal: {fileID: 692339184}
   tongueDamageScript: {fileID: 1206193681}
-  ramDamageScript: {fileID: 0}
+  ramDamageScript: {fileID: 784361129}
   slamDamageScript: {fileID: 1120244681}
   slamDamage: 50
   tongueDamage: 25

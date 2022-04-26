@@ -164,7 +164,7 @@ public class LavaBoss : MonoBehaviour
         if (!attacking)
         {
             attacking = true;
-            float randomAttack = 0.3f;
+            float randomAttack = Random.value;
             if (randomAttack < 0.25 && distance < 35)
             {
                 print("Roar then slam");
@@ -240,6 +240,23 @@ public class LavaBoss : MonoBehaviour
     public void DisableTongueHit()
     {
         tongueDamageScript.DisableDoShit();
+    }
+
+    public void EnableRamHit()
+    {
+        ramDamageScript.EnableDoShit();
+    }
+    public void DisableRamHit()
+    {
+        ramDamageScript.DisableDoShit();
+    }
+    public void EnableSlamHit()
+    {
+        slamDamageScript.EnableDoShit();
+    }
+    public void DisableSlamHit()
+    {
+        slamDamageScript.DisableDoShit();
     }
 
     // Damage Taken
