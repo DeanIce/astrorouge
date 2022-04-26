@@ -556,7 +556,7 @@ MonoBehaviour:
       persistence: 0.5
       scale: 1.9
       power: 2.04
-      elevation: 7.91
+      elevation: 4
       gain: 1
       verticalShift: 0.09
       peakSmoothing: 1
@@ -594,5 +594,5 @@ MonoBehaviour:
     oceanLevel: 0
     terrainMaterial: {fileID: 2100000, guid: 9e0319a5dc87dbc47838023b21bfff25, type: 2}
   terrainMesh: {fileID: 4795155531584681974}
-  heightMinMax: {x: 0.93256533, y: 1.1584213}
+  heightMinMax: {x: 0.93256533, y: 1.0957658}
   key: 0
