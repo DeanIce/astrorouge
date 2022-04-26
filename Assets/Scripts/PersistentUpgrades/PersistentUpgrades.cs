@@ -53,7 +53,9 @@ public class PersistentUpgrades
 
     public void ApplyStats(PlayerStats target)
     {
-        Dictionary<string, float> statUpgrades = defaultStatUpgrades;
+        Dictionary<string, float> statUpgrades = new();
+        foreach (KeyValuePair<string, float> keyValuePair in defaultStatUpgrades)
+            statUpgrades.Add(keyValuePair.Key, keyValuePair.Value);
         for (int i = 0; i < data.statNames.Count; i++)
             statUpgrades[data.statNames[i]] += data.statValues[i];
 
