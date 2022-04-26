@@ -26,6 +26,11 @@ namespace Enemy.Ingenalvus
             other.gameObject.GetComponent<PlayerDefault>()?.TakeDmg(ing.fireDamage * Time.fixedDeltaTime);
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            other.gameObject.GetComponent<StatusEffectManager>().ApplyBurn(3);
+        }
+
         public void Show()
         {
             particles.Play();
